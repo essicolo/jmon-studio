@@ -1,0 +1,65 @@
+{
+  "name": "jmon-studio",
+  "version": "1.0.3",
+  "description": "Complete JMON (JSON Music Object Notation) studio: format conversion, algorithmic composition, and music visualization",
+  "main": "index.js",
+  "types": "dist/index-simple.d.ts",
+  "files": [
+    "dist/**/*",
+    "src/**/*",
+    "README.md",
+    "LICENSE",
+    "schemas/**/*"
+  ],
+  "scripts": {
+    "build": "tsc && npm run copy-umd",
+    "copy-umd": "cp src/format/*.js dist/format/ 2>/dev/null || true",
+    "test": "npm run build && node test/simple-test.js",
+    "dev": "tsc --watch",
+    "clean": "rm -rf dist",
+    "prepublishOnly": "npm run clean && npm run build"
+  },
+  "keywords": [
+    "music",
+    "jmon",
+    "tone.js",
+    "abc",
+    "notation",
+    "composition",
+    "algorithmic",
+    "audio",
+    "synthesis",
+    "visualization",
+    "studio",
+    "observable",
+    "djalgo",
+    "fractals",
+    "cellular-automata",
+    "genetic-algorithms"
+  ],
+  "author": "jmonlabs",
+  "license": "MIT",
+  "peerDependencies": {
+    "tone": "^14.0.0 || ^15.0.0"
+  },
+  "optionalDependencies": {
+    "abcjs": "^6.0.0",
+    "plotly.js": "^2.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.19.9",
+    "@types/plotly.js": "^3.0.3",
+    "abcjs": "^6.5.1",
+    "plotly.js": "^2.27.0",
+    "tone": "^15.1.22",
+    "typescript": "^5.9.2"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jmonlabs/jmon-studio.git"
+  },
+  "bugs": {
+    "url": "https://github.com/jmonlabs/jmon-studio/issues"
+  },
+  "homepage": "https://github.com/jmonlabs/jmon-studio#readme"
+}
