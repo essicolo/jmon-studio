@@ -40,8 +40,8 @@
   "author": "jmonlabs",
   "license": "MIT",
   "peerDependencies": {
-    "tone": "^14.0.0 || ^15.0.0",
-    "abcjs": "^6.0.0"
+    "abcjs": "^6.0.0",
+    "tone": "^14.0.0 || ^15.0.0"
   },
   "optionalDependencies": {
     "plotly.js": "^2.0.0"
@@ -61,5 +61,8 @@
   "bugs": {
     "url": "https://github.com/jmonlabs/jmon-studio/issues"
   },
-  "homepage": "https://github.com/jmonlabs/jmon-studio#readme"
+  "homepage": "https://github.com/jmonlabs/jmon-studio#readme",
+  "dependencies": {
+    "ajv": "^8.17.1"
+  }
 }

@@ -37,79 +37,73 @@
         }
     };
 
-    // Full JMON Tone implementation
+    // Full JMON Tone implementation with Ajv schema validation
+    // Observable compatibility: This UMD build can be loaded in Observable notebooks using require or as a browser global.
+    // For full schema validation, Ajv is used (see https://ajv.js.org/). Ajv must be available in the environment.
+    let Ajv;
+    let jmonSchema;
+    try {
+        // Try to require Ajv and the schema (works in Node/Observable with require)
+        Ajv = (typeof require !== 'undefined') ? require('ajv') : root.Ajv;
+        jmonSchema = (typeof require !== 'undefined') ? require('./schemas/jmon-schema.json') : root.jmonSchema;
+    } catch (e) {
+        // Fallback for browser global (Ajv and schema must be loaded separately)
+        Ajv = root.Ajv;
+        jmonSchema = root.jmonSchema;
+    }
+
     const JmonTone = {
         VERSION: "1.0",
         FORMAT_IDENTIFIER: "jmonTone",
-        
+
         midiNoteToNoteName: function(midiNote) {
             if (typeof midiNote !== 'number' || midiNote < 0 || midiNote > 127) {
                 console.warn(`Invalid MIDI note number: ${midiNote}. Must be 0-127.`);
                 return 'C4';
             }
-            
             const noteNames = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B'];
             const octave = Math.floor(midiNote / 12) - 1;
             const noteIndex = midiNote % 12;
-            
             return noteNames[noteIndex] + octave;
         },
-        
+
         noteNameToMidiNote: function(noteName) {
             try {
                 const noteRegex = /^([A-Ga-g])([#b]?)(-?\d+)$/;
                 const match = noteName.match(noteRegex);
-                
                 if (!match) {
                     console.warn(`Invalid note name: ${noteName}`);
                     return 60;
                 }
-                
                 const [, noteLetter, accidental, octaveStr] = match;
                 const octave = parseInt(octaveStr, 10);
-                
-                const noteMap = {
-                    'C': 0, 'D': 2, 'E': 4, 'F': 5, 'G': 7, 'A': 9, 'B': 11
-                };
-                
+                const noteMap = { 'C': 0, 'D': 2, 'E': 4, 'F': 5, 'G': 7, 'A': 9, 'B': 11 };
                 let noteValue = noteMap[noteLetter.toUpperCase()];
-                
-                if (accidental === '#') {
-                    noteValue += 1;
-                } else if (accidental === 'b') {
-                    noteValue -= 1;
-                }
-                
+                if (accidental === '#') noteValue += 1;
+                else if (accidental === 'b') noteValue -= 1;
                 return Math.max(0, Math.min(127, (octave + 1) * 12 + noteValue));
             } catch (error) {
                 console.error(`Error converting note name ${noteName}:`, error);
                 return 60;
             }
         },
-        
+
         validateComposition: function(composition) {
-            const errors = [];
-            const warnings = [];
-            
-            if (!composition) {
-                errors.push({ field: 'composition', message: 'Composition object is required' });
-                return { valid: false, errors, warnings };
+            // Full JSON schema validation using Ajv
+            if (!Ajv || !jmonSchema) {
+                return {
+                    valid: false,
+                    errors: [{ message: 'Ajv or jmonSchema not available. Full validation not possible.' }],
+                    warnings: []
+                };
             }
-            
-            if (!composition.format) {
-                errors.push({ field: 'format', message: 'Format field is required' });
-            } else if (composition.format !== this.FORMAT_IDENTIFIER) {
-                errors.push({ 
-                    field: 'format', 
-                    message: `Invalid format: expected "${this.FORMAT_IDENTIFIER}", got "${composition.format}"`,
-                    value: composition.format 
-                });
-            }
-            
+            const ajv = new Ajv({ allErrors: true, strict: false });
+            const validate = ajv.compile(jmonSchema);
+            const valid = validate(composition);
             return {
-                valid: errors.length === 0,
-                errors,
-                warnings
+                valid,
+                errors: validate.errors || [],
+                warnings: []
             };
         }
     };
@@ -235,19 +229,16 @@
         return this.generations;
     };
 
-    // Visualization placeholder
+    // Visualization stubs: Not implemented in browser.js. See full version or use your own visualization code.
     const viz = {
         plotPolyloop: function(polyloop, element) {
-            console.log('Polyloop visualization would be rendered here');
-            return polyloop;
+            throw new Error('Polyloop visualization is not implemented in this build.');
         },
         plotScale: function(scale, element) {
-            console.log('Scale visualization would be rendered here');
-            return scale;
+            throw new Error('Scale visualization is not implemented in this build.');
         },
         plotCellularAutomata: function(ca, element) {
-            console.log('Cellular automata visualization would be rendered here');
-            return ca;
+            throw new Error('Cellular automata visualization is not implemented in this build.');
         }
     };
 
@@ -256,10 +247,10 @@
         // Format tools
         jmon: {
             toTone: JmonTone,
-            toAbc: function() { console.log('ABC conversion available in full version'); },
-            toMidi: function() { console.log('MIDI conversion available in full version'); },
-            show: function() { console.log('Display functions available in full version'); },
-            play: function() { console.log('Playback functions available in full version'); }
+            toAbc: function() { throw new Error('ABC conversion is not available in this build.'); },
+            toMidi: function() { throw new Error('MIDI conversion is not available in this build.'); },
+            show: function() { throw new Error('Display functions are not available in this build.'); },
+            play: function() { throw new Error('Playback functions are not available in this build.'); }
         },
         
         // Algorithm tools  
@@ -273,15 +264,14 @@
             CellularAutomata: CellularAutomata,
             
             // Placeholders for other algorithms
-            GeneticAlgorithm: function() { console.log('GeneticAlgorithm available in full version'); },
-            RandomWalk: function() { console.log('RandomWalk available in full version'); },
-            GaussianProcess: function() { console.log('GaussianProcess available in full version'); },
-            MinimalismProcess: function() { console.log('MinimalismProcess available in full version'); },
-            
+            GeneticAlgorithm: function() { throw new Error('GeneticAlgorithm is not available in this build.'); },
+            RandomWalk: function() { throw new Error('RandomWalk is not available in this build.'); },
+            GaussianProcess: function() { throw new Error('GaussianProcess is not available in this build.'); },
+            MinimalismProcess: function() { throw new Error('MinimalismProcess is not available in this build.'); },
             // Fractals
             Fractals: {
-                Mandelbrot: function() { console.log('Mandelbrot available in full version'); },
-                LogisticMap: function() { console.log('LogisticMap available in full version'); }
+                Mandelbrot: function() { throw new Error('Mandelbrot is not available in this build.'); },
+                LogisticMap: function() { throw new Error('LogisticMap is not available in this build.'); }
             }
         },
         
