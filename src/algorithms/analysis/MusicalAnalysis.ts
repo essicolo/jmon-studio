@@ -1,4 +1,4 @@
-import { JMonNote } from '../types/jmon';
+import { JMonNote } from '../../types/jmon';
 
 export interface AnalysisOptions {
   scale?: number[];

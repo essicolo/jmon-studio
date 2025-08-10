@@ -206,27 +206,29 @@ class JmonTone {
                 await Tone.start();
             }
             // Simple playback implementation
-            composition.tracks.forEach((track, trackIndex) => {
-                const synth = this.createSynth(track.instrument?.type || 'Synth', track.instrument);
-                if (!synth)
-                    return;
-                synth.toDestination();
-                track.sequence.forEach((note) => {
-                    const noteNames = this.processNoteInput(note.note);
-                    const time = this.parseTimeString(note.time, composition.bpm || 120);
-                    const duration = this.parseTimeString(note.duration, composition.bpm || 120);
-                    if (Array.isArray(noteNames)) {
-                        // Chord
-                        noteNames.forEach(noteName => {
-                            synth.triggerAttackRelease(noteName, duration, `+${time}`);
-                        });
-                    }
-                    else {
-                        // Single note
-                        synth.triggerAttackRelease(noteNames, duration, `+${time}`);
-                    }
+            if (composition.tracks && Array.isArray(composition.tracks)) {
+                composition.tracks.forEach((track, trackIndex) => {
+                    const synth = this.createSynth(track.instrument?.type || 'Synth', track.instrument);
+                    if (!synth)
+                        return;
+                    synth.toDestination();
+                    track.sequence?.forEach((note) => {
+                        const noteNames = this.processNoteInput(note.note || 'C4');
+                        const time = this.parseTimeString(note.time, composition.bpm || 120);
+                        const duration = this.parseTimeString(note.duration, composition.bpm || 120);
+                        if (Array.isArray(noteNames)) {
+                            // Chord
+                            noteNames.forEach(noteName => {
+                                synth.triggerAttackRelease(noteName, duration, `+${time}`);
+                            });
+                        }
+                        else {
+                            // Single note
+                            synth.triggerAttackRelease(noteNames, duration, `+${time}`);
+                        }
+                    });
                 });
-            });
+            }
         }
         else {
             console.warn('Tone.js not available. Cannot play composition.');

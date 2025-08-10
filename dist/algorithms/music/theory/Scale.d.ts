@@ -1,6 +1,6 @@
 import { ChromaticNote, ScaleMode, MusicalScale } from '../../types/music';
 import { Pitch } from '../../types/common';
-import { JMonSequence } from '../../types/jmon';
+import { JMonSequence } from '../../../types/jmon';
 export declare class Scale {
     readonly tonic: ChromaticNote;
     readonly mode: ScaleMode;

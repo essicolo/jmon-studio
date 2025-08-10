@@ -2,7 +2,7 @@ import { ChromaticNote, ScaleMode, ChordProgression } from '../../types/music';
 import { Pitch } from '../../types/common';
 // import { MusicTheoryConstants } from './MusicTheoryConstants';
 import { Scale } from './Scale';
-import { JMonSequence, JMonNote } from '../../types/jmon';
+import { JMonSequence, JMonNote } from '../../../types/jmon';
 import { JMonConverter } from '../../io/jmon/conversion';
 
 export interface ProgressionOptions {

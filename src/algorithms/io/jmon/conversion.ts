@@ -8,7 +8,7 @@ import {
   MusicalTime,
   NoteDuration,
   AudioNode
-} from '../../types/jmon';
+} from '../../../types/jmon';
 
 export class JMonConverter {
   
@@ -278,7 +278,7 @@ export class JMonConverter {
       errors.push('Format must be "jmonTone"');
     }
     
-    if (composition.bpm < 20 || composition.bpm > 400) {
+    if (composition.bpm && (composition.bpm < 20 || composition.bpm > 400)) {
       errors.push('BPM must be between 20 and 400');
     }
     
@@ -286,7 +286,7 @@ export class JMonConverter {
       errors.push('At least one sequence is required');
     }
     
-    composition.sequences.forEach((seq, index) => {
+    composition.sequences?.forEach((seq: any, index: number) => {
       if (!seq.label) {
         errors.push(`Sequence ${index} missing label`);
       }

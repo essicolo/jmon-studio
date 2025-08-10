@@ -1,108 +1,46 @@
 # jmon-studio
 
-Complete JMON (JSON Music Object Notation) studio: format conversion, algorithmic composition, and music visualization.
+jmon-studio (jam on studio) is a JMON (JSON Music Object Notation) studio for algorithmic music composition (djalgojs), format conversion (jmon-format) and music visualization (viz).
 
-Combines the power of **jmon-format** and **djalgojs** into a single, comprehensive package for musical composition and algorithmic generation.
+## Getting started
+
+The recommanded way of starting jamming is heading to [Observable](https://observablehq.com/), a beautiful platform to interact with JavaScript code. Sign up, sign in, create a new notebook, add a JavaScript cell and paste `jm = require("jmon-studio@latest")`. The `jm` object will include everything you need to compose jmon files, play them, show the score and export them to midi files, abc scores, Tone.js generators, etc. Since you'll probably need some guidance, read the free online, interactive book at [observablehq.com/collection/@essi/jmon-studio](https://observablehq.com/collection/@essi/jmon-studio).
 
 ## Installation
+
+If you are used to coding with npm packages locally, you can install jmon-studio with 
 
 ```bash
 npm install jmon-studio
 ```
 
-## Quick Start
-
-```javascript
-const jmonStudio = require('jmon-studio');
-
-// Use JMON format conversion
-const composition = { /* your JMON composition */ };
-const validation = jmonStudio.JmonTone.validateComposition(composition);
-
-// Use algorithmic composition
-const scale = new jmonStudio.Scale('C', 'major');
-const polyloop = new jmonStudio.Polyloop(16, 4);
-
-// Convenience objects
-const { jmon, dj } = jmonStudio;
-```
-
 ## Features
 
-### 🎵 **JMON Format Conversion**
-- **JmonTone**: Core format validation and Tone.js integration
-- **ABC Notation**: Convert JMON to ABC notation (jmon-abc.js)
-- **MIDI**: MIDI file conversion utilities (jmon-midi.js)
-- **Display**: Visualization and playback functions (jmon-display.js)
-- **SuperCollider**: Integration with SuperCollider (jmon-supercollider.js)
-
-### 🤖 **Algorithmic Composition**
-- **Music Theory**: Scales, progressions, harmony, rhythm
-- **Generative Algorithms**: Fractals, cellular automata, genetic algorithms
-- **AI/ML**: Gaussian processes, random walks
+###  **Algorithmic Composition**
+- **Music theory**: Scales, progressions, harmony, rhythm
 - **Minimalism**: Process-based composition techniques
+- **Generative algorithms**: no deep learning, just you, your imagination and math: random walks, Fractals, cellular automata, genetic algorithms, Gaussian processes
 
-### 📊 **Analysis & Utilities**
-- Musical analysis tools
+### **JMON Format Conversion**
+- **Tone**: Core format validation and Tone.js integration
+- **ABC notation**: Convert JMON to ABC notation
+- **MIDI**: MIDI file conversion utilities
+- **Display**: Score visualization and playback functions
+- **SuperCollider**: JMON format to SuperCollider code
+
+### **Analysis & Utilities**
+- Musical analysis tools (usefull for genetic algorithms)
 - Format conversion utilities
 - Mathematical utilities for music
 
-## Usage Examples
 
-### Basic JMON Operations
-```javascript
-// Convert MIDI note to name
-const noteName = jmonStudio.JmonTone.midiNoteToNoteName(60); // "C4"
+## Examples
 
-// Validate composition
-const result = jmonStudio.JmonTone.validateComposition(myComposition);
-```
-
-### Algorithmic Composition
-```javascript
-// Create a scale
-const scale = new jmonStudio.Scale('D', 'dorian');
-const notes = scale.getNotes();
-
-// Generate with cellular automata
-const ca = new jmonStudio.CellularAutomata();
-const pattern = ca.generate();
-
-// Create polyrhythmic loops
-const polyloop = new jmonStudio.Polyloop(16, 3);
-const rhythm = polyloop.generate();
-```
-
-### Convenience Objects
-```javascript
-const { dj } = require('jmon-studio');
-
-// All algorithms available under dj.*
-const mandelbrot = new dj.Fractals.Mandelbrot();
-const genetic = new dj.GeneticAlgorithm();
-```
-
-## Observable Integration
-
-Perfect for use in Observable notebooks:
-
-```javascript
-jm = require("jmon-studio@latest")
-
-// Use immediately
-scale = new jm.Scale('C', 'major')
-composition = jm.JmonTone.validateComposition(data)
-```
-
-## Package Structure
-
-- **Format**: `jmon.*` - JMON format conversion and validation
-- **Algorithms**: `dj.*` - All algorithmic composition tools
-- **Direct exports**: All classes available at top level
+To be developped...
 
 ## License
 
-MIT
+GPL-3
 
 ## Links
 

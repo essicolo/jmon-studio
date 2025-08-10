@@ -1,4 +1,4 @@
-import { JMonNote } from '../../types/jmon';
+import { JMonNote } from '../../../types/jmon';
 import { MusicalAnalysis } from '../../analysis/MusicalAnalysis';
 
 export interface GeneticOptions {

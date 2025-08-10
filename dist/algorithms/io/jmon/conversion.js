@@ -208,13 +208,13 @@ class JMonConverter {
         if (composition.format !== 'jmonTone') {
             errors.push('Format must be "jmonTone"');
         }
-        if (composition.bpm < 20 || composition.bpm > 400) {
+        if (composition.bpm && (composition.bpm < 20 || composition.bpm > 400)) {
             errors.push('BPM must be between 20 and 400');
         }
         if (!composition.sequences || composition.sequences.length === 0) {
             errors.push('At least one sequence is required');
         }
-        composition.sequences.forEach((seq, index) => {
+        composition.sequences?.forEach((seq, index) => {
             if (!seq.label) {
                 errors.push(`Sequence ${index} missing label`);
             }

@@ -1,6 +1,6 @@
 import { Note, Sequence, Pitch, Duration } from '../../types/common';
 import { RhythmPattern } from '../../types/music';
-import { JMonNote, JMonSequence, JMonComposition, BasicJMonComposition, MusicalTime, NoteDuration } from '../../types/jmon';
+import { JMonNote, JMonSequence, JMonComposition, BasicJMonComposition, MusicalTime, NoteDuration } from '../../../types/jmon';
 export declare class JMonConverter {
     /**
      * Convert a numeric time (in beats) to JMON bars:beats:ticks format

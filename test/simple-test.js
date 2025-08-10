@@ -1,4 +1,4 @@
-const jmonStudio = require('../dist/index-simple.js');
+const jmonStudio = require('../dist/index.js');
 
 console.log('Testing JMON Studio package...');
 

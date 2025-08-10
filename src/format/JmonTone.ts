@@ -235,14 +235,15 @@ export class JmonTone {
             }
 
             // Simple playback implementation
-            composition.tracks.forEach((track, trackIndex) => {
+            if (composition.tracks && Array.isArray(composition.tracks)) {
+                composition.tracks.forEach((track: JmonTrack, trackIndex: number) => {
                 const synth = this.createSynth(track.instrument?.type || 'Synth', track.instrument);
                 if (!synth) return;
 
                 synth.toDestination();
 
-                track.sequence.forEach((note: JmonNote) => {
-                    const noteNames = this.processNoteInput(note.note);
+                track.sequence?.forEach((note: JmonNote) => {
+                    const noteNames = this.processNoteInput(note.note || 'C4');
                     const time = this.parseTimeString(note.time, composition.bpm || 120);
                     const duration = this.parseTimeString(note.duration, composition.bpm || 120);
 
@@ -256,7 +257,8 @@ export class JmonTone {
                         synth.triggerAttackRelease(noteNames, duration, `+${time}`);
                     }
                 });
-            });
+                });
+            }
         } else {
             console.warn('Tone.js not available. Cannot play composition.');
         }

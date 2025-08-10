@@ -1,5 +1,5 @@
 import { PolyloopPoint, PolyloopLayer, PolyloopConfig, PolyloopTrigger } from '../../types/polyloop';
-import { JMonSequence, JMonNote } from '../../types/jmon';
+import { JMonSequence, JMonNote } from '../../../types/jmon';
 import { JMonConverter } from '../../io/jmon/conversion';
 
 export class Polyloop {

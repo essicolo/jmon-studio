@@ -1,5 +1,5 @@
 import { PolyloopLayer, PolyloopConfig, PolyloopTrigger } from '../../types/polyloop';
-import { JMonSequence } from '../../types/jmon';
+import { JMonSequence } from '../../../types/jmon';
 export declare class Polyloop {
     private config;
     private currentTime;

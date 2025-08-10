@@ -1,6 +1,6 @@
 import { ChromaticNote, ScaleMode, ChordProgression } from '../../types/music';
 import { Pitch } from '../../types/common';
-import { JMonSequence } from '../../types/jmon';
+import { JMonSequence } from '../../../types/jmon';
 export interface ProgressionOptions {
     length?: number;
     octave?: number;

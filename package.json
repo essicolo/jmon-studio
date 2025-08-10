@@ -1,9 +1,9 @@
 {
   "name": "jmon-studio",
-  "version": "1.0.3",
+  "version": "1.4.22",
   "description": "Complete JMON (JSON Music Object Notation) studio: format conversion, algorithmic composition, and music visualization",
   "main": "index.js",
-  "types": "dist/index-simple.d.ts",
+  "types": "dist/index.d.ts",
   "files": [
     "dist/**/*",
     "src/**/*",
@@ -40,10 +40,10 @@
   "author": "jmonlabs",
   "license": "MIT",
   "peerDependencies": {
-    "tone": "^14.0.0 || ^15.0.0"
+    "tone": "^14.0.0 || ^15.0.0",
+    "abcjs": "^6.0.0"
   },
   "optionalDependencies": {
-    "abcjs": "^6.0.0",
     "plotly.js": "^2.0.0"
   },
   "devDependencies": {
