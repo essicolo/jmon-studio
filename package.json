@@ -1,6 +1,6 @@
 {
   "name": "jmon-studio",
-  "version": "1.4.22",
+  "version": "1.5.0",
   "description": "Complete JMON (JSON Music Object Notation) studio: format conversion, algorithmic composition, and music visualization",
   "main": "index.js",
   "types": "dist/index.d.ts",

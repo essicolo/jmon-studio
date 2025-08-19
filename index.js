@@ -1164,6 +1164,6 @@
             enhancedPlay: createEnhancedPlayer
         },
         
-        VERSION: '1.4.22'
+        VERSION: '1.5.0'
     };
 }));
