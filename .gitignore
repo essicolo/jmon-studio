@@ -140,3 +140,7 @@ vite.config.ts.timestamp-*
 
 
 .npmrc
+
+_djalgo/
+
+node_modules/

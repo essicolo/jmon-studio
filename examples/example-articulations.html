@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>JMON Articulations Example</title>
+  <script src="https://cdn.jsdelivr.net/npm/abcjs@6.5.1/dist/abcjs-basic.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/tone@15.1.22/build/Tone.js"></script>
+
+  <style>
+    body { font-family: sans-serif; margin: 2em; }
+    #abc { margin-bottom: 2em; }
+    #player { margin-top: 2em; }
+    .desc { margin-bottom: 1em; color: #444; }
+    h2 { margin-top: 2em; }
+  </style>
+</head>
+<body>
+  <h1>JMON Articulations Example</h1>
+  <div class="desc">
+    <b>Articulations</b> in JMON affect how a note is played, but do not add extra notes. They are encoded as the <code>articulation</code> property on a note.<br>
+    <ul>
+      <li><b>Staccato</b>: Shortens the note (50% duration). In MIDI and playback, the note is played shorter. In ABC, a dot and <code>!staccato!</code> are added.</li>
+      <li><b>Accent</b>: Increases the note's velocity (louder attack). In ABC, <code>!accent!</code> is added.</li>
+      <li><b>Tenuto</b>: Slightly lengthens the note and increases velocity. In ABC, <code>!tenuto!</code> is added.</li>
+      <li><b>Glissando</b>: Slides from the note to a target note (requires <code>glissTarget</code>). In ABC, a slide is shown; in playback, a pitch slide is performed.</li>
+    </ul>
+    These articulations are interpreted by all JMON converters and the player.
+  </div>
+  <div id="abc"></div>
+  <div id="player"></div>
+  <script type="module">
+  // Import from the ES module build
+  import { JmonTone, dj, createPlayer } from '../dist/jmon-studio.js';
+  console.log('JMON Studio loaded:', JmonTone);
+
+  const jmonComp = {
+    format: 'jmonTone',
+    version: '1.0',
+    bpm: 100,
+    keySignature: 'C',
+    tracks: [
+      {
+        label: 'Articulated Melody',
+        sequence: [
+          { pitch: 'C4', duration: 1, time: 0, articulation: 'staccato' },
+          { pitch: 'D4', duration: 1, time: 1, articulation: 'accent' },
+          { pitch: 'E4', duration: 1, time: 2, articulation: 'tenuto' },
+          { pitch: 'F4', duration: 1, time: 3, articulation: 'glissando', glissTarget: 'G4' },
+          { pitch: 'G4', duration: 1, time: 4 }
+        ]
+      }
+    ],
+    audioGraph: [],
+    connections: []
+  };
+  window.jmonComp = jmonComp;
+
+  // Create a simple scale to show algorithm functionality
+  const scale = new dj.Scale('C', 'major');
+  const scaleNotes = scale.getNoteNames();
+  
+  // Display the composition and algorithm demo
+  document.getElementById('abc').innerHTML = `
+    <h2>JMON Composition with Articulations</h2>
+    <div id="notation"></div>
+    <div id="audio"></div>
+    
+    <h3>Original JMON Data</h3>
+    <pre>${JSON.stringify(jmonComp, null, 2)}</pre>
+    
+    <h3>Scale Algorithm Demo</h3>
+    <p>Generated C major scale: <strong>${scaleNotes.join(', ')}</strong></p>
+  `;
+
+  // Convert JMON to ABC and render
+  try {
+    const abcNotation = await JmonTone.convertToAbc(jmonComp);
+    console.log('ABC Notation:', abcNotation);
+    
+    // Render the ABC notation as musical score
+    if (typeof ABCJS !== 'undefined') {
+      ABCJS.renderAbc("notation", abcNotation, {
+        add_classes: true,
+        responsive: "resize"
+      });
+    }
+    
+    // Basic validation and player setup
+    if (JmonTone && JmonTone.validateComposition) {
+      const validation = JmonTone.validateComposition(jmonComp);
+      
+      // Create the info display
+      const infoDiv = document.createElement('div');
+      infoDiv.innerHTML = `
+        <h2>Validation Result</h2>
+        <p>Valid: <strong>${validation.valid}</strong></p>
+        ${validation.errors.length > 0 ? `<p>Errors: ${validation.errors.map(e => e.message).join(', ')}</p>` : ''}
+        ${validation.warnings.length > 0 ? `<p>Warnings: ${validation.warnings.join(', ')}</p>` : ''}
+        
+        <h2>ABC Notation</h2>
+        <pre>${abcNotation}</pre>
+        
+        <h2>Music Player</h2>
+      `;
+      
+      // Debug composition structure
+      console.log('Composition for player:', JSON.stringify(jmonComp, null, 2));
+      console.log('Tone.js available:', typeof Tone, Tone?.version);
+      console.log('Tracks:', jmonComp.tracks);
+      console.log('First track sequence:', jmonComp.tracks?.[0]?.sequence);
+      
+      // Ensure Tone.js is available globally
+      if (typeof Tone !== 'undefined') {
+        window.Tone = Tone;
+        console.log('Tone.js set globally:', Tone.version);
+      }
+      
+      // Create the music player
+      const playerWidget = createPlayer(jmonComp, {
+        tempo: jmonComp.bpm || 120,
+        showDebug: true
+      });
+      
+      // Add debug info
+      const debugInfo = document.createElement('div');
+      debugInfo.innerHTML = `
+        <h4>Debug Info</h4>
+        <p>Tone.js version: ${Tone?.version || 'Not loaded'}</p>
+        <p>window.Tone available: ${typeof window.Tone}</p>
+        <p>Tracks count: ${jmonComp.tracks?.length || 0}</p>
+        <p>First track notes: ${jmonComp.tracks?.[0]?.sequence?.length || 0}</p>
+        <p><strong>Click the play button to start audio!</strong></p>
+      `;
+      playerWidget.appendChild(debugInfo);
+      
+      // Add instructions for user interaction
+      const instructions = document.createElement('div');
+      instructions.innerHTML = `
+        <p style="background: #f0f8ff; padding: 10px; border-radius: 4px; margin-top: 10px;">
+          <strong>📢 Audio Note:</strong> Due to browser autoplay policies, you need to click the play button to start audio playback.
+        </p>
+      `;
+      playerWidget.appendChild(instructions);
+      
+      // Add info section
+      const infoSection = document.createElement('div');
+      infoSection.innerHTML = `
+        <h3>Available Algorithm Classes</h3>
+        <p>Scale, Rhythm, CellularAutomata, Polyloop, GeneticAlgorithm, RandomWalk, and more!</p>
+      `;
+      
+      // Append everything to the player container
+      const playerContainer = document.getElementById('player');
+      playerContainer.appendChild(infoDiv);
+      playerContainer.appendChild(playerWidget);
+      playerContainer.appendChild(infoSection);
+    }
+    
+  } catch (error) {
+    console.error('Error converting to ABC:', error);
+    document.getElementById('player').innerHTML = `
+      <h2>Error</h2>
+      <p>Could not convert JMON to ABC: ${error.message}</p>
+    `;
+  }
+  </script>
+</body>
+</html>

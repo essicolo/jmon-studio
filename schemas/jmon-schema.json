@@ -703,19 +703,19 @@
             "description": "Array of note events.",
             "items": {
               "type": "object",
-              "required": ["note", "time", "duration"],
+              "required": ["pitch", "time", "duration"],
               "properties": {
-                "note": {
+                "pitch": {
                   "oneOf": [
+                    { "type": "number", "description": "MIDI note number (preferred)." },
                     { "type": "string", "description": "Note name (e.g., 'C4', 'G#3')." },
-                    { "type": "number", "description": "MIDI note number." },
                     {
                       "type": "array",
-                      "description": "Chord (array of note names or MIDI numbers).",
+                      "description": "Chord (array of MIDI numbers or note names).",
                       "items": {
                         "oneOf": [
-                          { "type": "string" },
-                          { "type": "number" }
+                          { "type": "number" },
+                          { "type": "string" }
                         ]
                       }
                     }
@@ -1207,138 +1207,138 @@
     }
   },
   "additionalProperties": false,
-  "examples": [
-    {
-      "description": "Basic modulation example with pitch bend and modulation wheel",
-      "composition": {
-        "format": "jmonTone",
-        "version": "1.0",
-        "bpm": 120,
-        "synthConfig": {
-          "type": "Synth",
-          "modulationTarget": "filter"
-        },
-        "audioGraph": [
-          { "id": "master", "type": "Destination", "options": {} }
-        ],
-        "connections": [],
-        "sequences": [{
-          "label": "Modulation Demo",
-          "notes": [
-            {
-              "note": "C4",
-              "time": "0:0:0",
-              "duration": "2n",
-              "velocity": 0.8,
-              "modulations": [
-                { "type": "pitchBend", "value": -4096, "time": "0:0:0" },
-                { "type": "pitchBend", "value": 4096, "time": "0:1.5:0" }
-              ]
+      "examples": [
+        {
+          "description": "Basic modulation example with pitch bend and modulation wheel",
+          "composition": {
+            "format": "jmonTone",
+            "version": "1.0",
+            "bpm": 120,
+            "synthConfig": {
+              "type": "Synth",
+              "modulationTarget": "filter"
             },
-            {
-              "note": "G4",
-              "time": "0:2:0",
-              "duration": "2n",
-              "velocity": 0.8,
-              "modulations": [
-                { "type": "cc", "controller": 1, "value": 0, "time": "0:0:0" },
-                { "type": "cc", "controller": 1, "value": 127, "time": "0:1.5:0" }
+            "audioGraph": [
+              { "id": "master", "type": "Destination", "options": {} }
+            ],
+            "connections": [],
+            "sequences": [{
+              "label": "Modulation Demo",
+              "notes": [
+                {
+                  "pitch": "C4",
+                  "time": "0:0:0",
+                  "duration": "2n",
+                  "velocity": 0.8,
+                  "modulations": [
+                    { "type": "pitchBend", "value": -4096, "time": "0:0:0" },
+                    { "type": "pitchBend", "value": 4096, "time": "0:1.5:0" }
+                  ]
+                },
+                {
+                  "pitch": "G4",
+                  "time": "0:2:0",
+                  "duration": "2n",
+                  "velocity": 0.8,
+                  "modulations": [
+                    { "type": "cc", "controller": 1, "value": 0, "time": "0:0:0" },
+                    { "type": "cc", "controller": 1, "value": 127, "time": "0:1.5:0" }
+                  ]
+                }
               ]
-            }
-          ]
-        }]
-      }
-    },
-    {
-      "description": "Multi-level automation example with interpolation",
-      "composition": {
-        "format": "jmonTone",
-        "version": "1.0",
-        "bpm": 120,
-        "audioGraph": [
-          { "id": "master", "type": "Destination", "options": {} },
-          { "id": "reverb", "type": "Reverb", "options": { "wet": 0.3 } }
-        ],
-        "connections": [
-          ["reverb", "master"]
-        ],
-        "automation": {
-          "enabled": true,
-          "global": [
-            {
-              "id": "master-volume",
-              "name": "Master Volume",
-              "target": "synth.volume",
-              "level": "global",
-              "range": [0, 1],
-              "interpolation": "cubic",
-              "anchorPoints": [
-                { "time": "0:0:0", "value": 0 },
-                { "time": "2:0:0", "value": 0.8 },
-                { "time": "6:0:0", "value": 0.6 },
-                { "time": "8:0:0", "value": 0 }
-              ]
-            }
-          ],
-          "sequences": {
-            "lead": [
+            }]
+          }
+        },
+        {
+          "description": "Multi-level automation example with interpolation",
+          "composition": {
+            "format": "jmonTone",
+            "version": "1.0",
+            "bpm": 120,
+            "audioGraph": [
+              { "id": "master", "type": "Destination", "options": {} },
+              { "id": "reverb", "type": "Reverb", "options": { "wet": 0.3 } }
+            ],
+            "connections": [
+              ["reverb", "master"]
+            ],
+            "automation": {
+              "enabled": true,
+              "global": [
+                {
+                  "id": "master-volume",
+                  "name": "Master Volume",
+                  "target": "synth.volume",
+                  "level": "global",
+                  "range": [0, 1],
+                  "interpolation": "cubic",
+                  "anchorPoints": [
+                    { "time": "0:0:0", "value": 0 },
+                    { "time": "2:0:0", "value": 0.8 },
+                    { "time": "6:0:0", "value": 0.6 },
+                    { "time": "8:0:0", "value": 0 }
+                  ]
+                }
+              ],
+              "sequences": {
+                "lead": [
+                  {
+                    "id": "lead-filter",
+                    "name": "Lead Filter Sweep",
+                    "target": "synth.filter.frequency",
+                    "level": "sequence",
+                    "sequenceId": "lead",
+                    "range": [200, 8000],
+                    "interpolation": "daw",
+                    "anchorPoints": [
+                      { "time": "0:0:0", "value": 200, "tangent": 0 },
+                      { "time": "1:0:0", "value": 2000, "tangent": 1.5 },
+                      { "time": "3:0:0", "value": 8000, "tangent": 0 }
+                    ]
+                  }
+                ]
+              }
+            },
+            "sequences": [
               {
-                "id": "lead-filter",
-                "name": "Lead Filter Sweep",
-                "target": "synth.filter.frequency",
-                "level": "sequence",
-                "sequenceId": "lead",
-                "range": [200, 8000],
-                "interpolation": "daw",
-                "anchorPoints": [
-                  { "time": "0:0:0", "value": 200, "tangent": 0 },
-                  { "time": "1:0:0", "value": 2000, "tangent": 1.5 },
-                  { "time": "3:0:0", "value": 8000, "tangent": 0 }
+                "label": "lead",
+                "notes": [
+                  { "pitch": "C4", "time": "0:0:0", "duration": "1n", "velocity": 0.8 },
+                  { "pitch": "E4", "time": "1:0:0", "duration": "1n", "velocity": 0.7 },
+                  { "pitch": "G4", "time": "2:0:0", "duration": "1n", "velocity": 0.9 }
                 ]
               }
             ]
           }
         },
-        "sequences": [
-          {
-            "label": "lead",
-            "notes": [
-              { "note": "C4", "time": "0:0:0", "duration": "1n", "velocity": 0.8 },
-              { "note": "E4", "time": "1:0:0", "duration": "1n", "velocity": 0.7 },
-              { "note": "G4", "time": "2:0:0", "duration": "1n", "velocity": 0.9 }
-            ]
+        {
+          "description": "Vibrato modulation example",
+          "composition": {
+            "format": "jmonTone",
+            "version": "1.0", 
+            "bpm": 120,
+            "audioGraph": [
+              { "id": "master", "type": "Destination", "options": {} }
+            ],
+            "connections": [],
+            "sequences": [{
+              "label": "Vibrato Demo",
+              "synth": {
+                "type": "Synth",
+                "modulationTarget": "vibrato"
+              },
+              "notes": [{
+                "pitch": "A4",
+                "time": "0:0:0",
+                "duration": "1n",
+                "velocity": 0.8,
+                "modulations": [
+                  { "type": "cc", "controller": 1, "value": 0, "time": "0:0:0" },
+                  { "type": "cc", "controller": 1, "value": 127, "time": "0:3:0" }
+                ]
+              }]
+            }]
           }
-        ]
-      }
-    },
-    {
-      "description": "Vibrato modulation example",
-      "composition": {
-        "format": "jmonTone",
-        "version": "1.0", 
-        "bpm": 120,
-        "audioGraph": [
-          { "id": "master", "type": "Destination", "options": {} }
-        ],
-        "connections": [],
-        "sequences": [{
-          "label": "Vibrato Demo",
-          "synth": {
-            "type": "Synth",
-            "modulationTarget": "vibrato"
-          },
-          "notes": [{
-            "note": "A4",
-            "time": "0:0:0",
-            "duration": "1n",
-            "velocity": 0.8,
-            "modulations": [
-              { "type": "cc", "controller": 1, "value": 0, "time": "0:0:0" },
-              { "type": "cc", "controller": 1, "value": 127, "time": "0:3:0" }
-            ]
-          }]
-        }]
-      }
-    }
-  ]
+        }
+      ]
 }

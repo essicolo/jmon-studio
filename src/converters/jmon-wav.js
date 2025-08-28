@@ -45,38 +45,56 @@ function JmonWav() {
         // Synthesize each note
         for (const note of allNotes) {
             if (note.pitch && note.time !== undefined && note.duration) {
-                const frequency = midiToFrequency(note.pitch);
+                let startFreq = midiToFrequency(note.pitch);
+                let endFreq = startFreq;
+                let isGliss = note.articulation === 'glissando' && note.glissTarget !== undefined;
+                if (isGliss) {
+                    endFreq = midiToFrequency(note.glissTarget);
+                }
+                // Articulation logic
+                let noteDuration = note.duration;
+                let noteVelocity = note.velocity || 0.8;
+                if (note.articulation === 'staccato') {
+                    noteDuration = note.duration * 0.5;
+                }
+                if (note.articulation === 'accent') {
+                    noteVelocity = Math.min(noteVelocity * 1.2, 1.0);
+                }
+                if (note.articulation === 'tenuto') {
+                    noteDuration = note.duration * 1.1;
+                    noteVelocity = Math.min(noteVelocity * 1.05, 1.0);
+                }
                 const startSample = Math.floor(note.time * beatDuration * sampleRate);
-                const endSample = Math.floor((note.time + note.duration) * beatDuration * sampleRate);
-                
+                const endSample = Math.floor((note.time + noteDuration) * beatDuration * sampleRate);
                 for (let i = startSample; i < Math.min(endSample, length); i++) {
                     if (i >= 0) {
                         const t = (i - startSample) / sampleRate;
-                        const noteDuration = (endSample - startSample) / sampleRate;
-                        
+                        const totalNoteDuration = (endSample - startSample) / sampleRate;
+                        // Linear frequency sweep for glissando
+                        let freq = startFreq;
+                        if (isGliss) {
+                            freq = startFreq + (endFreq - startFreq) * (t / totalNoteDuration);
+                        }
                         // ADSR envelope
                         let envelope = 1.0;
                         const attack = 0.01;
                         const decay = 0.1;
                         const sustain = 0.7;
                         const release = 0.2;
-                        
                         if (t < attack) {
                             envelope = t / attack;
                         } else if (t < attack + decay) {
                             envelope = 1.0 - (1.0 - sustain) * (t - attack) / decay;
-                        } else if (t < noteDuration - release) {
+                        } else if (t < totalNoteDuration - release) {
                             envelope = sustain;
                         } else {
-                            envelope = sustain * (noteDuration - t) / release;
+                            envelope = sustain * (totalNoteDuration - t) / release;
                         }
-                        
                         // Simple sine wave synthesis with harmonics
-                        const fundamental = Math.sin(2 * Math.PI * frequency * t);
-                        const harmonic2 = 0.3 * Math.sin(2 * Math.PI * frequency * 2 * t);
-                        const harmonic3 = 0.1 * Math.sin(2 * Math.PI * frequency * 3 * t);
-                        
-                        const sample = (fundamental + harmonic2 + harmonic3) * envelope * (note.velocity || 0.8) * 0.3;
+                        const fundamental = Math.sin(2 * Math.PI * freq * t);
+                        const harmonic2 = 0.3 * Math.sin(2 * Math.PI * freq * 2 * t);
+                        const harmonic3 = 0.1 * Math.sin(2 * Math.PI * freq * 3 * t);
+                        const sample = (fundamental + harmonic2 + harmonic3) * envelope * noteVelocity * 0.3;
                         buffer[i] += sample;
                     }
                 }

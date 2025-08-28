@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JMON Articulation API Example</title>
+  <style>
+    body { font-family: sans-serif; margin: 2em; }
+    .code { background: #f5f5f5; padding: 1em; border-radius: 4px; margin: 1em 0; }
+    .result { background: #e8f5e8; padding: 1em; border-radius: 4px; margin: 1em 0; }
+    .error { background: #f5e8e8; padding: 1em; border-radius: 4px; margin: 1em 0; }
+  </style>
+</head>
+<body>
+  <h1>JMON Articulation API Example</h1>
+  
+  <p>This example demonstrates the hybrid articulation approach:</p>
+  <ul>
+    <li><strong>Simple articulations:</strong> Direct property assignment</li>
+    <li><strong>Complex articulations:</strong> API with validation and modulation sync</li>
+  </ul>
+
+  <div id="results"></div>
+
+  <script type="module">
+    import { dj } from '../dist/jmon-studio.js';
+
+    const resultsDiv = document.getElementById('results');
+
+    function addSection(title, content) {
+      const section = document.createElement('div');
+      section.innerHTML = `
+        <h2>${title}</h2>
+        <div class="code">${content}</div>
+      `;
+      resultsDiv.appendChild(section);
+    }
+
+    function addResult(content, isError = false) {
+      const div = document.createElement('div');
+      div.className = isError ? 'error' : 'result';
+      div.innerHTML = content;
+      resultsDiv.appendChild(div);
+    }
+
+    // Create a test sequence
+    let sequence = [
+      { pitch: 'C4', duration: 1, time: 0 },
+      { pitch: 'D4', duration: 1, time: 1 },
+      { pitch: 'E4', duration: 1, time: 2 },
+      { pitch: 'F4', duration: 1, time: 3 },
+      { pitch: 'G4', duration: 1, time: 4 }
+    ];
+
+    addSection('Original Sequence', 
+      `<pre>${JSON.stringify(sequence, null, 2)}</pre>`
+    );
+
+    // Example 1: Simple articulations (direct assignment)
+    addSection('Simple Articulations (Direct Assignment)', `
+      <pre>
+sequence[0].articulation = "staccato";
+sequence[1].articulation = "accent";
+sequence[2].articulation = "tenuto";
+      </pre>
+    `);
+
+    sequence[0].articulation = "staccato";
+    sequence[1].articulation = "accent";
+    sequence[2].articulation = "tenuto";
+
+    addResult(`✅ Simple articulations applied directly`);
+
+    // Example 2: Complex articulations (API)
+    addSection('Complex Articulations (API)', `
+      <pre>
+// Glissando with automatic modulation sync
+dj.addArticulation(sequence, 'glissando', 3, { target: 'G4' });
+
+// Vibrato with custom parameters
+dj.addArticulation(sequence, 'vibrato', 4, { rate: 6, depth: 30, delay: 0.1 });
+      </pre>
+    `);
+
+    try {
+      // Add glissando
+      let result1 = dj.addArticulation(sequence, 'glissando', 3, { target: 'G4' });
+      if (result1.success) {
+        addResult(`✅ Glissando: ${result1.warnings.join(', ')}`);
+      } else {
+        addResult(`❌ Glissando failed: ${result1.errors.join(', ')}`, true);
+      }
+
+      // Add vibrato
+      let result2 = dj.addArticulation(sequence, 'vibrato', 4, { rate: 6, depth: 30, delay: 0.1 });
+      if (result2.success) {
+        addResult(`✅ Vibrato: ${result2.warnings.join(', ')}`);
+      } else {
+        addResult(`❌ Vibrato failed: ${result2.errors.join(', ')}`, true);
+      }
+    } catch (error) {
+      addResult(`❌ API Error: ${error.message}`, true);
+    }
+
+    // Show final sequence
+    addSection('Final Sequence with Articulations', 
+      `<pre>${JSON.stringify(sequence, null, 2)}</pre>`
+    );
+
+    // Example 3: Validation
+    addSection('Validation', `
+      <pre>
+const validation = dj.validateArticulations(sequence);
+console.log(validation);
+      </pre>
+    `);
+
+    try {
+      const validation = dj.validateArticulations(sequence);
+      if (validation.valid) {
+        addResult(`✅ All articulations valid`);
+      } else {
+        addResult(`⚠️ Validation issues: ${JSON.stringify(validation.issues, null, 2)}`);
+      }
+    } catch (error) {
+      addResult(`❌ Validation Error: ${error.message}`, true);
+    }
+
+    // Example 4: Available types
+    addSection('Available Articulation Types', `
+      <pre>
+const types = dj.Articulation.getAvailableTypes();
+console.log(types);
+      </pre>
+    `);
+
+    try {
+      const types = dj.Articulation.getAvailableTypes();
+      const typesList = types.map(t => 
+        `<li><strong>${t.type}</strong> ${t.complex ? '(complex)' : '(simple)'}: ${t.description}</li>`
+      ).join('');
+      addResult(`
+        <h3>Available Types:</h3>
+        <ul>${typesList}</ul>
+      `);
+    } catch (error) {
+      addResult(`❌ Types Error: ${error.message}`, true);
+    }
+
+    // Example 5: Error handling
+    addSection('Error Handling', `
+      <pre>
+// This should fail - missing required parameter
+const badResult = dj.addArticulation(sequence, 'glissando', 0, {});
+console.log(badResult);
+      </pre>
+    `);
+
+    try {
+      const badResult = dj.addArticulation(sequence, 'glissando', 0, {});
+      if (!badResult.success) {
+        addResult(`✅ Validation caught error: ${badResult.errors.join(', ')}`);
+      }
+    } catch (error) {
+      addResult(`❌ Unexpected Error: ${error.message}`, true);
+    }
+
+  </script>
+</body>
+</html>

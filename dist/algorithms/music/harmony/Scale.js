@@ -1,56 +1,13 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.Scale = void 0;
-class Scale {
-    constructor(tonic, mode = 'major') {
-        if (!Scale.chromaticScale.includes(tonic)) {
-            tonic = Scale.convertFlatToSharp(tonic);
-            if (!Scale.chromaticScale.includes(tonic)) {
-                throw new Error(`'${tonic}' is not a valid tonic note. Select one among '${Scale.chromaticScale.join(', ')}'.`);
-            }
-        }
-        this.tonic = tonic;
-        if (Array.isArray(mode)) {
-            Scale.scaleIntervals['custom'] = mode;
-            this.mode = 'custom';
-        }
-        else if (!(mode in Scale.scaleIntervals)) {
-            throw new Error(`'${mode}' is not a valid scale. Select one among '${Object.keys(Scale.scaleIntervals).join(', ')}' or a list of half steps such as [0, 2, 4, 5, 7, 9, 11] for a major scale.`);
-        }
-        else {
-            this.mode = mode;
-        }
-    }
-    static convertFlatToSharp(note) {
-        const flatToSharp = {
-            Bb: 'A#', Db: 'C#', Eb: 'D#', Gb: 'F#', Ab: 'G#',
-            'B-': 'A#', 'D-': 'C#', 'E-': 'D#', 'G-': 'F#', 'A-': 'G#'
-        };
-        return flatToSharp[note] || note;
-    }
-    generate() {
-        const tonicNote = Scale.chromaticScale.indexOf(this.tonic);
-        const scale = Scale.scaleIntervals[this.mode] || Scale.scaleIntervals['major'];
-        const fullRangeScale = [];
-        const addedNotes = new Set();
-        for (let octave = 0; octave < 11; octave++) {
-            for (const interval of scale) {
-                const note = (tonicNote + interval) % 12 + octave * 12;
-                if (note <= 127 && !addedNotes.has(note)) {
-                    fullRangeScale.push(note);
-                    addedNotes.add(note);
-                }
-            }
-        }
-        fullRangeScale.sort((a, b) => a - b);
-        return fullRangeScale;
-    }
-}
-exports.Scale = Scale;
-Scale.chromaticScale = [
+/**
+ * @typedef {'major'|'minor'|'diminished'|'major pentatonic'|'minor pentatonic'|'chromatic'|'lydian'|'mixolydian'|'dorian'|'phrygian'|'locrian'|'harmonic minor'|'melodic minor ascending'|'melodic minor descending'|'custom'} ScaleMode
+ */
+
+export class Scale {
+  static chromaticScale = [
     'C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B'
-];
-Scale.scaleIntervals = {
+  ];
+
+  static scaleIntervals = {
     major: [0, 2, 4, 5, 7, 9, 11],
     minor: [0, 2, 3, 5, 7, 8, 10],
     diminished: [0, 2, 3, 5, 6, 8, 9, 11],
@@ -66,5 +23,55 @@ Scale.scaleIntervals = {
     'melodic minor ascending': [0, 2, 3, 5, 7, 9, 11],
     'melodic minor descending': [0, 2, 3, 5, 7, 8, 10],
     custom: []
-};
-//# sourceMappingURL=Scale.js.map
+  };
+
+  constructor(tonic, mode = 'major') {
+    if (!Scale.chromaticScale.includes(tonic)) {
+      tonic = Scale.convertFlatToSharp(tonic);
+      if (!Scale.chromaticScale.includes(tonic)) {
+        throw new Error(
+          `'${tonic}' is not a valid tonic note. Select one among '${Scale.chromaticScale.join(', ')}'.`
+        );
+      }
+    }
+    this.tonic = tonic;
+
+    if (Array.isArray(mode)) {
+      Scale.scaleIntervals['custom'] = mode;
+      this.mode = 'custom';
+    } else if (!(mode in Scale.scaleIntervals)) {
+      throw new Error(
+        `'${mode}' is not a valid scale. Select one among '${Object.keys(Scale.scaleIntervals).join(', ')}' or a list of half steps such as [0, 2, 4, 5, 7, 9, 11] for a major scale.`
+      );
+    } else {
+      this.mode = mode;
+    }
+  }
+
+  static convertFlatToSharp(note) {
+    const flatToSharp: Record<string, string> = {
+      Bb: 'A#', Db: 'C#', Eb: 'D#', Gb: 'F#', Ab: 'G#',
+      'B-': 'A#', 'D-': 'C#', 'E-': 'D#', 'G-': 'F#', 'A-': 'G#'
+    };
+    return flatToSharp[note] || note;
+  }
+
+  generate() {
+    const tonicNote = Scale.chromaticScale.indexOf(this.tonic);
+    const scale = Scale.scaleIntervals[this.mode] || Scale.scaleIntervals['major'];
+    const fullRangeScale = [];
+    const addedNotes = new Set<number>();
+
+    for (let octave = 0; octave < 11; octave++) {
+      for (const interval of scale) {
+        const note = (tonicNote + interval) % 12 + octave * 12;
+        if (note <= 127 && !addedNotes.has(note)) {
+          fullRangeScale.push(note);
+          addedNotes.add(note);
+        }
+      }
+    }
+    fullRangeScale.sort((a, b) => a - b);
+    return fullRangeScale;
+  }
+}
