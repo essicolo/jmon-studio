@@ -81,12 +81,12 @@ class JmonToMidi {
             return midi.header || midi._jmonHeader;
         };
         
-        // Helper function to parse time strings (replaces private _parseTimeString)
+        // Helper function to parse time strings (replaces _parseTimeString)
         const parseTime = (timeStr, bpm) => {
             if (typeof timeStr === 'number') return timeStr;
             if (typeof timeStr !== 'string') return 0;
             
-            // Try to use jmonTone's public method if available
+            // Try to use jmonTone's method if available
             if (jmonTone.parseTimeString) {
                 return jmonTone.parseTimeString(timeStr, bpm);
             }
@@ -274,17 +274,31 @@ class JmonToMidi {
                 const channel = note.channel !== undefined ? note.channel : defaultChannel;
 
                 // Handle single notes, chords, and MIDI note numbers
-                const notes = Array.isArray(note.note) ? note.note : [note.note];
-                
-                notes.forEach(n => {
+                const pitches = Array.isArray(note.pitch) ? note.pitch : [note.pitch];
+
+                pitches.forEach(n => {
                     let midiNote;
                     if (typeof n === 'number') {
                         midiNote = n;
                     } else if (typeof n === 'string') {
                         midiNote = noteNameToMidi(n);
                     } else {
-                        console.warn('Invalid note type:', n);
+                        console.warn('Invalid pitch type:', n);
                         return;
+                    }
+
+                    // Articulation logic
+                    let noteDuration = duration;
+                    let noteVelocity = velocity;
+                    if (note.articulation === 'staccato') {
+                        noteDuration = duration * 0.5;
+                    }
+                    if (note.articulation === 'accent') {
+                        noteVelocity = Math.min(Math.round(velocity * 1.2), 127);
+                    }
+                    if (note.articulation === 'tenuto') {
+                        noteDuration = duration * 1.1;
+                        noteVelocity = Math.min(Math.round(velocity * 1.05), 127);
                     }
 
                     // Apply microtuning if present
@@ -302,20 +316,47 @@ class JmonToMidi {
                     track.notes.push({
                         midi: midiNote,
                         time: startTime,
-                        duration: duration,
-                        velocity: velocity,
+                        duration: noteDuration,
+                        velocity: noteVelocity,
                         channel: channel
                     });
 
                     // Reset pitch bend after note if microtuning was applied
                     if (note.microtuning) {
                         track.pitchBends.push({
-                            time: startTime + duration,
+                            time: startTime + noteDuration,
                             value: 0,
                             channel: channel
                         });
                     }
                 });
+
+                // Glissando: if articulation is glissando and glissTarget is present, generate pitchbend ramp
+                if (note.articulation === 'glissando' && note.glissTarget !== undefined) {
+                    // Only add if no pitchBend modulations are present
+                    const hasPitchBend = Array.isArray(note.modulations) && note.modulations.some(m => m.type === 'pitchBend');
+                    if (!hasPitchBend) {
+                        // Compute pitch bend values for start and end
+                        let fromMidi = Array.isArray(note.note) ? noteNameToMidi(note.note[0]) : (typeof note.note === 'number' ? note.note : noteNameToMidi(note.note));
+                        let toMidi = typeof note.glissTarget === 'number' ? note.glissTarget : noteNameToMidi(note.glissTarget);
+                        // MIDI pitch bend range is ±8192 for ±2 semitones by default
+                        // We'll assume ±2 semitones, so for a larger interval, scale accordingly
+                        // For a true glissando, we want a ramp from fromMidi to toMidi
+                        const semitoneRange = 2; // default pitch bend range in semitones
+                        const bendStart = 0; // start at center
+                        const bendEnd = Math.round(((toMidi - fromMidi) / semitoneRange) * 8192);
+                        track.pitchBends.push({
+                            time: startTime,
+                            value: bendStart,
+                            channel: channel
+                        });
+                        track.pitchBends.push({
+                            time: startTime + duration,
+                            value: bendEnd,
+                            channel: channel
+                        });
+                    }
+                }
 
                 // Add modulation events
                 if (note.modulations && Array.isArray(note.modulations)) {
@@ -333,7 +374,6 @@ class JmonToMidi {
                                     channel: channel
                                 });
                                 break;
-                            
                             case 'pitchBend':
                                 track.pitchBends.push({
                                     time: modTime,
@@ -341,7 +381,6 @@ class JmonToMidi {
                                     channel: channel
                                 });
                                 break;
-                            
                             case 'aftertouch':
                                 // Store aftertouch events (MIDI doesn't have a standard way in Tone.js)
                                 if (!track.aftertouch) {

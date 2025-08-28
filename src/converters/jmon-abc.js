@@ -1,3 +1,4 @@
+import { JmonValidator } from '../utils/jmon-validator.js';
 /**
  * jmon-to-abc.js - Convert jmon format to ABC notation
  * 
@@ -5,15 +6,21 @@
  * Supports multi-voice scores, ornamentations, and dynamic markings.
  */
 
-(function(global) {
-    'use strict';
-    
-    // Check if already loaded
-    if (global.JmonToAbc) {
-        return;
+export class JmonToAbc {
+    /**
+     * Convertit un objet JMON en ABC après validation/normalisation
+     * @param {Object} composition - objet JMON
+     * @returns {string} ABC notation string
+     */
+    static fromValidatedJmon(composition) {
+        const validator = new JmonValidator();
+        const { valid, normalized, errors } = validator.validateAndNormalize(composition);
+        if (!valid) {
+            console.warn('JMON non valide pour conversion ABC:', errors);
+            throw new Error('JMON non valide');
+        }
+        return this.convertToAbc(normalized);
     }
-
-class JmonToAbc {
     /**
      * Helper function to parse time strings with fallback
      * @param {string|number} timeString - time value
@@ -71,12 +78,15 @@ class JmonToAbc {
      * @returns {string} ABC notation string
      */
     static convertToAbc(composition) {
-        // Smart normalize: convert various formats to jmon
-        const normalizedComposition = jmonTone ? jmonTone.normalize(composition) : composition;
+        // Normalize composition structure
+        const normalizedComposition = { ...composition };
         
-        // Validate normalized jmon composition
-        if (jmonTone && !jmonTone.validate(normalizedComposition).success) {
-            throw new Error('Invalid jmon composition');
+        // Handle both tracks and sequences formats
+        if (composition.tracks && !composition.sequences) {
+            normalizedComposition.sequences = composition.tracks.map(track => ({
+                ...track,
+                notes: track.sequence || track.notes || []
+            }));
         }
 
         let abc = '';
@@ -245,21 +255,75 @@ class JmonToAbc {
     }
     
     /**
+     * Convert a single note pitch to ABC notation
+     * @param {string} pitch - note pitch (e.g., "C4", "D#5")
+     * @returns {string} ABC note
+     */
+    static convertSingleNoteToAbc(pitch) {
+        if (!pitch || typeof pitch !== 'string') return 'C';
+        
+        // Parse note name and octave
+        const match = pitch.match(/^([A-Ga-g])([#b]?)(\d+)$/);
+        if (!match) return 'C';
+        
+        const [, noteName, accidental, octaveStr] = match;
+        const octave = parseInt(octaveStr);
+        
+        let abcNote = noteName.toUpperCase();
+        
+        // Add accidental
+        if (accidental === '#') abcNote = '^' + abcNote;
+        if (accidental === 'b') abcNote = '_' + abcNote;
+        
+        // Handle octave
+        if (octave <= 3) {
+            // Lower octaves use uppercase and commas
+            abcNote = abcNote.toUpperCase();
+            for (let i = 3; i > octave; i--) {
+                abcNote += ',';
+            }
+        } else if (octave >= 5) {
+            // Higher octaves use lowercase and apostrophes
+            abcNote = abcNote.toLowerCase();
+            for (let i = 5; i <= octave; i++) {
+                abcNote += "'";
+            }
+        } else if (octave === 4) {
+            // Octave 4 uses uppercase
+            abcNote = abcNote.toUpperCase();
+        }
+        
+        return abcNote;
+    }
+
+    /**
      * Simple note conversion without complex formatting
      */
     static convertNoteToAbcSimple(note, composition) {
-        let abcNote = '';
+    let abcNote = '';
+
+        // Glissando: if articulation is glissando and glissTarget is present
+        if (note.articulation === 'glissando' && note.glissTarget !== undefined) {
+            // Use !slide! after the note, no target note, to visually indicate a slide
+            const from = this.convertSingleNoteToAbc(note.pitch);
+            let duration = note.duration;
+            if (typeof note.duration === 'string') {
+                duration = this.parseTimeString(note.duration, composition.bpm || 120);
+            }
+            abcNote = `${from}!slide!${this.durationToAbcNotation(duration, composition.bpm || 120)}`;
+            return abcNote;
+        }
 
         // Handle chords
-        if (Array.isArray(note.note)) {
+        if (Array.isArray(note.pitch)) {
             abcNote += '[';
-            note.note.forEach((n, index) => {
+            note.pitch.forEach((n, index) => {
                 if (index > 0) abcNote += '';
                 abcNote += this.convertSingleNoteToAbc(n);
             });
             abcNote += ']';
         } else {
-            abcNote += this.convertSingleNoteToAbc(note.note);
+            abcNote += this.convertSingleNoteToAbc(note.pitch);
         }
 
         // Add duration
@@ -268,6 +332,24 @@ class JmonToAbc {
             duration = this.parseTimeString(note.duration, composition.bpm || 120);
         }
         abcNote += this.durationToAbcNotation(duration, composition.bpm || 120);
+
+        // Add articulation markings (except glissando, which is handled above)
+        // Only add articulation if not glissando
+        if (note.articulation && note.articulation !== 'glissando') {
+            switch (note.articulation) {
+                case 'staccato':
+                    abcNote = `${abcNote}!staccato!`;
+                    break;
+                case 'accent':
+                    abcNote = `${abcNote}!accent!`;
+                    break;
+                case 'tenuto':
+                    abcNote = `${abcNote}!tenuto!`;
+                    break;
+                default:
+                    break;
+            }
+        }
 
         return abcNote;
     }
@@ -293,165 +375,14 @@ class JmonToAbc {
     }
 
     /**
-     * Convert a single note to ABC notation
-     * @param {Object} note - jmon note object
-     * @param {Object} composition - composition context
-     * @returns {string} ABC note notation
-     */
-    static convertNoteToAbc(note, composition) {
-        let abcNote = '';
-
-        // Handle chords
-        if (Array.isArray(note.note)) {
-            abcNote += '[';
-            note.note.forEach((n, index) => {
-                if (index > 0) abcNote += '';
-                abcNote += this.convertSingleNoteToAbc(n);
-            });
-            abcNote += ']';
-        } else {
-            abcNote += this.convertSingleNoteToAbc(note.note);
-        }
-
-        // Add duration
-        let duration = note.duration;
-        if (typeof note.duration === 'string') {
-            // Use the class parseTimeString helper
-            duration = this.parseTimeString(note.duration, composition.bpm || 120);
-        }
-        abcNote += this.durationToAbcNotation(duration, composition.bpm || 120);
-
-        // Add dynamics based on velocity (using standard ABC dynamics)
-        if (note.velocity !== undefined) {
-            if (note.velocity < 0.4) {
-                abcNote += '!p!';
-            } else if (note.velocity < 0.7) {
-                abcNote += '!mp!';
-            } else if (note.velocity < 0.85) {
-                abcNote += '!mf!';
-            } else {
-                abcNote += '!f!';
-            }
-        }
-
-        // Add articulations (place before note)
-        if (note.articulation) {
-            switch (note.articulation) {
-                case 'staccato':
-                    abcNote = '.' + abcNote;
-                    break;
-                case 'accent':
-                    abcNote += '!accent!';
-                    break;
-                case 'tenuto':
-                    abcNote += '!tenuto!';
-                    break;
-            }
-        }
-
-        // Add ornaments based on modulations (place after note)
-        if (note.modulations && Array.isArray(note.modulations)) {
-            note.modulations.forEach(mod => {
-                if (mod.type === 'cc' && mod.controller === 1) {
-                    // Modulation wheel - interpret as vibrato/trill
-                    if (mod.value > 64) {
-                        abcNote += '!trill!';
-                    }
-                } else if (mod.type === 'pitchBend') {
-                    // Pitch bend - add slide notation
-                    if (Math.abs(mod.value) > 1000) { // Significant pitch bend
-                        abcNote += mod.value > 0 ? '!slide!' : '!bend!';
-                    }
-                } else if (mod.type === 'aftertouch') {
-                    // Aftertouch - interpret as accent or emphasis
-                    if (mod.value > 64) {
-                        abcNote += '!emphasis!';
-                    }
-                }
-            });
-        }
-
-        // Add microtuning as quarter-tone accidentals if present
-        if (note.microtuning) {
-            const semitones = Math.abs(note.microtuning);
-            if (semitones >= 0.25 && semitones < 0.75) {
-                // Quarter tone - use ABC extension
-                abcNote = (note.microtuning > 0 ? '^/' : '_/') + abcNote;
-            }
-        }
-
-        return abcNote;
-    }
-
-    /**
-     * Convert a single note name or MIDI number to ABC notation
-     * @param {string|number} note - note name or MIDI number
-     * @returns {string} ABC note
-     */
-    static convertSingleNoteToAbc(note) {
-        let noteName;
-        
-        if (typeof note === 'number') {
-            // Convert MIDI number to note name
-            const noteNames = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B'];
-            const octave = Math.floor(note / 12) - 1;
-            const noteIndex = note % 12;
-            noteName = noteNames[noteIndex] + octave;
-        } else {
-            noteName = note;
-        }
-
-        // Parse note name (e.g., "C4", "F#3", "Bb5")
-        const match = noteName.match(/^([A-G])(#|b)?(-?\d+)$/);
-        if (!match) {
-            console.warn('Invalid note name:', noteName);
-            return 'C';
-        }
-
-        const [, noteChar, accidental, octaveStr] = match;
-        const octave = parseInt(octaveStr);
-
-        // Convert to ABC notation
-        let abcNote = noteChar;
-
-        // Add accidentals
-        if (accidental === '#') {
-            abcNote = '^' + abcNote;
-        } else if (accidental === 'b') {
-            abcNote = '_' + abcNote;
-        }
-
-        // Handle octaves in ABC notation correctly
-        // ABC notation: C,, C, C c c' c''
-        // Octave 3 = C,  Octave 4 = C  Octave 5 = c  Octave 6 = c'
-        if (octave <= 3) {
-            abcNote = abcNote.toUpperCase();
-            // Add commas for lower octaves
-            for (let i = octave; i < 3; i++) {
-                abcNote += ',';
-            }
-        } else if (octave === 4) {
-            abcNote = abcNote.toUpperCase();
-        } else {
-            abcNote = abcNote.toLowerCase();
-            // Add apostrophes for higher octaves
-            for (let i = 5; i <= octave; i++) {
-                abcNote += "'";
-            }
-        }
-
-        return abcNote;
-    }
-
-    /**
      * Convert duration to ABC notation
      * @param {number} duration - duration in seconds
      * @param {number} bpm - beats per minute
      * @returns {string} ABC duration notation
      */
     static durationToAbcNotation(duration, bpm) {
-        const beatLength = 60 / bpm; // quarter note duration
-        const ratio = duration / beatLength;
+        // Duration is already in beats (quarter notes), so ratio is just the duration
+        const ratio = duration;
 
         // Common note durations
         if (Math.abs(ratio - 4) < 0.1) return '4';      // whole note
@@ -589,7 +520,7 @@ class JmonToAbc {
      */
     static convertWithLyrics(composition) {
         // Smart normalize: convert various formats to jmon
-        const normalizedComposition = jmonTone ? jmonTone.normalize(composition) : composition;
+    const normalizedComposition = composition;
         let abc = this.convertToAbc(composition);
         
         // Add lyrics from annotations
@@ -632,14 +563,7 @@ class JmonToAbc {
     }
 }
 
-// Export for both Node.js and browser environments
-if (typeof module !== 'undefined' && module.exports) {
-    module.exports = JmonToAbc;
+// ESM export for Rollup/browser compatibility
+export function convertToAbc(composition) {
+    return JmonToAbc.convertToAbc(composition);
 }
-
-// Export for browsers (global) - avoid redeclaration
-if (typeof window !== 'undefined') {
-    window.JmonToAbc = window.JmonToAbc || JmonToAbc;
-}
-
-})(typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : this);

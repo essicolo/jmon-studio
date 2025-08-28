@@ -1,17 +1,17 @@
-# jmon-studio
+# jmon-studio-js
 
-jmon-studio (jam on studio) is a JMON (JSON Music Object Notation) studio for algorithmic music composition (djalgojs), format conversion (jmon-format) and music visualization (viz).
+jmon-studio-js (jam on studio) is the JavaScript version of the JMON (JSON Music Object Notation) studio for algorithmic music composition (djalgojs), format conversion (jmon-format) and music visualization (viz). This version has been converted from TypeScript to pure JavaScript for easier management and broader compatibility.
 
 ## Getting started
 
-The recommanded way of starting jamming is heading to [Observable](https://observablehq.com/), a beautiful platform to interact with JavaScript code. Sign up, sign in, create a new notebook, add a JavaScript cell and paste `jm = require("jmon-studio@latest")`. The `jm` object will include everything you need to compose jmon files, play them, show the score and export them to midi files, abc scores, Tone.js generators, etc. Since you'll probably need some guidance, read the free online, interactive book at [observablehq.com/collection/@essi/jmon-studio](https://observablehq.com/collection/@essi/jmon-studio).
+The recommanded way of starting jamming is heading to [Observable](https://observablehq.com/), a beautiful platform to interact with JavaScript code. Sign up, sign in, create a new notebook, add a JavaScript cell and paste `jm = require("jmon-studio-js@latest")`. The `jm` object will include everything you need to compose jmon files, play them, show the score and export them to midi files, abc scores, Tone.js generators, etc. Since you'll probably need some guidance, read the free online, interactive book at [observablehq.com/collection/@essi/jmon-studio](https://observablehq.com/collection/@essi/jmon-studio).
 
 ## Installation
 
-If you are used to coding with npm packages locally, you can install jmon-studio with 
+If you are used to coding with npm packages locally, you can install jmon-studio-js with 
 
 ```bash
-npm install jmon-studio
+npm install jmon-studio-js
 ```
 
 ## Features

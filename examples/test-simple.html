@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>JMON Studio ES Module Test</title>
+  <style>
+    body { 
+      font-family: Arial, sans-serif; 
+      margin: 2em; 
+      background: #f5f5f5; 
+    }
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      background: white;
+      padding: 2em;
+      border-radius: 8px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+    pre {
+      background: #f0f0f0;
+      padding: 1em;
+      border-radius: 4px;
+      overflow-x: auto;
+    }
+    .success { color: green; }
+    .error { color: red; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>JMON Studio ES Module Test</h1>
+    <div id="output"></div>
+  </div>
+
+  <script type="module">
+    try {
+      // Import from the ES module build
+      const { JmonTone, dj } = await import('../dist/jmon-studio.js');
+      
+      const output = document.getElementById('output');
+      
+      // Test 1: Basic imports
+      output.innerHTML += '<h2>✅ ES Module Import Success</h2>';
+      output.innerHTML += `<p>JmonTone VERSION: <strong>${JmonTone.VERSION}</strong></p>`;
+      output.innerHTML += `<p>Available algorithms: <strong>${Object.keys(dj).join(', ')}</strong></p>`;
+      
+      // Test 2: Scale algorithm
+      const scale = new dj.Scale('C', 'major');
+      const scaleNotes = scale.getNoteNames();
+      output.innerHTML += '<h3>Scale Algorithm Test</h3>';
+      output.innerHTML += `<p>C major scale: <strong>${scaleNotes.join(', ')}</strong></p>`;
+      
+      // Test 3: MIDI conversion
+      const midiNote = JmonTone.midiNoteToNoteName(60);
+      output.innerHTML += '<h3>MIDI Conversion Test</h3>';
+      output.innerHTML += `<p>MIDI 60 = <strong>${midiNote}</strong></p>`;
+      
+      // Test 4: JMON composition creation
+      const composition = {
+        format: 'jmonTone',
+        version: '1.0',
+        bpm: 120,
+        tracks: [{
+          label: 'Test Track',
+          sequence: [
+            { pitch: 'C4', duration: 1, time: 0 },
+            { pitch: 'D4', duration: 1, time: 1 },
+            { pitch: 'E4', duration: 1, time: 2 }
+          ]
+        }]
+      };
+      
+      const validation = JmonTone.validateComposition(composition);
+      output.innerHTML += '<h3>JMON Validation Test</h3>';
+      output.innerHTML += `<p>Valid: <strong class="${validation.valid ? 'success' : 'error'}">${validation.valid}</strong></p>`;
+      
+      if (validation.valid) {
+        output.innerHTML += '<pre>' + JSON.stringify(composition, null, 2) + '</pre>';
+      }
+      
+      output.innerHTML += '<h2 class="success">🎉 All Tests Passed!</h2>';
+      console.log('JMON Studio ES module loaded successfully!');
+      
+    } catch (error) {
+      console.error('Error loading JMON Studio:', error);
+      document.getElementById('output').innerHTML = `
+        <h2 class="error">❌ Import Failed</h2>
+        <p>Error: ${error.message}</p>
+        <pre>${error.stack}</pre>
+      `;
+    }
+  </script>
+</body>
+</html>

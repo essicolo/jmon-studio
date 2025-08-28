@@ -503,16 +503,16 @@ s.waitForBoot({
             }
             
             // Convert note
-            if (Array.isArray(note.note)) {
+            if (Array.isArray(note.pitch)) {
                 // Chord
-                const midiNotes = note.note.map(n => 
+                const midiNotes = note.pitch.map(n => 
                     typeof n === 'number' ? n : jmonTone.noteNameToMidiNote(n)
                 );
                 notes.push(`[${midiNotes.map(n => `${n}.midicps`).join(', ')}]`);
             } else {
                 // Single note
-                const midiNote = typeof note.note === 'number' ? 
-                    note.note : jmonTone.noteNameToMidiNote(note.note);
+                const midiNote = typeof note.pitch === 'number' ? 
+                    note.pitch : jmonTone.noteNameToMidiNote(note.pitch);
                 notes.push(`${midiNote}.midicps`);
             }
             
