@@ -7,18 +7,17 @@ export default defineConfig({
       entry: resolve(__dirname, 'src/index.js'),
       name: 'JmonStudio',
       fileName: 'jmon-studio',
-      formats: ['es', 'cjs']
+      formats: ['umd']
     },
     rollupOptions: {
-      // Make sure to externalize deps that shouldn't be bundled
       external: ['plotly.js'],
       output: {
-        // Provide global variables for externalized deps in UMD build
+        format: 'umd',
+        name: 'JmonStudio',
+        exports: 'named',
         globals: {
           'plotly.js': 'Plotly'
-        },
-        // Use named exports only
-        exports: 'named'
+        }
       }
     },
     outDir: 'dist',

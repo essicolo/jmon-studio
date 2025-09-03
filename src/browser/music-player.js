@@ -6,15 +6,26 @@ import { convertJmonToTonejs } from '../converters/jmon-tonejs.js';
  */
 
 export function createPlayer(composition, options = {}) {
-    // Skip validation for now - focus on core functionality
-    // TODO: Fix JMON validator implementation
-    // const validator = new JmonValidator();
-    // const { valid, normalized, errors } = validator.validateAndNormalize(composition);
-    // if (!valid) {
-    //     console.warn('JMON non valide pour le player:', errors);
-    //     throw new Error('JMON non valide');
-    // }
-    // composition = normalized;
+    // Defensive validation
+    if (!composition || typeof composition !== 'object') {
+        console.error('[PLAYER] Invalid composition:', composition);
+        throw new Error('Composition must be a valid JMON object');
+    }
+
+    // Ensure composition has the expected structure
+    if (!composition.sequences && !composition.tracks) {
+        console.error('[PLAYER] No sequences or tracks found in composition:', composition);
+        throw new Error('Composition must have sequences or tracks');
+    }
+
+    // Normalize sequences/tracks to ensure forEach works
+    const tracks = composition.tracks || composition.sequences || [];
+    if (!Array.isArray(tracks)) {
+        console.error('[PLAYER] Tracks/sequences must be an array:', tracks);
+        throw new Error('Tracks/sequences must be an array');
+    }
+
+    console.log('[PLAYER] Processing composition with', tracks.length, 'tracks');
 
     const {
         tempo = composition.bpm || 120,

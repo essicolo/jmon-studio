@@ -24,36 +24,54 @@ export { MinimalismProcess, Tintinnabuli } from './generative/minimalism/index.j
 // Analysis
 export { MusicalAnalysis } from './analysis/index.js';
 
-// Main dj object with all functionality
+// Main dj object with namespaced functionality for Observable compatibility
 export const dj = {
-    // Core Theory Classes
-    MusicTheoryConstants,
+    // Harmony namespace
+    harmony: {
+        // Core Theory Classes
+        MusicTheoryConstants,
+        Scale,
+        Progression,
+        Voice,
+        Ornament,
+        
+        // Articulation System
+        Articulation,
+        addArticulation,
+        addOrnament: addArticulation,  // Alias for compatibility
+        removeArticulation,
+        removeOrnament: removeArticulation,  // Alias for compatibility
+        validateArticulations
+    },
+    
+    // Rhythm namespace
+    rhythm: {
+        Rhythm,
+        isorhythm,
+        beatcycle
+    },
+    
+    // Utility functions
+    utils: {
+        ...Utils
+    },
+    
+    // Generative algorithms
+    generative: {
+        MotifBank,
+        GaussianProcess: GaussianProcessRegressor,
+        CellularAutomata,
+        Polyloop,
+        GeneticAlgorithm,
+        RandomWalk,
+        Fractals: { Mandelbrot, LogisticMap },
+        MinimalismProcess
+    },
+    
+    // Backward compatibility - expose some functions at root level too
     Scale,
-    Progression,
-    Voice,
-    Ornament,
-    
-    // Rhythm Classes
     Rhythm,
-    isorhythm,
-    beatcycle,
-    
-    // Articulation System
-    Articulation,
     addArticulation,
     removeArticulation,
-    validateArticulations,
-    
-    // Utility Functions
-    ...Utils,
-    
-    // Advanced Classes (existing implementations)
-    MotifBank,
-    GaussianProcess: GaussianProcessRegressor,
-    CellularAutomata,
-    Polyloop,
-    GeneticAlgorithm,
-    RandomWalk,
-    Fractals: { Mandelbrot, LogisticMap },
-    MinimalismProcess
+    ...Utils
 };

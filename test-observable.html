@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test JMON Studio - Observable Simulation</title>
+</head>
+<body>
+    <h1>Test JMON Studio - Observable Simulation</h1>
+    <div id="output"></div>
+    
+    <!-- Simulate Observable environment -->
+    <script>
+        // Mock Observable c_major_piece data
+        const c_major_piece = {
+            format: "jmonTone",
+            version: "1.0",
+            bpm: 120,
+            sequences: [
+                {
+                    label: "melody",
+                    notes: [
+                        { pitch: 60, time: "0:0:0", duration: "4n", velocity: 0.8 },
+                        { pitch: 62, time: "0:1:0", duration: "4n", velocity: 0.8 },
+                        { pitch: 64, time: "0:2:0", duration: "4n", velocity: 0.8 },
+                        { pitch: 65, time: "0:3:0", duration: "4n", velocity: 0.8 }
+                    ]
+                }
+            ]
+        };
+
+        console.log('Mock c_major_piece:', c_major_piece);
+    </script>
+
+    <!-- Load our built UMD module -->
+    <script src="./dist/jmon-studio.umd.js"></script>
+    
+    <script>
+        const output = document.getElementById('output');
+        
+        function log(msg) {
+            const p = document.createElement('p');
+            p.textContent = msg;
+            output.appendChild(p);
+            console.log(msg);
+        }
+
+        try {
+            log('Testing JMON Studio UMD module...');
+            
+            // Test 1: Check if JmonStudio is defined
+            if (typeof JmonStudio !== 'undefined') {
+                log('✅ JmonStudio is defined');
+                log('JmonStudio object structure: ' + Object.keys(JmonStudio).join(', '));
+            } else {
+                log('❌ JmonStudio is NOT defined');
+                return;
+            }
+            
+            // Test 2: Check render function
+            if (typeof JmonStudio.render === 'function') {
+                log('✅ JmonStudio.render is a function');
+            } else {
+                log('❌ JmonStudio.render is NOT a function');
+            }
+            
+            // Test 3: Check play function
+            if (typeof JmonStudio.play === 'function') {
+                log('✅ JmonStudio.play is a function');
+            } else {
+                log('❌ JmonStudio.play is NOT a function');
+            }
+            
+            // Test 4: Check score function
+            if (typeof JmonStudio.score === 'function') {
+                log('✅ JmonStudio.score is a function');
+            } else {
+                log('❌ JmonStudio.score is NOT a function');
+            }
+            
+            // Test 5: Check dj namespace
+            if (JmonStudio.dj && typeof JmonStudio.dj === 'object') {
+                log('✅ JmonStudio.dj namespace exists');
+                log('dj structure: ' + Object.keys(JmonStudio.dj).join(', '));
+            } else {
+                log('❌ JmonStudio.dj namespace is missing');
+            }
+            
+            // Test 6: Check harmony namespace
+            if (JmonStudio.dj && JmonStudio.dj.harmony) {
+                log('✅ JmonStudio.dj.harmony exists');
+                log('harmony functions: ' + Object.keys(JmonStudio.dj.harmony).join(', '));
+                
+                // Test addArticulation
+                if (typeof JmonStudio.dj.harmony.addArticulation === 'function') {
+                    log('✅ JmonStudio.dj.harmony.addArticulation is a function');
+                } else {
+                    log('❌ JmonStudio.dj.harmony.addArticulation is NOT a function');
+                }
+            } else {
+                log('❌ JmonStudio.dj.harmony is missing');
+            }
+            
+            // Test 7: Try to render the c_major_piece
+            log('--- Testing render with c_major_piece ---');
+            try {
+                const player = JmonStudio.render(c_major_piece);
+                if (player && player.nodeType === Node.ELEMENT_NODE) {
+                    log('✅ render() returned an HTML element');
+                    document.body.appendChild(player);
+                } else {
+                    log('❌ render() did not return a valid HTML element');
+                }
+            } catch (error) {
+                log('❌ render() threw an error: ' + error.message);
+                log('Error details: ' + error.stack);
+            }
+            
+        } catch (error) {
+            log('❌ General error: ' + error.message);
+            log('Error details: ' + error.stack);
+        }
+    </script>
+</body>
+</html>

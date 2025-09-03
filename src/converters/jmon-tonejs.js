@@ -18,7 +18,20 @@ export class JmonTonejsConverter {
      * Convert JMON composition to Tone.js tracks with multivoice support
      */
     convert(composition) {
+        // Defensive validation
+        if (!composition || typeof composition !== 'object') {
+            console.error('[CONVERTER] Invalid composition:', composition);
+            throw new Error('Composition must be a valid object');
+        }
+
         const tracks = composition.tracks || composition.sequences || [];
+        
+        if (!Array.isArray(tracks)) {
+            console.error('[CONVERTER] Tracks must be an array, got:', typeof tracks, tracks);
+            throw new Error(`Expected tracks to be an array, got ${typeof tracks}`);
+        }
+
+        console.log('[CONVERTER] Processing', tracks.length, 'tracks');
         const convertedTracks = [];
 
         tracks.forEach((track, trackIndex) => {
