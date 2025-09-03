@@ -1,13 +1,14 @@
 {
   "name": "jmon-studio",
-  "version": "1.5.29",
+  "version": "1.5.30",
   "description": "Complete JMON (JSON Music Object Notation) studio: format conversion, algorithmic composition, and music visualization (JavaScript version)",
-  "main": "dist/jmon-studio.umd.js",
-  "browser": "dist/jmon-studio.umd.js",
+  "main": "./dist/jmon.umd.js",
+  "module": "./dist/jmon.esm.js",
+  "browser": "./dist/jmon.umd.js",
   "exports": {
     ".": {
-      "browser": "./dist/jmon-studio.umd.js",
-      "default": "./dist/jmon-studio.umd.js"
+      "import": "./dist/jmon.esm.js",
+      "require": "./dist/jmon.umd.js"
     }
   },
   "files": [
@@ -45,29 +46,24 @@
   ],
   "author": "jmonlabs",
   "license": "MIT",
-  "optionalDependencies": {
-    "plotly.js": "^2.0.0"
-  },
-  "devDependencies": {
-    "abcjs": "^6.5.1",
-    "jest": "^30.0.5",
-    "plotly.js": "^2.27.0",
-    "tone": "^15.1.22",
-    "vite": "^7.1.3"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/jmonlabs/jmon-studio.git"
-  },
-  "bugs": {
-    "url": "https://github.com/jmonlabs/jmon-studio/issues"
-  },
-  "homepage": "https://github.com/jmonlabs/jmon-studio#readme",
   "peerDependencies": {
+    "plotly.js": "^2.0.0",
     "abcjs": "^6.0.0",
     "tone": "^14.0.0 || ^15.0.0"
   },
+  "devDependencies": {
+    "vite": "^7.1.3",
+    "jest": "^30.0.5"
+  },
   "dependencies": {
     "ajv": "^8.17.1"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/essicolo/jmon-studio.git"
+  },
+  "bugs": {
+    "url": "https://github.com/essicolo/jmon-studio/issues"
+  },
+  "homepage": "https://github.com/essicolo/jmon-studio#readme"
 }

@@ -6,22 +6,23 @@ export default defineConfig({
     lib: {
       entry: resolve(__dirname, 'src/index.js'),
       name: 'JmonStudio',
-      fileName: 'jmon-studio',
-      formats: ['umd']
+      fileName: (format) => `jmon.${format === 'es' ? 'esm' : 'umd'}.js`
     },
     rollupOptions: {
-      external: ['plotly.js'],
+      external: ['plotly.js', 'abcjs', 'tone'],
       output: {
         format: 'umd',
         name: 'JmonStudio',
         exports: 'named',
         globals: {
-          'plotly.js': 'Plotly'
+          'plotly.js': 'Plotly',
+          'abcjs': 'ABCJS',
+          'tone': 'Tone'
         }
       }
     },
     outDir: 'dist',
-    emptyOutDir: false // Don't clear dist folder since we copy src files there too
+    emptyOutDir: false
   },
   resolve: {
     alias: {
