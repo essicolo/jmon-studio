@@ -1,6 +1,6 @@
 import { JmonValidator } from './utils/jmon-validator.js';
 import { JmonTone } from './format/JmonTone.js';
-import { dj } from './algorithms/index.js';
+import * as algorithms from './algorithms/index.js';
 import { createPlayer } from './browser/music-player.js';
 
 /**
@@ -63,38 +63,31 @@ function play(jmonObj) {
  */
 function score(jmonObj) {
 	return render(jmonObj);
-}
+}// Export structured API
+export const jm = {
+    // Core functionality
+    render,
+    play,
+    score,
+    validate: validateJmon,
 
-// Export structured API for Observable compatibility
-export default {
-	// Main functions expected by Observable
-	render,
-	play,
-	score,
-	validateJmon,
-	
-	// Structured namespaces
-	dj,
-	
-	// Core classes and utilities
-	JmonTone,
-	JmonValidator,
-	createPlayer,
-	
-	// Version
-	VERSION: '1.0.0'
+    // Core formats and players
+    Tone: JmonTone,
+    createPlayer,
+
+    // Music theory and algorithms
+    theory: algorithms.theory,
+    generative: algorithms.generative,
+    analysis: algorithms.analysis,
+
+    // Constants and utilities
+    constants: algorithms.constants,
+    utils: {
+        ...algorithms.utils,
+        JmonValidator
+    },
+
+    VERSION: '1.0.0'
 };
 
-// Also export individual functions for compatibility
-export { 
-	render,
-	play,
-	score,
-	validateJmon,
-	dj,
-	JmonTone,
-	JmonValidator,
-	createPlayer
-};
-
-export const VERSION = '1.0.0';
+export default jm;

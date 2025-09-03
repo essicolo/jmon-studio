@@ -1,9 +1,9 @@
-function In(s) {
+function Rn(s) {
   return s && s.__esModule && Object.prototype.hasOwnProperty.call(s, "default") ? s.default : s;
 }
-var De = { exports: {} }, Rt = {}, ye = {}, Ee = {}, Nt = {}, Ct = {}, It = {}, Qt;
+var De = { exports: {} }, Rt = {}, ye = {}, Ee = {}, Nt = {}, Ct = {}, It = {}, Jt;
 function _t() {
-  return Qt || (Qt = 1, (function(s) {
+  return Jt || (Jt = 1, (function(s) {
     Object.defineProperty(s, "__esModule", { value: !0 }), s.regexpCode = s.getEsmExportName = s.getProperty = s.safeStringify = s.stringify = s.strConcat = s.addCodeArg = s.str = s._ = s.nil = s._Code = s.Name = s.IDENTIFIER = s._CodeOrName = void 0;
     class e {
     }
@@ -124,9 +124,9 @@ function _t() {
     s.regexpCode = f;
   })(It)), It;
 }
-var jt = {}, Zt;
-function er() {
-  return Zt || (Zt = 1, (function(s) {
+var jt = {}, Yt;
+function Xt() {
+  return Yt || (Yt = 1, (function(s) {
     Object.defineProperty(s, "__esModule", { value: !0 }), s.ValueScope = s.ValueScopeName = s.Scope = s.varKinds = s.UsedValueState = void 0;
     const e = _t();
     class t extends Error {
@@ -247,11 +247,11 @@ function er() {
     s.ValueScope = a;
   })(jt)), jt;
 }
-var tr;
+var Qt;
 function X() {
-  return tr || (tr = 1, (function(s) {
+  return Qt || (Qt = 1, (function(s) {
     Object.defineProperty(s, "__esModule", { value: !0 }), s.or = s.and = s.not = s.CodeGen = s.operators = s.varKinds = s.ValueScopeName = s.ValueScope = s.Scope = s.Name = s.regexpCode = s.stringify = s.getProperty = s.nil = s.strConcat = s.str = s._ = void 0;
-    const e = _t(), t = er();
+    const e = _t(), t = Xt();
     var r = _t();
     Object.defineProperty(s, "_", { enumerable: !0, get: function() {
       return r._;
@@ -270,7 +270,7 @@ function X() {
     } }), Object.defineProperty(s, "Name", { enumerable: !0, get: function() {
       return r.Name;
     } });
-    var n = er();
+    var n = Xt();
     Object.defineProperty(s, "Scope", { enumerable: !0, get: function() {
       return n.Scope;
     } }), Object.defineProperty(s, "ValueScope", { enumerable: !0, get: function() {
@@ -809,10 +809,10 @@ function X() {
     }
   })(Ct)), Ct;
 }
-var W = {}, rr;
+var W = {}, Zt;
 function ee() {
-  if (rr) return W;
-  rr = 1, Object.defineProperty(W, "__esModule", { value: !0 }), W.checkStrictMode = W.getErrorPath = W.Type = W.useFunc = W.setEvaluated = W.evaluatedPropsToName = W.mergeEvaluated = W.eachItem = W.unescapeJsonPointer = W.escapeJsonPointer = W.escapeFragment = W.unescapeFragment = W.schemaRefOrVal = W.schemaHasRulesButRef = W.schemaHasRules = W.checkUnknownRules = W.alwaysValidSchema = W.toHash = void 0;
+  if (Zt) return W;
+  Zt = 1, Object.defineProperty(W, "__esModule", { value: !0 }), W.checkStrictMode = W.getErrorPath = W.Type = W.useFunc = W.setEvaluated = W.evaluatedPropsToName = W.mergeEvaluated = W.eachItem = W.unescapeJsonPointer = W.escapeJsonPointer = W.escapeFragment = W.unescapeFragment = W.schemaRefOrVal = W.schemaHasRulesButRef = W.schemaHasRules = W.checkUnknownRules = W.alwaysValidSchema = W.toHash = void 0;
   const s = X(), e = _t();
   function t(b) {
     const g = {};
@@ -950,10 +950,10 @@ function ee() {
   }
   return W.checkStrictMode = y, W;
 }
-var xe = {}, nr;
+var xe = {}, er;
 function _e() {
-  if (nr) return xe;
-  nr = 1, Object.defineProperty(xe, "__esModule", { value: !0 });
+  if (er) return xe;
+  er = 1, Object.defineProperty(xe, "__esModule", { value: !0 });
   const s = X(), e = {
     // validation function arguments
     data: new s.Name("data"),
@@ -985,9 +985,9 @@ function _e() {
   };
   return xe.default = e, xe;
 }
-var ir;
+var tr;
 function Pt() {
-  return ir || (ir = 1, (function(s) {
+  return tr || (tr = 1, (function(s) {
     Object.defineProperty(s, "__esModule", { value: !0 }), s.extendErrors = s.resetErrorsCount = s.reportExtraError = s.reportError = s.keyword$DataError = s.keywordError = void 0;
     const e = X(), t = ee(), r = _e();
     s.keywordError = {
@@ -1061,10 +1061,10 @@ function Pt() {
     }
   })(Nt)), Nt;
 }
-var sr;
-function jn() {
-  if (sr) return Ee;
-  sr = 1, Object.defineProperty(Ee, "__esModule", { value: !0 }), Ee.boolOrEmptySchema = Ee.topBoolOrEmptySchema = void 0;
+var rr;
+function Nn() {
+  if (rr) return Ee;
+  rr = 1, Object.defineProperty(Ee, "__esModule", { value: !0 }), Ee.boolOrEmptySchema = Ee.topBoolOrEmptySchema = void 0;
   const s = Pt(), e = X(), t = _e(), r = {
     message: "boolean schema is false"
   };
@@ -1093,10 +1093,10 @@ function jn() {
   }
   return Ee;
 }
-var oe = {}, Me = {}, or;
-function yn() {
-  if (or) return Me;
-  or = 1, Object.defineProperty(Me, "__esModule", { value: !0 }), Me.getRules = Me.isJSONType = void 0;
+var oe = {}, Me = {}, nr;
+function dn() {
+  if (nr) return Me;
+  nr = 1, Object.defineProperty(Me, "__esModule", { value: !0 }), Me.getRules = Me.isJSONType = void 0;
   const s = ["string", "number", "integer", "boolean", "null", "object", "array"], e = new Set(s);
   function t(n) {
     return typeof n == "string" && e.has(n);
@@ -1119,10 +1119,10 @@ function yn() {
   }
   return Me.getRules = r, Me;
 }
-var ge = {}, ar;
-function gn() {
-  if (ar) return ge;
-  ar = 1, Object.defineProperty(ge, "__esModule", { value: !0 }), ge.shouldUseRule = ge.shouldUseGroup = ge.schemaHasRulesForType = void 0;
+var ge = {}, ir;
+function hn() {
+  if (ir) return ge;
+  ir = 1, Object.defineProperty(ge, "__esModule", { value: !0 }), ge.shouldUseRule = ge.shouldUseGroup = ge.schemaHasRulesForType = void 0;
   function s({ schema: r, self: n }, i) {
     const o = n.RULES.types[i];
     return o && o !== !0 && e(r, o);
@@ -1138,11 +1138,11 @@ function gn() {
   }
   return ge.shouldUseRule = t, ge;
 }
-var cr;
+var sr;
 function St() {
-  if (cr) return oe;
-  cr = 1, Object.defineProperty(oe, "__esModule", { value: !0 }), oe.reportTypeError = oe.checkDataTypes = oe.checkDataType = oe.coerceAndCheckDataType = oe.getJSONTypes = oe.getSchemaTypes = oe.DataType = void 0;
-  const s = yn(), e = gn(), t = Pt(), r = X(), n = ee();
+  if (sr) return oe;
+  sr = 1, Object.defineProperty(oe, "__esModule", { value: !0 }), oe.reportTypeError = oe.checkDataTypes = oe.checkDataType = oe.coerceAndCheckDataType = oe.getJSONTypes = oe.getSchemaTypes = oe.DataType = void 0;
+  const s = dn(), e = hn(), t = Pt(), r = X(), n = ee();
   var i;
   (function(c) {
     c[c.Correct = 0] = "Correct", c[c.Wrong = 1] = "Wrong";
@@ -1286,10 +1286,10 @@ function St() {
   }
   return oe;
 }
-var Ie = {}, lr;
-function qn() {
-  if (lr) return Ie;
-  lr = 1, Object.defineProperty(Ie, "__esModule", { value: !0 }), Ie.assignDefaults = void 0;
+var Ie = {}, or;
+function Cn() {
+  if (or) return Ie;
+  or = 1, Object.defineProperty(Ie, "__esModule", { value: !0 }), Ie.assignDefaults = void 0;
   const s = X(), e = ee();
   function t(n, i) {
     const { properties: o, items: a } = n.schema;
@@ -1313,10 +1313,10 @@ function qn() {
   }
   return Ie;
 }
-var pe = {}, te = {}, ur;
+var pe = {}, te = {}, ar;
 function me() {
-  if (ur) return te;
-  ur = 1, Object.defineProperty(te, "__esModule", { value: !0 }), te.validateUnion = te.validateArray = te.usePattern = te.callValidateCode = te.schemaProperties = te.allSchemaProperties = te.noPropertyInData = te.propertyInData = te.isOwnProperty = te.hasPropFunc = te.reportMissingProp = te.checkMissingProp = te.checkReportMissingProp = void 0;
+  if (ar) return te;
+  ar = 1, Object.defineProperty(te, "__esModule", { value: !0 }), te.validateUnion = te.validateArray = te.usePattern = te.callValidateCode = te.schemaProperties = te.allSchemaProperties = te.noPropertyInData = te.propertyInData = te.isOwnProperty = te.hasPropFunc = te.reportMissingProp = te.checkMissingProp = te.checkReportMissingProp = void 0;
   const s = X(), e = ee(), t = _e(), r = ee();
   function n(c, h) {
     const { gen: y, data: b, it: g } = c;
@@ -1422,10 +1422,10 @@ function me() {
   }
   return te.validateUnion = d, te;
 }
-var dr;
-function On() {
-  if (dr) return pe;
-  dr = 1, Object.defineProperty(pe, "__esModule", { value: !0 }), pe.validateKeywordUsage = pe.validSchemaType = pe.funcKeywordCode = pe.macroKeywordCode = void 0;
+var cr;
+function In() {
+  if (cr) return pe;
+  cr = 1, Object.defineProperty(pe, "__esModule", { value: !0 }), pe.validateKeywordUsage = pe.validSchemaType = pe.funcKeywordCode = pe.macroKeywordCode = void 0;
   const s = X(), e = _e(), t = me(), r = Pt();
   function n(_, $) {
     const { gen: E, keyword: w, schema: f, parentSchema: d, it: c } = _, h = $.macro.call(c.self, f, d, c), y = u(E, w, h);
@@ -1511,10 +1511,10 @@ function On() {
   }
   return pe.validateKeywordUsage = v, pe;
 }
-var ve = {}, hr;
-function Dn() {
-  if (hr) return ve;
-  hr = 1, Object.defineProperty(ve, "__esModule", { value: !0 }), ve.extendSubschemaMode = ve.extendSubschemaData = ve.getSubschema = void 0;
+var ve = {}, lr;
+function jn() {
+  if (lr) return ve;
+  lr = 1, Object.defineProperty(ve, "__esModule", { value: !0 }), ve.extendSubschemaMode = ve.extendSubschemaData = ve.getSubschema = void 0;
   const s = X(), e = ee();
   function t(i, { keyword: o, schemaProp: a, schema: l, schemaPath: u, errSchemaPath: p, topSchemaRef: v }) {
     if (o !== void 0 && l !== void 0)
@@ -1567,9 +1567,9 @@ function Dn() {
   }
   return ve.extendSubschemaMode = n, ve;
 }
-var de = {}, qt, fr;
-function vn() {
-  return fr || (fr = 1, qt = function s(e, t) {
+var de = {}, qt, ur;
+function fn() {
+  return ur || (ur = 1, qt = function s(e, t) {
     if (e === t) return !0;
     if (e && t && typeof e == "object" && typeof t == "object") {
       if (e.constructor !== t.constructor) return !1;
@@ -1595,10 +1595,10 @@ function vn() {
     return e !== e && t !== t;
   }), qt;
 }
-var Ot = { exports: {} }, pr;
-function xn() {
-  if (pr) return Ot.exports;
-  pr = 1;
+var Ot = { exports: {} }, dr;
+function qn() {
+  if (dr) return Ot.exports;
+  dr = 1;
   var s = Ot.exports = function(r, n, i) {
     typeof n == "function" && (i = n, n = {}), i = n.cb || i;
     var o = typeof i == "function" ? i : i.pre || function() {
@@ -1670,11 +1670,11 @@ function xn() {
   }
   return Ot.exports;
 }
-var mr;
+var hr;
 function Et() {
-  if (mr) return de;
-  mr = 1, Object.defineProperty(de, "__esModule", { value: !0 }), de.getSchemaRefs = de.resolveUrl = de.normalizeId = de._getFullPath = de.getFullPath = de.inlineRef = void 0;
-  const s = ee(), e = vn(), t = xn(), r = /* @__PURE__ */ new Set([
+  if (hr) return de;
+  hr = 1, Object.defineProperty(de, "__esModule", { value: !0 }), de.getSchemaRefs = de.resolveUrl = de.normalizeId = de._getFullPath = de.getFullPath = de.inlineRef = void 0;
+  const s = ee(), e = fn(), t = qn(), r = /* @__PURE__ */ new Set([
     "type",
     "format",
     "pattern",
@@ -1779,11 +1779,11 @@ function Et() {
   }
   return de.getSchemaRefs = E, de;
 }
-var yr;
+var fr;
 function Mt() {
-  if (yr) return ye;
-  yr = 1, Object.defineProperty(ye, "__esModule", { value: !0 }), ye.getData = ye.KeywordCxt = ye.validateFunctionCode = void 0;
-  const s = jn(), e = St(), t = gn(), r = St(), n = qn(), i = On(), o = Dn(), a = X(), l = _e(), u = Et(), p = ee(), v = Pt();
+  if (fr) return ye;
+  fr = 1, Object.defineProperty(ye, "__esModule", { value: !0 }), ye.getData = ye.KeywordCxt = ye.validateFunctionCode = void 0;
+  const s = Nn(), e = St(), t = hn(), r = St(), n = Cn(), i = In(), o = jn(), a = X(), l = _e(), u = Et(), p = ee(), v = Pt();
   function _(M) {
     if (b(M) && (S(M), y(M))) {
       f(M);
@@ -2092,10 +2092,10 @@ function Mt() {
   }
   return ye.getData = H, ye;
 }
-var Ve = {}, gr;
-function Ht() {
-  if (gr) return Ve;
-  gr = 1, Object.defineProperty(Ve, "__esModule", { value: !0 });
+var Ve = {}, pr;
+function Gt() {
+  if (pr) return Ve;
+  pr = 1, Object.defineProperty(Ve, "__esModule", { value: !0 });
   class s extends Error {
     constructor(t) {
       super("validation failed"), this.errors = t, this.ajv = this.validation = !0;
@@ -2103,10 +2103,10 @@ function Ht() {
   }
   return Ve.default = s, Ve;
 }
-var Fe = {}, vr;
+var Fe = {}, mr;
 function Tt() {
-  if (vr) return Fe;
-  vr = 1, Object.defineProperty(Fe, "__esModule", { value: !0 });
+  if (mr) return Fe;
+  mr = 1, Object.defineProperty(Fe, "__esModule", { value: !0 });
   const s = Et();
   class e extends Error {
     constructor(r, n, i, o) {
@@ -2115,11 +2115,11 @@ function Tt() {
   }
   return Fe.default = e, Fe;
 }
-var fe = {}, br;
-function Wt() {
-  if (br) return fe;
-  br = 1, Object.defineProperty(fe, "__esModule", { value: !0 }), fe.resolveSchema = fe.getCompilingSchema = fe.resolveRef = fe.compileSchema = fe.SchemaEnv = void 0;
-  const s = X(), e = Ht(), t = _e(), r = Et(), n = ee(), i = Mt();
+var fe = {}, yr;
+function Kt() {
+  if (yr) return fe;
+  yr = 1, Object.defineProperty(fe, "__esModule", { value: !0 }), fe.resolveSchema = fe.getCompilingSchema = fe.resolveRef = fe.compileSchema = fe.SchemaEnv = void 0;
+  const s = X(), e = Gt(), t = _e(), r = Et(), n = ee(), i = Mt();
   class o {
     constructor(d) {
       var c;
@@ -2273,17 +2273,17 @@ function Wt() {
   }
   return fe;
 }
-const Vn = "https://raw.githubusercontent.com/ajv-validator/ajv/master/lib/refs/data.json#", Fn = "Meta-schema for $data reference (JSON AnySchema extension proposal)", zn = "object", Ln = ["$data"], Un = { $data: { type: "string", anyOf: [{ format: "relative-json-pointer" }, { format: "json-pointer" }] } }, Gn = !1, Kn = {
-  $id: Vn,
-  description: Fn,
-  type: zn,
-  required: Ln,
-  properties: Un,
-  additionalProperties: Gn
+const On = "https://raw.githubusercontent.com/ajv-validator/ajv/master/lib/refs/data.json#", Dn = "Meta-schema for $data reference (JSON AnySchema extension proposal)", xn = "object", Vn = ["$data"], Fn = { $data: { type: "string", anyOf: [{ format: "relative-json-pointer" }, { format: "json-pointer" }] } }, zn = !1, Ln = {
+  $id: On,
+  description: Dn,
+  type: xn,
+  required: Vn,
+  properties: Fn,
+  additionalProperties: zn
 };
-var ze = {}, je = { exports: {} }, Dt, wr;
-function Bn() {
-  return wr || (wr = 1, Dt = {
+var ze = {}, je = { exports: {} }, Dt, gr;
+function Un() {
+  return gr || (gr = 1, Dt = {
     HEX: {
       0: 0,
       1: 1,
@@ -2310,11 +2310,11 @@ function Bn() {
     }
   }), Dt;
 }
-var xt, $r;
-function Hn() {
-  if ($r) return xt;
-  $r = 1;
-  const { HEX: s } = Bn(), e = /^(?:(?:25[0-5]|2[0-4]\d|1\d{2}|[1-9]\d|\d)\.){3}(?:25[0-5]|2[0-4]\d|1\d{2}|[1-9]\d|\d)$/u;
+var xt, vr;
+function Gn() {
+  if (vr) return xt;
+  vr = 1;
+  const { HEX: s } = Un(), e = /^(?:(?:25[0-5]|2[0-4]\d|1\d{2}|[1-9]\d|\d)\.){3}(?:25[0-5]|2[0-4]\d|1\d{2}|[1-9]\d|\d)$/u;
   function t(w) {
     if (a(w, ".") < 3)
       return { host: w, isIPV4: !1 };
@@ -2445,10 +2445,10 @@ function Hn() {
     stringArrayToHexStripped: r
   }, xt;
 }
-var Vt, _r;
-function Wn() {
-  if (_r) return Vt;
-  _r = 1;
+var Vt, br;
+function Kn() {
+  if (br) return Vt;
+  br = 1;
   const s = /^[\da-f]{8}-[\da-f]{4}-[\da-f]{4}-[\da-f]{4}-[\da-f]{12}$/iu, e = /([\da-z][\d\-a-z]{0,31}):((?:[\w!$'()*+,\-.:;=@]|%[\da-f]{2})+)/iu;
   function t(c) {
     return typeof c.secure == "boolean" ? c.secure : String(c.scheme).toLowerCase() === "wss";
@@ -2537,11 +2537,11 @@ function Wn() {
   };
   return Vt = d, Vt;
 }
-var Sr;
-function Jn() {
-  if (Sr) return je.exports;
-  Sr = 1;
-  const { normalizeIPv6: s, normalizeIPv4: e, removeDotSegments: t, recomposeAuthority: r, normalizeComponentEncoding: n } = Hn(), i = Wn();
+var wr;
+function Bn() {
+  if (wr) return je.exports;
+  wr = 1;
+  const { normalizeIPv6: s, normalizeIPv4: e, removeDotSegments: t, recomposeAuthority: r, normalizeComponentEncoding: n } = Gn(), i = Kn();
   function o(f, d) {
     return typeof f == "string" ? f = p(E(f, d), d) : typeof f == "object" && (f = E(p(f, d), d)), f;
   }
@@ -2636,16 +2636,16 @@ function Jn() {
   };
   return je.exports = w, je.exports.default = w, je.exports.fastUri = w, je.exports;
 }
-var Pr;
-function Yn() {
-  if (Pr) return ze;
-  Pr = 1, Object.defineProperty(ze, "__esModule", { value: !0 });
-  const s = Jn();
+var $r;
+function Hn() {
+  if ($r) return ze;
+  $r = 1, Object.defineProperty(ze, "__esModule", { value: !0 });
+  const s = Bn();
   return s.code = 'require("ajv/dist/runtime/uri").default', ze.default = s, ze;
 }
-var Er;
-function Xn() {
-  return Er || (Er = 1, (function(s) {
+var _r;
+function Wn() {
+  return _r || (_r = 1, (function(s) {
     Object.defineProperty(s, "__esModule", { value: !0 }), s.CodeGen = s.Name = s.nil = s.stringify = s.str = s._ = s.KeywordCxt = void 0;
     var e = Mt();
     Object.defineProperty(s, "KeywordCxt", { enumerable: !0, get: function() {
@@ -2665,7 +2665,7 @@ function Xn() {
     } }), Object.defineProperty(s, "CodeGen", { enumerable: !0, get: function() {
       return t.CodeGen;
     } });
-    const r = Ht(), n = Tt(), i = yn(), o = Wt(), a = X(), l = Et(), u = St(), p = ee(), v = Kn, _ = Yn(), $ = (q, k) => new RegExp(q, k);
+    const r = Gt(), n = Tt(), i = dn(), o = Kt(), a = X(), l = Et(), u = St(), p = ee(), v = Ln, _ = Hn(), $ = (q, k) => new RegExp(q, k);
     $.code = "new RegExp";
     const E = ["removeAdditional", "useDefaults", "coerceTypes"], w = /* @__PURE__ */ new Set([
       "validate",
@@ -3086,10 +3086,10 @@ function Xn() {
     }
   })(Rt)), Rt;
 }
-var Le = {}, Ue = {}, Ge = {}, Mr;
-function Qn() {
-  if (Mr) return Ge;
-  Mr = 1, Object.defineProperty(Ge, "__esModule", { value: !0 });
+var Le = {}, Ue = {}, Ge = {}, Sr;
+function Jn() {
+  if (Sr) return Ge;
+  Sr = 1, Object.defineProperty(Ge, "__esModule", { value: !0 });
   const s = {
     keyword: "id",
     code() {
@@ -3098,11 +3098,11 @@ function Qn() {
   };
   return Ge.default = s, Ge;
 }
-var we = {}, Tr;
-function Zn() {
-  if (Tr) return we;
-  Tr = 1, Object.defineProperty(we, "__esModule", { value: !0 }), we.callRef = we.getValidate = void 0;
-  const s = Tt(), e = me(), t = X(), r = _e(), n = Wt(), i = ee(), o = {
+var we = {}, Pr;
+function Yn() {
+  if (Pr) return we;
+  Pr = 1, Object.defineProperty(we, "__esModule", { value: !0 }), we.callRef = we.getValidate = void 0;
+  const s = Tt(), e = me(), t = X(), r = _e(), n = Kt(), i = ee(), o = {
     keyword: "$ref",
     schemaType: "string",
     code(u) {
@@ -3185,11 +3185,11 @@ function Zn() {
   }
   return we.callRef = l, we.default = o, we;
 }
-var kr;
-function ei() {
-  if (kr) return Ue;
-  kr = 1, Object.defineProperty(Ue, "__esModule", { value: !0 });
-  const s = Qn(), e = Zn(), t = [
+var Er;
+function Xn() {
+  if (Er) return Ue;
+  Er = 1, Object.defineProperty(Ue, "__esModule", { value: !0 });
+  const s = Jn(), e = Yn(), t = [
     "$schema",
     "$id",
     "$defs",
@@ -3201,10 +3201,10 @@ function ei() {
   ];
   return Ue.default = t, Ue;
 }
-var Ke = {}, Be = {}, Ar;
-function ti() {
-  if (Ar) return Be;
-  Ar = 1, Object.defineProperty(Be, "__esModule", { value: !0 });
+var Ke = {}, Be = {}, Mr;
+function Qn() {
+  if (Mr) return Be;
+  Mr = 1, Object.defineProperty(Be, "__esModule", { value: !0 });
   const s = X(), e = s.operators, t = {
     maximum: { okStr: "<=", ok: e.LTE, fail: e.GT },
     minimum: { okStr: ">=", ok: e.GTE, fail: e.LT },
@@ -3226,10 +3226,10 @@ function ti() {
   };
   return Be.default = n, Be;
 }
-var He = {}, Rr;
-function ri() {
-  if (Rr) return He;
-  Rr = 1, Object.defineProperty(He, "__esModule", { value: !0 });
+var He = {}, Tr;
+function Zn() {
+  if (Tr) return He;
+  Tr = 1, Object.defineProperty(He, "__esModule", { value: !0 });
   const s = X(), t = {
     keyword: "multipleOf",
     type: "number",
@@ -3246,10 +3246,10 @@ function ri() {
   };
   return He.default = t, He;
 }
-var We = {}, Je = {}, Nr;
-function ni() {
-  if (Nr) return Je;
-  Nr = 1, Object.defineProperty(Je, "__esModule", { value: !0 });
+var We = {}, Je = {}, kr;
+function ei() {
+  if (kr) return Je;
+  kr = 1, Object.defineProperty(Je, "__esModule", { value: !0 });
   function s(e) {
     const t = e.length;
     let r = 0, n = 0, i;
@@ -3259,11 +3259,11 @@ function ni() {
   }
   return Je.default = s, s.code = 'require("ajv/dist/runtime/ucs2length").default', Je;
 }
-var Cr;
-function ii() {
-  if (Cr) return We;
-  Cr = 1, Object.defineProperty(We, "__esModule", { value: !0 });
-  const s = X(), e = ee(), t = ni(), n = {
+var Ar;
+function ti() {
+  if (Ar) return We;
+  Ar = 1, Object.defineProperty(We, "__esModule", { value: !0 });
+  const s = X(), e = ee(), t = ei(), n = {
     keyword: ["maxLength", "minLength"],
     type: "string",
     schemaType: "number",
@@ -3282,10 +3282,10 @@ function ii() {
   };
   return We.default = n, We;
 }
-var Ye = {}, Ir;
-function si() {
-  if (Ir) return Ye;
-  Ir = 1, Object.defineProperty(Ye, "__esModule", { value: !0 });
+var Ye = {}, Rr;
+function ri() {
+  if (Rr) return Ye;
+  Rr = 1, Object.defineProperty(Ye, "__esModule", { value: !0 });
   const s = me(), e = X(), r = {
     keyword: "pattern",
     type: "string",
@@ -3302,10 +3302,10 @@ function si() {
   };
   return Ye.default = r, Ye;
 }
-var Xe = {}, jr;
-function oi() {
-  if (jr) return Xe;
-  jr = 1, Object.defineProperty(Xe, "__esModule", { value: !0 });
+var Xe = {}, Nr;
+function ni() {
+  if (Nr) return Xe;
+  Nr = 1, Object.defineProperty(Xe, "__esModule", { value: !0 });
   const s = X(), t = {
     keyword: ["maxProperties", "minProperties"],
     type: "object",
@@ -3325,10 +3325,10 @@ function oi() {
   };
   return Xe.default = t, Xe;
 }
-var Qe = {}, qr;
-function ai() {
-  if (qr) return Qe;
-  qr = 1, Object.defineProperty(Qe, "__esModule", { value: !0 });
+var Qe = {}, Cr;
+function ii() {
+  if (Cr) return Qe;
+  Cr = 1, Object.defineProperty(Qe, "__esModule", { value: !0 });
   const s = me(), e = X(), t = ee(), n = {
     keyword: "required",
     type: "object",
@@ -3382,10 +3382,10 @@ function ai() {
   };
   return Qe.default = n, Qe;
 }
-var Ze = {}, Or;
-function ci() {
-  if (Or) return Ze;
-  Or = 1, Object.defineProperty(Ze, "__esModule", { value: !0 });
+var Ze = {}, Ir;
+function si() {
+  if (Ir) return Ze;
+  Ir = 1, Object.defineProperty(Ze, "__esModule", { value: !0 });
   const s = X(), t = {
     keyword: ["maxItems", "minItems"],
     type: "array",
@@ -3405,18 +3405,18 @@ function ci() {
   };
   return Ze.default = t, Ze;
 }
-var et = {}, tt = {}, Dr;
-function Jt() {
-  if (Dr) return tt;
-  Dr = 1, Object.defineProperty(tt, "__esModule", { value: !0 });
-  const s = vn();
+var et = {}, tt = {}, jr;
+function Bt() {
+  if (jr) return tt;
+  jr = 1, Object.defineProperty(tt, "__esModule", { value: !0 });
+  const s = fn();
   return s.code = 'require("ajv/dist/runtime/equal").default', tt.default = s, tt;
 }
-var xr;
-function li() {
-  if (xr) return et;
-  xr = 1, Object.defineProperty(et, "__esModule", { value: !0 });
-  const s = St(), e = X(), t = ee(), r = Jt(), i = {
+var qr;
+function oi() {
+  if (qr) return et;
+  qr = 1, Object.defineProperty(et, "__esModule", { value: !0 });
+  const s = St(), e = X(), t = ee(), r = Bt(), i = {
     keyword: "uniqueItems",
     type: "array",
     schemaType: "boolean",
@@ -3456,11 +3456,11 @@ function li() {
   };
   return et.default = i, et;
 }
-var rt = {}, Vr;
-function ui() {
-  if (Vr) return rt;
-  Vr = 1, Object.defineProperty(rt, "__esModule", { value: !0 });
-  const s = X(), e = ee(), t = Jt(), n = {
+var rt = {}, Or;
+function ai() {
+  if (Or) return rt;
+  Or = 1, Object.defineProperty(rt, "__esModule", { value: !0 });
+  const s = X(), e = ee(), t = Bt(), n = {
     keyword: "const",
     $data: !0,
     error: {
@@ -3474,11 +3474,11 @@ function ui() {
   };
   return rt.default = n, rt;
 }
-var nt = {}, Fr;
-function di() {
-  if (Fr) return nt;
-  Fr = 1, Object.defineProperty(nt, "__esModule", { value: !0 });
-  const s = X(), e = ee(), t = Jt(), n = {
+var nt = {}, Dr;
+function ci() {
+  if (Dr) return nt;
+  Dr = 1, Object.defineProperty(nt, "__esModule", { value: !0 });
+  const s = X(), e = ee(), t = Bt(), n = {
     keyword: "enum",
     schemaType: "array",
     $data: !0,
@@ -3514,11 +3514,11 @@ function di() {
   };
   return nt.default = n, nt;
 }
-var zr;
-function hi() {
-  if (zr) return Ke;
-  zr = 1, Object.defineProperty(Ke, "__esModule", { value: !0 });
-  const s = ti(), e = ri(), t = ii(), r = si(), n = oi(), i = ai(), o = ci(), a = li(), l = ui(), u = di(), p = [
+var xr;
+function li() {
+  if (xr) return Ke;
+  xr = 1, Object.defineProperty(Ke, "__esModule", { value: !0 });
+  const s = Qn(), e = Zn(), t = ti(), r = ri(), n = ni(), i = ii(), o = si(), a = oi(), l = ai(), u = ci(), p = [
     // number
     s.default,
     e.default,
@@ -3539,10 +3539,10 @@ function hi() {
   ];
   return Ke.default = p, Ke;
 }
-var it = {}, Ae = {}, Lr;
-function bn() {
-  if (Lr) return Ae;
-  Lr = 1, Object.defineProperty(Ae, "__esModule", { value: !0 }), Ae.validateAdditionalItems = void 0;
+var it = {}, Ae = {}, Vr;
+function pn() {
+  if (Vr) return Ae;
+  Vr = 1, Object.defineProperty(Ae, "__esModule", { value: !0 }), Ae.validateAdditionalItems = void 0;
   const s = X(), e = ee(), r = {
     keyword: "additionalItems",
     type: "array",
@@ -3579,10 +3579,10 @@ function bn() {
   }
   return Ae.validateAdditionalItems = n, Ae.default = r, Ae;
 }
-var st = {}, Re = {}, Ur;
-function wn() {
-  if (Ur) return Re;
-  Ur = 1, Object.defineProperty(Re, "__esModule", { value: !0 }), Re.validateTuple = void 0;
+var st = {}, Re = {}, Fr;
+function mn() {
+  if (Fr) return Re;
+  Fr = 1, Object.defineProperty(Re, "__esModule", { value: !0 }), Re.validateTuple = void 0;
   const s = X(), e = ee(), t = me(), r = {
     keyword: "items",
     type: "array",
@@ -3616,11 +3616,11 @@ function wn() {
   }
   return Re.validateTuple = n, Re.default = r, Re;
 }
-var Gr;
-function fi() {
-  if (Gr) return st;
-  Gr = 1, Object.defineProperty(st, "__esModule", { value: !0 });
-  const s = wn(), e = {
+var zr;
+function ui() {
+  if (zr) return st;
+  zr = 1, Object.defineProperty(st, "__esModule", { value: !0 });
+  const s = mn(), e = {
     keyword: "prefixItems",
     type: "array",
     schemaType: ["array"],
@@ -3629,11 +3629,11 @@ function fi() {
   };
   return st.default = e, st;
 }
-var ot = {}, Kr;
-function pi() {
-  if (Kr) return ot;
-  Kr = 1, Object.defineProperty(ot, "__esModule", { value: !0 });
-  const s = X(), e = ee(), t = me(), r = bn(), i = {
+var ot = {}, Lr;
+function di() {
+  if (Lr) return ot;
+  Lr = 1, Object.defineProperty(ot, "__esModule", { value: !0 });
+  const s = X(), e = ee(), t = me(), r = pn(), i = {
     keyword: "items",
     type: "array",
     schemaType: ["object", "boolean"],
@@ -3649,10 +3649,10 @@ function pi() {
   };
   return ot.default = i, ot;
 }
-var at = {}, Br;
-function mi() {
-  if (Br) return at;
-  Br = 1, Object.defineProperty(at, "__esModule", { value: !0 });
+var at = {}, Ur;
+function hi() {
+  if (Ur) return at;
+  Ur = 1, Object.defineProperty(at, "__esModule", { value: !0 });
   const s = X(), e = ee(), r = {
     keyword: "contains",
     type: "array",
@@ -3706,9 +3706,9 @@ function mi() {
   };
   return at.default = r, at;
 }
-var Ft = {}, Hr;
-function yi() {
-  return Hr || (Hr = 1, (function(s) {
+var Ft = {}, Gr;
+function fi() {
+  return Gr || (Gr = 1, (function(s) {
     Object.defineProperty(s, "__esModule", { value: !0 }), s.validateSchemaDeps = s.validatePropertyDeps = s.error = void 0;
     const e = X(), t = ee(), r = me();
     s.error = {
@@ -3779,10 +3779,10 @@ function yi() {
     s.validateSchemaDeps = a, s.default = n;
   })(Ft)), Ft;
 }
-var ct = {}, Wr;
-function gi() {
-  if (Wr) return ct;
-  Wr = 1, Object.defineProperty(ct, "__esModule", { value: !0 });
+var ct = {}, Kr;
+function pi() {
+  if (Kr) return ct;
+  Kr = 1, Object.defineProperty(ct, "__esModule", { value: !0 });
   const s = X(), e = ee(), r = {
     keyword: "propertyNames",
     type: "object",
@@ -3811,10 +3811,10 @@ function gi() {
   };
   return ct.default = r, ct;
 }
-var lt = {}, Jr;
-function $n() {
-  if (Jr) return lt;
-  Jr = 1, Object.defineProperty(lt, "__esModule", { value: !0 });
+var lt = {}, Br;
+function yn() {
+  if (Br) return lt;
+  Br = 1, Object.defineProperty(lt, "__esModule", { value: !0 });
   const s = me(), e = X(), t = _e(), r = ee(), i = {
     keyword: "additionalProperties",
     type: ["object"],
@@ -3882,11 +3882,11 @@ function $n() {
   };
   return lt.default = i, lt;
 }
-var ut = {}, Yr;
-function vi() {
-  if (Yr) return ut;
-  Yr = 1, Object.defineProperty(ut, "__esModule", { value: !0 });
-  const s = Mt(), e = me(), t = ee(), r = $n(), n = {
+var ut = {}, Hr;
+function mi() {
+  if (Hr) return ut;
+  Hr = 1, Object.defineProperty(ut, "__esModule", { value: !0 });
+  const s = Mt(), e = me(), t = ee(), r = yn(), n = {
     keyword: "properties",
     type: "object",
     schemaType: "object",
@@ -3917,10 +3917,10 @@ function vi() {
   };
   return ut.default = n, ut;
 }
-var dt = {}, Xr;
-function bi() {
-  if (Xr) return dt;
-  Xr = 1, Object.defineProperty(dt, "__esModule", { value: !0 });
+var dt = {}, Wr;
+function yi() {
+  if (Wr) return dt;
+  Wr = 1, Object.defineProperty(dt, "__esModule", { value: !0 });
   const s = me(), e = X(), t = ee(), r = ee(), n = {
     keyword: "patternProperties",
     type: "object",
@@ -3958,10 +3958,10 @@ function bi() {
   };
   return dt.default = n, dt;
 }
-var ht = {}, Qr;
-function wi() {
-  if (Qr) return ht;
-  Qr = 1, Object.defineProperty(ht, "__esModule", { value: !0 });
+var ht = {}, Jr;
+function gi() {
+  if (Jr) return ht;
+  Jr = 1, Object.defineProperty(ht, "__esModule", { value: !0 });
   const s = ee(), e = {
     keyword: "not",
     schemaType: ["object", "boolean"],
@@ -3984,10 +3984,10 @@ function wi() {
   };
   return ht.default = e, ht;
 }
-var ft = {}, Zr;
-function $i() {
-  if (Zr) return ft;
-  Zr = 1, Object.defineProperty(ft, "__esModule", { value: !0 });
+var ft = {}, Yr;
+function vi() {
+  if (Yr) return ft;
+  Yr = 1, Object.defineProperty(ft, "__esModule", { value: !0 });
   const e = {
     keyword: "anyOf",
     schemaType: "array",
@@ -3997,10 +3997,10 @@ function $i() {
   };
   return ft.default = e, ft;
 }
-var pt = {}, en;
-function _i() {
-  if (en) return pt;
-  en = 1, Object.defineProperty(pt, "__esModule", { value: !0 });
+var pt = {}, Xr;
+function bi() {
+  if (Xr) return pt;
+  Xr = 1, Object.defineProperty(pt, "__esModule", { value: !0 });
   const s = X(), e = ee(), r = {
     keyword: "oneOf",
     schemaType: "array",
@@ -4033,10 +4033,10 @@ function _i() {
   };
   return pt.default = r, pt;
 }
-var mt = {}, tn;
-function Si() {
-  if (tn) return mt;
-  tn = 1, Object.defineProperty(mt, "__esModule", { value: !0 });
+var mt = {}, Qr;
+function wi() {
+  if (Qr) return mt;
+  Qr = 1, Object.defineProperty(mt, "__esModule", { value: !0 });
   const s = ee(), e = {
     keyword: "allOf",
     schemaType: "array",
@@ -4055,10 +4055,10 @@ function Si() {
   };
   return mt.default = e, mt;
 }
-var yt = {}, rn;
-function Pi() {
-  if (rn) return yt;
-  rn = 1, Object.defineProperty(yt, "__esModule", { value: !0 });
+var yt = {}, Zr;
+function $i() {
+  if (Zr) return yt;
+  Zr = 1, Object.defineProperty(yt, "__esModule", { value: !0 });
   const s = X(), e = ee(), r = {
     keyword: "if",
     schemaType: ["object", "boolean"],
@@ -4102,10 +4102,10 @@ function Pi() {
   }
   return yt.default = r, yt;
 }
-var gt = {}, nn;
-function Ei() {
-  if (nn) return gt;
-  nn = 1, Object.defineProperty(gt, "__esModule", { value: !0 });
+var gt = {}, en;
+function _i() {
+  if (en) return gt;
+  en = 1, Object.defineProperty(gt, "__esModule", { value: !0 });
   const s = ee(), e = {
     keyword: ["then", "else"],
     schemaType: ["object", "boolean"],
@@ -4115,11 +4115,11 @@ function Ei() {
   };
   return gt.default = e, gt;
 }
-var sn;
-function Mi() {
-  if (sn) return it;
-  sn = 1, Object.defineProperty(it, "__esModule", { value: !0 });
-  const s = bn(), e = fi(), t = wn(), r = pi(), n = mi(), i = yi(), o = gi(), a = $n(), l = vi(), u = bi(), p = wi(), v = $i(), _ = _i(), $ = Si(), E = Pi(), w = Ei();
+var tn;
+function Si() {
+  if (tn) return it;
+  tn = 1, Object.defineProperty(it, "__esModule", { value: !0 });
+  const s = pn(), e = ui(), t = mn(), r = di(), n = hi(), i = fi(), o = pi(), a = yn(), l = mi(), u = yi(), p = gi(), v = vi(), _ = bi(), $ = wi(), E = $i(), w = _i();
   function f(d = !1) {
     const c = [
       // any
@@ -4140,10 +4140,10 @@ function Mi() {
   }
   return it.default = f, it;
 }
-var vt = {}, bt = {}, on;
-function Ti() {
-  if (on) return bt;
-  on = 1, Object.defineProperty(bt, "__esModule", { value: !0 });
+var vt = {}, bt = {}, rn;
+function Pi() {
+  if (rn) return bt;
+  rn = 1, Object.defineProperty(bt, "__esModule", { value: !0 });
   const s = X(), t = {
     keyword: "format",
     type: ["number", "string"],
@@ -4209,16 +4209,16 @@ function Ti() {
   };
   return bt.default = t, bt;
 }
-var an;
-function ki() {
-  if (an) return vt;
-  an = 1, Object.defineProperty(vt, "__esModule", { value: !0 });
-  const e = [Ti().default];
+var nn;
+function Ei() {
+  if (nn) return vt;
+  nn = 1, Object.defineProperty(vt, "__esModule", { value: !0 });
+  const e = [Pi().default];
   return vt.default = e, vt;
 }
-var Te = {}, cn;
-function Ai() {
-  return cn || (cn = 1, Object.defineProperty(Te, "__esModule", { value: !0 }), Te.contentVocabulary = Te.metadataVocabulary = void 0, Te.metadataVocabulary = [
+var Te = {}, sn;
+function Mi() {
+  return sn || (sn = 1, Object.defineProperty(Te, "__esModule", { value: !0 }), Te.contentVocabulary = Te.metadataVocabulary = void 0, Te.metadataVocabulary = [
     "title",
     "description",
     "default",
@@ -4232,11 +4232,11 @@ function Ai() {
     "contentSchema"
   ]), Te;
 }
-var ln;
-function Ri() {
-  if (ln) return Le;
-  ln = 1, Object.defineProperty(Le, "__esModule", { value: !0 });
-  const s = ei(), e = hi(), t = Mi(), r = ki(), n = Ai(), i = [
+var on;
+function Ti() {
+  if (on) return Le;
+  on = 1, Object.defineProperty(Le, "__esModule", { value: !0 });
+  const s = Xn(), e = li(), t = Si(), r = Ei(), n = Mi(), i = [
     s.default,
     e.default,
     (0, t.default)(),
@@ -4246,20 +4246,20 @@ function Ri() {
   ];
   return Le.default = i, Le;
 }
-var wt = {}, qe = {}, un;
-function Ni() {
-  if (un) return qe;
-  un = 1, Object.defineProperty(qe, "__esModule", { value: !0 }), qe.DiscrError = void 0;
+var wt = {}, qe = {}, an;
+function ki() {
+  if (an) return qe;
+  an = 1, Object.defineProperty(qe, "__esModule", { value: !0 }), qe.DiscrError = void 0;
   var s;
   return (function(e) {
     e.Tag = "tag", e.Mapping = "mapping";
   })(s || (qe.DiscrError = s = {})), qe;
 }
-var dn;
-function Ci() {
-  if (dn) return wt;
-  dn = 1, Object.defineProperty(wt, "__esModule", { value: !0 });
-  const s = X(), e = Ni(), t = Wt(), r = Tt(), n = ee(), o = {
+var cn;
+function Ai() {
+  if (cn) return wt;
+  cn = 1, Object.defineProperty(wt, "__esModule", { value: !0 });
+  const s = X(), e = ki(), t = Kt(), r = Tt(), n = ee(), o = {
     keyword: "discriminator",
     type: "object",
     schemaType: "object",
@@ -4332,20 +4332,20 @@ function Ci() {
   };
   return wt.default = o, wt;
 }
-const Ii = "http://json-schema.org/draft-07/schema#", ji = "http://json-schema.org/draft-07/schema#", qi = "Core schema meta-schema", Oi = { schemaArray: { type: "array", minItems: 1, items: { $ref: "#" } }, nonNegativeInteger: { type: "integer", minimum: 0 }, nonNegativeIntegerDefault0: { allOf: [{ $ref: "#/definitions/nonNegativeInteger" }, { default: 0 }] }, simpleTypes: { enum: ["array", "boolean", "integer", "null", "number", "object", "string"] }, stringArray: { type: "array", items: { type: "string" }, uniqueItems: !0, default: [] } }, Di = ["object", "boolean"], xi = { $id: { type: "string", format: "uri-reference" }, $schema: { type: "string", format: "uri" }, $ref: { type: "string", format: "uri-reference" }, $comment: { type: "string" }, title: { type: "string" }, description: { type: "string" }, default: !0, readOnly: { type: "boolean", default: !1 }, examples: { type: "array", items: !0 }, multipleOf: { type: "number", exclusiveMinimum: 0 }, maximum: { type: "number" }, exclusiveMaximum: { type: "number" }, minimum: { type: "number" }, exclusiveMinimum: { type: "number" }, maxLength: { $ref: "#/definitions/nonNegativeInteger" }, minLength: { $ref: "#/definitions/nonNegativeIntegerDefault0" }, pattern: { type: "string", format: "regex" }, additionalItems: { $ref: "#" }, items: { anyOf: [{ $ref: "#" }, { $ref: "#/definitions/schemaArray" }], default: !0 }, maxItems: { $ref: "#/definitions/nonNegativeInteger" }, minItems: { $ref: "#/definitions/nonNegativeIntegerDefault0" }, uniqueItems: { type: "boolean", default: !1 }, contains: { $ref: "#" }, maxProperties: { $ref: "#/definitions/nonNegativeInteger" }, minProperties: { $ref: "#/definitions/nonNegativeIntegerDefault0" }, required: { $ref: "#/definitions/stringArray" }, additionalProperties: { $ref: "#" }, definitions: { type: "object", additionalProperties: { $ref: "#" }, default: {} }, properties: { type: "object", additionalProperties: { $ref: "#" }, default: {} }, patternProperties: { type: "object", additionalProperties: { $ref: "#" }, propertyNames: { format: "regex" }, default: {} }, dependencies: { type: "object", additionalProperties: { anyOf: [{ $ref: "#" }, { $ref: "#/definitions/stringArray" }] } }, propertyNames: { $ref: "#" }, const: !0, enum: { type: "array", items: !0, minItems: 1, uniqueItems: !0 }, type: { anyOf: [{ $ref: "#/definitions/simpleTypes" }, { type: "array", items: { $ref: "#/definitions/simpleTypes" }, minItems: 1, uniqueItems: !0 }] }, format: { type: "string" }, contentMediaType: { type: "string" }, contentEncoding: { type: "string" }, if: { $ref: "#" }, then: { $ref: "#" }, else: { $ref: "#" }, allOf: { $ref: "#/definitions/schemaArray" }, anyOf: { $ref: "#/definitions/schemaArray" }, oneOf: { $ref: "#/definitions/schemaArray" }, not: { $ref: "#" } }, Vi = {
-  $schema: Ii,
-  $id: ji,
-  title: qi,
-  definitions: Oi,
-  type: Di,
-  properties: xi,
+const Ri = "http://json-schema.org/draft-07/schema#", Ni = "http://json-schema.org/draft-07/schema#", Ci = "Core schema meta-schema", Ii = { schemaArray: { type: "array", minItems: 1, items: { $ref: "#" } }, nonNegativeInteger: { type: "integer", minimum: 0 }, nonNegativeIntegerDefault0: { allOf: [{ $ref: "#/definitions/nonNegativeInteger" }, { default: 0 }] }, simpleTypes: { enum: ["array", "boolean", "integer", "null", "number", "object", "string"] }, stringArray: { type: "array", items: { type: "string" }, uniqueItems: !0, default: [] } }, ji = ["object", "boolean"], qi = { $id: { type: "string", format: "uri-reference" }, $schema: { type: "string", format: "uri" }, $ref: { type: "string", format: "uri-reference" }, $comment: { type: "string" }, title: { type: "string" }, description: { type: "string" }, default: !0, readOnly: { type: "boolean", default: !1 }, examples: { type: "array", items: !0 }, multipleOf: { type: "number", exclusiveMinimum: 0 }, maximum: { type: "number" }, exclusiveMaximum: { type: "number" }, minimum: { type: "number" }, exclusiveMinimum: { type: "number" }, maxLength: { $ref: "#/definitions/nonNegativeInteger" }, minLength: { $ref: "#/definitions/nonNegativeIntegerDefault0" }, pattern: { type: "string", format: "regex" }, additionalItems: { $ref: "#" }, items: { anyOf: [{ $ref: "#" }, { $ref: "#/definitions/schemaArray" }], default: !0 }, maxItems: { $ref: "#/definitions/nonNegativeInteger" }, minItems: { $ref: "#/definitions/nonNegativeIntegerDefault0" }, uniqueItems: { type: "boolean", default: !1 }, contains: { $ref: "#" }, maxProperties: { $ref: "#/definitions/nonNegativeInteger" }, minProperties: { $ref: "#/definitions/nonNegativeIntegerDefault0" }, required: { $ref: "#/definitions/stringArray" }, additionalProperties: { $ref: "#" }, definitions: { type: "object", additionalProperties: { $ref: "#" }, default: {} }, properties: { type: "object", additionalProperties: { $ref: "#" }, default: {} }, patternProperties: { type: "object", additionalProperties: { $ref: "#" }, propertyNames: { format: "regex" }, default: {} }, dependencies: { type: "object", additionalProperties: { anyOf: [{ $ref: "#" }, { $ref: "#/definitions/stringArray" }] } }, propertyNames: { $ref: "#" }, const: !0, enum: { type: "array", items: !0, minItems: 1, uniqueItems: !0 }, type: { anyOf: [{ $ref: "#/definitions/simpleTypes" }, { type: "array", items: { $ref: "#/definitions/simpleTypes" }, minItems: 1, uniqueItems: !0 }] }, format: { type: "string" }, contentMediaType: { type: "string" }, contentEncoding: { type: "string" }, if: { $ref: "#" }, then: { $ref: "#" }, else: { $ref: "#" }, allOf: { $ref: "#/definitions/schemaArray" }, anyOf: { $ref: "#/definitions/schemaArray" }, oneOf: { $ref: "#/definitions/schemaArray" }, not: { $ref: "#" } }, Oi = {
+  $schema: Ri,
+  $id: Ni,
+  title: Ci,
+  definitions: Ii,
+  type: ji,
+  properties: qi,
   default: !0
 };
-var hn;
-function Fi() {
-  return hn || (hn = 1, (function(s, e) {
+var ln;
+function Di() {
+  return ln || (ln = 1, (function(s, e) {
     Object.defineProperty(e, "__esModule", { value: !0 }), e.MissingRefError = e.ValidationError = e.CodeGen = e.Name = e.nil = e.stringify = e.str = e._ = e.KeywordCxt = e.Ajv = void 0;
-    const t = Xn(), r = Ri(), n = Ci(), i = Vi, o = ["/properties"], a = "http://json-schema.org/draft-07/schema";
+    const t = Wn(), r = Ti(), n = Ai(), i = Oi, o = ["/properties"], a = "http://json-schema.org/draft-07/schema";
     class l extends t.default {
       _addVocabularies() {
         super._addVocabularies(), r.default.forEach((E) => this.addVocabulary(E)), this.opts.discriminator && this.addKeyword(n.default);
@@ -4379,7 +4379,7 @@ function Fi() {
     } }), Object.defineProperty(e, "CodeGen", { enumerable: !0, get: function() {
       return p.CodeGen;
     } });
-    var v = Ht();
+    var v = Gt();
     Object.defineProperty(e, "ValidationError", { enumerable: !0, get: function() {
       return v.default;
     } });
@@ -4389,21 +4389,21 @@ function Fi() {
     } });
   })(De, De.exports)), De.exports;
 }
-var zi = Fi();
-const Li = /* @__PURE__ */ In(zi), Ui = "http://json-schema.org/draft-07/schema#", Gi = "JMON Composition (Multi-Track, Extended)", Ki = "A declarative music format supporting synthesis, MIDI, score notation, key changes, arbitrary metadata, annotations, and custom presets. Time values should use the bars:beats:ticks format (e.g., '2:1:240') for precise musical timing. This format is independent of BPM and follows professional DAW standards.", Bi = "object", Hi = ["format", "version", "bpm", "sequences"], Wi = /* @__PURE__ */ JSON.parse(`{"format":{"type":"string","const":"jmonTone","description":"The format identifier for the JMON schema."},"version":{"type":"string","description":"JMON schema version."},"bpm":{"type":"number","minimum":20,"maximum":400,"description":"Tempo in beats per minute."},"keySignature":{"type":"string","pattern":"^[A-G](#|b)?m?$","description":"Key signature (e.g., 'C', 'Am', 'F#')."},"keySignatureMap":{"type":"array","description":"Map of key signature changes over time.","items":{"type":"object","required":["time","keySignature"],"properties":{"time":{"oneOf":[{"type":"string","pattern":"^\\\\d+:\\\\d+(\\\\.\\\\d+)?:\\\\d+$","description":"Musical time in bars:beats:ticks format (e.g., '2:0:0')."},{"type":"number","description":"Legacy: Time in beats (deprecated)."}],"description":"Time of the key signature change."},"keySignature":{"type":"string","pattern":"^[A-G](#|b)?m?$","description":"New key signature at this time."}},"additionalProperties":false}},"timeSignature":{"type":"string","pattern":"^\\\\d+/\\\\d+$","description":"Time signature for the composition (e.g., '4/4')."},"tempoMap":{"type":"array","description":"Map of tempo changes over time.","items":{"type":"object","required":["time","bpm"],"properties":{"time":{"oneOf":[{"type":"string","pattern":"^\\\\d+:\\\\d+(\\\\.\\\\d+)?:\\\\d+$","description":"Musical time in bars:beats:ticks format (e.g., '4:0:0')."},{"type":"number","description":"Legacy: Time in beats (deprecated)."}],"description":"The time point for the tempo change."},"bpm":{"type":"number","minimum":20,"maximum":400,"description":"Tempo in beats per minute at this time point."}},"additionalProperties":false}},"transport":{"type":"object","description":"Settings controlling global playback and looping.","properties":{"startOffset":{"oneOf":[{"type":"string","pattern":"^\\\\d+:\\\\d+(\\\\.\\\\d+)?:\\\\d+$","description":"Musical time in bars:beats:ticks format (e.g., '0:2:0')."},{"type":"number","description":"Legacy: Time in beats (deprecated)."}],"description":"Offset for when playback should start."},"globalLoop":{"type":"boolean","description":"Whether the entire project should loop."},"globalLoopEnd":{"type":"string","pattern":"^\\\\d+:\\\\d+(\\\\.\\\\d+)?:\\\\d+$","description":"Musical time in bars:beats:ticks format where the global loop should end (e.g., '8:0:0')."},"swing":{"type":"number","minimum":0,"maximum":1,"description":"Swing amount (0-1)."}},"additionalProperties":false},"metadata":{"type":"object","description":"Metadata for the composition, allowing arbitrary fields.","properties":{"name":{"type":"string","description":"Name of the composition."},"author":{"type":"string","description":"Author or composer."},"description":{"type":"string","description":"Description of the composition."}},"additionalProperties":true},"customPresets":{"type":"array","description":"Array of custom user-defined presets for synths or effects.","items":{"type":"object","required":["id","type","options"],"properties":{"id":{"type":"string","description":"Unique identifier for this preset."},"type":{"type":"string","description":"Type of preset (e.g., 'Synth', 'Effect', 'Sampler')."},"options":{"type":"object","description":"Preset options."}},"additionalProperties":false}},"audioGraph":{"type":"array","description":"Audio node graph for synthesis. If not provided, a default synth->master setup will be created automatically.","default":[{"id":"synth","type":"Synth","options":{}},{"id":"master","type":"Destination","options":{}}],"items":{"type":"object","required":["id","type","options"],"properties":{"id":{"type":"string","description":"Unique identifier for this node."},"type":{"type":"string","enum":["Synth","PolySynth","MonoSynth","AMSynth","FMSynth","DuoSynth","PluckSynth","NoiseSynth","Sampler","Filter","AutoFilter","Reverb","FeedbackDelay","PingPongDelay","Delay","Chorus","Phaser","Tremolo","Vibrato","AutoWah","Distortion","Chebyshev","BitCrusher","Compressor","Limiter","Gate","FrequencyShifter","PitchShift","JCReverb","Freeverb","StereoWidener","MidSideCompressor","Destination"],"description":"Type of audio node (Synth, Sampler, Effect, etc.)."},"options":{"type":"object","description":"Options for this node. Content varies by node type."},"target":{"type":"string","description":"Target node for audio routing."},"presetRef":{"type":"string","description":"Reference to a custom preset."}},"allOf":[{"if":{"properties":{"type":{"const":"Sampler"}}},"then":{"properties":{"options":{"type":"object","properties":{"urls":{"type":"object","description":"Sample URLs for Sampler nodes (note -> file path mapping)","patternProperties":{"^[A-G](#|b)?[0-8]$":{"type":"string","description":"File path to sample for this note"}}},"envelope":{"type":"object","description":"Automatic envelope for Samplers to smooth attack/release","properties":{"enabled":{"type":"boolean","default":true,"description":"Whether to apply automatic envelope"},"attack":{"type":"number","minimum":0,"maximum":2,"default":0.02,"description":"Attack time in seconds"},"decay":{"type":"number","minimum":0,"maximum":2,"default":0.1,"description":"Decay time in seconds"},"sustain":{"type":"number","minimum":0,"maximum":1,"default":0.8,"description":"Sustain level (0-1)"},"release":{"type":"number","minimum":0,"maximum":5,"default":0.3,"description":"Release time in seconds"}},"additionalProperties":false}},"additionalProperties":false}}}},{"if":{"properties":{"type":{"enum":["Synth","PolySynth","MonoSynth","AMSynth","FMSynth","DuoSynth","PluckSynth","NoiseSynth"]}}},"then":{"properties":{"options":{"type":"object","properties":{"oscillator":{"type":"object","description":"Oscillator settings for synths"},"envelope":{"type":"object","description":"ADSR envelope settings for synths"},"filter":{"type":"object","description":"Filter settings for synths"}},"additionalProperties":true}}}},{"if":{"properties":{"type":{"enum":["Reverb","JCReverb","Freeverb"]}}},"then":{"properties":{"options":{"type":"object","properties":{"wet":{"type":"number","minimum":0,"maximum":1,"default":0.5,"description":"Wet/dry mix (0=dry, 1=wet)"},"roomSize":{"type":"number","minimum":0,"maximum":1,"default":0.7,"description":"Room size for reverb effects"},"dampening":{"type":"number","minimum":0,"maximum":1,"default":0.3,"description":"Dampening for reverb effects"}},"additionalProperties":false}}}},{"if":{"properties":{"type":{"enum":["Delay","FeedbackDelay","PingPongDelay"]}}},"then":{"properties":{"options":{"type":"object","properties":{"wet":{"type":"number","minimum":0,"maximum":1,"default":0.5,"description":"Wet/dry mix (0=dry, 1=wet)"},"delayTime":{"type":"string","default":"8n","description":"Delay time (note values like '8n' or seconds)"},"feedback":{"type":"number","minimum":0,"maximum":0.95,"default":0.4,"description":"Feedback amount for delay effects"}},"additionalProperties":false}}}},{"if":{"properties":{"type":{"enum":["Filter","AutoFilter"]}}},"then":{"properties":{"options":{"type":"object","properties":{"frequency":{"type":"number","minimum":20,"maximum":20000,"default":1000,"description":"Filter frequency"},"Q":{"type":"number","minimum":0.1,"maximum":50,"default":1,"description":"Filter Q/resonance"},"type":{"type":"string","enum":["lowpass","highpass","bandpass","notch"],"default":"lowpass","description":"Filter type"}},"additionalProperties":false}}}},{"if":{"properties":{"type":{"enum":["Chorus","Phaser"]}}},"then":{"properties":{"options":{"type":"object","properties":{"wet":{"type":"number","minimum":0,"maximum":1,"default":0.5,"description":"Wet/dry mix (0=dry, 1=wet)"},"depth":{"type":"number","minimum":0,"maximum":1,"default":0.5,"description":"Modulation depth"},"rate":{"type":"string","default":"4n","description":"Modulation rate (note values or Hz)"}},"additionalProperties":false}}}},{"if":{"properties":{"type":{"enum":["Compressor","Limiter","Gate"]}}},"then":{"properties":{"options":{"type":"object","properties":{"threshold":{"type":"number","minimum":-60,"maximum":0,"default":-24,"description":"Threshold in dB"},"ratio":{"type":"number","minimum":1,"maximum":20,"default":4,"description":"Compression ratio"},"attack":{"type":"number","minimum":0,"maximum":1,"default":0.003,"description":"Attack time for compressor/gate"},"release":{"type":"number","minimum":0,"maximum":1,"default":0.1,"description":"Release time for compressor/gate"}},"additionalProperties":false}}}},{"if":{"properties":{"type":{"enum":["Distortion","Chebyshev"]}}},"then":{"properties":{"options":{"type":"object","properties":{"wet":{"type":"number","minimum":0,"maximum":1,"default":0.5,"description":"Wet/dry mix (0=dry, 1=wet)"},"distortion":{"type":"number","minimum":0,"maximum":1,"default":0.4,"description":"Distortion amount"}},"additionalProperties":false}}}},{"if":{"properties":{"type":{"const":"BitCrusher"}}},"then":{"properties":{"options":{"type":"object","properties":{"wet":{"type":"number","minimum":0,"maximum":1,"default":0.5,"description":"Wet/dry mix (0=dry, 1=wet)"},"bits":{"type":"number","minimum":1,"maximum":16,"default":4,"description":"Bit depth for BitCrusher"}},"additionalProperties":false}}}},{"if":{"properties":{"type":{"const":"Tremolo"}}},"then":{"properties":{"options":{"type":"object","properties":{"wet":{"type":"number","minimum":0,"maximum":1,"default":1,"description":"Wet/dry mix (0=dry, 1=wet)"},"frequency":{"type":"number","minimum":0.1,"maximum":20,"default":4,"description":"Tremolo frequency in Hz"},"depth":{"type":"number","minimum":0,"maximum":1,"default":0.5,"description":"Tremolo depth"}},"additionalProperties":false}}}},{"if":{"properties":{"type":{"const":"Destination"}}},"then":{"properties":{"options":{"type":"object","properties":{},"additionalProperties":false}}}}],"additionalProperties":false}},"connections":{"type":"array","description":"Array of audio graph connections. Each is a two-element array [source, target]. If not provided, default connections will be created automatically.","default":[["synth","master"]],"items":{"type":"array","minItems":2,"maxItems":2,"items":{"type":"string"}}},"sequences":{"type":"array","description":"Musical sequences (tracks or parts).","items":{"type":"object","required":["label","notes"],"properties":{"label":{"type":"string","description":"Label for this sequence (e.g., 'lead', 'bass', etc.)."},"midiChannel":{"type":"integer","minimum":0,"maximum":15,"description":"Default MIDI channel for this sequence (0-15)."},"synth":{"type":"object","required":["type"],"properties":{"type":{"type":"string","enum":["Synth","PolySynth","MonoSynth","AMSynth","FMSynth","DuoSynth","PluckSynth","NoiseSynth","Sampler"],"description":"Type of synthesizer (Synth, Sampler, AMSynth, FMSynth, etc.)."},"options":{"type":"object","description":"Synthesizer options."},"presetRef":{"type":"string","description":"Reference to a custom preset."},"modulationTarget":{"type":"string","enum":["vibrato","tremolo","glissando","filter"],"description":"Target for modulation wheel (CC1) control. Determines how modulation wheel affects the synth."}},"additionalProperties":false,"description":"Synthesizer definition for this sequence."},"synthRef":{"type":"string","description":"Reference to an audioGraph node to use as the synth."},"notes":{"type":"array","description":"Array of note events.","items":{"type":"object","required":["pitch","time","duration"],"properties":{"pitch":{"oneOf":[{"type":"number","description":"MIDI note number (preferred)."},{"type":"string","description":"Note name (e.g., 'C4', 'G#3')."},{"type":"array","description":"Chord (array of MIDI numbers or note names).","items":{"oneOf":[{"type":"number"},{"type":"string"}]}}]},"time":{"oneOf":[{"type":"string","pattern":"^\\\\d+:\\\\d+(\\\\.\\\\d+)?:\\\\d+$","description":"Musical time in bars:beats:ticks format (e.g., '0:2:0', '1:3.5:240'). Preferred format for precise musical timing."},{"type":"string","pattern":"^(\\\\d+n|\\\\d+t)$","description":"Tone.js note values (e.g., '4n', '8t') for relative timing."},{"type":"number","description":"Legacy: Time in beats (deprecated, use bars:beats:ticks format instead)."}]},"duration":{"oneOf":[{"type":"string","pattern":"^(\\\\d+n|\\\\d+t|\\\\d+:\\\\d+(\\\\.\\\\d+)?:\\\\d+)$","description":"Musical duration using Tone.js note values (e.g., '4n', '8n', '2t') or bars:beats:ticks format (e.g., '1:0:0')."},{"type":"number","description":"Legacy: Duration in seconds (deprecated, use note values instead)."}]},"velocity":{"type":"number","minimum":0,"maximum":1,"description":"Note velocity (0-1)."},"articulation":{"type":"string","description":"Articulation (e.g., 'staccato', 'accent')."},"microtuning":{"type":"number","description":"Microtuning adjustment in semitones."},"channel":{"type":"integer","minimum":0,"maximum":15,"description":"Override sequence MIDI channel for this note (0-15)."},"modulations":{"type":"array","description":"Per-note modulation events (CC, pitch bend, aftertouch).","items":{"type":"object","required":["type","value","time"],"properties":{"type":{"type":"string","enum":["cc","pitchBend","aftertouch"],"description":"Type of MIDI modulation event."},"controller":{"type":"integer","description":"MIDI CC number (required for type: 'cc')."},"value":{"type":"number","description":"Value for this modulation: 0-127 for CC, -8192 to +8192 for pitchBend (14-bit, maps to ±2 semitones), 0-127 for aftertouch."},"time":{"oneOf":[{"type":"string","pattern":"^(\\\\d+n|\\\\d+t|\\\\d+:\\\\d+(\\\\.\\\\d+)?:\\\\d+)$","description":"Relative time using note values (e.g., '8n') or bars:beats:ticks (e.g., '0:0:240')."},{"type":"number","description":"Legacy: Relative time in seconds (deprecated)."}],"description":"When this modulation event happens (relative to note start)."}},"additionalProperties":false}}},"additionalProperties":false}},"loop":{"oneOf":[{"type":"boolean"},{"type":"string"}],"description":"Whether this sequence loops, or string for musical duration."},"loopEnd":{"type":"string","pattern":"^\\\\d+:\\\\d+(\\\\.\\\\d+)?:\\\\d+$","description":"Musical time in bars:beats:ticks format to end the loop (e.g., '4:0:0')."},"effects":{"type":"array","description":"Sequence-level effects.","items":{"type":"object","required":["type"],"properties":{"type":{"type":"string","description":"Type of effect (e.g., 'Reverb', 'Delay')."},"options":{"type":"object","description":"Options for this effect."},"presetRef":{"type":"string","description":"Reference to a custom preset."}},"additionalProperties":false}},"automation":{"type":"array","description":"Sequence-level automation channels affecting only this sequence.","items":{"$ref":"#/definitions/automationChannel"}}},"additionalProperties":false}},"automation":{"type":"object","description":"Multi-level automation system with interpolation support.","properties":{"enabled":{"type":"boolean","default":true,"description":"Whether automation is enabled globally."},"global":{"type":"array","description":"Global automation channels affecting the entire composition.","items":{"$ref":"#/definitions/automationChannel"}},"sequences":{"type":"object","description":"Sequence-level automation channels organized by sequence ID.","patternProperties":{".*":{"type":"array","description":"Automation channels for this sequence.","items":{"$ref":"#/definitions/automationChannel"}}},"additionalProperties":false},"events":{"type":"array","description":"Legacy automation events (deprecated, use channels instead).","items":{"type":"object","required":["target","time","value"],"properties":{"target":{"type":"string","description":"Parameter to automate, e.g., 'synth.frequency', 'effect.mix', 'midi.cc1'."},"time":{"oneOf":[{"type":"string","pattern":"^\\\\d+:\\\\d+(\\\\.\\\\d+)?:\\\\d+$","description":"Musical time in bars:beats:ticks format."},{"type":"number","description":"Legacy: Time in beats (deprecated)."}]},"value":{"type":"number","description":"Target value for the parameter."}},"additionalProperties":false}}},"additionalProperties":false},"annotations":{"type":"array","description":"Annotations (e.g., lyrics, rehearsal marks, comments) in the composition.","items":{"type":"object","required":["text","time"],"properties":{"text":{"type":"string","description":"Annotation text (e.g., lyric, instruction, label)."},"time":{"oneOf":[{"type":"string","pattern":"^\\\\d+:\\\\d+(\\\\.\\\\d+)?:\\\\d+$","description":"Musical time in bars:beats:ticks format (e.g., '1:2:0')."},{"type":"number","description":"Legacy: Time in beats (deprecated)."}]},"type":{"type":"string","description":"Type of annotation (e.g., 'lyric', 'marker', 'comment', 'rehearsal')."},"duration":{"oneOf":[{"type":"string","pattern":"^(\\\\d+n|\\\\d+t|\\\\d+:\\\\d+(\\\\.\\\\d+)?:\\\\d+)$","description":"Musical duration using note values (e.g., '4n') or bars:beats:ticks (e.g., '1:0:0')."},{"type":"number","description":"Legacy: Duration in seconds (deprecated)."}],"description":"Optional duration for annotation (e.g., for lyrics or extended comments)."}},"additionalProperties":false}},"timeSignatureMap":{"type":"array","description":"Map of time signature changes over time.","items":{"type":"object","required":["time","timeSignature"],"properties":{"time":{"oneOf":[{"type":"string","pattern":"^\\\\d+:\\\\d+(\\\\.\\\\d+)?:\\\\d+$","description":"Musical time in bars:beats:ticks format (e.g., '8:0:0')."},{"type":"number","description":"Legacy: Time in beats (deprecated)."}],"description":"Time of the time signature change."},"timeSignature":{"type":"string","pattern":"^\\\\d+/\\\\d+$","description":"New time signature at this time."}},"additionalProperties":false}},"synthConfig":{"type":"object","description":"Global synthesizer configuration that applies to all sequences unless overridden.","properties":{"type":{"type":"string","enum":["Synth","PolySynth","MonoSynth","AMSynth","FMSynth","DuoSynth","PluckSynth","NoiseSynth","Sampler"],"description":"Default synthesizer type (Synth, Sampler, AMSynth, FMSynth, etc.)."},"modulationTarget":{"type":"string","enum":["vibrato","tremolo","glissando","filter"],"description":"Default target for modulation wheel (CC1) control across all sequences."},"options":{"type":"object","description":"Default synthesizer options applied globally.","properties":{"envelope":{"type":"object","description":"Automatic envelope settings for Samplers to avoid abrupt cuts","properties":{"enabled":{"type":"boolean","default":true,"description":"Whether to apply automatic envelope to Samplers"},"attack":{"type":"number","minimum":0,"maximum":2,"default":0.02,"description":"Attack time in seconds"},"decay":{"type":"number","minimum":0,"maximum":2,"default":0.1,"description":"Decay time in seconds"},"sustain":{"type":"number","minimum":0,"maximum":1,"default":0.8,"description":"Sustain level (0-1)"},"release":{"type":"number","minimum":0,"maximum":5,"default":0.3,"description":"Release time in seconds"}},"additionalProperties":false}}}},"additionalProperties":false},"converterHints":{"type":"object","description":"Optional hints to guide specific converters.","properties":{"tone":{"type":"object","description":"Hints for jmon-tone.js converter.","patternProperties":{"^cc[0-9]+$":{"type":"object","description":"Hint configuration for a MIDI CC controller mapping.","properties":{"target":{"type":"string","description":"Target for this CC mapping - can be legacy target (filter, vibrato, tremolo, glissando) or specific effect node ID from audioGraph."},"parameter":{"type":"string","description":"Parameter name to control on the target effect (e.g., 'frequency', 'depth', 'Q')."},"frequency":{"type":"number","description":"Modulation rate in Hz (for vibrato/tremolo)."},"depthRange":{"type":"array","description":"Min/max depth or frequency range for the parameter.","items":{"type":"number"},"minItems":2,"maxItems":2}},"required":["target"],"additionalProperties":false}},"additionalProperties":false},"midi":{"type":"object","description":"Hints for jmon-midi.js converter.","properties":{"channel":{"type":"integer","minimum":0,"maximum":15,"description":"Default MIDI channel for outgoing messages."},"port":{"type":"string","description":"MIDI port name or identifier."}},"additionalProperties":false}},"additionalProperties":false}}`), Ji = { automationChannel: { type: "object", description: "Automation channel with interpolation support and anchor points.", required: ["id", "target", "anchorPoints"], properties: { id: { type: "string", description: "Unique identifier for this automation channel." }, name: { type: "string", description: "Human-readable name for this automation channel." }, target: { type: "string", description: "JMON target parameter (e.g., 'synth.frequency', 'midi.cc1', 'effect.mix')." }, level: { type: "string", enum: ["global", "sequence", "note"], default: "global", description: "Automation level: global (entire composition), sequence (per track), or note (per note velocity)." }, sequenceId: { type: "string", description: "Target sequence ID for sequence-level automation." }, range: { type: "array", items: { type: "number" }, minItems: 2, maxItems: 2, default: [0, 127], description: "Value range [min, max] for this automation parameter." }, interpolation: { type: "string", enum: ["linear", "quadratic", "cubic", "daw"], default: "daw", description: "Interpolation type: linear, quadratic (curve), cubic (smoothstep), or daw (Hermite splines)." }, enabled: { type: "boolean", default: !0, description: "Whether this automation channel is enabled." }, anchorPoints: { type: "array", description: "Automation anchor points defining the curve.", items: { type: "object", required: ["time", "value"], properties: { time: { oneOf: [{ type: "string", pattern: "^\\d+:\\d+(\\.\\d+)?:\\d+$", description: "Musical time in bars:beats:ticks format (e.g., '2:1:240')." }, { type: "number", description: "Time in measures (e.g., 2.5 = 2 bars + 2 beats in 4/4)." }] }, value: { type: "number", description: "Automation value at this time point." }, tangent: { type: "number", description: "Optional tangent/slope for Hermite interpolation (DAW mode)." } }, additionalProperties: !1 } } }, additionalProperties: !1 } }, Yi = !1, Xi = [{ description: "Basic modulation example with pitch bend and modulation wheel", composition: { format: "jmonTone", version: "1.0", bpm: 120, synthConfig: { type: "Synth", modulationTarget: "filter" }, audioGraph: [{ id: "master", type: "Destination", options: {} }], connections: [], sequences: [{ label: "Modulation Demo", notes: [{ pitch: "C4", time: "0:0:0", duration: "2n", velocity: 0.8, modulations: [{ type: "pitchBend", value: -4096, time: "0:0:0" }, { type: "pitchBend", value: 4096, time: "0:1.5:0" }] }, { pitch: "G4", time: "0:2:0", duration: "2n", velocity: 0.8, modulations: [{ type: "cc", controller: 1, value: 0, time: "0:0:0" }, { type: "cc", controller: 1, value: 127, time: "0:1.5:0" }] }] }] } }, { description: "Multi-level automation example with interpolation", composition: { format: "jmonTone", version: "1.0", bpm: 120, audioGraph: [{ id: "master", type: "Destination", options: {} }, { id: "reverb", type: "Reverb", options: { wet: 0.3 } }], connections: [["reverb", "master"]], automation: { enabled: !0, global: [{ id: "master-volume", name: "Master Volume", target: "synth.volume", level: "global", range: [0, 1], interpolation: "cubic", anchorPoints: [{ time: "0:0:0", value: 0 }, { time: "2:0:0", value: 0.8 }, { time: "6:0:0", value: 0.6 }, { time: "8:0:0", value: 0 }] }], sequences: { lead: [{ id: "lead-filter", name: "Lead Filter Sweep", target: "synth.filter.frequency", level: "sequence", sequenceId: "lead", range: [200, 8e3], interpolation: "daw", anchorPoints: [{ time: "0:0:0", value: 200, tangent: 0 }, { time: "1:0:0", value: 2e3, tangent: 1.5 }, { time: "3:0:0", value: 8e3, tangent: 0 }] }] } }, sequences: [{ label: "lead", notes: [{ pitch: "C4", time: "0:0:0", duration: "1n", velocity: 0.8 }, { pitch: "E4", time: "1:0:0", duration: "1n", velocity: 0.7 }, { pitch: "G4", time: "2:0:0", duration: "1n", velocity: 0.9 }] }] } }, { description: "Vibrato modulation example", composition: { format: "jmonTone", version: "1.0", bpm: 120, audioGraph: [{ id: "master", type: "Destination", options: {} }], connections: [], sequences: [{ label: "Vibrato Demo", synth: { type: "Synth", modulationTarget: "vibrato" }, notes: [{ pitch: "A4", time: "0:0:0", duration: "1n", velocity: 0.8, modulations: [{ type: "cc", controller: 1, value: 0, time: "0:0:0" }, { type: "cc", controller: 1, value: 127, time: "0:3:0" }] }] }] } }], Qi = {
-  $schema: Ui,
-  title: Gi,
-  description: Ki,
-  type: Bi,
-  required: Hi,
-  properties: Wi,
-  definitions: Ji,
-  additionalProperties: Yi,
-  examples: Xi
+var xi = Di();
+const Vi = /* @__PURE__ */ Rn(xi), Fi = "http://json-schema.org/draft-07/schema#", zi = "JMON Composition (Multi-Track, Extended)", Li = "A declarative music format supporting synthesis, MIDI, score notation, key changes, arbitrary metadata, annotations, and custom presets. Time values should use the bars:beats:ticks format (e.g., '2:1:240') for precise musical timing. This format is independent of BPM and follows professional DAW standards.", Ui = "object", Gi = ["format", "version", "bpm", "sequences"], Ki = /* @__PURE__ */ JSON.parse(`{"format":{"type":"string","const":"jmonTone","description":"The format identifier for the JMON schema."},"version":{"type":"string","description":"JMON schema version."},"bpm":{"type":"number","minimum":20,"maximum":400,"description":"Tempo in beats per minute."},"keySignature":{"type":"string","pattern":"^[A-G](#|b)?m?$","description":"Key signature (e.g., 'C', 'Am', 'F#')."},"keySignatureMap":{"type":"array","description":"Map of key signature changes over time.","items":{"type":"object","required":["time","keySignature"],"properties":{"time":{"oneOf":[{"type":"string","pattern":"^\\\\d+:\\\\d+(\\\\.\\\\d+)?:\\\\d+$","description":"Musical time in bars:beats:ticks format (e.g., '2:0:0')."},{"type":"number","description":"Legacy: Time in beats (deprecated)."}],"description":"Time of the key signature change."},"keySignature":{"type":"string","pattern":"^[A-G](#|b)?m?$","description":"New key signature at this time."}},"additionalProperties":false}},"timeSignature":{"type":"string","pattern":"^\\\\d+/\\\\d+$","description":"Time signature for the composition (e.g., '4/4')."},"tempoMap":{"type":"array","description":"Map of tempo changes over time.","items":{"type":"object","required":["time","bpm"],"properties":{"time":{"oneOf":[{"type":"string","pattern":"^\\\\d+:\\\\d+(\\\\.\\\\d+)?:\\\\d+$","description":"Musical time in bars:beats:ticks format (e.g., '4:0:0')."},{"type":"number","description":"Legacy: Time in beats (deprecated)."}],"description":"The time point for the tempo change."},"bpm":{"type":"number","minimum":20,"maximum":400,"description":"Tempo in beats per minute at this time point."}},"additionalProperties":false}},"transport":{"type":"object","description":"Settings controlling global playback and looping.","properties":{"startOffset":{"oneOf":[{"type":"string","pattern":"^\\\\d+:\\\\d+(\\\\.\\\\d+)?:\\\\d+$","description":"Musical time in bars:beats:ticks format (e.g., '0:2:0')."},{"type":"number","description":"Legacy: Time in beats (deprecated)."}],"description":"Offset for when playback should start."},"globalLoop":{"type":"boolean","description":"Whether the entire project should loop."},"globalLoopEnd":{"type":"string","pattern":"^\\\\d+:\\\\d+(\\\\.\\\\d+)?:\\\\d+$","description":"Musical time in bars:beats:ticks format where the global loop should end (e.g., '8:0:0')."},"swing":{"type":"number","minimum":0,"maximum":1,"description":"Swing amount (0-1)."}},"additionalProperties":false},"metadata":{"type":"object","description":"Metadata for the composition, allowing arbitrary fields.","properties":{"name":{"type":"string","description":"Name of the composition."},"author":{"type":"string","description":"Author or composer."},"description":{"type":"string","description":"Description of the composition."}},"additionalProperties":true},"customPresets":{"type":"array","description":"Array of custom user-defined presets for synths or effects.","items":{"type":"object","required":["id","type","options"],"properties":{"id":{"type":"string","description":"Unique identifier for this preset."},"type":{"type":"string","description":"Type of preset (e.g., 'Synth', 'Effect', 'Sampler')."},"options":{"type":"object","description":"Preset options."}},"additionalProperties":false}},"audioGraph":{"type":"array","description":"Audio node graph for synthesis. If not provided, a default synth->master setup will be created automatically.","default":[{"id":"synth","type":"Synth","options":{}},{"id":"master","type":"Destination","options":{}}],"items":{"type":"object","required":["id","type","options"],"properties":{"id":{"type":"string","description":"Unique identifier for this node."},"type":{"type":"string","enum":["Synth","PolySynth","MonoSynth","AMSynth","FMSynth","DuoSynth","PluckSynth","NoiseSynth","Sampler","Filter","AutoFilter","Reverb","FeedbackDelay","PingPongDelay","Delay","Chorus","Phaser","Tremolo","Vibrato","AutoWah","Distortion","Chebyshev","BitCrusher","Compressor","Limiter","Gate","FrequencyShifter","PitchShift","JCReverb","Freeverb","StereoWidener","MidSideCompressor","Destination"],"description":"Type of audio node (Synth, Sampler, Effect, etc.)."},"options":{"type":"object","description":"Options for this node. Content varies by node type."},"target":{"type":"string","description":"Target node for audio routing."},"presetRef":{"type":"string","description":"Reference to a custom preset."}},"allOf":[{"if":{"properties":{"type":{"const":"Sampler"}}},"then":{"properties":{"options":{"type":"object","properties":{"urls":{"type":"object","description":"Sample URLs for Sampler nodes (note -> file path mapping)","patternProperties":{"^[A-G](#|b)?[0-8]$":{"type":"string","description":"File path to sample for this note"}}},"envelope":{"type":"object","description":"Automatic envelope for Samplers to smooth attack/release","properties":{"enabled":{"type":"boolean","default":true,"description":"Whether to apply automatic envelope"},"attack":{"type":"number","minimum":0,"maximum":2,"default":0.02,"description":"Attack time in seconds"},"decay":{"type":"number","minimum":0,"maximum":2,"default":0.1,"description":"Decay time in seconds"},"sustain":{"type":"number","minimum":0,"maximum":1,"default":0.8,"description":"Sustain level (0-1)"},"release":{"type":"number","minimum":0,"maximum":5,"default":0.3,"description":"Release time in seconds"}},"additionalProperties":false}},"additionalProperties":false}}}},{"if":{"properties":{"type":{"enum":["Synth","PolySynth","MonoSynth","AMSynth","FMSynth","DuoSynth","PluckSynth","NoiseSynth"]}}},"then":{"properties":{"options":{"type":"object","properties":{"oscillator":{"type":"object","description":"Oscillator settings for synths"},"envelope":{"type":"object","description":"ADSR envelope settings for synths"},"filter":{"type":"object","description":"Filter settings for synths"}},"additionalProperties":true}}}},{"if":{"properties":{"type":{"enum":["Reverb","JCReverb","Freeverb"]}}},"then":{"properties":{"options":{"type":"object","properties":{"wet":{"type":"number","minimum":0,"maximum":1,"default":0.5,"description":"Wet/dry mix (0=dry, 1=wet)"},"roomSize":{"type":"number","minimum":0,"maximum":1,"default":0.7,"description":"Room size for reverb effects"},"dampening":{"type":"number","minimum":0,"maximum":1,"default":0.3,"description":"Dampening for reverb effects"}},"additionalProperties":false}}}},{"if":{"properties":{"type":{"enum":["Delay","FeedbackDelay","PingPongDelay"]}}},"then":{"properties":{"options":{"type":"object","properties":{"wet":{"type":"number","minimum":0,"maximum":1,"default":0.5,"description":"Wet/dry mix (0=dry, 1=wet)"},"delayTime":{"type":"string","default":"8n","description":"Delay time (note values like '8n' or seconds)"},"feedback":{"type":"number","minimum":0,"maximum":0.95,"default":0.4,"description":"Feedback amount for delay effects"}},"additionalProperties":false}}}},{"if":{"properties":{"type":{"enum":["Filter","AutoFilter"]}}},"then":{"properties":{"options":{"type":"object","properties":{"frequency":{"type":"number","minimum":20,"maximum":20000,"default":1000,"description":"Filter frequency"},"Q":{"type":"number","minimum":0.1,"maximum":50,"default":1,"description":"Filter Q/resonance"},"type":{"type":"string","enum":["lowpass","highpass","bandpass","notch"],"default":"lowpass","description":"Filter type"}},"additionalProperties":false}}}},{"if":{"properties":{"type":{"enum":["Chorus","Phaser"]}}},"then":{"properties":{"options":{"type":"object","properties":{"wet":{"type":"number","minimum":0,"maximum":1,"default":0.5,"description":"Wet/dry mix (0=dry, 1=wet)"},"depth":{"type":"number","minimum":0,"maximum":1,"default":0.5,"description":"Modulation depth"},"rate":{"type":"string","default":"4n","description":"Modulation rate (note values or Hz)"}},"additionalProperties":false}}}},{"if":{"properties":{"type":{"enum":["Compressor","Limiter","Gate"]}}},"then":{"properties":{"options":{"type":"object","properties":{"threshold":{"type":"number","minimum":-60,"maximum":0,"default":-24,"description":"Threshold in dB"},"ratio":{"type":"number","minimum":1,"maximum":20,"default":4,"description":"Compression ratio"},"attack":{"type":"number","minimum":0,"maximum":1,"default":0.003,"description":"Attack time for compressor/gate"},"release":{"type":"number","minimum":0,"maximum":1,"default":0.1,"description":"Release time for compressor/gate"}},"additionalProperties":false}}}},{"if":{"properties":{"type":{"enum":["Distortion","Chebyshev"]}}},"then":{"properties":{"options":{"type":"object","properties":{"wet":{"type":"number","minimum":0,"maximum":1,"default":0.5,"description":"Wet/dry mix (0=dry, 1=wet)"},"distortion":{"type":"number","minimum":0,"maximum":1,"default":0.4,"description":"Distortion amount"}},"additionalProperties":false}}}},{"if":{"properties":{"type":{"const":"BitCrusher"}}},"then":{"properties":{"options":{"type":"object","properties":{"wet":{"type":"number","minimum":0,"maximum":1,"default":0.5,"description":"Wet/dry mix (0=dry, 1=wet)"},"bits":{"type":"number","minimum":1,"maximum":16,"default":4,"description":"Bit depth for BitCrusher"}},"additionalProperties":false}}}},{"if":{"properties":{"type":{"const":"Tremolo"}}},"then":{"properties":{"options":{"type":"object","properties":{"wet":{"type":"number","minimum":0,"maximum":1,"default":1,"description":"Wet/dry mix (0=dry, 1=wet)"},"frequency":{"type":"number","minimum":0.1,"maximum":20,"default":4,"description":"Tremolo frequency in Hz"},"depth":{"type":"number","minimum":0,"maximum":1,"default":0.5,"description":"Tremolo depth"}},"additionalProperties":false}}}},{"if":{"properties":{"type":{"const":"Destination"}}},"then":{"properties":{"options":{"type":"object","properties":{},"additionalProperties":false}}}}],"additionalProperties":false}},"connections":{"type":"array","description":"Array of audio graph connections. Each is a two-element array [source, target]. If not provided, default connections will be created automatically.","default":[["synth","master"]],"items":{"type":"array","minItems":2,"maxItems":2,"items":{"type":"string"}}},"sequences":{"type":"array","description":"Musical sequences (tracks or parts).","items":{"type":"object","required":["label","notes"],"properties":{"label":{"type":"string","description":"Label for this sequence (e.g., 'lead', 'bass', etc.)."},"midiChannel":{"type":"integer","minimum":0,"maximum":15,"description":"Default MIDI channel for this sequence (0-15)."},"synth":{"type":"object","required":["type"],"properties":{"type":{"type":"string","enum":["Synth","PolySynth","MonoSynth","AMSynth","FMSynth","DuoSynth","PluckSynth","NoiseSynth","Sampler"],"description":"Type of synthesizer (Synth, Sampler, AMSynth, FMSynth, etc.)."},"options":{"type":"object","description":"Synthesizer options."},"presetRef":{"type":"string","description":"Reference to a custom preset."},"modulationTarget":{"type":"string","enum":["vibrato","tremolo","glissando","filter"],"description":"Target for modulation wheel (CC1) control. Determines how modulation wheel affects the synth."}},"additionalProperties":false,"description":"Synthesizer definition for this sequence."},"synthRef":{"type":"string","description":"Reference to an audioGraph node to use as the synth."},"notes":{"type":"array","description":"Array of note events.","items":{"type":"object","required":["pitch","time","duration"],"properties":{"pitch":{"oneOf":[{"type":"number","description":"MIDI note number (preferred)."},{"type":"string","description":"Note name (e.g., 'C4', 'G#3')."},{"type":"array","description":"Chord (array of MIDI numbers or note names).","items":{"oneOf":[{"type":"number"},{"type":"string"}]}}]},"time":{"oneOf":[{"type":"string","pattern":"^\\\\d+:\\\\d+(\\\\.\\\\d+)?:\\\\d+$","description":"Musical time in bars:beats:ticks format (e.g., '0:2:0', '1:3.5:240'). Preferred format for precise musical timing."},{"type":"string","pattern":"^(\\\\d+n|\\\\d+t)$","description":"Tone.js note values (e.g., '4n', '8t') for relative timing."},{"type":"number","description":"Legacy: Time in beats (deprecated, use bars:beats:ticks format instead)."}]},"duration":{"oneOf":[{"type":"string","pattern":"^(\\\\d+n|\\\\d+t|\\\\d+:\\\\d+(\\\\.\\\\d+)?:\\\\d+)$","description":"Musical duration using Tone.js note values (e.g., '4n', '8n', '2t') or bars:beats:ticks format (e.g., '1:0:0')."},{"type":"number","description":"Legacy: Duration in seconds (deprecated, use note values instead)."}]},"velocity":{"type":"number","minimum":0,"maximum":1,"description":"Note velocity (0-1)."},"articulation":{"type":"string","description":"Articulation (e.g., 'staccato', 'accent')."},"microtuning":{"type":"number","description":"Microtuning adjustment in semitones."},"channel":{"type":"integer","minimum":0,"maximum":15,"description":"Override sequence MIDI channel for this note (0-15)."},"modulations":{"type":"array","description":"Per-note modulation events (CC, pitch bend, aftertouch).","items":{"type":"object","required":["type","value","time"],"properties":{"type":{"type":"string","enum":["cc","pitchBend","aftertouch"],"description":"Type of MIDI modulation event."},"controller":{"type":"integer","description":"MIDI CC number (required for type: 'cc')."},"value":{"type":"number","description":"Value for this modulation: 0-127 for CC, -8192 to +8192 for pitchBend (14-bit, maps to ±2 semitones), 0-127 for aftertouch."},"time":{"oneOf":[{"type":"string","pattern":"^(\\\\d+n|\\\\d+t|\\\\d+:\\\\d+(\\\\.\\\\d+)?:\\\\d+)$","description":"Relative time using note values (e.g., '8n') or bars:beats:ticks (e.g., '0:0:240')."},{"type":"number","description":"Legacy: Relative time in seconds (deprecated)."}],"description":"When this modulation event happens (relative to note start)."}},"additionalProperties":false}}},"additionalProperties":false}},"loop":{"oneOf":[{"type":"boolean"},{"type":"string"}],"description":"Whether this sequence loops, or string for musical duration."},"loopEnd":{"type":"string","pattern":"^\\\\d+:\\\\d+(\\\\.\\\\d+)?:\\\\d+$","description":"Musical time in bars:beats:ticks format to end the loop (e.g., '4:0:0')."},"effects":{"type":"array","description":"Sequence-level effects.","items":{"type":"object","required":["type"],"properties":{"type":{"type":"string","description":"Type of effect (e.g., 'Reverb', 'Delay')."},"options":{"type":"object","description":"Options for this effect."},"presetRef":{"type":"string","description":"Reference to a custom preset."}},"additionalProperties":false}},"automation":{"type":"array","description":"Sequence-level automation channels affecting only this sequence.","items":{"$ref":"#/definitions/automationChannel"}}},"additionalProperties":false}},"automation":{"type":"object","description":"Multi-level automation system with interpolation support.","properties":{"enabled":{"type":"boolean","default":true,"description":"Whether automation is enabled globally."},"global":{"type":"array","description":"Global automation channels affecting the entire composition.","items":{"$ref":"#/definitions/automationChannel"}},"sequences":{"type":"object","description":"Sequence-level automation channels organized by sequence ID.","patternProperties":{".*":{"type":"array","description":"Automation channels for this sequence.","items":{"$ref":"#/definitions/automationChannel"}}},"additionalProperties":false},"events":{"type":"array","description":"Legacy automation events (deprecated, use channels instead).","items":{"type":"object","required":["target","time","value"],"properties":{"target":{"type":"string","description":"Parameter to automate, e.g., 'synth.frequency', 'effect.mix', 'midi.cc1'."},"time":{"oneOf":[{"type":"string","pattern":"^\\\\d+:\\\\d+(\\\\.\\\\d+)?:\\\\d+$","description":"Musical time in bars:beats:ticks format."},{"type":"number","description":"Legacy: Time in beats (deprecated)."}]},"value":{"type":"number","description":"Target value for the parameter."}},"additionalProperties":false}}},"additionalProperties":false},"annotations":{"type":"array","description":"Annotations (e.g., lyrics, rehearsal marks, comments) in the composition.","items":{"type":"object","required":["text","time"],"properties":{"text":{"type":"string","description":"Annotation text (e.g., lyric, instruction, label)."},"time":{"oneOf":[{"type":"string","pattern":"^\\\\d+:\\\\d+(\\\\.\\\\d+)?:\\\\d+$","description":"Musical time in bars:beats:ticks format (e.g., '1:2:0')."},{"type":"number","description":"Legacy: Time in beats (deprecated)."}]},"type":{"type":"string","description":"Type of annotation (e.g., 'lyric', 'marker', 'comment', 'rehearsal')."},"duration":{"oneOf":[{"type":"string","pattern":"^(\\\\d+n|\\\\d+t|\\\\d+:\\\\d+(\\\\.\\\\d+)?:\\\\d+)$","description":"Musical duration using note values (e.g., '4n') or bars:beats:ticks (e.g., '1:0:0')."},{"type":"number","description":"Legacy: Duration in seconds (deprecated)."}],"description":"Optional duration for annotation (e.g., for lyrics or extended comments)."}},"additionalProperties":false}},"timeSignatureMap":{"type":"array","description":"Map of time signature changes over time.","items":{"type":"object","required":["time","timeSignature"],"properties":{"time":{"oneOf":[{"type":"string","pattern":"^\\\\d+:\\\\d+(\\\\.\\\\d+)?:\\\\d+$","description":"Musical time in bars:beats:ticks format (e.g., '8:0:0')."},{"type":"number","description":"Legacy: Time in beats (deprecated)."}],"description":"Time of the time signature change."},"timeSignature":{"type":"string","pattern":"^\\\\d+/\\\\d+$","description":"New time signature at this time."}},"additionalProperties":false}},"synthConfig":{"type":"object","description":"Global synthesizer configuration that applies to all sequences unless overridden.","properties":{"type":{"type":"string","enum":["Synth","PolySynth","MonoSynth","AMSynth","FMSynth","DuoSynth","PluckSynth","NoiseSynth","Sampler"],"description":"Default synthesizer type (Synth, Sampler, AMSynth, FMSynth, etc.)."},"modulationTarget":{"type":"string","enum":["vibrato","tremolo","glissando","filter"],"description":"Default target for modulation wheel (CC1) control across all sequences."},"options":{"type":"object","description":"Default synthesizer options applied globally.","properties":{"envelope":{"type":"object","description":"Automatic envelope settings for Samplers to avoid abrupt cuts","properties":{"enabled":{"type":"boolean","default":true,"description":"Whether to apply automatic envelope to Samplers"},"attack":{"type":"number","minimum":0,"maximum":2,"default":0.02,"description":"Attack time in seconds"},"decay":{"type":"number","minimum":0,"maximum":2,"default":0.1,"description":"Decay time in seconds"},"sustain":{"type":"number","minimum":0,"maximum":1,"default":0.8,"description":"Sustain level (0-1)"},"release":{"type":"number","minimum":0,"maximum":5,"default":0.3,"description":"Release time in seconds"}},"additionalProperties":false}}}},"additionalProperties":false},"converterHints":{"type":"object","description":"Optional hints to guide specific converters.","properties":{"tone":{"type":"object","description":"Hints for jmon-tone.js converter.","patternProperties":{"^cc[0-9]+$":{"type":"object","description":"Hint configuration for a MIDI CC controller mapping.","properties":{"target":{"type":"string","description":"Target for this CC mapping - can be legacy target (filter, vibrato, tremolo, glissando) or specific effect node ID from audioGraph."},"parameter":{"type":"string","description":"Parameter name to control on the target effect (e.g., 'frequency', 'depth', 'Q')."},"frequency":{"type":"number","description":"Modulation rate in Hz (for vibrato/tremolo)."},"depthRange":{"type":"array","description":"Min/max depth or frequency range for the parameter.","items":{"type":"number"},"minItems":2,"maxItems":2}},"required":["target"],"additionalProperties":false}},"additionalProperties":false},"midi":{"type":"object","description":"Hints for jmon-midi.js converter.","properties":{"channel":{"type":"integer","minimum":0,"maximum":15,"description":"Default MIDI channel for outgoing messages."},"port":{"type":"string","description":"MIDI port name or identifier."}},"additionalProperties":false}},"additionalProperties":false}}`), Bi = { automationChannel: { type: "object", description: "Automation channel with interpolation support and anchor points.", required: ["id", "target", "anchorPoints"], properties: { id: { type: "string", description: "Unique identifier for this automation channel." }, name: { type: "string", description: "Human-readable name for this automation channel." }, target: { type: "string", description: "JMON target parameter (e.g., 'synth.frequency', 'midi.cc1', 'effect.mix')." }, level: { type: "string", enum: ["global", "sequence", "note"], default: "global", description: "Automation level: global (entire composition), sequence (per track), or note (per note velocity)." }, sequenceId: { type: "string", description: "Target sequence ID for sequence-level automation." }, range: { type: "array", items: { type: "number" }, minItems: 2, maxItems: 2, default: [0, 127], description: "Value range [min, max] for this automation parameter." }, interpolation: { type: "string", enum: ["linear", "quadratic", "cubic", "daw"], default: "daw", description: "Interpolation type: linear, quadratic (curve), cubic (smoothstep), or daw (Hermite splines)." }, enabled: { type: "boolean", default: !0, description: "Whether this automation channel is enabled." }, anchorPoints: { type: "array", description: "Automation anchor points defining the curve.", items: { type: "object", required: ["time", "value"], properties: { time: { oneOf: [{ type: "string", pattern: "^\\d+:\\d+(\\.\\d+)?:\\d+$", description: "Musical time in bars:beats:ticks format (e.g., '2:1:240')." }, { type: "number", description: "Time in measures (e.g., 2.5 = 2 bars + 2 beats in 4/4)." }] }, value: { type: "number", description: "Automation value at this time point." }, tangent: { type: "number", description: "Optional tangent/slope for Hermite interpolation (DAW mode)." } }, additionalProperties: !1 } } }, additionalProperties: !1 } }, Hi = !1, Wi = [{ description: "Basic modulation example with pitch bend and modulation wheel", composition: { format: "jmonTone", version: "1.0", bpm: 120, synthConfig: { type: "Synth", modulationTarget: "filter" }, audioGraph: [{ id: "master", type: "Destination", options: {} }], connections: [], sequences: [{ label: "Modulation Demo", notes: [{ pitch: "C4", time: "0:0:0", duration: "2n", velocity: 0.8, modulations: [{ type: "pitchBend", value: -4096, time: "0:0:0" }, { type: "pitchBend", value: 4096, time: "0:1.5:0" }] }, { pitch: "G4", time: "0:2:0", duration: "2n", velocity: 0.8, modulations: [{ type: "cc", controller: 1, value: 0, time: "0:0:0" }, { type: "cc", controller: 1, value: 127, time: "0:1.5:0" }] }] }] } }, { description: "Multi-level automation example with interpolation", composition: { format: "jmonTone", version: "1.0", bpm: 120, audioGraph: [{ id: "master", type: "Destination", options: {} }, { id: "reverb", type: "Reverb", options: { wet: 0.3 } }], connections: [["reverb", "master"]], automation: { enabled: !0, global: [{ id: "master-volume", name: "Master Volume", target: "synth.volume", level: "global", range: [0, 1], interpolation: "cubic", anchorPoints: [{ time: "0:0:0", value: 0 }, { time: "2:0:0", value: 0.8 }, { time: "6:0:0", value: 0.6 }, { time: "8:0:0", value: 0 }] }], sequences: { lead: [{ id: "lead-filter", name: "Lead Filter Sweep", target: "synth.filter.frequency", level: "sequence", sequenceId: "lead", range: [200, 8e3], interpolation: "daw", anchorPoints: [{ time: "0:0:0", value: 200, tangent: 0 }, { time: "1:0:0", value: 2e3, tangent: 1.5 }, { time: "3:0:0", value: 8e3, tangent: 0 }] }] } }, sequences: [{ label: "lead", notes: [{ pitch: "C4", time: "0:0:0", duration: "1n", velocity: 0.8 }, { pitch: "E4", time: "1:0:0", duration: "1n", velocity: 0.7 }, { pitch: "G4", time: "2:0:0", duration: "1n", velocity: 0.9 }] }] } }, { description: "Vibrato modulation example", composition: { format: "jmonTone", version: "1.0", bpm: 120, audioGraph: [{ id: "master", type: "Destination", options: {} }], connections: [], sequences: [{ label: "Vibrato Demo", synth: { type: "Synth", modulationTarget: "vibrato" }, notes: [{ pitch: "A4", time: "0:0:0", duration: "1n", velocity: 0.8, modulations: [{ type: "cc", controller: 1, value: 0, time: "0:0:0" }, { type: "cc", controller: 1, value: 127, time: "0:3:0" }] }] }] } }], Ji = {
+  $schema: Fi,
+  title: zi,
+  description: Li,
+  type: Ui,
+  required: Gi,
+  properties: Ki,
+  definitions: Bi,
+  additionalProperties: Hi,
+  examples: Wi
 };
-class Yt {
-  constructor(e = Qi) {
-    this.ajv = new Li({ allErrors: !0, useDefaults: !0 }), this.validate = this.ajv.compile(e);
+class Ht {
+  constructor(e = Ji) {
+    this.ajv = new Vi({ allErrors: !0, useDefaults: !0 }), this.validate = this.ajv.compile(e);
   }
   /**
    * Valide et normalise un objet JMON.
@@ -4428,14 +4428,14 @@ class Yt {
     return t ? r : null;
   }
 }
-class Zi {
+class Yi {
   /**
    * Convertit un objet JMON en ABC après validation/normalisation
    * @param {Object} composition - objet JMON
    * @returns {string} ABC notation string
    */
   static fromValidatedJmon(e) {
-    const t = new Yt(), { valid: r, normalized: n, errors: i } = t.validateAndNormalize(e);
+    const t = new Ht(), { valid: r, normalized: n, errors: i } = t.validateAndNormalize(e);
     if (!r)
       throw console.warn("JMON non valide pour conversion ABC:", i), new Error("JMON non valide");
     return this.convertToAbc(n);
@@ -4762,10 +4762,10 @@ w: `, n.forEach((o, a) => {
     return r;
   }
 }
-function es(s) {
-  return Zi.convertToAbc(s);
+function Xi(s) {
+  return Yi.convertToAbc(s);
 }
-class ts {
+class Qi {
   static VERSION = "1.0";
   static FORMAT_IDENTIFIER = "jmonTone";
   /**
@@ -4774,7 +4774,7 @@ class ts {
    * @returns {Promise<string>} ABC notation string
    */
   static async convertToAbc(e) {
-    return es(e);
+    return Xi(e);
   }
   /**
    * Create a player UI for a jmon composition
@@ -5041,7 +5041,7 @@ class ae {
     return [e[0], e[2], e[4]];
   }
 }
-class Kt {
+class gn {
   /**
    * Create a Scale
    * @param {string} tonic - The tonic note of the scale
@@ -5111,7 +5111,7 @@ class Kt {
     return this.generate().map((n) => n % 12).includes(t);
   }
 }
-function rs(s) {
+function Zi(s) {
   if (typeof s == "object" && !Array.isArray(s))
     return s;
   if (Array.isArray(s)) {
@@ -5126,15 +5126,15 @@ function rs(s) {
   }
   throw new Error("Input must be a list or dict of tracks.");
 }
-function _n(s, e) {
+function vn(s, e) {
   return e.reduce(
     (t, r) => Math.abs(r - s) < Math.abs(t - s) ? r : t
   );
 }
-function Sn(s) {
+function bn(s) {
   return Math.floor(s / 12) - 1;
 }
-function ns(s) {
+function es(s) {
   return {
     "D-": "C#",
     "E-": "D#",
@@ -5148,19 +5148,19 @@ function ns(s) {
     Bb: "A#"
   }[s] || s;
 }
-function Bt(s, e, t) {
+function Ut(s, e, t) {
   typeof s == "string" && (s = Oe(s)), typeof t == "string" && (t = Oe(t));
   const r = e.indexOf(t);
   if (e.includes(s))
     return e.indexOf(s) - r;
   {
-    const n = _n(s, e), i = e.indexOf(n), o = i > 0 ? i - 1 : i, a = e[o], l = n - s, u = s - a, p = l + u;
+    const n = vn(s, e), i = e.indexOf(n), o = i > 0 ? i - 1 : i, a = e[o], l = n - s, u = s - a, p = l + u;
     if (p === 0) return i - r;
     const v = 1 - l / p, _ = 1 - u / p, $ = i - r, E = o - r;
     return $ * v + E * _;
   }
 }
-function is(s, e, t) {
+function ts(s, e, t) {
   const r = e.indexOf(t), n = Math.round(r + s);
   if (n >= 0 && n < e.length)
     return e[n];
@@ -5172,7 +5172,7 @@ function is(s, e, t) {
     return l * _ + a * $;
   }
 }
-function Pn(s) {
+function wn(s) {
   s.length > 0 && s[0].length === 2 && (s = s.map((r) => [r[0], r[1], 0]));
   const e = [];
   let t = 0;
@@ -5180,7 +5180,7 @@ function Pn(s) {
     e.push([r, n, t]), t += n;
   return e;
 }
-function En(s, e = 0) {
+function $n(s, e = 0) {
   const t = [...s].sort((i, o) => i[2] - o[2]);
   let r = 0;
   const n = [];
@@ -5194,7 +5194,7 @@ function En(s, e = 0) {
   }
   return n;
 }
-function Mn(s) {
+function _n(s) {
   s.sort((e, t) => e[2] - t[2]);
   for (let e = 0; e < s.length - 1; e++) {
     const t = s[e], r = s[e + 1];
@@ -5205,8 +5205,8 @@ function Mn(s) {
   }
   return s;
 }
-function ss(s) {
-  return Mn(En(s));
+function rs(s) {
+  return _n($n(s));
 }
 function Oe(s) {
   const e = ["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"], t = {
@@ -5225,30 +5225,30 @@ function Oe(s) {
   let i;
   return n.length > 2 || n.length === 2 && !isNaN(n[1]) ? (i = n.slice(0, -1), r = parseInt(n.slice(-1))) : i = n[0], 12 * (r + 1) + e.indexOf(i);
 }
-function os(s) {
+function ns(s) {
   const e = ["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"], t = Math.floor(s / 12) - 1, r = s % 12;
   return e[r] + t.toString();
 }
-function as(s, e = "offsets") {
+function is(s, e = "offsets") {
   const t = [];
   let r = 0;
   for (const [n, i, o] of s)
     t.push([n, i, r]), r += i;
   return t;
 }
-function cs(s) {
+function ss(s) {
   return s.every((e) => Array.isArray(e)) ? "list of tuples" : s.every((e) => !Array.isArray(e)) ? "list" : "unknown";
 }
-function ls(s, e, t, r = null, n = null) {
+function os(s, e, t, r = null, n = null) {
   const i = r !== null ? r : Math.min(...s), o = n !== null ? n : Math.max(...s);
   return i === o ? new Array(s.length).fill((e + t) / 2) : s.map(
     (a) => (a - i) * (t - e) / (o - i) + e
   );
 }
-function Tn(s, e) {
+function Sn(s, e) {
   return s.map(([t, r, n]) => [t, r, n + e]);
 }
-function us(s, e, t) {
+function as(s, e, t) {
   const r = [];
   for (const [n, i, o] of s) {
     const a = Math.round(o / t) * t, l = (Math.floor(a / e) + 1) * e;
@@ -5257,7 +5257,7 @@ function us(s, e, t) {
   }
   return r;
 }
-function ds(s, e) {
+function cs(s, e) {
   const r = s.filter(([a, , l]) => a !== null && l !== null).sort((a, l) => a[2] - l[2]), n = Math.max(...r.map(([, , a]) => a)), i = Math.floor(n / e) + 1, o = [];
   for (let a = 0; a < i; a++) {
     const l = a * e;
@@ -5270,31 +5270,31 @@ function ds(s, e) {
   }
   return o;
 }
-function hs(s, e) {
+function ls(s, e) {
   return e.reduce(
     (t, r) => Math.abs(r - s) < Math.abs(t - s) ? r : t
   );
 }
-function fs(s, e) {
+function us(s, e) {
   return 60 / e * s;
 }
-function* ps(s = 0, e = 1, t = 0, r = 1) {
+function* ds(s = 0, e = 1, t = 0, r = 1) {
   for (; ; )
     yield t + r * s, [s, e] = [e, s + e];
 }
-function ms(s, e, t) {
+function hs(s, e, t) {
   const r = {};
   for (const [n, i] of Object.entries(s)) {
     const o = [];
     for (let a = 0; a < e; a++) {
-      const l = a * t, u = Tn(i, l);
+      const l = a * t, u = Sn(i, l);
       o.push(...u);
     }
     r[n] = o;
   }
   return r;
 }
-const ys = {
+const fs = {
   "Acoustic Grand Piano": 0,
   "Bright Acoustic Piano": 1,
   "Electric Grand Piano": 2,
@@ -5305,33 +5305,33 @@ const ys = {
   Clavinet: 7,
   // ... (full mapping truncated for brevity, but would include all 128 instruments)
   Gunshot: 127
-}, fn = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
+}, ps = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
   __proto__: null,
-  adjustNoteDurationsToPreventOverlaps: Mn,
+  adjustNoteDurationsToPreventOverlaps: _n,
   cdeToMidi: Oe,
-  checkInput: cs,
-  fibonacci: ps,
-  fillGapsWithRests: En,
-  findClosestPitchAtMeasureStart: ds,
-  getDegreeFromPitch: Bt,
-  getOctave: Sn,
-  getPitchFromDegree: is,
-  getSharp: ns,
-  instrumentMapping: ys,
-  midiToCde: os,
-  noOverlap: as,
-  offsetTrack: Tn,
-  qlToSeconds: fs,
-  quantizeNotes: us,
-  repairNotes: ss,
-  repeatPolyloops: ms,
-  roundToList: _n,
-  scaleList: ls,
-  setOffsetsAccordingToDurations: Pn,
-  tracksToDict: rs,
-  tune: hs
+  checkInput: ss,
+  fibonacci: ds,
+  fillGapsWithRests: $n,
+  findClosestPitchAtMeasureStart: cs,
+  getDegreeFromPitch: Ut,
+  getOctave: bn,
+  getPitchFromDegree: ts,
+  getSharp: es,
+  instrumentMapping: fs,
+  midiToCde: ns,
+  noOverlap: is,
+  offsetTrack: Sn,
+  qlToSeconds: us,
+  quantizeNotes: as,
+  repairNotes: rs,
+  repeatPolyloops: hs,
+  roundToList: vn,
+  scaleList: os,
+  setOffsetsAccordingToDurations: wn,
+  tracksToDict: Zi,
+  tune: ls
 }, Symbol.toStringTag, { value: "Module" }));
-class gs extends ae {
+class ms extends ae {
   /**
    * Initialize a Progression object
    * @param {string} tonicPitch - The tonic pitch of the progression (default: 'C4')
@@ -5407,7 +5407,7 @@ class gs extends ae {
     return e.length - 1;
   }
 }
-class kn extends ae {
+class Pn extends ae {
   /**
    * Constructs all the necessary attributes for the voice object
    * @param {string} mode - The type of the scale (default: 'major')
@@ -5415,7 +5415,7 @@ class kn extends ae {
    * @param {Array} degrees - Relative degrees for chord formation (default: [0, 2, 4])
    */
   constructor(e = "major", t = "C", r = [0, 2, 4]) {
-    super(), this.tonic = t, this.scale = new Kt(t, e).generate(), this.degrees = r;
+    super(), this.tonic = t, this.scale = new gn(t, e).generate(), this.degrees = r;
   }
   /**
    * Convert a MIDI note to a chord based on the scale using the specified degrees
@@ -5423,7 +5423,7 @@ class kn extends ae {
    * @returns {Array} Array of MIDI notes representing the chord
    */
   pitchToChord(e) {
-    const t = Sn(e), r = this.tonic + t.toString(), n = Oe(r), i = this.scale.map((l) => Bt(l, this.scale, n)), o = Math.round(Bt(e, this.scale, n)), a = [];
+    const t = bn(e), r = this.tonic + t.toString(), n = Oe(r), i = this.scale.map((l) => Ut(l, this.scale, n)), o = Math.round(Ut(e, this.scale, n)), a = [];
     for (const l of this.degrees) {
       const u = o + l, p = i.indexOf(u);
       p !== -1 && a.push(this.scale[p]);
@@ -5526,7 +5526,7 @@ const $t = {
     }
   }
 };
-class vs extends ae {
+class ys extends ae {
   /**
    * Initialize an Ornament object
    * @param {string} type - The type of ornament ('grace_note', 'trill', 'mordent', 'arpeggio', 'turn', 'slide')
@@ -5555,7 +5555,7 @@ class vs extends ae {
     const r = t.parameters;
     for (const [n, i] of Object.entries(r))
       this[n] = e.parameters?.[n] ?? i.default;
-    e.tonic && e.mode ? (this.tonicIndex = ae.chromatic_scale.indexOf(e.tonic), this.scale = this.generateScale(e.tonic, e.mode), e.parameters?.arpeggioDegrees ? this.arpeggioVoice = new kn(e.mode, e.tonic, e.parameters.arpeggioDegrees) : this.arpeggioVoice = null) : (this.scale = null, this.arpeggioVoice = null);
+    e.tonic && e.mode ? (this.tonicIndex = ae.chromatic_scale.indexOf(e.tonic), this.scale = this.generateScale(e.tonic, e.mode), e.parameters?.arpeggioDegrees ? this.arpeggioVoice = new Pn(e.mode, e.tonic, e.parameters.arpeggioDegrees) : this.arpeggioVoice = null) : (this.scale = null, this.arpeggioVoice = null);
   }
   /**
    * Generate a complete scale based on tonic and mode
@@ -5949,16 +5949,16 @@ class kt {
     }));
   }
 }
-function Lt(s, e, t, r) {
+function gs(s, e, t, r) {
   return kt.addArticulation(s, e, t, r);
 }
-function Ut(s, e) {
+function vs(s, e) {
   return kt.removeArticulation(s, e);
 }
 function bs(s) {
   return kt.validateSequence(s);
 }
-class pn {
+class ws {
   /**
    * Constructs all the necessary attributes for the Rhythm object
    * @param {number} measureLength - The length of the measure
@@ -6001,7 +6001,7 @@ class pn {
    * @returns {Array} The best rhythm found after evolution
    */
   darwin(e = null, t = 10, r = 50, n = 0.1) {
-    return new ws(
+    return new $s(
       e,
       t,
       this.measureLength,
@@ -6011,7 +6011,7 @@ class pn {
     ).generate();
   }
 }
-class ws {
+class $s {
   constructor(e, t, r, n, i, o) {
     e !== null && (Math.seedrandom = e), this.populationSize = t, this.measureLength = r, this.maxGenerations = n, this.mutationRate = i, this.durations = o, this.population = this.initializePopulation();
   }
@@ -6111,18 +6111,18 @@ class ws {
     ).sort((t, r) => t[1] - r[1]);
   }
 }
-function $s(s, e) {
-  const t = s.map((a) => Array.isArray(a) || typeof a == "object" && a.length ? a[0] : a), r = _s(t.length, e.length), n = [], i = [];
+function _s(s, e) {
+  const t = s.map((a) => Array.isArray(a) || typeof a == "object" && a.length ? a[0] : a), r = Ss(t.length, e.length), n = [], i = [];
   for (let a = 0; a < r; a++)
     n.push(t[a % t.length]), i.push(e[a % e.length]);
   const o = n.map((a, l) => [a, i[l], 1]);
-  return Pn(o);
+  return wn(o);
 }
-function _s(s, e) {
+function Ss(s, e) {
   const t = (r, n) => n === 0 ? r : t(n, r % n);
   return Math.abs(s * e) / t(s, e);
 }
-function Ss(s, e) {
+function Ps(s, e) {
   const t = [];
   let r = 0, n = 0;
   for (const i of s) {
@@ -6131,7 +6131,7 @@ function Ss(s, e) {
   }
   return t;
 }
-class Ps {
+class Es {
   // Dummy implementation, replace with actual logic
   constructor() {
   }
@@ -6188,10 +6188,10 @@ class $e {
     return this.data.map((e) => [...e]);
   }
 }
-function Gt(s) {
+function Lt(s) {
   return Array.isArray(s[0]) ? $e.from2DArray(s) : $e.from2DArray([s]);
 }
-function Es(s) {
+function Ms(s) {
   if (s.rows !== s.columns)
     throw new Error("Matrix must be square for Cholesky decomposition");
   const e = s.rows, t = $e.zeros(e, e);
@@ -6213,7 +6213,7 @@ function Es(s) {
       }
   return t;
 }
-class Ms {
+class Ts {
   kernel;
   alpha;
   XTrain;
@@ -6224,12 +6224,12 @@ class Ms {
     this.kernel = e, this.alpha = t.alpha || 1e-10;
   }
   fit(e, t) {
-    this.XTrain = Gt(e), this.yTrain = [...t];
+    this.XTrain = Lt(e), this.yTrain = [...t];
     const r = this.kernel.call(this.XTrain);
     for (let n = 0; n < r.rows; n++)
       r.set(n, n, r.get(n, n) + this.alpha);
     try {
-      this.L = Es(r);
+      this.L = Ms(r);
     } catch (n) {
       throw new Error(`Failed to compute Cholesky decomposition: ${n instanceof Error ? n.message : "Unknown error"}`);
     }
@@ -6238,7 +6238,7 @@ class Ms {
   predict(e, t = !1) {
     if (!this.XTrain || !this.yTrain || !this.L || !this.alphaVector)
       throw new Error("Model must be fitted before prediction");
-    const r = Gt(e), n = this.kernel.call(this.XTrain, r), i = new Array(r.rows);
+    const r = Lt(e), n = this.kernel.call(this.XTrain, r), i = new Array(r.rows);
     for (let a = 0; a < r.rows; a++) {
       i[a] = 0;
       for (let l = 0; l < this.XTrain.rows; l++)
@@ -6254,7 +6254,7 @@ class Ms {
   sampleY(e, t = 1) {
     if (!this.XTrain || !this.yTrain || !this.L || !this.alphaVector)
       throw new Error("Model must be fitted before sampling");
-    const r = Gt(e), n = this.predict(e, !0);
+    const r = Lt(e), n = this.predict(e, !0);
     if (!n.std)
       throw new Error("Standard deviation computation failed");
     const i = [];
@@ -6321,7 +6321,7 @@ class Ms {
     return Math.sqrt(-2 * Math.log(e)) * Math.cos(2 * Math.PI * t);
   }
 }
-class Ts {
+class ks {
   /**
    * @param {CellularAutomataOptions} [options={}] - Configuration options
    */
@@ -6475,7 +6475,7 @@ class Ts {
     return (await import("./CAVisualizer-DexuwBpG.mjs")).CAVisualizer.plotDensity(this.getHistory(), e);
   }
 }
-class mn {
+class un {
   static midiToNoteName(e) {
     return `MIDI_${e}`;
   }
@@ -6483,7 +6483,7 @@ class mn {
     return `${e}`;
   }
 }
-class ks {
+class As {
   config;
   currentTime = 0;
   rotationAngles = /* @__PURE__ */ new Map();
@@ -6648,8 +6648,8 @@ class ks {
     const n = [];
     return r.forEach((i, o) => {
       const a = i.map((l) => ({
-        pitch: mn.midiToNoteName(l.point.pitch || 60),
-        time: mn.timeToMusicalTime(l.time),
+        pitch: un.midiToNoteName(l.point.pitch || 60),
+        time: un.timeToMusicalTime(l.time),
         duration: "8n",
         // Default duration
         velocity: l.point.velocity || 0.8
@@ -6712,7 +6712,7 @@ class ks {
     return r.plotAnimated(this.config.layers, e, t);
   }
 }
-class As {
+class En {
   /**
    * Calculate Gini coefficient for inequality measurement
    * @param {number[]} values - Values to analyze
@@ -7020,7 +7020,7 @@ class Rs {
    * Calculate fitness using weighted musical analysis metrics
    */
   calculateFitness(e) {
-    const t = As.analyze(e, { scale: this.options.scale });
+    const t = En.analyze(e, { scale: this.options.scale });
     let r = 0;
     const n = this.options.fitnessWeights;
     r += (n.gini || 0) * (1 - t.gini), r += (n.balance || 0) * (1 - Math.abs(t.balance - 60) / 60), r += (n.motif || 0) * t.motif, r += (n.dissonance || 0) * (1 - t.dissonance), r += (n.rhythmic || 0) * t.rhythmic;
@@ -7822,54 +7822,112 @@ class js {
     });
   }
 }
-const qs = {
-  // Harmony namespace
+class qs {
+  tChord;
+  direction;
+  rank;
+  isAlternate;
+  currentDirection;
+  constructor(e, t = "down", r = 0) {
+    if (!["up", "down", "any", "alternate"].includes(t))
+      throw new Error("Invalid direction. Choose 'up', 'down', 'any' or 'alternate'.");
+    if (this.tChord = e, this.isAlternate = t === "alternate", this.currentDirection = this.isAlternate ? "up" : t, this.direction = t, !Number.isInteger(r) || r < 0)
+      throw new Error("Rank must be a non-negative integer.");
+    this.rank = Math.min(r, e.length - 1), this.rank >= e.length && console.warn("Rank exceeds the length of the t-chord. Using last note of the t-chord.");
+  }
+  /**
+   * Generate t-voice from m-voice sequence
+   */
+  generate(e) {
+    const t = [];
+    for (const r of e) {
+      if (r.pitch === void 0) {
+        t.push({
+          ...r,
+          pitch: void 0
+        });
+        continue;
+      }
+      const n = r.pitch, o = this.tChord.map((u) => u - n).map((u, p) => ({ index: p, value: u })).sort((u, p) => Math.abs(u.value) - Math.abs(p.value));
+      let a = this.rank, l;
+      if (this.currentDirection === "up" || this.currentDirection === "down") {
+        const u = o.filter(
+          ({ value: p }) => this.currentDirection === "up" ? p >= 0 : p <= 0
+        );
+        if (u.length === 0)
+          l = this.currentDirection === "up" ? Math.max(...this.tChord) : Math.min(...this.tChord);
+        else {
+          a >= u.length && (a = u.length - 1);
+          const p = u[a].index;
+          l = this.tChord[p];
+        }
+      } else {
+        a >= o.length && (a = o.length - 1);
+        const u = o[a].index;
+        l = this.tChord[u];
+      }
+      this.isAlternate && (this.currentDirection = this.currentDirection === "up" ? "down" : "up"), t.push({
+        ...r,
+        pitch: l
+      });
+    }
+    return t;
+  }
+}
+const Os = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
+  __proto__: null,
+  MusicalAnalysis: En
+}, Symbol.toStringTag, { value: "Module" })), Ds = {
+  theory: ae
+}, xs = {
   harmony: {
-    // Core Theory Classes
-    MusicTheoryConstants: ae,
-    Scale: Kt,
-    Progression: gs,
-    Voice: kn,
-    Ornament: vs,
-    // Articulation System
+    Scale: gn,
+    Progression: ms,
+    Voice: Pn,
+    Ornament: ys,
     Articulation: kt,
-    addArticulation: Lt,
-    addOrnament: Lt,
-    // Alias for compatibility
-    removeArticulation: Ut,
-    removeOrnament: Ut,
-    // Alias for compatibility
+    addArticulation: gs,
+    removeArticulation: vs,
     validateArticulations: bs
   },
-  // Rhythm namespace
   rhythm: {
-    Rhythm: pn,
-    isorhythm: $s,
-    beatcycle: Ss
+    Rhythm: ws,
+    isorhythm: _s,
+    beatcycle: Ps
   },
-  // Utility functions
-  utils: {
-    ...fn
+  motifs: {
+    MotifBank: Es
+  }
+}, Vs = {
+  gaussian: {
+    Regressor: Ts
   },
-  // Generative algorithms
-  generative: {
-    MotifBank: Ps,
-    GaussianProcess: Ms,
-    CellularAutomata: Ts,
-    Polyloop: ks,
-    GeneticAlgorithm: Rs,
-    RandomWalk: Ns,
-    Fractals: { Mandelbrot: Cs, LogisticMap: Is },
-    MinimalismProcess: js
+  automata: {
+    Cellular: ks
   },
-  // Backward compatibility - expose some functions at root level too
-  Scale: Kt,
-  Rhythm: pn,
-  addArticulation: Lt,
-  removeArticulation: Ut,
-  ...fn
+  loops: {
+    Poly: As
+  },
+  genetic: {
+    Algorithm: Rs
+  },
+  walks: {
+    Random: Ns
+  },
+  fractals: {
+    Mandelbrot: Cs,
+    LogisticMap: Is
+  },
+  minimalism: {
+    Process: js,
+    Tintinnabuli: qs
+  }
+}, Fs = {
+  ...Os
+}, zs = {
+  ...ps
 };
-class Os {
+class Ls {
   constructor(e = {}) {
     this.options = {
       autoMultivoice: e.autoMultivoice ?? !0,
@@ -8017,10 +8075,10 @@ class Os {
     };
   }
 }
-function Ds(s, e = {}) {
-  return new Os(e).convert(s);
+function Us(s, e = {}) {
+  return new Ls(e).convert(s);
 }
-function An(s, e = {}) {
+function Mn(s, e = {}) {
   if (!s || typeof s != "object")
     throw console.error("[PLAYER] Invalid composition:", s), new Error("Composition must be a valid JMON object");
   if (!s.sequences && !s.tracks)
@@ -8037,7 +8095,7 @@ function An(s, e = {}) {
     // Automatically create multiple synths for overlapping notes
     maxVoices: a = 4
     // Maximum voices per track
-  } = e, u = Ds(s, { autoMultivoice: o, maxVoices: a, showDebug: n }), { tracks: p, metadata: v } = u;
+  } = e, u = Us(s, { autoMultivoice: o, maxVoices: a, showDebug: n }), { tracks: p, metadata: v } = u;
   let _ = v.totalDuration;
   const $ = {
     background: "#FFFFFF",
@@ -8278,8 +8336,8 @@ function An(s, e = {}) {
           else {
             const Ne = x.Frequency(Q).toMidi(), Se = x.Frequency(Z).toMidi(), be = Math.max(3, Math.abs(Se - Ne)), Ce = G.duration / be;
             for (let Pe = 1; Pe < be; Pe++) {
-              const At = Pe / (be - 1), Rn = se * Math.pow(ue / se, At), Nn = x.Frequency(Rn).toNote(), Cn = re + Pe * Ce;
-              K.triggerAttackRelease(Nn, Ce * 0.8, Cn, (G.velocity || 0.8) * 0.7);
+              const At = Pe / (be - 1), Tn = se * Math.pow(ue / se, At), kn = x.Frequency(Tn).toNote(), An = re + Pe * Ce;
+              K.triggerAttackRelease(kn, Ce * 0.8, An, (G.velocity || 0.8) * 0.7);
             }
             console.log("[PLAYER] Applied chromatic glissando with", be, "steps");
           }
@@ -8328,10 +8386,10 @@ function An(s, e = {}) {
     console.log("WAV download - requires WAV generator implementation");
   }), typeof window < "u" && window.Tone && R().then(() => m()), E;
 }
-function xs(s) {
-  return new Yt().validateAndNormalize(s);
+function Gs(s) {
+  return new Ht().validateAndNormalize(s);
 }
-function Xt(s) {
+function Wt(s) {
   if (!s || typeof s != "object")
     throw console.error("[RENDER] Invalid JMON object:", s), new Error("render() requires a valid JMON object");
   return !s.sequences && !s.tracks && !s.format && (console.warn("[RENDER] Object does not appear to be JMON format, attempting normalization"), s = {
@@ -8339,42 +8397,40 @@ function Xt(s) {
     version: "1.0",
     bpm: s.bpm || 120,
     sequences: s.sequences || s.tracks || []
-  }), An(s);
+  }), Mn(s);
 }
-function Vs(s) {
-  const e = Xt(s);
+function Ks(s) {
+  const e = Wt(s);
   return setTimeout(() => {
     const t = e.querySelector('button[aria-label="Play"]') || e.querySelector("button");
     t && t.click();
   }, 100), e;
 }
-function Fs(s) {
-  return Xt(s);
+function Bs(s) {
+  return Wt(s);
 }
-const zs = {
-  // Main functions expected by Observable
-  render: Xt,
-  play: Vs,
-  score: Fs,
-  validateJmon: xs,
-  // Structured namespaces
-  dj: qs,
-  // Core classes and utilities
-  JmonTone: ts,
-  JmonValidator: Yt,
-  createPlayer: An,
-  // Version
+const Hs = {
+  // Core functionality
+  render: Wt,
+  play: Ks,
+  score: Bs,
+  validate: Gs,
+  // Core formats and players
+  Tone: Qi,
+  createPlayer: Mn,
+  // Music theory and algorithms
+  theory: xs,
+  generative: Vs,
+  analysis: Fs,
+  // Constants and utilities
+  constants: Ds,
+  utils: {
+    ...zs,
+    JmonValidator: Ht
+  },
   VERSION: "1.0.0"
-}, Ls = "1.0.0";
+};
 export {
-  ts as JmonTone,
-  Yt as JmonValidator,
-  Ls as VERSION,
-  An as createPlayer,
-  zs as default,
-  qs as dj,
-  Vs as play,
-  Xt as render,
-  Fs as score,
-  xs as validateJmon
+  Hs as default,
+  Hs as jm
 };

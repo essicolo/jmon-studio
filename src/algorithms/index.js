@@ -1,80 +1,82 @@
 // Constants
-import { MusicTheoryConstants } from './constants/MusicTheoryConstants.js'
+import { MusicTheoryConstants } from './constants/MusicTheoryConstants.js';
 
-// Music Theory and Harmony - Updated imports
-import { Scale, Progression, Voice, Ornament, Articulation, addArticulation, removeArticulation, validateArticulations } from './theory/harmony/index.js';
-import { Rhythm, isorhythm, beatcycle } from './theory/rhythm/index.js';
-import * as Utils from './utils.js';
+// Theory imports
+import * as harmonyModule from './theory/harmony/index.js';
+import * as rhythmModule from './theory/rhythm/index.js';
+import * as motifsModule from './theory/motifs/index.js';
 
-// Export existing classes that are working
-import { MotifBank } from './theory/motifs/index.js';
+// Generative algorithm imports
 import { GaussianProcessRegressor } from './generative/gaussian-processes/index.js';
 import { CellularAutomata } from './generative/cellular-automata/index.js';
 import { Polyloop } from './generative/polyloops/index.js';
 import { GeneticAlgorithm } from './generative/genetic/index.js';
 import { RandomWalk } from './generative/walks/index.js';
 import { Mandelbrot, LogisticMap } from './generative/fractals/index.js';
-import { MinimalismProcess } from './generative/minimalism/index.js';
+import { MinimalismProcess, Tintinnabuli } from './generative/minimalism/index.js';
 
-// Re-exports
-export { MusicTheoryConstants, Scale, Progression, Voice, Ornament };
-export { Rhythm, isorhythm, beatcycle };
-export { Articulation, addArticulation, removeArticulation, validateArticulations };
-export * from './utils.js';
-export { Mandelbrot, LogisticMap } from './generative/fractals/index.js';
-export { MinimalismProcess, Tintinnabuli } from './generative/minimalism/index.js';
+// Analysis imports
+import * as analysisModule from './analysis/index.js';
 
-// Analysis
-export { MusicalAnalysis } from './analysis/index.js';
+// Utils imports
+import * as Utils from './utils.js';
 
-// Main dj object with namespaced functionality for Observable compatibility
-export const dj = {
-    // Harmony namespace
+// Organized exports
+export const constants = {
+    theory: MusicTheoryConstants
+};
+
+export const theory = {
     harmony: {
-        // Core Theory Classes
-        MusicTheoryConstants,
-        Scale,
-        Progression,
-        Voice,
-        Ornament,
-        
-        // Articulation System
-        Articulation,
-        addArticulation,
-        addOrnament: addArticulation,  // Alias for compatibility
-        removeArticulation,
-        removeOrnament: removeArticulation,  // Alias for compatibility
-        validateArticulations
+        Scale: harmonyModule.Scale,
+        Progression: harmonyModule.Progression,
+        Voice: harmonyModule.Voice,
+        Ornament: harmonyModule.Ornament,
+        Articulation: harmonyModule.Articulation,
+        addArticulation: harmonyModule.addArticulation,
+        removeArticulation: harmonyModule.removeArticulation,
+        validateArticulations: harmonyModule.validateArticulations
     },
-    
-    // Rhythm namespace
     rhythm: {
-        Rhythm,
-        isorhythm,
-        beatcycle
+        Rhythm: rhythmModule.Rhythm,
+        isorhythm: rhythmModule.isorhythm,
+        beatcycle: rhythmModule.beatcycle
     },
-    
-    // Utility functions
-    utils: {
-        ...Utils
+    motifs: {
+        MotifBank: motifsModule.MotifBank
+    }
+};
+
+export const generative = {
+    gaussian: {
+        Regressor: GaussianProcessRegressor
     },
-    
-    // Generative algorithms
-    generative: {
-        MotifBank,
-        GaussianProcess: GaussianProcessRegressor,
-        CellularAutomata,
-        Polyloop,
-        GeneticAlgorithm,
-        RandomWalk,
-        Fractals: { Mandelbrot, LogisticMap },
-        MinimalismProcess
+    automata: {
+        Cellular: CellularAutomata
     },
-    
-    // Backward compatibility - expose some functions at root level too
-    Scale,
-    Rhythm,
-    addArticulation,
-    removeArticulation,
+    loops: {
+        Poly: Polyloop
+    },
+    genetic: {
+        Algorithm: GeneticAlgorithm
+    },
+    walks: {
+        Random: RandomWalk
+    },
+    fractals: {
+        Mandelbrot,
+        LogisticMap
+    },
+    minimalism: {
+        Process: MinimalismProcess,
+        Tintinnabuli
+    }
+};
+
+export const analysis = {
+    ...analysisModule
+};
+
+export const utils = {
     ...Utils
 };
