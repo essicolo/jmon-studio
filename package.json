@@ -19,7 +19,7 @@
     "schemas/**/*"
   ],
   "scripts": {
-    "build": "npm run copy-files && vite build",
+    "build": "vite build",
     "copy-files": "mkdir -p dist && cp -r src/* dist/ && cp src/format/*.js dist/format/ 2>/dev/null || true",
     "test": "npm run build && node test/simple-test.js",
     "dev": "vite",
