@@ -5043,17 +5043,17 @@ class Ut extends pe {
       throw new Error(`'${t}' is not a valid scale. Select one among '${Object.keys(this.scale_intervals).join(", ")}' or provide an array of intervals.`);
   }
   /**
-   * Generate the full range of the scale
-   * @returns {Array} Array of MIDI note numbers representing the scale
-   */
-  generate() {
-    const e = this.chromatic_scale.indexOf(this.tonic), t = this.scale_intervals[this.mode] || this.scale_intervals.major, r = [], n = /* @__PURE__ */ new Set();
-    for (let i = 0; i < 11; i++)
-      for (const o of t) {
-        const a = (e + o) % 12 + i * 12;
-        a <= 127 && !n.has(a) && (r.push(a), n.add(a));
-      }
-    return r.sort((i, o) => i - o), r;
+  * Generate a scale starting from a specific octave with n notes
+  * @param {number} octave - The starting octave (0-10)
+  * @param {number} n - Number of notes to generate
+  * @returns {Array} Array of MIDI note numbers representing the scale
+  */
+  generate(e, t) {
+    const r = e * 12 + this.chromatic_scale.indexOf(this.tonic), n = this.scale_intervals[this.mode], i = [];
+    for (let o = 0; i.length < t; o++)
+      for (const a of n)
+        if (i.push(r + a + o * 12), i.length >= t) break;
+    return i;
   }
 }
 function es(s) {
