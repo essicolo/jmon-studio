@@ -1,5 +1,4 @@
 // Harmony module exports
-export { MusicTheoryConstants } from './MusicTheoryConstants.js';
 export { Scale } from './Scale.js';
 export { Progression } from './Progression.js';
 export { Voice } from './Voice.js';

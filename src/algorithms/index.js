@@ -1,5 +1,8 @@
+// Constants
+import { MusicTheoryConstants } from './constants/MusicTheoryConstants.js'
+
 // Music Theory and Harmony - Updated imports
-import { MusicTheoryConstants, Scale, Progression, Voice, Ornament, Articulation, addArticulation, removeArticulation, validateArticulations } from './theory/harmony/index.js';
+import { Scale, Progression, Voice, Ornament, Articulation, addArticulation, removeArticulation, validateArticulations } from './theory/harmony/index.js';
 import { Rhythm, isorhythm, beatcycle } from './theory/rhythm/index.js';
 import * as Utils from './utils.js';
 

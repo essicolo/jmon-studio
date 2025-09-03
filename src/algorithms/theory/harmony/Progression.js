@@ -1,4 +1,4 @@
-import { MusicTheoryConstants } from './MusicTheoryConstants.js';
+import { MusicTheoryConstants } from '../../constants/MusicTheoryConstants.js';
 import { cdeToMidi } from '../../utils.js';
 
 /**

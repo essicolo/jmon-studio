@@ -3,74 +3,9 @@
  * Handles articulation application with automatic validation and synchronization
  */
 
+import { ARTICULATION_TYPES } from '../../constants/ArticulationTypes.js';
+
 export class Articulation {
-    /**
-     * Available articulation types and their requirements
-     */
-    static ARTICULATION_TYPES = {
-        // Simple articulations (direct property assignment)
-        'staccato': { 
-            complex: false, 
-            description: 'Shortens note duration to ~50%' 
-        },
-        'accent': { 
-            complex: false, 
-            description: 'Increases note velocity/emphasis' 
-        },
-        'tenuto': { 
-            complex: false, 
-            description: 'Holds note for full duration with emphasis' 
-        },
-        'legato': { 
-            complex: false, 
-            description: 'Smooth connection between notes' 
-        },
-        'marcato': { 
-            complex: false, 
-            description: 'Strong accent with slight separation' 
-        },
-        
-        // Complex articulations (require API with parameters)
-        'glissando': { 
-            complex: true, 
-            requiredParams: ['target'], 
-            description: 'Smooth slide from note to target pitch' 
-        },
-        'portamento': { 
-            complex: true, 
-            requiredParams: ['target'], 
-            optionalParams: ['curve', 'speed'],
-            description: 'Expressive slide between pitches' 
-        },
-        'bend': { 
-            complex: true, 
-            requiredParams: ['amount'], 
-            optionalParams: ['curve', 'returnToOriginal'],
-            description: 'Pitch bend up or down in cents' 
-        },
-        'vibrato': { 
-            complex: true, 
-            optionalParams: ['rate', 'depth', 'delay'],
-            description: 'Periodic pitch variation' 
-        },
-        'tremolo': { 
-            complex: true, 
-            optionalParams: ['rate', 'depth'],
-            description: 'Rapid volume variation' 
-        },
-        'crescendo': { 
-            complex: true, 
-            requiredParams: ['endVelocity'], 
-            optionalParams: ['curve'],
-            description: 'Gradual volume increase' 
-        },
-        'diminuendo': { 
-            complex: true, 
-            requiredParams: ['endVelocity'], 
-            optionalParams: ['curve'],
-            description: 'Gradual volume decrease' 
-        }
-    };
 
     /**
      * Add articulation to a note in a sequence
@@ -98,7 +33,7 @@ export class Articulation {
             return result;
         }
 
-        const articulationDef = this.ARTICULATION_TYPES[articulationType];
+        const articulationDef = ARTICULATION_TYPES[articulationType];
         if (!articulationDef) {
             result.errors.push(`Unknown articulation type: ${articulationType}`);
             return result;
@@ -330,7 +265,7 @@ export class Articulation {
         
         // Remove related modulations
         if (note.modulations && articulationType) {
-            const articulationDef = this.ARTICULATION_TYPES[articulationType];
+            const articulationDef = ARTICULATION_TYPES[articulationType];
             if (articulationDef && articulationDef.complex) {
                 note.modulations = note.modulations.filter(mod => mod.subtype !== articulationType);
                 if (note.modulations.length === 0) {
@@ -402,9 +337,8 @@ export class Articulation {
 
     /**
      * Get available articulation types with descriptions
-     */
-    static getAvailableTypes() {
-        return Object.entries(this.ARTICULATION_TYPES).map(([type, def]) => ({
+     */static getAvailableTypes() {
+        return Object.entries(ARTICULATION_TYPES).map(([type, def]) => ({
             type,
             complex: def.complex,
             description: def.description,

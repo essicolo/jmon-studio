@@ -1,4 +1,5 @@
-import { MusicTheoryConstants } from './MusicTheoryConstants.js';
+import { MusicTheoryConstants } from '../../constants/MusicTheoryConstants.js';
+import { ORNAMENT_TYPES } from '../../constants/OrnamentTypes.js';
 import { Voice } from './Voice.js';
 
 /**
@@ -16,38 +17,56 @@ export class Ornament extends MusicTheoryConstants {
      * @param {number} trillRate - Duration of each individual note in the trill (default: 0.125)
      * @param {Array} arpeggioDegrees - Degrees in the scale to run the arpeggio
      * @param {number} slideLength - Length of the slide (default: 4.0)
+     *//**
+     * Initialize an Ornament object
+     * @param {Object} options - Configuration object for the ornament
+     * @param {string} options.type - The type of ornament
+     * @param {string} [options.tonic] - The tonic note for the scale
+     * @param {string} [options.mode] - The type of scale to generate
+     * @param {Object} [options.parameters] - Specific parameters for the ornament type
      */
-    constructor(
-        type = 'grace_note',
-        tonic = null,
-        mode = null,
-        by = 1.0,
-        graceNoteType = 'acciaccatura',
-        gracePitches = null,
-        trillRate = 0.125,
-        arpeggioDegrees = null,
-        slideLength = 4.0
-    ) {
-        super();
-        this.type = type;
-        this.by = by;
-        this.graceNoteType = graceNoteType;
-        this.gracePitches = gracePitches;
-        this.trillRate = trillRate;
-        this.slideLength = slideLength;
-
-        if (tonic && mode) {
-            this.tonicIndex = this.chromatic_scale.indexOf(tonic);
-            this.scale = this.generateScale(tonic, mode);
-            if (arpeggioDegrees) {
-                this.arpeggioVoice = new Voice(mode, tonic, arpeggioDegrees);
-            } else {
-                this.arpeggioVoice = null;
-            }
-        } else {
-            this.scale = null;
-            this.arpeggioVoice = null;
+    constructor(options) {
+        const ornamentType = ORNAMENT_TYPES[options.type];
+        if (!ornamentType) {
+            throw new Error(`Unknown ornament type: ${options.type}`);
         }
+
+        this.type = options.type;
+
+        // Initialize default parameters from ORNAMENT_TYPES
+
+        const parameters = ornamentType.parameters;
+
+        for (const [param, config] of Object.entries(parameters)) {
+
+            this[param] = options.parameters?.[param] ?? config.default;
+
+        }
+
+        if (options.tonic && options.mode) {
+
+            this.tonicIndex = MusicTheoryConstants.chromatic_scale.indexOf(options.tonic);
+
+            this.scale = this.generateScale(options.tonic, options.mode);
+
+            if (options.parameters?.arpeggioDegrees) {
+
+                this.arpeggioVoice = new Voice(options.mode, options.tonic, options.parameters.arpeggioDegrees);
+
+            } else {
+
+                this.arpeggioVoice = null;
+
+            }
+
+        } else {
+
+            this.scale = null;
+
+            this.arpeggioVoice = null;
+
+        }
+
     }
 
     /**
@@ -84,8 +103,11 @@ export class Ornament extends MusicTheoryConstants {
             this.gracePitches[Math.floor(Math.random() * this.gracePitches.length)] :
             mainPitch + 1;
 
+        const config = ORNAMENT_TYPES.grace_note.parameters;
+        const type = this.graceNoteType || config.graceNoteType.default;
+
         let newNotes;
-        if (this.graceNoteType === 'acciaccatura') {
+        if (type === 'acciaccatura') {
             // Very brief, does not alter main note's start time
             const graceDuration = mainDuration * 0.125;
             const modifiedMain = [mainPitch, mainDuration, mainOffset + graceDuration];
@@ -95,7 +117,7 @@ export class Ornament extends MusicTheoryConstants {
                 modifiedMain,
                 ...notes.slice(noteIndex + 1)
             ];
-        } else if (this.graceNoteType === 'appoggiatura') {
+        } else if (type === 'appoggiatura') {
             // Takes half the time of the main note
             const graceDuration = mainDuration / 2;
             const modifiedMain = [mainPitch, graceDuration, mainOffset + graceDuration];
@@ -122,20 +144,24 @@ export class Ornament extends MusicTheoryConstants {
         const trillNotes = [];
         let currentOffset = mainOffset;
 
+        const config = ORNAMENT_TYPES.trill.parameters;
+        const by = this.by || config.by.default;
+        const trillRate = this.trillRate || config.trillRate.default;
+
         // Determine the trill pitch
         let trillPitch;
         if (this.scale && this.scale.includes(mainPitch)) {
             const pitchIndex = this.scale.indexOf(mainPitch);
-            const trillIndex = (pitchIndex + Math.round(this.by)) % this.scale.length;
+            const trillIndex = (pitchIndex + Math.round(by)) % this.scale.length;
             trillPitch = this.scale[trillIndex];
         } else {
-            trillPitch = mainPitch + this.by;
+            trillPitch = mainPitch + by;
         }
 
         // Generate trill sequence
         while (currentOffset < mainOffset + mainDuration) {
             const remainingTime = mainOffset + mainDuration - currentOffset;
-            const noteLength = Math.min(this.trillRate, remainingTime / 2);
+            const noteLength = Math.min(trillRate, remainingTime / 2);
             
             if (remainingTime >= noteLength * 2) {
                 trillNotes.push([mainPitch, noteLength, currentOffset]);
@@ -162,13 +188,16 @@ export class Ornament extends MusicTheoryConstants {
     addMordent(notes, noteIndex) {
         const [mainPitch, mainDuration, mainOffset] = notes[noteIndex];
         
+        const config = ORNAMENT_TYPES.mordent.parameters;
+        const by = this.by || config.by.default;
+
         let mordentPitch;
         if (this.scale && this.scale.includes(mainPitch)) {
             const pitchIndex = this.scale.indexOf(mainPitch);
-            const mordentIndex = pitchIndex + Math.round(this.by);
-            mordentPitch = this.scale[mordentIndex] || mainPitch + this.by;
+            const mordentIndex = pitchIndex + Math.round(by);
+            mordentPitch = this.scale[mordentIndex] || mainPitch + by;
         } else {
-            mordentPitch = mainPitch + this.by;
+            mordentPitch = mainPitch + by;
         }
 
         const partDuration = mainDuration / 3;
