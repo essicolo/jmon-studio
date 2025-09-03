@@ -30,30 +30,24 @@ export class Scale extends MusicTheoryConstants {
         } else {
             this.mode = mode;
         }
-    }
-
-    /**
-     * Generate the full range of the scale
+    }/**
+     * Generate a scale starting from a specific octave with n notes
+     * @param {number} octave - The starting octave (0-10)
+     * @param {number} n - Number of notes to generate
      * @returns {Array} Array of MIDI note numbers representing the scale
      */
-    generate() {
-        const tonicNote = this.chromatic_scale.indexOf(this.tonic);
-        const scale = this.scale_intervals[this.mode] || this.scale_intervals['major'];
+    generate(octave, n) {
+        const baseNote = octave * 12 + this.chromatic_scale.indexOf(this.tonic);
+        const intervals = this.scale_intervals[this.mode];
+        const scale = [];
         
-        const fullRangeScale = [];
-        const addedNotes = new Set();
-        
-        for (let octave = 0; octave < 11; octave++) {
-            for (const interval of scale) {
-                const note = (tonicNote + interval) % 12 + octave * 12;
-                if (note <= 127 && !addedNotes.has(note)) {
-                    fullRangeScale.push(note);
-                    addedNotes.add(note);
-                }
+        for (let i = 0; scale.length < n; i++) {
+            for (const interval of intervals) {
+                scale.push(baseNote + interval + (i * 12));
+                if (scale.length >= n) break;
             }
         }
         
-        fullRangeScale.sort((a, b) => a - b);
-        return fullRangeScale;
+        return scale;
     }
 }
