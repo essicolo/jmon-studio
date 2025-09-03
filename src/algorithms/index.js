@@ -2,9 +2,9 @@
 import { MusicTheoryConstants } from './constants/MusicTheoryConstants.js';
 
 // Theory imports
-import * as harmonyModule from './theory/harmony/index.js';
-import * as rhythmModule from './theory/rhythm/index.js';
-import * as motifsModule from './theory/motifs/index.js';
+import { harmony } from './theory/harmony/index.js';
+import { rhythm } from './theory/rhythm/index.js';
+import { MotifBank } from './theory/motifs/index.js';
 
 // Generative algorithm imports
 import { GaussianProcessRegressor } from './generative/gaussian-processes/index.js';
@@ -21,32 +21,21 @@ import * as analysisModule from './analysis/index.js';
 // Utils imports
 import * as Utils from './utils.js';
 
-// Organized exports
+// Theory namespace
+export const theory = {
+    harmony,
+    rhythm,
+    motifs: {
+        MotifBank
+    }
+};
+
+// Constants namespace
 export const constants = {
     theory: MusicTheoryConstants
 };
 
-export const theory = {
-    harmony: {
-        Scale: harmonyModule.Scale,
-        Progression: harmonyModule.Progression,
-        Voice: harmonyModule.Voice,
-        Ornament: harmonyModule.Ornament,
-        Articulation: harmonyModule.Articulation,
-        addArticulation: harmonyModule.addArticulation,
-        removeArticulation: harmonyModule.removeArticulation,
-        validateArticulations: harmonyModule.validateArticulations
-    },
-    rhythm: {
-        Rhythm: rhythmModule.Rhythm,
-        isorhythm: rhythmModule.isorhythm,
-        beatcycle: rhythmModule.beatcycle
-    },
-    motifs: {
-        MotifBank: motifsModule.MotifBank
-    }
-};
-
+// Generative namespace
 export const generative = {
     gaussian: {
         Regressor: GaussianProcessRegressor
@@ -73,10 +62,12 @@ export const generative = {
     }
 };
 
+// Analysis namespace
 export const analysis = {
     ...analysisModule
 };
 
+// Utils namespace
 export const utils = {
     ...Utils
 };
