@@ -1,5 +1,5 @@
 /**
- * The Base class defines a set of musical scales, intervals, and notes.
+ * Constants and utility functions for music theory
  */
 export class MusicTheoryConstants {
     static chromatic_scale = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B'];
@@ -18,20 +18,13 @@ export class MusicTheoryConstants {
         'locrian': [0, 1, 3, 5, 6, 8, 10],
         'harmonic minor': [0, 2, 3, 5, 7, 8, 11],
         'melodic minor ascending': [0, 2, 3, 5, 7, 9, 11],
-        'melodic minor descending': [0, 2, 3, 5, 7, 8, 10],  // same as natural minor
+        'melodic minor descending': [0, 2, 3, 5, 7, 8, 10]  // same as natural minor
     };
 
     static intervals = {
         'P1': 0, 'm2': 1, 'M2': 2, 'm3': 3, 'M3': 4, 'P4': 5, 
         'P5': 7, 'm6': 8, 'M6': 9, 'm7': 10, 'M7': 11, 'P8': 12
     };
-
-    constructor() {
-        // Instance access to static properties
-        this.chromatic_scale = MusicTheoryConstants.chromatic_scale;
-        this.scale_intervals = MusicTheoryConstants.scale_intervals;
-        this.intervals = MusicTheoryConstants.intervals;
-    }
 
     /**
      * Convert flat notes to their equivalent sharp notes
@@ -46,10 +39,6 @@ export class MusicTheoryConstants {
         return flatToSharp[note] || note;
     }
 
-    convertFlatToSharp(note) {
-        return MusicTheoryConstants.convertFlatToSharp(note);
-    }
-
     /**
      * Returns the intervals for a triad based on the given scale intervals
      * @param {Array} scale - Scale intervals
@@ -57,9 +46,5 @@ export class MusicTheoryConstants {
      */
     static scaleToTriad(scale) {
         return [scale[0], scale[2], scale[4]]; // root, third, fifth
-    }
-
-    scaleToTriad(scale) {
-        return MusicTheoryConstants.scaleToTriad(scale);
     }
 }
