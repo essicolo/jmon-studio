@@ -1,6 +1,6 @@
 import { JmonValidator } from './utils/jmon-validator.js';
 import { JmonTone } from './format/JmonTone.js';
-import * as algorithms from './algorithms/index.js';
+import algorithms from './algorithms/index.js';
 import { createPlayer } from './browser/music-player.js';
 
 /**

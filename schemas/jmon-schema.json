@@ -7,12 +7,12 @@
     "format",
     "version", 
     "bpm",
-    "sequences"
+    "tracks"
   ],
   "properties": {
     "format": {
       "type": "string",
-      "const": "jmonTone",
+      "const": "jmon",
       "description": "The format identifier for the JMON schema."
     },
     "version": {
@@ -651,9 +651,9 @@
         }
       }
     },
-    "sequences": {
+    "tracks": {
       "type": "array",
-      "description": "Musical sequences (tracks or parts).",
+      "description": "Musical tracks (sequences or parts).",
       "items": {
         "type": "object",
         "required": ["label", "notes"],
@@ -990,7 +990,7 @@
             "$ref": "#/definitions/automationChannel"
           }
         },
-        "sequences": {
+        "tracks": {
           "type": "object",
           "description": "Sequence-level automation channels organized by sequence ID.",
           "patternProperties": {
@@ -1117,7 +1117,7 @@
     },
     "synthConfig": {
       "type": "object",
-      "description": "Global synthesizer configuration that applies to all sequences unless overridden.",
+      "description": "Global synthesizer configuration that applies to all tracks unless overridden.",
       "properties": {
         "type": {
           "type": "string", 
@@ -1127,7 +1127,7 @@
         "modulationTarget": {
           "type": "string",
           "enum": ["vibrato", "tremolo", "glissando", "filter"],
-          "description": "Default target for modulation wheel (CC1) control across all sequences."
+          "description": "Default target for modulation wheel (CC1) control across all tracks."
         },
         "options": {
           "type": "object",
