@@ -63,8 +63,8 @@ function play(jmonObj) {
  */
 function score(jmonObj) {
 	return render(jmonObj);
-}// Export structured API
-export const jm = {
+}// Create the main jm object
+const jm = {
     // Core functionality
     render,
     play,
@@ -75,13 +75,13 @@ export const jm = {
     Tone: JmonTone,
     createPlayer,
 
-    // Music theory and algorithms
+    // Theory and algorithms
     theory: algorithms.theory,
     generative: algorithms.generative,
     analysis: algorithms.analysis,
-
-    // Constants and utilities
     constants: algorithms.constants,
+
+    // Utils
     utils: {
         ...algorithms.utils,
         JmonValidator
@@ -90,4 +90,6 @@ export const jm = {
     VERSION: '1.0.0'
 };
 
+// Export both default and named
+export { jm };
 export default jm;

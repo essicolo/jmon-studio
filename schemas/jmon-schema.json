@@ -757,10 +757,124 @@
                   "minimum": 0,
                   "maximum": 1,
                   "description": "Note velocity (0-1)."
-                },
-                "articulation": {
+                },"articulation": {
                   "type": "string",
-                  "description": "Articulation (e.g., 'staccato', 'accent')."
+                  "enum": ["staccato", "accent", "tenuto", "legato", "marcato"],
+                  "description": "Performance instruction that affects how a note is played (e.g., 'staccato', 'accent')."
+                },
+                "ornaments": {
+                  "type": "array",
+                  "description": "Array of melodic ornaments to apply to this note",
+                  "items": {
+                    "type": "object",
+                    "required": ["type"],
+                    "properties": {
+                      "type": {
+                        "type": "string",
+                        "enum": ["grace_note", "trill", "mordent", "turn", "arpeggio"],
+                        "description": "Type of ornament"
+                      },
+                      "parameters": {
+                        "type": "object",
+                        "description": "Parameters specific to this ornament type",
+                        "oneOf": [
+                          {
+                            "if": {
+                              "properties": { "type": { "const": "grace_note" } }
+                            },
+                            "then": {
+                              "properties": {
+                                "graceNoteType": {
+                                  "type": "string",
+                                  "enum": ["acciaccatura", "appoggiatura"],
+                                  "description": "Type of grace note"
+                                },
+                                "gracePitches": {
+                                  "type": "array",
+                                  "items": {
+                                    "oneOf": [
+                                      { "type": "number", "description": "MIDI note number" },
+                                      { "type": "string", "description": "Note name (e.g., 'C4')" }
+                                    ]
+                                  },
+                                  "description": "Optional specific pitches for the grace note(s)"
+                                }
+                              },
+                              "required": ["graceNoteType"]
+                            }
+                          },
+                          {
+                            "if": {
+                              "properties": { "type": { "const": "trill" } }
+                            },
+                            "then": {
+                              "properties": {
+                                "by": {
+                                  "type": "number",
+                                  "default": 1,
+                                  "description": "Interval for the trill (in scale steps)"
+                                },
+                                "trillRate": {
+                                  "type": "number",
+                                  "default": 0.125,
+                                  "description": "Duration of each note in the trill"
+                                }
+                              }
+                            }
+                          },
+                          {
+                            "if": {
+                              "properties": { "type": { "const": "mordent" } }
+                            },
+                            "then": {
+                              "properties": {
+                                "by": {
+                                  "type": "number",
+                                  "default": 1,
+                                  "description": "Interval for the mordent (in scale steps)"
+                                }
+                              }
+                            }
+                          },
+                          {
+                            "if": {
+                              "properties": { "type": { "const": "turn" } }
+                            },
+                            "then": {
+                              "properties": {
+                                "scale": {
+                                  "type": "string",
+                                  "description": "Optional scale context for the turn"
+                                }
+                              }
+                            }
+                          },
+                          {
+                            "if": {
+                              "properties": { "type": { "const": "arpeggio" } }
+                            },
+                            "then": {
+                              "properties": {
+                                "arpeggioDegrees": {
+                                  "type": "array",
+                                  "items": { "type": "number" },
+                                  "description": "Scale degrees for the arpeggio"
+                                },
+                                "direction": {
+                                  "type": "string",
+                                  "enum": ["up", "down", "both"],
+                                  "default": "up",
+                                  "description": "Direction of the arpeggio"
+                                }
+                              },
+                              "required": ["arpeggioDegrees"]
+                            }
+                          }
+                        ]
+                      }
+                    },
+                    "additionalProperties": false
+                  }
                 },
                 "microtuning": {
                   "type": "number",
@@ -1207,138 +1321,4 @@
     }
   },
   "additionalProperties": false,
-      "examples": [
-        {
-          "description": "Basic modulation example with pitch bend and modulation wheel",
-          "composition": {
-            "format": "jmonTone",
-            "version": "1.0",
-            "bpm": 120,
-            "synthConfig": {
-              "type": "Synth",
-              "modulationTarget": "filter"
-            },
-            "audioGraph": [
-              { "id": "master", "type": "Destination", "options": {} }
-            ],
-            "connections": [],
-            "sequences": [{
-              "label": "Modulation Demo",
-              "notes": [
-                {
-                  "pitch": "C4",
-                  "time": "0:0:0",
-                  "duration": "2n",
-                  "velocity": 0.8,
-                  "modulations": [
-                    { "type": "pitchBend", "value": -4096, "time": "0:0:0" },
-                    { "type": "pitchBend", "value": 4096, "time": "0:1.5:0" }
-                  ]
-                },
-                {
-                  "pitch": "G4",
-                  "time": "0:2:0",
-                  "duration": "2n",
-                  "velocity": 0.8,
-                  "modulations": [
-                    { "type": "cc", "controller": 1, "value": 0, "time": "0:0:0" },
-                    { "type": "cc", "controller": 1, "value": 127, "time": "0:1.5:0" }
-                  ]
-                }
-              ]
-            }]
-          }
-        },
-        {
-          "description": "Multi-level automation example with interpolation",
-          "composition": {
-            "format": "jmonTone",
-            "version": "1.0",
-            "bpm": 120,
-            "audioGraph": [
-              { "id": "master", "type": "Destination", "options": {} },
-              { "id": "reverb", "type": "Reverb", "options": { "wet": 0.3 } }
-            ],
-            "connections": [
-              ["reverb", "master"]
-            ],
-            "automation": {
-              "enabled": true,
-              "global": [
-                {
-                  "id": "master-volume",
-                  "name": "Master Volume",
-                  "target": "synth.volume",
-                  "level": "global",
-                  "range": [0, 1],
-                  "interpolation": "cubic",
-                  "anchorPoints": [
-                    { "time": "0:0:0", "value": 0 },
-                    { "time": "2:0:0", "value": 0.8 },
-                    { "time": "6:0:0", "value": 0.6 },
-                    { "time": "8:0:0", "value": 0 }
-                  ]
-                }
-              ],
-              "sequences": {
-                "lead": [
-                  {
-                    "id": "lead-filter",
-                    "name": "Lead Filter Sweep",
-                    "target": "synth.filter.frequency",
-                    "level": "sequence",
-                    "sequenceId": "lead",
-                    "range": [200, 8000],
-                    "interpolation": "daw",
-                    "anchorPoints": [
-                      { "time": "0:0:0", "value": 200, "tangent": 0 },
-                      { "time": "1:0:0", "value": 2000, "tangent": 1.5 },
-                      { "time": "3:0:0", "value": 8000, "tangent": 0 }
-                    ]
-                  }
-                ]
-              }
-            },
-            "sequences": [
-              {
-                "label": "lead",
-                "notes": [
-                  { "pitch": "C4", "time": "0:0:0", "duration": "1n", "velocity": 0.8 },
-                  { "pitch": "E4", "time": "1:0:0", "duration": "1n", "velocity": 0.7 },
-                  { "pitch": "G4", "time": "2:0:0", "duration": "1n", "velocity": 0.9 }
-                ]
-              }
-            ]
-          }
-        },
-        {
-          "description": "Vibrato modulation example",
-          "composition": {
-            "format": "jmonTone",
-            "version": "1.0", 
-            "bpm": 120,
-            "audioGraph": [
-              { "id": "master", "type": "Destination", "options": {} }
-            ],
-            "connections": [],
-            "sequences": [{
-              "label": "Vibrato Demo",
-              "synth": {
-                "type": "Synth",
-                "modulationTarget": "vibrato"
-              },
-              "notes": [{
-                "pitch": "A4",
-                "time": "0:0:0",
-                "duration": "1n",
-                "velocity": 0.8,
-                "modulations": [
-                  { "type": "cc", "controller": 1, "value": 0, "time": "0:0:0" },
-                  { "type": "cc", "controller": 1, "value": 127, "time": "0:3:0" }
-                ]
-              }]
-            }]
-          }
-        }
-      ]
 }

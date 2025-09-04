@@ -2,8 +2,8 @@
 import { MusicTheoryConstants } from './constants/MusicTheoryConstants.js';
 
 // Theory imports
-import { harmony } from './theory/harmony/index.js';
-import { rhythm } from './theory/rhythm/index.js';
+import harmony from './theory/harmony/index.js';
+import rhythm from './theory/rhythm/index.js';
 import { MotifBank } from './theory/motifs/index.js';
 
 // Generative algorithm imports
@@ -21,7 +21,7 @@ import * as analysisModule from './analysis/index.js';
 // Utils imports
 import * as Utils from './utils.js';
 
-// Theory namespace
+// Export namespaces
 export const theory = {
     harmony,
     rhythm,
@@ -30,12 +30,10 @@ export const theory = {
     }
 };
 
-// Constants namespace
 export const constants = {
     theory: MusicTheoryConstants
 };
 
-// Generative namespace
 export const generative = {
     gaussian: {
         Regressor: GaussianProcessRegressor
@@ -62,12 +60,19 @@ export const generative = {
     }
 };
 
-// Analysis namespace
 export const analysis = {
     ...analysisModule
 };
 
-// Utils namespace
 export const utils = {
     ...Utils
+};
+
+// Export everything as default
+export default {
+    theory,
+    constants,
+    generative,
+    analysis,
+    utils
 };

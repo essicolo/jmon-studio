@@ -1,17 +1,17 @@
-// Import all components
+// Import components
 import { Rhythm } from './Rhythm.js';
 import { isorhythm } from './isorhythm.js';
 import { beatcycle } from './beatcycle.js';
 
-// Export as a namespace object
-export const rhythm = {
+// Export individual components
+export {
     Rhythm,
     isorhythm,
     beatcycle
 };
 
-// Also export individual components for internal use
-export {
+// Export rhythm namespace
+export default {
     Rhythm,
     isorhythm,
     beatcycle

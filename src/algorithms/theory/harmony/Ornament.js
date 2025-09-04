@@ -3,81 +3,102 @@ import { ORNAMENT_TYPES } from '../../constants/OrnamentTypes.js';
 import { Voice } from './Voice.js';
 
 /**
- * A class to represent musical ornaments
+ * A class to represent and validate musical ornaments
  */
-export class Ornament extends MusicTheoryConstants {
+export class Ornament {
     /**
-     * Initialize an Ornament object
-     * @param {string} type - The type of ornament ('grace_note', 'trill', 'mordent', 'arpeggio', 'turn', 'slide')
-     * @param {string} tonic - The tonic note for the scale
-     * @param {string} mode - The type of scale to generate
-     * @param {number} by - The pitch step for the trill (default: 1.0)
-     * @param {string} graceNoteType - Type of grace note ('acciaccatura' or 'appoggiatura')
-     * @param {Array} gracePitches - List of pitches for the grace note
-     * @param {number} trillRate - Duration of each individual note in the trill (default: 0.125)
-     * @param {Array} arpeggioDegrees - Degrees in the scale to run the arpeggio
-     * @param {number} slideLength - Length of the slide (default: 4.0)
-     *//**
-     * Initialize an Ornament object
-     * @param {Object} options - Configuration object for the ornament
-     * @param {string} options.type - The type of ornament
-     * @param {string} [options.tonic] - The tonic note for the scale
-     * @param {string} [options.mode] - The type of scale to generate
-     * @param {Object} [options.parameters] - Specific parameters for the ornament type
+     * Validate ornament parameters and compatibility
+     * @param {Object} note - The note to apply the ornament to
+     * @param {string} type - The type of ornament
+     * @param {Object} params - Parameters for the ornament
+     * @returns {Object} Validation result with success status and any messages
+     */
+    static validateOrnament(note, type, params = {}) {
+        const result = {
+            valid: false,
+            warnings: [],
+            errors: []
+        };
+
+        // 1. Check if ornament type exists
+        const ornamentDef = ORNAMENT_TYPES[type];
+        if (!ornamentDef) {
+            result.errors.push(`Unknown ornament type: ${type}`);
+            return result;
+        }
+
+        // 2. Check required parameters
+        if (ornamentDef.requiredParams) {
+            for (const param of ornamentDef.requiredParams) {
+                if (!(param in params)) {
+                    result.errors.push(`Missing required parameter '${param}' for ${type}`);
+                    return result;
+                }
+            }
+        }
+
+        // 3. Check minimum duration if specified
+        if (ornamentDef.minDuration) {
+            // TODO: Add duration check logic
+            result.warnings.push(`Duration check not implemented for ${type}`);
+        }
+
+        // 4. Check conflicts with existing ornaments
+        if (note.ornaments && ornamentDef.conflicts) {
+            const existingConflicts = note.ornaments
+                .filter(o => ornamentDef.conflicts.includes(o.type))
+                .map(o => o.type);
+            
+            if (existingConflicts.length > 0) {
+                result.errors.push(`${type} conflicts with existing ornaments: ${existingConflicts.join(', ')}`);
+                return result;
+            }
+        }
+
+        // 5. Run ornament-specific validation
+        if (ornamentDef.validate) {
+            const specificValidation = ornamentDef.validate(note, params);
+            if (!specificValidation.valid) {
+                result.errors.push(specificValidation.error);
+                return result;
+            }
+        }
+
+        result.valid = true;
+        return result;
+    }
+
+    /**
+     * Create a new ornament instance with validation
+     * @param {Object} options - Ornament configuration
      */
     constructor(options) {
-        const ornamentType = ORNAMENT_TYPES[options.type];
-        if (!ornamentType) {
+        const ornamentDef = ORNAMENT_TYPES[options.type];
+        if (!ornamentDef) {
             throw new Error(`Unknown ornament type: ${options.type}`);
         }
 
         this.type = options.type;
-
-        // Initialize default parameters from ORNAMENT_TYPES
-
-        const parameters = ornamentType.parameters;
-
-        for (const [param, config] of Object.entries(parameters)) {
-
-            this[param] = options.parameters?.[param] ?? config.default;
-
-        }
+        this.params = {
+            ...ornamentDef.defaultParams,
+            ...options.parameters
+        };
 
         if (options.tonic && options.mode) {
-
             this.tonicIndex = MusicTheoryConstants.chromatic_scale.indexOf(options.tonic);
-
             this.scale = this.generateScale(options.tonic, options.mode);
-
-            if (options.parameters?.arpeggioDegrees) {
-
-                this.arpeggioVoice = new Voice(options.mode, options.tonic, options.parameters.arpeggioDegrees);
-
-            } else {
-
-                this.arpeggioVoice = null;
-
-            }
-
         } else {
-
             this.scale = null;
-
-            this.arpeggioVoice = null;
-
         }
-
     }
 
     /**
-     * Generate a complete scale based on tonic and mode
-     * @param {string} tonic - The tonic note for the scale
-     * @param {string} mode - The type of scale to generate
-     * @returns {Array} Array of MIDI notes for the complete scale
+     * Generate a scale for pitch-based ornaments
      */
     generateScale(tonic, mode) {
-        const scalePattern = this.scale_intervals[mode];
-        const scaleNotes = scalePattern.map(interval => (this.tonicIndex + interval) % 12);
+        const scalePattern = MusicTheoryConstants.scale_intervals[mode];
+        const tonicIndex = MusicTheoryConstants.chromatic_scale.indexOf(tonic);
+        const scaleNotes = scalePattern.map(interval => (tonicIndex + interval) % 12);
         const completeScale = [];
 
         for (let octave = -1; octave < 10; octave++) {
@@ -92,61 +113,89 @@ export class Ornament extends MusicTheoryConstants {
     }
 
     /**
-     * Add a grace note to a specified note
-     * @param {Array} notes - The list of notes to be processed
-     * @param {number} noteIndex - The index of the note to add grace note to
-     * @returns {Array} The list of notes with the grace note added
+     * Apply the ornament to notes
      */
-    addGraceNote(notes, noteIndex) {
-        const [mainPitch, mainDuration, mainOffset] = notes[noteIndex];
-        const ornamentPitch = this.gracePitches ? 
-            this.gracePitches[Math.floor(Math.random() * this.gracePitches.length)] :
-            mainPitch + 1;
-
-        const config = ORNAMENT_TYPES.grace_note.parameters;
-        const type = this.graceNoteType || config.graceNoteType.default;
-
-        let newNotes;
-        if (type === 'acciaccatura') {
-            // Very brief, does not alter main note's start time
-            const graceDuration = mainDuration * 0.125;
-            const modifiedMain = [mainPitch, mainDuration, mainOffset + graceDuration];
-            newNotes = [
-                ...notes.slice(0, noteIndex),
-                [ornamentPitch, graceDuration, mainOffset],
-                modifiedMain,
-                ...notes.slice(noteIndex + 1)
-            ];
-        } else if (type === 'appoggiatura') {
-            // Takes half the time of the main note
-            const graceDuration = mainDuration / 2;
-            const modifiedMain = [mainPitch, graceDuration, mainOffset + graceDuration];
-            newNotes = [
-                ...notes.slice(0, noteIndex),
-                [ornamentPitch, graceDuration, mainOffset],
-                modifiedMain,
-                ...notes.slice(noteIndex + 1)
-            ];
-        } else {
-            newNotes = notes;
+    apply(notes, noteIndex = null) {
+        if (!Array.isArray(notes) || notes.length === 0) {
+            return notes;
         }
-        return newNotes;
+
+        // Use random note index if none provided
+        if (noteIndex === null) {
+            noteIndex = Math.floor(Math.random() * notes.length);
+        }
+
+        if (noteIndex < 0 || noteIndex >= notes.length) {
+            return notes;
+        }
+
+        const note = notes[noteIndex];
+        const validation = Ornament.validateOrnament(note, this.type, this.params);
+
+        if (!validation.valid) {
+            console.warn(`Ornament validation failed: ${validation.errors.join(', ')}`);
+            return notes;
+        }
+
+        // Apply the ornament based on type
+        switch (this.type) {
+            case 'grace_note':
+                return this.addGraceNote(notes, noteIndex);
+            case 'trill':
+                return this.addTrill(notes, noteIndex);
+            case 'mordent':
+                return this.addMordent(notes, noteIndex);
+            case 'turn':
+                return this.addTurn(notes, noteIndex);
+            case 'arpeggio':
+                return this.addArpeggio(notes, noteIndex);
+            default:
+                return notes;
+        }
     }
 
     /**
-     * Add a trill ornament by alternating between original pitch and step above
-     * @param {Array} notes - The list of notes to be processed
-     * @param {number} noteIndex - The index of the note to add trill to
-     * @returns {Array} The list of notes with the trill applied
+     * Add a grace note
+     */
+    addGraceNote(notes, noteIndex) {
+        const [mainPitch, mainDuration, mainOffset] = notes[noteIndex];
+        const ornamentPitch = this.params.gracePitches ? 
+            this.params.gracePitches[Math.floor(Math.random() * this.params.gracePitches.length)] :
+            mainPitch + 1;
+
+        if (this.params.graceNoteType === 'acciaccatura') {
+            // Very brief, does not alter main note's start time
+            const graceDuration = mainDuration * 0.125;
+            const modifiedMain = [mainPitch, mainDuration, mainOffset + graceDuration];
+            return [
+                ...notes.slice(0, noteIndex),
+                [ornamentPitch, graceDuration, mainOffset],
+                modifiedMain,
+                ...notes.slice(noteIndex + 1)
+            ];
+        } else { // appoggiatura
+            // Takes half the time of the main note
+            const graceDuration = mainDuration / 2;
+            const modifiedMain = [mainPitch, graceDuration, mainOffset + graceDuration];
+            return [
+                ...notes.slice(0, noteIndex),
+                [ornamentPitch, graceDuration, mainOffset],
+                modifiedMain,
+                ...notes.slice(noteIndex + 1)
+            ];
+        }
+    }
+
+    /**
+     * Add a trill
      */
     addTrill(notes, noteIndex) {
         const [mainPitch, mainDuration, mainOffset] = notes[noteIndex];
         const trillNotes = [];
         let currentOffset = mainOffset;
 
-        const config = ORNAMENT_TYPES.trill.parameters;
-        const by = this.by || config.by.default;
-        const trillRate = this.trillRate || config.trillRate.default;
+        const by = this.params.by || 1;
+        const trillRate = this.params.trillRate || 0.125;
 
         // Determine the trill pitch
         let trillPitch;
@@ -180,16 +229,11 @@ export class Ornament extends MusicTheoryConstants {
     }
 
     /**
-     * Add a mordent ornament
-     * @param {Array} notes - The list of notes to be processed  
-     * @param {number} noteIndex - The index of the note to add mordent to
-     * @returns {Array} The list of notes with the mordent applied
+     * Add a mordent
      */
     addMordent(notes, noteIndex) {
         const [mainPitch, mainDuration, mainOffset] = notes[noteIndex];
-        
-        const config = ORNAMENT_TYPES.mordent.parameters;
-        const by = this.by || config.by.default;
+        const by = this.params.by || 1;
 
         let mordentPitch;
         if (this.scale && this.scale.includes(mainPitch)) {
@@ -215,34 +259,69 @@ export class Ornament extends MusicTheoryConstants {
     }
 
     /**
-     * Generate the ornament on the specified notes
-     * @param {Array} notes - The list of notes to be processed
-     * @param {number} noteIndex - The index of the note to ornament (random if null)
-     * @returns {Array} The list of notes with the ornamentation applied
+     * Add a turn
      */
-    generate(notes, noteIndex = null) {
-        if (!Array.isArray(notes) || notes.length === 0) {
+    addTurn(notes, noteIndex) {
+        const [mainPitch, mainDuration, mainOffset] = notes[noteIndex];
+        const partDuration = mainDuration / 4;
+
+        let upperPitch, lowerPitch;
+        if (this.scale && this.scale.includes(mainPitch)) {
+            const pitchIndex = this.scale.indexOf(mainPitch);
+            upperPitch = this.scale[pitchIndex + 1] || mainPitch + 2;
+            lowerPitch = this.scale[pitchIndex - 1] || mainPitch - 2;
+        } else {
+            upperPitch = mainPitch + 2;
+            lowerPitch = mainPitch - 2;
+        }
+
+        const turnNotes = [
+            [mainPitch, partDuration, mainOffset],
+            [upperPitch, partDuration, mainOffset + partDuration],
+            [mainPitch, partDuration, mainOffset + 2 * partDuration],
+            [lowerPitch, partDuration, mainOffset + 3 * partDuration]
+        ];
+
+        return [
+            ...notes.slice(0, noteIndex),
+            ...turnNotes,
+            ...notes.slice(noteIndex + 1)
+        ];
+    }
+
+    /**
+     * Add an arpeggio
+     */
+    addArpeggio(notes, noteIndex) {
+        const [mainPitch, mainDuration, mainOffset] = notes[noteIndex];
+        const { arpeggioDegrees, direction = 'up' } = this.params;
+
+        if (!arpeggioDegrees || !Array.isArray(arpeggioDegrees)) {
             return notes;
         }
 
-        if (noteIndex === null) {
-            noteIndex = Math.floor(Math.random() * notes.length);
+        const pitches = [];
+        if (this.scale && this.scale.includes(mainPitch)) {
+            const pitchIndex = this.scale.indexOf(mainPitch);
+            pitches.push(...arpeggioDegrees.map(degree => this.scale[pitchIndex + degree] || mainPitch + degree));
+        } else {
+            pitches.push(...arpeggioDegrees.map(degree => mainPitch + degree));
         }
 
-        if (noteIndex < 0 || noteIndex >= notes.length) {
-            return notes;
-        }
+        if (direction === 'down') pitches.reverse();
+        if (direction === 'both') pitches.push(...pitches.slice(0, -1).reverse());
 
-        switch (this.type) {
-            case 'grace_note':
-                return this.addGraceNote(notes, noteIndex);
-            case 'trill':
-                return this.addTrill(notes, noteIndex);
-            case 'mordent':
-                return this.addMordent(notes, noteIndex);
-            // Add other ornament types as needed
-            default:
-                return notes;
-        }
+        const partDuration = mainDuration / pitches.length;
+        const arpeggioNotes = pitches.map((pitch, i) => [
+            pitch,
+            partDuration,
+            mainOffset + i * partDuration
+        ]);
+
+        return [
+            ...notes.slice(0, noteIndex),
+            ...arpeggioNotes,
+            ...notes.slice(noteIndex + 1)
+        ];
     }
 }
