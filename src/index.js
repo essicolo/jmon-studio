@@ -1,8 +1,7 @@
 import { JmonValidator } from './utils/jmon-validator.js';
-import { JmonTone } from './format/JmonTone.js';
 import algorithms from './algorithms/index.js';
 import { createPlayer } from './browser/music-player.js';
-
+import { abc, midi, tonejs, wav, supercollider } from './converters/index.js';
 /**
  * Validation utilitaire simple
  * @param {Object} obj - Objet JMON à valider
@@ -29,13 +28,19 @@ function render(jmonObj) {
 	if (!jmonObj.sequences && !jmonObj.tracks && !jmonObj.format) {
 		console.warn('[RENDER] Object does not appear to be JMON format, attempting normalization');
 		// Try to create a minimal JMON structure
-		jmonObj = {
-			format: 'jmonTone',
-			version: '1.0',
-			bpm: jmonObj.bpm || 120,
-			sequences: jmonObj.sequences || jmonObj.tracks || []
-		};
 	}
+
+	// Harmonized convert namespace
+	const jm = {
+		// ...existing code...
+	};
+	jm.converters = {
+		abc,
+		midi,
+		tonejs,
+		wav,
+		supercollider
+	};
 	
 	return createPlayer(jmonObj);
 }
@@ -72,7 +77,6 @@ const jm = {
     validate: validateJmon,
 
     // Core formats and players
-    Tone: JmonTone,
     createPlayer,
 
     // Theory and algorithms

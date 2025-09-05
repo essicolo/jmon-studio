@@ -1,6 +1,6 @@
 // (Type import removed: PolyloopPoint, PolyloopLayer, PolyloopConfig, PolyloopTrigger)
 // (Type import removed: JMonSequence, JMonNote)
-import { JMonConverter } from '../../../converters/jmon-conversion.js';
+// import supprimé : JMonConverter n'est plus utilisé
 
 export class Polyloop {
   config;
@@ -251,8 +251,8 @@ export class Polyloop {
     
     sequencesByLayer.forEach((layerTriggers, layerName) => {
       const notes = layerTriggers.map(trigger => ({
-            pitch: JMonConverter.midiToNoteName(trigger.point.pitch || 60),
-        time: JMonConverter.timeToMusicalTime(trigger.time),
+        pitch: typeof trigger.point.pitch === 'number' ? trigger.point.pitch : 60,
+        time: trigger.time,
         duration: '8n', // Default duration
         velocity: trigger.point.velocity || 0.8
       }));

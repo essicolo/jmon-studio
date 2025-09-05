@@ -3,7 +3,7 @@
  * Handles visual score rendering using ABC.js
  */
 
-import { toAbc } from './abc-converter.js';
+import { toAbc } from '../converters/index.js';
 
 export function score(composition, options = {}) {
     const { width = 800, scale = 1.0 } = options;

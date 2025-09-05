@@ -1,5 +1,5 @@
 // import { JmonValidator } from '../utils/jmon-validator.js';
-import { convertJmonToTonejs } from '../converters/jmon-tonejs.js';
+import { tonejs } from '../converters/tonejs.js';
 /**
  * Music Player
  * Comprehensive music player inspired by djalgo player.py
@@ -37,7 +37,7 @@ export function createPlayer(composition, options = {}) {
 
     // Convert JMON to Tone.js format with multivoice support
     const conversionOptions = { autoMultivoice, maxVoices, showDebug };
-    const convertedData = convertJmonToTonejs(composition, conversionOptions);
+    const convertedData = tonejs(composition, conversionOptions);
     
     // Use converted track data
     const { tracks: convertedTracks, metadata } = convertedData;
