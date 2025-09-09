@@ -496,21 +496,27 @@ export function createPlayer(composition, options = {}) {
                 
                 // Safari-specific audio context handling
                 try {
-                    // Force audio context start for Safari
-                    if (Tone.context.state === 'suspended' || Tone.context.state === 'interrupted') {
-                        await Tone.context.resume();
-                    }
-                    
-                    // Ensure audio context is started
-                    if (Tone.context.state !== 'running') {
+                    // Check if context exists before accessing it
+                    if (!Tone.context) {
+                        console.warn('[PLAYER] Tone.context not available, attempting to start...');
                         await Tone.start();
+                    } else {
+                        // Force audio context start for Safari
+                        if (Tone.context.state === 'suspended' || Tone.context.state === 'interrupted') {
+                            await Tone.context.resume();
+                        }
                         
-                        // Safari sometimes needs a delay
-                        if (navigator.userAgent.includes('Safari') && !navigator.userAgent.includes('Chrome')) {
-                            await new Promise(resolve => setTimeout(resolve, 100));
+                        // Ensure audio context is started
+                        if (Tone.context.state !== 'running') {
+                            await Tone.start();
+                            
+                            // Safari sometimes needs a delay
+                            if (navigator.userAgent.includes('Safari') && !navigator.userAgent.includes('Chrome')) {
+                                await new Promise(resolve => setTimeout(resolve, 100));
+                            }
                         }
                     }
-                    return Tone.context.state === 'running';
+                    return Tone.context && Tone.context.state === 'running';
                 } catch (error) {
                     console.error('[PLAYER] Failed to initialize audio context:', error);
                     return false;
@@ -775,9 +781,9 @@ export function createPlayer(composition, options = {}) {
         } else {
             
             // Ensure audio context is started first
-            if (Tone.context.state !== 'running') {
+            if (!Tone.context || Tone.context.state !== 'running') {
                 await Tone.start();
-                console.log('[PLAYER] Audio context started:', Tone.context.state);
+                console.log('[PLAYER] Audio context started:', Tone.context ? Tone.context.state : 'unknown');
             }
             
             if (synths.length === 0) {
@@ -792,7 +798,7 @@ export function createPlayer(composition, options = {}) {
             
             console.log('[PLAYER] Transport state before start:', Tone.Transport.state);
             console.log('[PLAYER] Transport position reset to:', Tone.Transport.position);
-            console.log('[PLAYER] Audio context state:', Tone.context.state);
+            console.log('[PLAYER] Audio context state:', Tone.context ? Tone.context.state : 'unknown');
             console.log('[PLAYER] Parts count:', parts.length);
             console.log('[PLAYER] Synths count:', synths.length);
             // Wait for samplers to load if present
