@@ -1,18 +1,18 @@
-function Jn(o) {
-  return o && o.__esModule && Object.prototype.hasOwnProperty.call(o, "default") ? o.default : o;
+function ci(s) {
+  return s && s.__esModule && Object.prototype.hasOwnProperty.call(s, "default") ? s.default : s;
 }
-var Fe = { exports: {} }, It = {}, $e = {}, Te = {}, Ot = {}, qt = {}, Dt = {}, ir;
-function Mt() {
-  return ir || (ir = 1, (function(o) {
-    Object.defineProperty(o, "__esModule", { value: !0 }), o.regexpCode = o.getEsmExportName = o.getProperty = o.safeStringify = o.stringify = o.strConcat = o.addCodeArg = o.str = o._ = o.nil = o._Code = o.Name = o.IDENTIFIER = o._CodeOrName = void 0;
+var He = { exports: {} }, Ft = {}, Pe = {}, Ne = {}, Lt = {}, Ut = {}, Gt = {}, pr;
+function It() {
+  return pr || (pr = 1, (function(s) {
+    Object.defineProperty(s, "__esModule", { value: !0 }), s.regexpCode = s.getEsmExportName = s.getProperty = s.safeStringify = s.stringify = s.strConcat = s.addCodeArg = s.str = s._ = s.nil = s._Code = s.Name = s.IDENTIFIER = s._CodeOrName = void 0;
     class e {
     }
-    o._CodeOrName = e, o.IDENTIFIER = /^[a-z$_][a-z$_0-9]*$/i;
+    s._CodeOrName = e, s.IDENTIFIER = /^[a-z$_][a-z$_0-9]*$/i;
     class t extends e {
-      constructor(c) {
-        if (super(), !o.IDENTIFIER.test(c))
+      constructor(l) {
+        if (super(), !s.IDENTIFIER.test(l))
           throw new Error("CodeGen: name must be a valid identifier");
-        this.str = c;
+        this.str = l;
       }
       toString() {
         return this.str;
@@ -24,10 +24,10 @@ function Mt() {
         return { [this.str]: 1 };
       }
     }
-    o.Name = t;
+    s.Name = t;
     class r extends e {
-      constructor(c) {
-        super(), this._items = typeof c == "string" ? [c] : c;
+      constructor(l) {
+        super(), this._items = typeof l == "string" ? [l] : l;
       }
       toString() {
         return this.str;
@@ -35,116 +35,116 @@ function Mt() {
       emptyStr() {
         if (this._items.length > 1)
           return !1;
-        const c = this._items[0];
-        return c === "" || c === '""';
+        const l = this._items[0];
+        return l === "" || l === '""';
       }
       get str() {
-        var c;
-        return (c = this._str) !== null && c !== void 0 ? c : this._str = this._items.reduce((f, m) => `${f}${m}`, "");
+        var l;
+        return (l = this._str) !== null && l !== void 0 ? l : this._str = this._items.reduce((p, m) => `${p}${m}`, "");
       }
       get names() {
-        var c;
-        return (c = this._names) !== null && c !== void 0 ? c : this._names = this._items.reduce((f, m) => (m instanceof t && (f[m.str] = (f[m.str] || 0) + 1), f), {});
+        var l;
+        return (l = this._names) !== null && l !== void 0 ? l : this._names = this._items.reduce((p, m) => (m instanceof t && (p[m.str] = (p[m.str] || 0) + 1), p), {});
       }
     }
-    o._Code = r, o.nil = new r("");
-    function n(d, ...c) {
-      const f = [d[0]];
+    s._Code = r, s.nil = new r("");
+    function n(f, ...l) {
+      const p = [f[0]];
       let m = 0;
-      for (; m < c.length; )
-        a(f, c[m]), f.push(d[++m]);
-      return new r(f);
+      for (; m < l.length; )
+        a(p, l[m]), p.push(f[++m]);
+      return new r(p);
     }
-    o._ = n;
+    s._ = n;
     const i = new r("+");
-    function s(d, ...c) {
-      const f = [S(d[0])];
+    function o(f, ...l) {
+      const p = [$(f[0])];
       let m = 0;
-      for (; m < c.length; )
-        f.push(i), a(f, c[m]), f.push(i, S(d[++m]));
-      return l(f), new r(f);
+      for (; m < l.length; )
+        p.push(i), a(p, l[m]), p.push(i, $(f[++m]));
+      return c(p), new r(p);
     }
-    o.str = s;
-    function a(d, c) {
-      c instanceof r ? d.push(...c._items) : c instanceof t ? d.push(c) : d.push(w(c));
+    s.str = o;
+    function a(f, l) {
+      l instanceof r ? f.push(...l._items) : l instanceof t ? f.push(l) : f.push(v(l));
     }
-    o.addCodeArg = a;
-    function l(d) {
-      let c = 1;
-      for (; c < d.length - 1; ) {
-        if (d[c] === i) {
-          const f = u(d[c - 1], d[c + 1]);
-          if (f !== void 0) {
-            d.splice(c - 1, 3, f);
+    s.addCodeArg = a;
+    function c(f) {
+      let l = 1;
+      for (; l < f.length - 1; ) {
+        if (f[l] === i) {
+          const p = u(f[l - 1], f[l + 1]);
+          if (p !== void 0) {
+            f.splice(l - 1, 3, p);
             continue;
           }
-          d[c++] = "+";
+          f[l++] = "+";
         }
-        c++;
+        l++;
       }
     }
-    function u(d, c) {
-      if (c === '""')
-        return d;
-      if (d === '""')
-        return c;
-      if (typeof d == "string")
-        return c instanceof t || d[d.length - 1] !== '"' ? void 0 : typeof c != "string" ? `${d.slice(0, -1)}${c}"` : c[0] === '"' ? d.slice(0, -1) + c.slice(1) : void 0;
-      if (typeof c == "string" && c[0] === '"' && !(d instanceof t))
-        return `"${d}${c.slice(1)}`;
+    function u(f, l) {
+      if (l === '""')
+        return f;
+      if (f === '""')
+        return l;
+      if (typeof f == "string")
+        return l instanceof t || f[f.length - 1] !== '"' ? void 0 : typeof l != "string" ? `${f.slice(0, -1)}${l}"` : l[0] === '"' ? f.slice(0, -1) + l.slice(1) : void 0;
+      if (typeof l == "string" && l[0] === '"' && !(f instanceof t))
+        return `"${f}${l.slice(1)}`;
     }
-    function p(d, c) {
-      return c.emptyStr() ? d : d.emptyStr() ? c : s`${d}${c}`;
+    function d(f, l) {
+      return l.emptyStr() ? f : f.emptyStr() ? l : o`${f}${l}`;
     }
-    o.strConcat = p;
-    function w(d) {
-      return typeof d == "number" || typeof d == "boolean" || d === null ? d : S(Array.isArray(d) ? d.join(",") : d);
+    s.strConcat = d;
+    function v(f) {
+      return typeof f == "number" || typeof f == "boolean" || f === null ? f : $(Array.isArray(f) ? f.join(",") : f);
     }
-    function _(d) {
-      return new r(S(d));
+    function _(f) {
+      return new r($(f));
     }
-    o.stringify = _;
-    function S(d) {
-      return JSON.stringify(d).replace(/\u2028/g, "\\u2028").replace(/\u2029/g, "\\u2029");
+    s.stringify = _;
+    function $(f) {
+      return JSON.stringify(f).replace(/\u2028/g, "\\u2028").replace(/\u2029/g, "\\u2029");
     }
-    o.safeStringify = S;
-    function E(d) {
-      return typeof d == "string" && o.IDENTIFIER.test(d) ? new r(`.${d}`) : n`[${d}]`;
+    s.safeStringify = $;
+    function S(f) {
+      return typeof f == "string" && s.IDENTIFIER.test(f) ? new r(`.${f}`) : n`[${f}]`;
     }
-    o.getProperty = E;
-    function b(d) {
-      if (typeof d == "string" && o.IDENTIFIER.test(d))
-        return new r(`${d}`);
-      throw new Error(`CodeGen: invalid export name: ${d}, use explicit $id name mapping`);
+    s.getProperty = S;
+    function g(f) {
+      if (typeof f == "string" && s.IDENTIFIER.test(f))
+        return new r(`${f}`);
+      throw new Error(`CodeGen: invalid export name: ${f}, use explicit $id name mapping`);
     }
-    o.getEsmExportName = b;
-    function h(d) {
-      return new r(d.toString());
+    s.getEsmExportName = g;
+    function h(f) {
+      return new r(f.toString());
     }
-    o.regexpCode = h;
-  })(Dt)), Dt;
+    s.regexpCode = h;
+  })(Gt)), Gt;
 }
-var xt = {}, or;
-function sr() {
-  return or || (or = 1, (function(o) {
-    Object.defineProperty(o, "__esModule", { value: !0 }), o.ValueScope = o.ValueScopeName = o.Scope = o.varKinds = o.UsedValueState = void 0;
-    const e = Mt();
+var Bt = {}, mr;
+function yr() {
+  return mr || (mr = 1, (function(s) {
+    Object.defineProperty(s, "__esModule", { value: !0 }), s.ValueScope = s.ValueScopeName = s.Scope = s.varKinds = s.UsedValueState = void 0;
+    const e = It();
     class t extends Error {
       constructor(u) {
         super(`CodeGen: "code" for ${u} not defined`), this.value = u.value;
       }
     }
     var r;
-    (function(l) {
-      l[l.Started = 0] = "Started", l[l.Completed = 1] = "Completed";
-    })(r || (o.UsedValueState = r = {})), o.varKinds = {
+    (function(c) {
+      c[c.Started = 0] = "Started", c[c.Completed = 1] = "Completed";
+    })(r || (s.UsedValueState = r = {})), s.varKinds = {
       const: new e.Name("const"),
       let: new e.Name("let"),
       var: new e.Name("var")
     };
     class n {
-      constructor({ prefixes: u, parent: p } = {}) {
-        this._names = {}, this._prefixes = u, this._parent = p;
+      constructor({ prefixes: u, parent: d } = {}) {
+        this._names = {}, this._prefixes = u, this._parent = d;
       }
       toName(u) {
         return u instanceof e.Name ? u : this.name(u);
@@ -153,30 +153,30 @@ function sr() {
         return new e.Name(this._newName(u));
       }
       _newName(u) {
-        const p = this._names[u] || this._nameGroup(u);
-        return `${u}${p.index++}`;
+        const d = this._names[u] || this._nameGroup(u);
+        return `${u}${d.index++}`;
       }
       _nameGroup(u) {
-        var p, w;
-        if (!((w = (p = this._parent) === null || p === void 0 ? void 0 : p._prefixes) === null || w === void 0) && w.has(u) || this._prefixes && !this._prefixes.has(u))
+        var d, v;
+        if (!((v = (d = this._parent) === null || d === void 0 ? void 0 : d._prefixes) === null || v === void 0) && v.has(u) || this._prefixes && !this._prefixes.has(u))
           throw new Error(`CodeGen: prefix "${u}" is not allowed in this scope`);
         return this._names[u] = { prefix: u, index: 0 };
       }
     }
-    o.Scope = n;
+    s.Scope = n;
     class i extends e.Name {
-      constructor(u, p) {
-        super(p), this.prefix = u;
+      constructor(u, d) {
+        super(d), this.prefix = u;
       }
-      setValue(u, { property: p, itemIndex: w }) {
-        this.value = u, this.scopePath = (0, e._)`.${new e.Name(p)}[${w}]`;
+      setValue(u, { property: d, itemIndex: v }) {
+        this.value = u, this.scopePath = (0, e._)`.${new e.Name(d)}[${v}]`;
       }
     }
-    o.ValueScopeName = i;
-    const s = (0, e._)`\n`;
+    s.ValueScopeName = i;
+    const o = (0, e._)`\n`;
     class a extends n {
       constructor(u) {
-        super(u), this._values = {}, this._scope = u.scope, this.opts = { ...u, _n: u.lines ? s : e.nil };
+        super(u), this._values = {}, this._scope = u.scope, this.opts = { ...u, _n: u.lines ? o : e.nil };
       }
       get() {
         return this._scope;
@@ -184,102 +184,102 @@ function sr() {
       name(u) {
         return new i(u, this._newName(u));
       }
-      value(u, p) {
-        var w;
-        if (p.ref === void 0)
+      value(u, d) {
+        var v;
+        if (d.ref === void 0)
           throw new Error("CodeGen: ref must be passed in value");
-        const _ = this.toName(u), { prefix: S } = _, E = (w = p.key) !== null && w !== void 0 ? w : p.ref;
-        let b = this._values[S];
-        if (b) {
-          const c = b.get(E);
-          if (c)
-            return c;
+        const _ = this.toName(u), { prefix: $ } = _, S = (v = d.key) !== null && v !== void 0 ? v : d.ref;
+        let g = this._values[$];
+        if (g) {
+          const l = g.get(S);
+          if (l)
+            return l;
         } else
-          b = this._values[S] = /* @__PURE__ */ new Map();
-        b.set(E, _);
-        const h = this._scope[S] || (this._scope[S] = []), d = h.length;
-        return h[d] = p.ref, _.setValue(p, { property: S, itemIndex: d }), _;
+          g = this._values[$] = /* @__PURE__ */ new Map();
+        g.set(S, _);
+        const h = this._scope[$] || (this._scope[$] = []), f = h.length;
+        return h[f] = d.ref, _.setValue(d, { property: $, itemIndex: f }), _;
       }
-      getValue(u, p) {
-        const w = this._values[u];
-        if (w)
-          return w.get(p);
+      getValue(u, d) {
+        const v = this._values[u];
+        if (v)
+          return v.get(d);
       }
-      scopeRefs(u, p = this._values) {
-        return this._reduceValues(p, (w) => {
-          if (w.scopePath === void 0)
-            throw new Error(`CodeGen: name "${w}" has no value`);
-          return (0, e._)`${u}${w.scopePath}`;
+      scopeRefs(u, d = this._values) {
+        return this._reduceValues(d, (v) => {
+          if (v.scopePath === void 0)
+            throw new Error(`CodeGen: name "${v}" has no value`);
+          return (0, e._)`${u}${v.scopePath}`;
         });
       }
-      scopeCode(u = this._values, p, w) {
+      scopeCode(u = this._values, d, v) {
         return this._reduceValues(u, (_) => {
           if (_.value === void 0)
             throw new Error(`CodeGen: name "${_}" has no value`);
           return _.value.code;
-        }, p, w);
+        }, d, v);
       }
-      _reduceValues(u, p, w = {}, _) {
-        let S = e.nil;
-        for (const E in u) {
-          const b = u[E];
-          if (!b)
+      _reduceValues(u, d, v = {}, _) {
+        let $ = e.nil;
+        for (const S in u) {
+          const g = u[S];
+          if (!g)
             continue;
-          const h = w[E] = w[E] || /* @__PURE__ */ new Map();
-          b.forEach((d) => {
-            if (h.has(d))
+          const h = v[S] = v[S] || /* @__PURE__ */ new Map();
+          g.forEach((f) => {
+            if (h.has(f))
               return;
-            h.set(d, r.Started);
-            let c = p(d);
-            if (c) {
-              const f = this.opts.es5 ? o.varKinds.var : o.varKinds.const;
-              S = (0, e._)`${S}${f} ${d} = ${c};${this.opts._n}`;
-            } else if (c = _?.(d))
-              S = (0, e._)`${S}${c}${this.opts._n}`;
+            h.set(f, r.Started);
+            let l = d(f);
+            if (l) {
+              const p = this.opts.es5 ? s.varKinds.var : s.varKinds.const;
+              $ = (0, e._)`${$}${p} ${f} = ${l};${this.opts._n}`;
+            } else if (l = _?.(f))
+              $ = (0, e._)`${$}${l}${this.opts._n}`;
             else
-              throw new t(d);
-            h.set(d, r.Completed);
+              throw new t(f);
+            h.set(f, r.Completed);
           });
         }
-        return S;
+        return $;
       }
     }
-    o.ValueScope = a;
-  })(xt)), xt;
+    s.ValueScope = a;
+  })(Bt)), Bt;
 }
-var ar;
+var gr;
 function Y() {
-  return ar || (ar = 1, (function(o) {
-    Object.defineProperty(o, "__esModule", { value: !0 }), o.or = o.and = o.not = o.CodeGen = o.operators = o.varKinds = o.ValueScopeName = o.ValueScope = o.Scope = o.Name = o.regexpCode = o.stringify = o.getProperty = o.nil = o.strConcat = o.str = o._ = void 0;
-    const e = Mt(), t = sr();
-    var r = Mt();
-    Object.defineProperty(o, "_", { enumerable: !0, get: function() {
+  return gr || (gr = 1, (function(s) {
+    Object.defineProperty(s, "__esModule", { value: !0 }), s.or = s.and = s.not = s.CodeGen = s.operators = s.varKinds = s.ValueScopeName = s.ValueScope = s.Scope = s.Name = s.regexpCode = s.stringify = s.getProperty = s.nil = s.strConcat = s.str = s._ = void 0;
+    const e = It(), t = yr();
+    var r = It();
+    Object.defineProperty(s, "_", { enumerable: !0, get: function() {
       return r._;
-    } }), Object.defineProperty(o, "str", { enumerable: !0, get: function() {
+    } }), Object.defineProperty(s, "str", { enumerable: !0, get: function() {
       return r.str;
-    } }), Object.defineProperty(o, "strConcat", { enumerable: !0, get: function() {
+    } }), Object.defineProperty(s, "strConcat", { enumerable: !0, get: function() {
       return r.strConcat;
-    } }), Object.defineProperty(o, "nil", { enumerable: !0, get: function() {
+    } }), Object.defineProperty(s, "nil", { enumerable: !0, get: function() {
       return r.nil;
-    } }), Object.defineProperty(o, "getProperty", { enumerable: !0, get: function() {
+    } }), Object.defineProperty(s, "getProperty", { enumerable: !0, get: function() {
       return r.getProperty;
-    } }), Object.defineProperty(o, "stringify", { enumerable: !0, get: function() {
+    } }), Object.defineProperty(s, "stringify", { enumerable: !0, get: function() {
       return r.stringify;
-    } }), Object.defineProperty(o, "regexpCode", { enumerable: !0, get: function() {
+    } }), Object.defineProperty(s, "regexpCode", { enumerable: !0, get: function() {
       return r.regexpCode;
-    } }), Object.defineProperty(o, "Name", { enumerable: !0, get: function() {
+    } }), Object.defineProperty(s, "Name", { enumerable: !0, get: function() {
       return r.Name;
     } });
-    var n = sr();
-    Object.defineProperty(o, "Scope", { enumerable: !0, get: function() {
+    var n = yr();
+    Object.defineProperty(s, "Scope", { enumerable: !0, get: function() {
       return n.Scope;
-    } }), Object.defineProperty(o, "ValueScope", { enumerable: !0, get: function() {
+    } }), Object.defineProperty(s, "ValueScope", { enumerable: !0, get: function() {
       return n.ValueScope;
-    } }), Object.defineProperty(o, "ValueScopeName", { enumerable: !0, get: function() {
+    } }), Object.defineProperty(s, "ValueScopeName", { enumerable: !0, get: function() {
       return n.ValueScopeName;
-    } }), Object.defineProperty(o, "varKinds", { enumerable: !0, get: function() {
+    } }), Object.defineProperty(s, "varKinds", { enumerable: !0, get: function() {
       return n.varKinds;
-    } }), o.operators = {
+    } }), s.operators = {
       GT: new e._Code(">"),
       GTE: new e._Code(">="),
       LT: new e._Code("<"),
@@ -295,45 +295,45 @@ function Y() {
       optimizeNodes() {
         return this;
       }
-      optimizeNames(y, M) {
+      optimizeNames(y, E) {
         return this;
       }
     }
-    class s extends i {
-      constructor(y, M, A) {
-        super(), this.varKind = y, this.name = M, this.rhs = A;
+    class o extends i {
+      constructor(y, E, R) {
+        super(), this.varKind = y, this.name = E, this.rhs = R;
       }
-      render({ es5: y, _n: M }) {
-        const A = y ? t.varKinds.var : this.varKind, F = this.rhs === void 0 ? "" : ` = ${this.rhs}`;
-        return `${A} ${this.name}${F};` + M;
+      render({ es5: y, _n: E }) {
+        const R = y ? t.varKinds.var : this.varKind, F = this.rhs === void 0 ? "" : ` = ${this.rhs}`;
+        return `${R} ${this.name}${F};` + E;
       }
-      optimizeNames(y, M) {
+      optimizeNames(y, E) {
         if (y[this.name.str])
-          return this.rhs && (this.rhs = H(this.rhs, y, M)), this;
+          return this.rhs && (this.rhs = H(this.rhs, y, E)), this;
       }
       get names() {
         return this.rhs instanceof e._CodeOrName ? this.rhs.names : {};
       }
     }
     class a extends i {
-      constructor(y, M, A) {
-        super(), this.lhs = y, this.rhs = M, this.sideEffects = A;
+      constructor(y, E, R) {
+        super(), this.lhs = y, this.rhs = E, this.sideEffects = R;
       }
       render({ _n: y }) {
         return `${this.lhs} = ${this.rhs};` + y;
       }
-      optimizeNames(y, M) {
+      optimizeNames(y, E) {
         if (!(this.lhs instanceof e.Name && !y[this.lhs.str] && !this.sideEffects))
-          return this.rhs = H(this.rhs, y, M), this;
+          return this.rhs = H(this.rhs, y, E), this;
       }
       get names() {
         const y = this.lhs instanceof e.Name ? {} : { ...this.lhs.names };
         return L(y, this.rhs);
       }
     }
-    class l extends a {
-      constructor(y, M, A, F) {
-        super(y, A, F), this.op = M;
+    class c extends a {
+      constructor(y, E, R, F) {
+        super(y, R, F), this.op = E;
       }
       render({ _n: y }) {
         return `${this.lhs} ${this.op}= ${this.rhs};` + y;
@@ -347,7 +347,7 @@ function Y() {
         return `${this.label}:` + y;
       }
     }
-    class p extends i {
+    class d extends i {
       constructor(y) {
         super(), this.label = y, this.names = {};
       }
@@ -355,7 +355,7 @@ function Y() {
         return `break${this.label ? ` ${this.label}` : ""};` + y;
       }
     }
-    class w extends i {
+    class v extends i {
       constructor(y) {
         super(), this.error = y;
       }
@@ -376,166 +376,166 @@ function Y() {
       optimizeNodes() {
         return `${this.code}` ? this : void 0;
       }
-      optimizeNames(y, M) {
-        return this.code = H(this.code, y, M), this;
+      optimizeNames(y, E) {
+        return this.code = H(this.code, y, E), this;
       }
       get names() {
         return this.code instanceof e._CodeOrName ? this.code.names : {};
       }
     }
-    class S extends i {
+    class $ extends i {
       constructor(y = []) {
         super(), this.nodes = y;
       }
       render(y) {
-        return this.nodes.reduce((M, A) => M + A.render(y), "");
+        return this.nodes.reduce((E, R) => E + R.render(y), "");
       }
       optimizeNodes() {
         const { nodes: y } = this;
-        let M = y.length;
-        for (; M--; ) {
-          const A = y[M].optimizeNodes();
-          Array.isArray(A) ? y.splice(M, 1, ...A) : A ? y[M] = A : y.splice(M, 1);
+        let E = y.length;
+        for (; E--; ) {
+          const R = y[E].optimizeNodes();
+          Array.isArray(R) ? y.splice(E, 1, ...R) : R ? y[E] = R : y.splice(E, 1);
         }
         return y.length > 0 ? this : void 0;
       }
-      optimizeNames(y, M) {
-        const { nodes: A } = this;
-        let F = A.length;
+      optimizeNames(y, E) {
+        const { nodes: R } = this;
+        let F = R.length;
         for (; F--; ) {
-          const G = A[F];
-          G.optimizeNames(y, M) || (ce(y, G.names), A.splice(F, 1));
+          const G = R[F];
+          G.optimizeNames(y, E) || (ce(y, G.names), R.splice(F, 1));
         }
-        return A.length > 0 ? this : void 0;
+        return R.length > 0 ? this : void 0;
       }
       get names() {
-        return this.nodes.reduce((y, M) => B(y, M.names), {});
+        return this.nodes.reduce((y, E) => B(y, E.names), {});
       }
     }
-    class E extends S {
+    class S extends $ {
       render(y) {
         return "{" + y._n + super.render(y) + "}" + y._n;
       }
     }
-    class b extends S {
+    class g extends $ {
     }
-    class h extends E {
+    class h extends S {
     }
     h.kind = "else";
-    class d extends E {
-      constructor(y, M) {
-        super(M), this.condition = y;
+    class f extends S {
+      constructor(y, E) {
+        super(E), this.condition = y;
       }
       render(y) {
-        let M = `if(${this.condition})` + super.render(y);
-        return this.else && (M += "else " + this.else.render(y)), M;
+        let E = `if(${this.condition})` + super.render(y);
+        return this.else && (E += "else " + this.else.render(y)), E;
       }
       optimizeNodes() {
         super.optimizeNodes();
         const y = this.condition;
         if (y === !0)
           return this.nodes;
-        let M = this.else;
-        if (M) {
-          const A = M.optimizeNodes();
-          M = this.else = Array.isArray(A) ? new h(A) : A;
+        let E = this.else;
+        if (E) {
+          const R = E.optimizeNodes();
+          E = this.else = Array.isArray(R) ? new h(R) : R;
         }
-        if (M)
-          return y === !1 ? M instanceof d ? M : M.nodes : this.nodes.length ? this : new d(me(y), M instanceof d ? [M] : M.nodes);
+        if (E)
+          return y === !1 ? E instanceof f ? E : E.nodes : this.nodes.length ? this : new f(me(y), E instanceof f ? [E] : E.nodes);
         if (!(y === !1 || !this.nodes.length))
           return this;
       }
-      optimizeNames(y, M) {
-        var A;
-        if (this.else = (A = this.else) === null || A === void 0 ? void 0 : A.optimizeNames(y, M), !!(super.optimizeNames(y, M) || this.else))
-          return this.condition = H(this.condition, y, M), this;
+      optimizeNames(y, E) {
+        var R;
+        if (this.else = (R = this.else) === null || R === void 0 ? void 0 : R.optimizeNames(y, E), !!(super.optimizeNames(y, E) || this.else))
+          return this.condition = H(this.condition, y, E), this;
       }
       get names() {
         const y = super.names;
         return L(y, this.condition), this.else && B(y, this.else.names), y;
       }
     }
-    d.kind = "if";
-    class c extends E {
+    f.kind = "if";
+    class l extends S {
     }
-    c.kind = "for";
-    class f extends c {
+    l.kind = "for";
+    class p extends l {
       constructor(y) {
         super(), this.iteration = y;
       }
       render(y) {
         return `for(${this.iteration})` + super.render(y);
       }
-      optimizeNames(y, M) {
-        if (super.optimizeNames(y, M))
-          return this.iteration = H(this.iteration, y, M), this;
+      optimizeNames(y, E) {
+        if (super.optimizeNames(y, E))
+          return this.iteration = H(this.iteration, y, E), this;
       }
       get names() {
         return B(super.names, this.iteration.names);
       }
     }
-    class m extends c {
-      constructor(y, M, A, F) {
-        super(), this.varKind = y, this.name = M, this.from = A, this.to = F;
+    class m extends l {
+      constructor(y, E, R, F) {
+        super(), this.varKind = y, this.name = E, this.from = R, this.to = F;
       }
       render(y) {
-        const M = y.es5 ? t.varKinds.var : this.varKind, { name: A, from: F, to: G } = this;
-        return `for(${M} ${A}=${F}; ${A}<${G}; ${A}++)` + super.render(y);
+        const E = y.es5 ? t.varKinds.var : this.varKind, { name: R, from: F, to: G } = this;
+        return `for(${E} ${R}=${F}; ${R}<${G}; ${R}++)` + super.render(y);
       }
       get names() {
         const y = L(super.names, this.from);
         return L(y, this.to);
       }
     }
-    class v extends c {
-      constructor(y, M, A, F) {
-        super(), this.loop = y, this.varKind = M, this.name = A, this.iterable = F;
+    class w extends l {
+      constructor(y, E, R, F) {
+        super(), this.loop = y, this.varKind = E, this.name = R, this.iterable = F;
       }
       render(y) {
         return `for(${this.varKind} ${this.name} ${this.loop} ${this.iterable})` + super.render(y);
       }
-      optimizeNames(y, M) {
-        if (super.optimizeNames(y, M))
-          return this.iterable = H(this.iterable, y, M), this;
+      optimizeNames(y, E) {
+        if (super.optimizeNames(y, E))
+          return this.iterable = H(this.iterable, y, E), this;
       }
       get names() {
         return B(super.names, this.iterable.names);
       }
     }
-    class g extends E {
-      constructor(y, M, A) {
-        super(), this.name = y, this.args = M, this.async = A;
+    class b extends S {
+      constructor(y, E, R) {
+        super(), this.name = y, this.args = E, this.async = R;
       }
       render(y) {
         return `${this.async ? "async " : ""}function ${this.name}(${this.args})` + super.render(y);
       }
     }
-    g.kind = "func";
-    class $ extends S {
+    b.kind = "func";
+    class P extends $ {
       render(y) {
         return "return " + super.render(y);
       }
     }
-    $.kind = "return";
-    class k extends E {
+    P.kind = "return";
+    class k extends S {
       render(y) {
-        let M = "try" + super.render(y);
-        return this.catch && (M += this.catch.render(y)), this.finally && (M += this.finally.render(y)), M;
+        let E = "try" + super.render(y);
+        return this.catch && (E += this.catch.render(y)), this.finally && (E += this.finally.render(y)), E;
       }
       optimizeNodes() {
-        var y, M;
-        return super.optimizeNodes(), (y = this.catch) === null || y === void 0 || y.optimizeNodes(), (M = this.finally) === null || M === void 0 || M.optimizeNodes(), this;
+        var y, E;
+        return super.optimizeNodes(), (y = this.catch) === null || y === void 0 || y.optimizeNodes(), (E = this.finally) === null || E === void 0 || E.optimizeNodes(), this;
       }
-      optimizeNames(y, M) {
-        var A, F;
-        return super.optimizeNames(y, M), (A = this.catch) === null || A === void 0 || A.optimizeNames(y, M), (F = this.finally) === null || F === void 0 || F.optimizeNames(y, M), this;
+      optimizeNames(y, E) {
+        var R, F;
+        return super.optimizeNames(y, E), (R = this.catch) === null || R === void 0 || R.optimizeNames(y, E), (F = this.finally) === null || F === void 0 || F.optimizeNames(y, E), this;
       }
       get names() {
         const y = super.names;
         return this.catch && B(y, this.catch.names), this.finally && B(y, this.finally.names), y;
       }
     }
-    class j extends E {
+    class C extends S {
       constructor(y) {
         super(), this.error = y;
       }
@@ -543,17 +543,17 @@ function Y() {
         return `catch(${this.error})` + super.render(y);
       }
     }
-    j.kind = "catch";
-    class D extends E {
+    C.kind = "catch";
+    class x extends S {
       render(y) {
         return "finally" + super.render(y);
       }
     }
-    D.kind = "finally";
-    class V {
-      constructor(y, M = {}) {
-        this._values = {}, this._blockStarts = [], this._constants = {}, this.opts = { ...M, _n: M.lines ? `
-` : "" }, this._extScope = y, this._scope = new t.Scope({ parent: y }), this._nodes = [new b()];
+    x.kind = "finally";
+    class z {
+      constructor(y, E = {}) {
+        this._values = {}, this._blockStarts = [], this._constants = {}, this.opts = { ...E, _n: E.lines ? `
+` : "" }, this._extScope = y, this._scope = new t.Scope({ parent: y }), this._nodes = [new g()];
       }
       toString() {
         return this._root.render(this.opts);
@@ -567,12 +567,12 @@ function Y() {
         return this._extScope.name(y);
       }
       // reserves unique name in the external scope and assigns value to it
-      scopeValue(y, M) {
-        const A = this._extScope.value(y, M);
-        return (this._values[A.prefix] || (this._values[A.prefix] = /* @__PURE__ */ new Set())).add(A), A;
+      scopeValue(y, E) {
+        const R = this._extScope.value(y, E);
+        return (this._values[R.prefix] || (this._values[R.prefix] = /* @__PURE__ */ new Set())).add(R), R;
       }
-      getScopeValue(y, M) {
-        return this._extScope.getValue(y, M);
+      getScopeValue(y, E) {
+        return this._extScope.getValue(y, E);
       }
       // return code that assigns values in the external scope to the names that are used internally
       // (same names that were returned by gen.scopeName or gen.scopeValue)
@@ -582,29 +582,29 @@ function Y() {
       scopeCode() {
         return this._extScope.scopeCode(this._values);
       }
-      _def(y, M, A, F) {
-        const G = this._scope.toName(M);
-        return A !== void 0 && F && (this._constants[G.str] = A), this._leafNode(new s(y, G, A)), G;
+      _def(y, E, R, F) {
+        const G = this._scope.toName(E);
+        return R !== void 0 && F && (this._constants[G.str] = R), this._leafNode(new o(y, G, R)), G;
       }
       // `const` declaration (`var` in es5 mode)
-      const(y, M, A) {
-        return this._def(t.varKinds.const, y, M, A);
+      const(y, E, R) {
+        return this._def(t.varKinds.const, y, E, R);
       }
       // `let` declaration with optional assignment (`var` in es5 mode)
-      let(y, M, A) {
-        return this._def(t.varKinds.let, y, M, A);
+      let(y, E, R) {
+        return this._def(t.varKinds.let, y, E, R);
       }
       // `var` declaration with optional assignment
-      var(y, M, A) {
-        return this._def(t.varKinds.var, y, M, A);
+      var(y, E, R) {
+        return this._def(t.varKinds.var, y, E, R);
       }
       // assignment code
-      assign(y, M, A) {
-        return this._leafNode(new a(y, M, A));
+      assign(y, E, R) {
+        return this._leafNode(new a(y, E, R));
       }
       // `+=` code
-      add(y, M) {
-        return this._leafNode(new l(y, o.operators.ADD, M));
+      add(y, E) {
+        return this._leafNode(new c(y, s.operators.ADD, E));
       }
       // appends passed SafeExpr to code or executes Block
       code(y) {
@@ -612,24 +612,24 @@ function Y() {
       }
       // returns code for object literal for the passed argument list of key-value pairs
       object(...y) {
-        const M = ["{"];
-        for (const [A, F] of y)
-          M.length > 1 && M.push(","), M.push(A), (A !== F || this.opts.es5) && (M.push(":"), (0, e.addCodeArg)(M, F));
-        return M.push("}"), new e._Code(M);
+        const E = ["{"];
+        for (const [R, F] of y)
+          E.length > 1 && E.push(","), E.push(R), (R !== F || this.opts.es5) && (E.push(":"), (0, e.addCodeArg)(E, F));
+        return E.push("}"), new e._Code(E);
       }
       // `if` clause (or statement if `thenBody` and, optionally, `elseBody` are passed)
-      if(y, M, A) {
-        if (this._blockNode(new d(y)), M && A)
-          this.code(M).else().code(A).endIf();
-        else if (M)
-          this.code(M).endIf();
-        else if (A)
+      if(y, E, R) {
+        if (this._blockNode(new f(y)), E && R)
+          this.code(E).else().code(R).endIf();
+        else if (E)
+          this.code(E).endIf();
+        else if (R)
           throw new Error('CodeGen: "else" body without "then" body');
         return this;
       }
       // `else if` clause - invalid without `if` or after `else` clauses
       elseIf(y) {
-        return this._elseNode(new d(y));
+        return this._elseNode(new f(y));
       }
       // `else` clause - only valid after `if` or `else if` clauses
       else() {
@@ -637,42 +637,42 @@ function Y() {
       }
       // end `if` statement (needed if gen.if was used only with condition)
       endIf() {
-        return this._endBlockNode(d, h);
+        return this._endBlockNode(f, h);
       }
-      _for(y, M) {
-        return this._blockNode(y), M && this.code(M).endFor(), this;
+      _for(y, E) {
+        return this._blockNode(y), E && this.code(E).endFor(), this;
       }
       // a generic `for` clause (or statement if `forBody` is passed)
-      for(y, M) {
-        return this._for(new f(y), M);
+      for(y, E) {
+        return this._for(new p(y), E);
       }
       // `for` statement for a range of values
-      forRange(y, M, A, F, G = this.opts.es5 ? t.varKinds.var : t.varKinds.let) {
+      forRange(y, E, R, F, G = this.opts.es5 ? t.varKinds.var : t.varKinds.let) {
         const Q = this._scope.toName(y);
-        return this._for(new m(G, Q, M, A), () => F(Q));
+        return this._for(new m(G, Q, E, R), () => F(Q));
       }
       // `for-of` statement (in es5 mode replace with a normal for loop)
-      forOf(y, M, A, F = t.varKinds.const) {
+      forOf(y, E, R, F = t.varKinds.const) {
         const G = this._scope.toName(y);
         if (this.opts.es5) {
-          const Q = M instanceof e.Name ? M : this.var("_arr", M);
+          const Q = E instanceof e.Name ? E : this.var("_arr", E);
           return this.forRange("_i", 0, (0, e._)`${Q}.length`, (W) => {
-            this.var(G, (0, e._)`${Q}[${W}]`), A(G);
+            this.var(G, (0, e._)`${Q}[${W}]`), R(G);
           });
         }
-        return this._for(new v("of", F, G, M), () => A(G));
+        return this._for(new w("of", F, G, E), () => R(G));
       }
       // `for-in` statement.
       // With option `ownProperties` replaced with a `for-of` loop for object keys
-      forIn(y, M, A, F = this.opts.es5 ? t.varKinds.var : t.varKinds.const) {
+      forIn(y, E, R, F = this.opts.es5 ? t.varKinds.var : t.varKinds.const) {
         if (this.opts.ownProperties)
-          return this.forOf(y, (0, e._)`Object.keys(${M})`, A);
+          return this.forOf(y, (0, e._)`Object.keys(${E})`, R);
         const G = this._scope.toName(y);
-        return this._for(new v("in", F, G, M), () => A(G));
+        return this._for(new w("in", F, G, E), () => R(G));
       }
       // end `for` loop
       endFor() {
-        return this._endBlockNode(c);
+        return this._endBlockNode(l);
       }
       // `label` statement
       label(y) {
@@ -680,51 +680,51 @@ function Y() {
       }
       // `break` statement
       break(y) {
-        return this._leafNode(new p(y));
+        return this._leafNode(new d(y));
       }
       // `return` statement
       return(y) {
-        const M = new $();
-        if (this._blockNode(M), this.code(y), M.nodes.length !== 1)
+        const E = new P();
+        if (this._blockNode(E), this.code(y), E.nodes.length !== 1)
           throw new Error('CodeGen: "return" should have one node');
-        return this._endBlockNode($);
+        return this._endBlockNode(P);
       }
       // `try` statement
-      try(y, M, A) {
-        if (!M && !A)
+      try(y, E, R) {
+        if (!E && !R)
           throw new Error('CodeGen: "try" without "catch" and "finally"');
         const F = new k();
-        if (this._blockNode(F), this.code(y), M) {
+        if (this._blockNode(F), this.code(y), E) {
           const G = this.name("e");
-          this._currNode = F.catch = new j(G), M(G);
+          this._currNode = F.catch = new C(G), E(G);
         }
-        return A && (this._currNode = F.finally = new D(), this.code(A)), this._endBlockNode(j, D);
+        return R && (this._currNode = F.finally = new x(), this.code(R)), this._endBlockNode(C, x);
       }
       // `throw` statement
       throw(y) {
-        return this._leafNode(new w(y));
+        return this._leafNode(new v(y));
       }
       // start self-balancing block
-      block(y, M) {
-        return this._blockStarts.push(this._nodes.length), y && this.code(y).endBlock(M), this;
+      block(y, E) {
+        return this._blockStarts.push(this._nodes.length), y && this.code(y).endBlock(E), this;
       }
       // end the current self-balancing block
       endBlock(y) {
-        const M = this._blockStarts.pop();
-        if (M === void 0)
+        const E = this._blockStarts.pop();
+        if (E === void 0)
           throw new Error("CodeGen: not in self-balancing block");
-        const A = this._nodes.length - M;
-        if (A < 0 || y !== void 0 && A !== y)
-          throw new Error(`CodeGen: wrong number of nodes: ${A} vs ${y} expected`);
-        return this._nodes.length = M, this;
+        const R = this._nodes.length - E;
+        if (R < 0 || y !== void 0 && R !== y)
+          throw new Error(`CodeGen: wrong number of nodes: ${R} vs ${y} expected`);
+        return this._nodes.length = E, this;
       }
       // `function` heading (or definition if funcBody is passed)
-      func(y, M = e.nil, A, F) {
-        return this._blockNode(new g(y, M, A)), F && this.code(F).endFunc(), this;
+      func(y, E = e.nil, R, F) {
+        return this._blockNode(new b(y, E, R)), F && this.code(F).endFunc(), this;
       }
       // end function definition
       endFunc() {
-        return this._endBlockNode(g);
+        return this._endBlockNode(b);
       }
       optimize(y = 1) {
         for (; y-- > 0; )
@@ -736,17 +736,17 @@ function Y() {
       _blockNode(y) {
         this._currNode.nodes.push(y), this._nodes.push(y);
       }
-      _endBlockNode(y, M) {
-        const A = this._currNode;
-        if (A instanceof y || M && A instanceof M)
+      _endBlockNode(y, E) {
+        const R = this._currNode;
+        if (R instanceof y || E && R instanceof E)
           return this._nodes.pop(), this;
-        throw new Error(`CodeGen: not in block "${M ? `${y.kind}/${M.kind}` : y.kind}"`);
+        throw new Error(`CodeGen: not in block "${E ? `${y.kind}/${E.kind}` : y.kind}"`);
       }
       _elseNode(y) {
-        const M = this._currNode;
-        if (!(M instanceof d))
+        const E = this._currNode;
+        if (!(E instanceof f))
           throw new Error('CodeGen: "else" without "if"');
-        return this._currNode = M.else = y, this;
+        return this._currNode = E.else = y, this;
       }
       get _root() {
         return this._nodes[0];
@@ -756,277 +756,277 @@ function Y() {
         return y[y.length - 1];
       }
       set _currNode(y) {
-        const M = this._nodes;
-        M[M.length - 1] = y;
+        const E = this._nodes;
+        E[E.length - 1] = y;
       }
     }
-    o.CodeGen = V;
-    function B(R, y) {
-      for (const M in y)
-        R[M] = (R[M] || 0) + (y[M] || 0);
-      return R;
+    s.CodeGen = z;
+    function B(A, y) {
+      for (const E in y)
+        A[E] = (A[E] || 0) + (y[E] || 0);
+      return A;
     }
-    function L(R, y) {
-      return y instanceof e._CodeOrName ? B(R, y.names) : R;
+    function L(A, y) {
+      return y instanceof e._CodeOrName ? B(A, y.names) : A;
     }
-    function H(R, y, M) {
-      if (R instanceof e.Name)
-        return A(R);
-      if (!F(R))
-        return R;
-      return new e._Code(R._items.reduce((G, Q) => (Q instanceof e.Name && (Q = A(Q)), Q instanceof e._Code ? G.push(...Q._items) : G.push(Q), G), []));
-      function A(G) {
-        const Q = M[G.str];
+    function H(A, y, E) {
+      if (A instanceof e.Name)
+        return R(A);
+      if (!F(A))
+        return A;
+      return new e._Code(A._items.reduce((G, Q) => (Q instanceof e.Name && (Q = R(Q)), Q instanceof e._Code ? G.push(...Q._items) : G.push(Q), G), []));
+      function R(G) {
+        const Q = E[G.str];
         return Q === void 0 || y[G.str] !== 1 ? G : (delete y[G.str], Q);
       }
       function F(G) {
-        return G instanceof e._Code && G._items.some((Q) => Q instanceof e.Name && y[Q.str] === 1 && M[Q.str] !== void 0);
+        return G instanceof e._Code && G._items.some((Q) => Q instanceof e.Name && y[Q.str] === 1 && E[Q.str] !== void 0);
       }
     }
-    function ce(R, y) {
-      for (const M in y)
-        R[M] = (R[M] || 0) - (y[M] || 0);
+    function ce(A, y) {
+      for (const E in y)
+        A[E] = (A[E] || 0) - (y[E] || 0);
     }
-    function me(R) {
-      return typeof R == "boolean" || typeof R == "number" || R === null ? !R : (0, e._)`!${I(R)}`;
+    function me(A) {
+      return typeof A == "boolean" || typeof A == "number" || A === null ? !A : (0, e._)`!${j(A)}`;
     }
-    o.not = me;
-    const ye = N(o.operators.AND);
-    function ee(...R) {
-      return R.reduce(ye);
+    s.not = me;
+    const ye = N(s.operators.AND);
+    function ee(...A) {
+      return A.reduce(ye);
     }
-    o.and = ee;
-    const z = N(o.operators.OR);
-    function q(...R) {
-      return R.reduce(z);
+    s.and = ee;
+    const V = N(s.operators.OR);
+    function O(...A) {
+      return A.reduce(V);
     }
-    o.or = q;
-    function N(R) {
-      return (y, M) => y === e.nil ? M : M === e.nil ? y : (0, e._)`${I(y)} ${R} ${I(M)}`;
+    s.or = O;
+    function N(A) {
+      return (y, E) => y === e.nil ? E : E === e.nil ? y : (0, e._)`${j(y)} ${A} ${j(E)}`;
     }
-    function I(R) {
-      return R instanceof e.Name ? R : (0, e._)`(${R})`;
+    function j(A) {
+      return A instanceof e.Name ? A : (0, e._)`(${A})`;
     }
-  })(qt)), qt;
+  })(Ut)), Ut;
 }
-var J = {}, cr;
+var J = {}, vr;
 function Z() {
-  if (cr) return J;
-  cr = 1, Object.defineProperty(J, "__esModule", { value: !0 }), J.checkStrictMode = J.getErrorPath = J.Type = J.useFunc = J.setEvaluated = J.evaluatedPropsToName = J.mergeEvaluated = J.eachItem = J.unescapeJsonPointer = J.escapeJsonPointer = J.escapeFragment = J.unescapeFragment = J.schemaRefOrVal = J.schemaHasRulesButRef = J.schemaHasRules = J.checkUnknownRules = J.alwaysValidSchema = J.toHash = void 0;
-  const o = Y(), e = Mt();
-  function t(v) {
-    const g = {};
-    for (const $ of v)
-      g[$] = !0;
-    return g;
+  if (vr) return J;
+  vr = 1, Object.defineProperty(J, "__esModule", { value: !0 }), J.checkStrictMode = J.getErrorPath = J.Type = J.useFunc = J.setEvaluated = J.evaluatedPropsToName = J.mergeEvaluated = J.eachItem = J.unescapeJsonPointer = J.escapeJsonPointer = J.escapeFragment = J.unescapeFragment = J.schemaRefOrVal = J.schemaHasRulesButRef = J.schemaHasRules = J.checkUnknownRules = J.alwaysValidSchema = J.toHash = void 0;
+  const s = Y(), e = It();
+  function t(w) {
+    const b = {};
+    for (const P of w)
+      b[P] = !0;
+    return b;
   }
   J.toHash = t;
-  function r(v, g) {
-    return typeof g == "boolean" ? g : Object.keys(g).length === 0 ? !0 : (n(v, g), !i(g, v.self.RULES.all));
+  function r(w, b) {
+    return typeof b == "boolean" ? b : Object.keys(b).length === 0 ? !0 : (n(w, b), !i(b, w.self.RULES.all));
   }
   J.alwaysValidSchema = r;
-  function n(v, g = v.schema) {
-    const { opts: $, self: k } = v;
-    if (!$.strictSchema || typeof g == "boolean")
+  function n(w, b = w.schema) {
+    const { opts: P, self: k } = w;
+    if (!P.strictSchema || typeof b == "boolean")
       return;
-    const j = k.RULES.keywords;
-    for (const D in g)
-      j[D] || m(v, `unknown keyword: "${D}"`);
+    const C = k.RULES.keywords;
+    for (const x in b)
+      C[x] || m(w, `unknown keyword: "${x}"`);
   }
   J.checkUnknownRules = n;
-  function i(v, g) {
-    if (typeof v == "boolean")
-      return !v;
-    for (const $ in v)
-      if (g[$])
+  function i(w, b) {
+    if (typeof w == "boolean")
+      return !w;
+    for (const P in w)
+      if (b[P])
         return !0;
     return !1;
   }
   J.schemaHasRules = i;
-  function s(v, g) {
-    if (typeof v == "boolean")
-      return !v;
-    for (const $ in v)
-      if ($ !== "$ref" && g.all[$])
+  function o(w, b) {
+    if (typeof w == "boolean")
+      return !w;
+    for (const P in w)
+      if (P !== "$ref" && b.all[P])
         return !0;
     return !1;
   }
-  J.schemaHasRulesButRef = s;
-  function a({ topSchemaRef: v, schemaPath: g }, $, k, j) {
-    if (!j) {
-      if (typeof $ == "number" || typeof $ == "boolean")
-        return $;
-      if (typeof $ == "string")
-        return (0, o._)`${$}`;
+  J.schemaHasRulesButRef = o;
+  function a({ topSchemaRef: w, schemaPath: b }, P, k, C) {
+    if (!C) {
+      if (typeof P == "number" || typeof P == "boolean")
+        return P;
+      if (typeof P == "string")
+        return (0, s._)`${P}`;
     }
-    return (0, o._)`${v}${g}${(0, o.getProperty)(k)}`;
+    return (0, s._)`${w}${b}${(0, s.getProperty)(k)}`;
   }
   J.schemaRefOrVal = a;
-  function l(v) {
-    return w(decodeURIComponent(v));
+  function c(w) {
+    return v(decodeURIComponent(w));
   }
-  J.unescapeFragment = l;
-  function u(v) {
-    return encodeURIComponent(p(v));
+  J.unescapeFragment = c;
+  function u(w) {
+    return encodeURIComponent(d(w));
   }
   J.escapeFragment = u;
-  function p(v) {
-    return typeof v == "number" ? `${v}` : v.replace(/~/g, "~0").replace(/\//g, "~1");
+  function d(w) {
+    return typeof w == "number" ? `${w}` : w.replace(/~/g, "~0").replace(/\//g, "~1");
   }
-  J.escapeJsonPointer = p;
-  function w(v) {
-    return v.replace(/~1/g, "/").replace(/~0/g, "~");
+  J.escapeJsonPointer = d;
+  function v(w) {
+    return w.replace(/~1/g, "/").replace(/~0/g, "~");
   }
-  J.unescapeJsonPointer = w;
-  function _(v, g) {
-    if (Array.isArray(v))
-      for (const $ of v)
-        g($);
+  J.unescapeJsonPointer = v;
+  function _(w, b) {
+    if (Array.isArray(w))
+      for (const P of w)
+        b(P);
     else
-      g(v);
+      b(w);
   }
   J.eachItem = _;
-  function S({ mergeNames: v, mergeToName: g, mergeValues: $, resultToName: k }) {
-    return (j, D, V, B) => {
-      const L = V === void 0 ? D : V instanceof o.Name ? (D instanceof o.Name ? v(j, D, V) : g(j, D, V), V) : D instanceof o.Name ? (g(j, V, D), D) : $(D, V);
-      return B === o.Name && !(L instanceof o.Name) ? k(j, L) : L;
+  function $({ mergeNames: w, mergeToName: b, mergeValues: P, resultToName: k }) {
+    return (C, x, z, B) => {
+      const L = z === void 0 ? x : z instanceof s.Name ? (x instanceof s.Name ? w(C, x, z) : b(C, x, z), z) : x instanceof s.Name ? (b(C, z, x), x) : P(x, z);
+      return B === s.Name && !(L instanceof s.Name) ? k(C, L) : L;
     };
   }
   J.mergeEvaluated = {
-    props: S({
-      mergeNames: (v, g, $) => v.if((0, o._)`${$} !== true && ${g} !== undefined`, () => {
-        v.if((0, o._)`${g} === true`, () => v.assign($, !0), () => v.assign($, (0, o._)`${$} || {}`).code((0, o._)`Object.assign(${$}, ${g})`));
+    props: $({
+      mergeNames: (w, b, P) => w.if((0, s._)`${P} !== true && ${b} !== undefined`, () => {
+        w.if((0, s._)`${b} === true`, () => w.assign(P, !0), () => w.assign(P, (0, s._)`${P} || {}`).code((0, s._)`Object.assign(${P}, ${b})`));
       }),
-      mergeToName: (v, g, $) => v.if((0, o._)`${$} !== true`, () => {
-        g === !0 ? v.assign($, !0) : (v.assign($, (0, o._)`${$} || {}`), b(v, $, g));
+      mergeToName: (w, b, P) => w.if((0, s._)`${P} !== true`, () => {
+        b === !0 ? w.assign(P, !0) : (w.assign(P, (0, s._)`${P} || {}`), g(w, P, b));
       }),
-      mergeValues: (v, g) => v === !0 ? !0 : { ...v, ...g },
-      resultToName: E
+      mergeValues: (w, b) => w === !0 ? !0 : { ...w, ...b },
+      resultToName: S
     }),
-    items: S({
-      mergeNames: (v, g, $) => v.if((0, o._)`${$} !== true && ${g} !== undefined`, () => v.assign($, (0, o._)`${g} === true ? true : ${$} > ${g} ? ${$} : ${g}`)),
-      mergeToName: (v, g, $) => v.if((0, o._)`${$} !== true`, () => v.assign($, g === !0 ? !0 : (0, o._)`${$} > ${g} ? ${$} : ${g}`)),
-      mergeValues: (v, g) => v === !0 ? !0 : Math.max(v, g),
-      resultToName: (v, g) => v.var("items", g)
+    items: $({
+      mergeNames: (w, b, P) => w.if((0, s._)`${P} !== true && ${b} !== undefined`, () => w.assign(P, (0, s._)`${b} === true ? true : ${P} > ${b} ? ${P} : ${b}`)),
+      mergeToName: (w, b, P) => w.if((0, s._)`${P} !== true`, () => w.assign(P, b === !0 ? !0 : (0, s._)`${P} > ${b} ? ${P} : ${b}`)),
+      mergeValues: (w, b) => w === !0 ? !0 : Math.max(w, b),
+      resultToName: (w, b) => w.var("items", b)
     })
   };
-  function E(v, g) {
-    if (g === !0)
-      return v.var("props", !0);
-    const $ = v.var("props", (0, o._)`{}`);
-    return g !== void 0 && b(v, $, g), $;
+  function S(w, b) {
+    if (b === !0)
+      return w.var("props", !0);
+    const P = w.var("props", (0, s._)`{}`);
+    return b !== void 0 && g(w, P, b), P;
   }
-  J.evaluatedPropsToName = E;
-  function b(v, g, $) {
-    Object.keys($).forEach((k) => v.assign((0, o._)`${g}${(0, o.getProperty)(k)}`, !0));
+  J.evaluatedPropsToName = S;
+  function g(w, b, P) {
+    Object.keys(P).forEach((k) => w.assign((0, s._)`${b}${(0, s.getProperty)(k)}`, !0));
   }
-  J.setEvaluated = b;
+  J.setEvaluated = g;
   const h = {};
-  function d(v, g) {
-    return v.scopeValue("func", {
-      ref: g,
-      code: h[g.code] || (h[g.code] = new e._Code(g.code))
+  function f(w, b) {
+    return w.scopeValue("func", {
+      ref: b,
+      code: h[b.code] || (h[b.code] = new e._Code(b.code))
     });
   }
-  J.useFunc = d;
-  var c;
-  (function(v) {
-    v[v.Num = 0] = "Num", v[v.Str = 1] = "Str";
-  })(c || (J.Type = c = {}));
-  function f(v, g, $) {
-    if (v instanceof o.Name) {
-      const k = g === c.Num;
-      return $ ? k ? (0, o._)`"[" + ${v} + "]"` : (0, o._)`"['" + ${v} + "']"` : k ? (0, o._)`"/" + ${v}` : (0, o._)`"/" + ${v}.replace(/~/g, "~0").replace(/\\//g, "~1")`;
+  J.useFunc = f;
+  var l;
+  (function(w) {
+    w[w.Num = 0] = "Num", w[w.Str = 1] = "Str";
+  })(l || (J.Type = l = {}));
+  function p(w, b, P) {
+    if (w instanceof s.Name) {
+      const k = b === l.Num;
+      return P ? k ? (0, s._)`"[" + ${w} + "]"` : (0, s._)`"['" + ${w} + "']"` : k ? (0, s._)`"/" + ${w}` : (0, s._)`"/" + ${w}.replace(/~/g, "~0").replace(/\\//g, "~1")`;
     }
-    return $ ? (0, o.getProperty)(v).toString() : "/" + p(v);
+    return P ? (0, s.getProperty)(w).toString() : "/" + d(w);
   }
-  J.getErrorPath = f;
-  function m(v, g, $ = v.opts.strictSchema) {
-    if ($) {
-      if (g = `strict mode: ${g}`, $ === !0)
-        throw new Error(g);
-      v.self.logger.warn(g);
+  J.getErrorPath = p;
+  function m(w, b, P = w.opts.strictSchema) {
+    if (P) {
+      if (b = `strict mode: ${b}`, P === !0)
+        throw new Error(b);
+      w.self.logger.warn(b);
     }
   }
   return J.checkStrictMode = m, J;
 }
-var Le = {}, lr;
-function Me() {
-  if (lr) return Le;
-  lr = 1, Object.defineProperty(Le, "__esModule", { value: !0 });
-  const o = Y(), e = {
+var Je = {}, br;
+function ke() {
+  if (br) return Je;
+  br = 1, Object.defineProperty(Je, "__esModule", { value: !0 });
+  const s = Y(), e = {
     // validation function arguments
-    data: new o.Name("data"),
+    data: new s.Name("data"),
     // data passed to validation function
     // args passed from referencing schema
-    valCxt: new o.Name("valCxt"),
+    valCxt: new s.Name("valCxt"),
     // validation/data context - should not be used directly, it is destructured to the names below
-    instancePath: new o.Name("instancePath"),
-    parentData: new o.Name("parentData"),
-    parentDataProperty: new o.Name("parentDataProperty"),
-    rootData: new o.Name("rootData"),
+    instancePath: new s.Name("instancePath"),
+    parentData: new s.Name("parentData"),
+    parentDataProperty: new s.Name("parentDataProperty"),
+    rootData: new s.Name("rootData"),
     // root data - same as the data passed to the first/top validation function
-    dynamicAnchors: new o.Name("dynamicAnchors"),
+    dynamicAnchors: new s.Name("dynamicAnchors"),
     // used to support recursiveRef and dynamicRef
     // function scoped variables
-    vErrors: new o.Name("vErrors"),
+    vErrors: new s.Name("vErrors"),
     // null or array of validation errors
-    errors: new o.Name("errors"),
+    errors: new s.Name("errors"),
     // counter of validation errors
-    this: new o.Name("this"),
+    this: new s.Name("this"),
     // "globals"
-    self: new o.Name("self"),
-    scope: new o.Name("scope"),
+    self: new s.Name("self"),
+    scope: new s.Name("scope"),
     // JTD serialize/parse name for JSON string and position
-    json: new o.Name("json"),
-    jsonPos: new o.Name("jsonPos"),
-    jsonLen: new o.Name("jsonLen"),
-    jsonPart: new o.Name("jsonPart")
+    json: new s.Name("json"),
+    jsonPos: new s.Name("jsonPos"),
+    jsonLen: new s.Name("jsonLen"),
+    jsonPart: new s.Name("jsonPart")
   };
-  return Le.default = e, Le;
+  return Je.default = e, Je;
 }
-var ur;
-function Nt() {
-  return ur || (ur = 1, (function(o) {
-    Object.defineProperty(o, "__esModule", { value: !0 }), o.extendErrors = o.resetErrorsCount = o.reportExtraError = o.reportError = o.keyword$DataError = o.keywordError = void 0;
-    const e = Y(), t = Z(), r = Me();
-    o.keywordError = {
+var wr;
+function Ot() {
+  return wr || (wr = 1, (function(s) {
+    Object.defineProperty(s, "__esModule", { value: !0 }), s.extendErrors = s.resetErrorsCount = s.reportExtraError = s.reportError = s.keyword$DataError = s.keywordError = void 0;
+    const e = Y(), t = Z(), r = ke();
+    s.keywordError = {
       message: ({ keyword: h }) => (0, e.str)`must pass "${h}" keyword validation`
-    }, o.keyword$DataError = {
-      message: ({ keyword: h, schemaType: d }) => d ? (0, e.str)`"${h}" keyword must be ${d} ($data)` : (0, e.str)`"${h}" keyword is invalid ($data)`
+    }, s.keyword$DataError = {
+      message: ({ keyword: h, schemaType: f }) => f ? (0, e.str)`"${h}" keyword must be ${f} ($data)` : (0, e.str)`"${h}" keyword is invalid ($data)`
     };
-    function n(h, d = o.keywordError, c, f) {
-      const { it: m } = h, { gen: v, compositeRule: g, allErrors: $ } = m, k = w(h, d, c);
-      f ?? (g || $) ? l(v, k) : u(m, (0, e._)`[${k}]`);
+    function n(h, f = s.keywordError, l, p) {
+      const { it: m } = h, { gen: w, compositeRule: b, allErrors: P } = m, k = v(h, f, l);
+      p ?? (b || P) ? c(w, k) : u(m, (0, e._)`[${k}]`);
     }
-    o.reportError = n;
-    function i(h, d = o.keywordError, c) {
-      const { it: f } = h, { gen: m, compositeRule: v, allErrors: g } = f, $ = w(h, d, c);
-      l(m, $), v || g || u(f, r.default.vErrors);
+    s.reportError = n;
+    function i(h, f = s.keywordError, l) {
+      const { it: p } = h, { gen: m, compositeRule: w, allErrors: b } = p, P = v(h, f, l);
+      c(m, P), w || b || u(p, r.default.vErrors);
     }
-    o.reportExtraError = i;
-    function s(h, d) {
-      h.assign(r.default.errors, d), h.if((0, e._)`${r.default.vErrors} !== null`, () => h.if(d, () => h.assign((0, e._)`${r.default.vErrors}.length`, d), () => h.assign(r.default.vErrors, null)));
+    s.reportExtraError = i;
+    function o(h, f) {
+      h.assign(r.default.errors, f), h.if((0, e._)`${r.default.vErrors} !== null`, () => h.if(f, () => h.assign((0, e._)`${r.default.vErrors}.length`, f), () => h.assign(r.default.vErrors, null)));
     }
-    o.resetErrorsCount = s;
-    function a({ gen: h, keyword: d, schemaValue: c, data: f, errsCount: m, it: v }) {
+    s.resetErrorsCount = o;
+    function a({ gen: h, keyword: f, schemaValue: l, data: p, errsCount: m, it: w }) {
       if (m === void 0)
         throw new Error("ajv implementation error");
-      const g = h.name("err");
-      h.forRange("i", m, r.default.errors, ($) => {
-        h.const(g, (0, e._)`${r.default.vErrors}[${$}]`), h.if((0, e._)`${g}.instancePath === undefined`, () => h.assign((0, e._)`${g}.instancePath`, (0, e.strConcat)(r.default.instancePath, v.errorPath))), h.assign((0, e._)`${g}.schemaPath`, (0, e.str)`${v.errSchemaPath}/${d}`), v.opts.verbose && (h.assign((0, e._)`${g}.schema`, c), h.assign((0, e._)`${g}.data`, f));
+      const b = h.name("err");
+      h.forRange("i", m, r.default.errors, (P) => {
+        h.const(b, (0, e._)`${r.default.vErrors}[${P}]`), h.if((0, e._)`${b}.instancePath === undefined`, () => h.assign((0, e._)`${b}.instancePath`, (0, e.strConcat)(r.default.instancePath, w.errorPath))), h.assign((0, e._)`${b}.schemaPath`, (0, e.str)`${w.errSchemaPath}/${f}`), w.opts.verbose && (h.assign((0, e._)`${b}.schema`, l), h.assign((0, e._)`${b}.data`, p));
       });
     }
-    o.extendErrors = a;
-    function l(h, d) {
-      const c = h.const("err", d);
-      h.if((0, e._)`${r.default.vErrors} === null`, () => h.assign(r.default.vErrors, (0, e._)`[${c}]`), (0, e._)`${r.default.vErrors}.push(${c})`), h.code((0, e._)`${r.default.errors}++`);
+    s.extendErrors = a;
+    function c(h, f) {
+      const l = h.const("err", f);
+      h.if((0, e._)`${r.default.vErrors} === null`, () => h.assign(r.default.vErrors, (0, e._)`[${l}]`), (0, e._)`${r.default.vErrors}.push(${l})`), h.code((0, e._)`${r.default.errors}++`);
     }
-    function u(h, d) {
-      const { gen: c, validateName: f, schemaEnv: m } = h;
-      m.$async ? c.throw((0, e._)`new ${h.ValidationError}(${d})`) : (c.assign((0, e._)`${f}.errors`, d), c.return(!1));
+    function u(h, f) {
+      const { gen: l, validateName: p, schemaEnv: m } = h;
+      m.$async ? l.throw((0, e._)`new ${h.ValidationError}(${f})`) : (l.assign((0, e._)`${p}.errors`, f), l.return(!1));
     }
-    const p = {
+    const d = {
       keyword: new e.Name("keyword"),
       schemaPath: new e.Name("schemaPath"),
       // also used in JTD errors
@@ -1036,72 +1036,72 @@ function Nt() {
       schema: new e.Name("schema"),
       parentSchema: new e.Name("parentSchema")
     };
-    function w(h, d, c) {
-      const { createErrors: f } = h.it;
-      return f === !1 ? (0, e._)`{}` : _(h, d, c);
+    function v(h, f, l) {
+      const { createErrors: p } = h.it;
+      return p === !1 ? (0, e._)`{}` : _(h, f, l);
     }
-    function _(h, d, c = {}) {
-      const { gen: f, it: m } = h, v = [
-        S(m, c),
-        E(h, c)
+    function _(h, f, l = {}) {
+      const { gen: p, it: m } = h, w = [
+        $(m, l),
+        S(h, l)
       ];
-      return b(h, d, v), f.object(...v);
+      return g(h, f, w), p.object(...w);
     }
-    function S({ errorPath: h }, { instancePath: d }) {
-      const c = d ? (0, e.str)`${h}${(0, t.getErrorPath)(d, t.Type.Str)}` : h;
-      return [r.default.instancePath, (0, e.strConcat)(r.default.instancePath, c)];
+    function $({ errorPath: h }, { instancePath: f }) {
+      const l = f ? (0, e.str)`${h}${(0, t.getErrorPath)(f, t.Type.Str)}` : h;
+      return [r.default.instancePath, (0, e.strConcat)(r.default.instancePath, l)];
     }
-    function E({ keyword: h, it: { errSchemaPath: d } }, { schemaPath: c, parentSchema: f }) {
-      let m = f ? d : (0, e.str)`${d}/${h}`;
-      return c && (m = (0, e.str)`${m}${(0, t.getErrorPath)(c, t.Type.Str)}`), [p.schemaPath, m];
+    function S({ keyword: h, it: { errSchemaPath: f } }, { schemaPath: l, parentSchema: p }) {
+      let m = p ? f : (0, e.str)`${f}/${h}`;
+      return l && (m = (0, e.str)`${m}${(0, t.getErrorPath)(l, t.Type.Str)}`), [d.schemaPath, m];
     }
-    function b(h, { params: d, message: c }, f) {
-      const { keyword: m, data: v, schemaValue: g, it: $ } = h, { opts: k, propertyName: j, topSchemaRef: D, schemaPath: V } = $;
-      f.push([p.keyword, m], [p.params, typeof d == "function" ? d(h) : d || (0, e._)`{}`]), k.messages && f.push([p.message, typeof c == "function" ? c(h) : c]), k.verbose && f.push([p.schema, g], [p.parentSchema, (0, e._)`${D}${V}`], [r.default.data, v]), j && f.push([p.propertyName, j]);
+    function g(h, { params: f, message: l }, p) {
+      const { keyword: m, data: w, schemaValue: b, it: P } = h, { opts: k, propertyName: C, topSchemaRef: x, schemaPath: z } = P;
+      p.push([d.keyword, m], [d.params, typeof f == "function" ? f(h) : f || (0, e._)`{}`]), k.messages && p.push([d.message, typeof l == "function" ? l(h) : l]), k.verbose && p.push([d.schema, b], [d.parentSchema, (0, e._)`${x}${z}`], [r.default.data, w]), C && p.push([d.propertyName, C]);
     }
-  })(Ot)), Ot;
+  })(Lt)), Lt;
 }
-var dr;
-function Wn() {
-  if (dr) return Te;
-  dr = 1, Object.defineProperty(Te, "__esModule", { value: !0 }), Te.boolOrEmptySchema = Te.topBoolOrEmptySchema = void 0;
-  const o = Nt(), e = Y(), t = Me(), r = {
+var $r;
+function li() {
+  if ($r) return Ne;
+  $r = 1, Object.defineProperty(Ne, "__esModule", { value: !0 }), Ne.boolOrEmptySchema = Ne.topBoolOrEmptySchema = void 0;
+  const s = Ot(), e = Y(), t = ke(), r = {
     message: "boolean schema is false"
   };
   function n(a) {
-    const { gen: l, schema: u, validateName: p } = a;
-    u === !1 ? s(a, !1) : typeof u == "object" && u.$async === !0 ? l.return(t.default.data) : (l.assign((0, e._)`${p}.errors`, null), l.return(!0));
+    const { gen: c, schema: u, validateName: d } = a;
+    u === !1 ? o(a, !1) : typeof u == "object" && u.$async === !0 ? c.return(t.default.data) : (c.assign((0, e._)`${d}.errors`, null), c.return(!0));
   }
-  Te.topBoolOrEmptySchema = n;
-  function i(a, l) {
-    const { gen: u, schema: p } = a;
-    p === !1 ? (u.var(l, !1), s(a)) : u.var(l, !0);
+  Ne.topBoolOrEmptySchema = n;
+  function i(a, c) {
+    const { gen: u, schema: d } = a;
+    d === !1 ? (u.var(c, !1), o(a)) : u.var(c, !0);
   }
-  Te.boolOrEmptySchema = i;
-  function s(a, l) {
-    const { gen: u, data: p } = a, w = {
+  Ne.boolOrEmptySchema = i;
+  function o(a, c) {
+    const { gen: u, data: d } = a, v = {
       gen: u,
       keyword: "false schema",
-      data: p,
+      data: d,
       schema: !1,
       schemaCode: !1,
       schemaValue: !1,
       params: {},
       it: a
     };
-    (0, o.reportError)(w, r, void 0, l);
+    (0, s.reportError)(v, r, void 0, c);
   }
-  return Te;
+  return Ne;
 }
-var he = {}, ke = {}, fr;
-function wn() {
-  if (fr) return ke;
-  fr = 1, Object.defineProperty(ke, "__esModule", { value: !0 }), ke.getRules = ke.isJSONType = void 0;
-  const o = ["string", "number", "integer", "boolean", "null", "object", "array"], e = new Set(o);
+var fe = {}, Ae = {}, _r;
+function Rn() {
+  if (_r) return Ae;
+  _r = 1, Object.defineProperty(Ae, "__esModule", { value: !0 }), Ae.getRules = Ae.isJSONType = void 0;
+  const s = ["string", "number", "integer", "boolean", "null", "object", "array"], e = new Set(s);
   function t(n) {
     return typeof n == "string" && e.has(n);
   }
-  ke.isJSONType = t;
+  Ae.isJSONType = t;
   function r() {
     const n = {
       number: { type: "number", rules: [] },
@@ -1117,459 +1117,459 @@ function wn() {
       keywords: {}
     };
   }
-  return ke.getRules = r, ke;
+  return Ae.getRules = r, Ae;
 }
-var _e = {}, hr;
-function $n() {
-  if (hr) return _e;
-  hr = 1, Object.defineProperty(_e, "__esModule", { value: !0 }), _e.shouldUseRule = _e.shouldUseGroup = _e.schemaHasRulesForType = void 0;
-  function o({ schema: r, self: n }, i) {
-    const s = n.RULES.types[i];
-    return s && s !== !0 && e(r, s);
+var Me = {}, Sr;
+function Cn() {
+  if (Sr) return Me;
+  Sr = 1, Object.defineProperty(Me, "__esModule", { value: !0 }), Me.shouldUseRule = Me.shouldUseGroup = Me.schemaHasRulesForType = void 0;
+  function s({ schema: r, self: n }, i) {
+    const o = n.RULES.types[i];
+    return o && o !== !0 && e(r, o);
   }
-  _e.schemaHasRulesForType = o;
+  Me.schemaHasRulesForType = s;
   function e(r, n) {
     return n.rules.some((i) => t(r, i));
   }
-  _e.shouldUseGroup = e;
+  Me.shouldUseGroup = e;
   function t(r, n) {
     var i;
-    return r[n.keyword] !== void 0 || ((i = n.definition.implements) === null || i === void 0 ? void 0 : i.some((s) => r[s] !== void 0));
+    return r[n.keyword] !== void 0 || ((i = n.definition.implements) === null || i === void 0 ? void 0 : i.some((o) => r[o] !== void 0));
   }
-  return _e.shouldUseRule = t, _e;
+  return Me.shouldUseRule = t, Me;
 }
-var pr;
-function Tt() {
-  if (pr) return he;
-  pr = 1, Object.defineProperty(he, "__esModule", { value: !0 }), he.reportTypeError = he.checkDataTypes = he.checkDataType = he.coerceAndCheckDataType = he.getJSONTypes = he.getSchemaTypes = he.DataType = void 0;
-  const o = wn(), e = $n(), t = Nt(), r = Y(), n = Z();
+var Pr;
+function jt() {
+  if (Pr) return fe;
+  Pr = 1, Object.defineProperty(fe, "__esModule", { value: !0 }), fe.reportTypeError = fe.checkDataTypes = fe.checkDataType = fe.coerceAndCheckDataType = fe.getJSONTypes = fe.getSchemaTypes = fe.DataType = void 0;
+  const s = Rn(), e = Cn(), t = Ot(), r = Y(), n = Z();
   var i;
-  (function(c) {
-    c[c.Correct = 0] = "Correct", c[c.Wrong = 1] = "Wrong";
-  })(i || (he.DataType = i = {}));
-  function s(c) {
-    const f = a(c.type);
-    if (f.includes("null")) {
-      if (c.nullable === !1)
+  (function(l) {
+    l[l.Correct = 0] = "Correct", l[l.Wrong = 1] = "Wrong";
+  })(i || (fe.DataType = i = {}));
+  function o(l) {
+    const p = a(l.type);
+    if (p.includes("null")) {
+      if (l.nullable === !1)
         throw new Error("type: null contradicts nullable: false");
     } else {
-      if (!f.length && c.nullable !== void 0)
+      if (!p.length && l.nullable !== void 0)
         throw new Error('"nullable" cannot be used without "type"');
-      c.nullable === !0 && f.push("null");
+      l.nullable === !0 && p.push("null");
     }
-    return f;
+    return p;
   }
-  he.getSchemaTypes = s;
-  function a(c) {
-    const f = Array.isArray(c) ? c : c ? [c] : [];
-    if (f.every(o.isJSONType))
-      return f;
-    throw new Error("type must be JSONType or JSONType[]: " + f.join(","));
+  fe.getSchemaTypes = o;
+  function a(l) {
+    const p = Array.isArray(l) ? l : l ? [l] : [];
+    if (p.every(s.isJSONType))
+      return p;
+    throw new Error("type must be JSONType or JSONType[]: " + p.join(","));
   }
-  he.getJSONTypes = a;
-  function l(c, f) {
-    const { gen: m, data: v, opts: g } = c, $ = p(f, g.coerceTypes), k = f.length > 0 && !($.length === 0 && f.length === 1 && (0, e.schemaHasRulesForType)(c, f[0]));
+  fe.getJSONTypes = a;
+  function c(l, p) {
+    const { gen: m, data: w, opts: b } = l, P = d(p, b.coerceTypes), k = p.length > 0 && !(P.length === 0 && p.length === 1 && (0, e.schemaHasRulesForType)(l, p[0]));
     if (k) {
-      const j = E(f, v, g.strictNumbers, i.Wrong);
-      m.if(j, () => {
-        $.length ? w(c, f, $) : h(c);
+      const C = S(p, w, b.strictNumbers, i.Wrong);
+      m.if(C, () => {
+        P.length ? v(l, p, P) : h(l);
       });
     }
     return k;
   }
-  he.coerceAndCheckDataType = l;
+  fe.coerceAndCheckDataType = c;
   const u = /* @__PURE__ */ new Set(["string", "number", "integer", "boolean", "null"]);
-  function p(c, f) {
-    return f ? c.filter((m) => u.has(m) || f === "array" && m === "array") : [];
+  function d(l, p) {
+    return p ? l.filter((m) => u.has(m) || p === "array" && m === "array") : [];
   }
-  function w(c, f, m) {
-    const { gen: v, data: g, opts: $ } = c, k = v.let("dataType", (0, r._)`typeof ${g}`), j = v.let("coerced", (0, r._)`undefined`);
-    $.coerceTypes === "array" && v.if((0, r._)`${k} == 'object' && Array.isArray(${g}) && ${g}.length == 1`, () => v.assign(g, (0, r._)`${g}[0]`).assign(k, (0, r._)`typeof ${g}`).if(E(f, g, $.strictNumbers), () => v.assign(j, g))), v.if((0, r._)`${j} !== undefined`);
-    for (const V of m)
-      (u.has(V) || V === "array" && $.coerceTypes === "array") && D(V);
-    v.else(), h(c), v.endIf(), v.if((0, r._)`${j} !== undefined`, () => {
-      v.assign(g, j), _(c, j);
+  function v(l, p, m) {
+    const { gen: w, data: b, opts: P } = l, k = w.let("dataType", (0, r._)`typeof ${b}`), C = w.let("coerced", (0, r._)`undefined`);
+    P.coerceTypes === "array" && w.if((0, r._)`${k} == 'object' && Array.isArray(${b}) && ${b}.length == 1`, () => w.assign(b, (0, r._)`${b}[0]`).assign(k, (0, r._)`typeof ${b}`).if(S(p, b, P.strictNumbers), () => w.assign(C, b))), w.if((0, r._)`${C} !== undefined`);
+    for (const z of m)
+      (u.has(z) || z === "array" && P.coerceTypes === "array") && x(z);
+    w.else(), h(l), w.endIf(), w.if((0, r._)`${C} !== undefined`, () => {
+      w.assign(b, C), _(l, C);
     });
-    function D(V) {
-      switch (V) {
+    function x(z) {
+      switch (z) {
         case "string":
-          v.elseIf((0, r._)`${k} == "number" || ${k} == "boolean"`).assign(j, (0, r._)`"" + ${g}`).elseIf((0, r._)`${g} === null`).assign(j, (0, r._)`""`);
+          w.elseIf((0, r._)`${k} == "number" || ${k} == "boolean"`).assign(C, (0, r._)`"" + ${b}`).elseIf((0, r._)`${b} === null`).assign(C, (0, r._)`""`);
           return;
         case "number":
-          v.elseIf((0, r._)`${k} == "boolean" || ${g} === null
-              || (${k} == "string" && ${g} && ${g} == +${g})`).assign(j, (0, r._)`+${g}`);
+          w.elseIf((0, r._)`${k} == "boolean" || ${b} === null
+              || (${k} == "string" && ${b} && ${b} == +${b})`).assign(C, (0, r._)`+${b}`);
           return;
         case "integer":
-          v.elseIf((0, r._)`${k} === "boolean" || ${g} === null
-              || (${k} === "string" && ${g} && ${g} == +${g} && !(${g} % 1))`).assign(j, (0, r._)`+${g}`);
+          w.elseIf((0, r._)`${k} === "boolean" || ${b} === null
+              || (${k} === "string" && ${b} && ${b} == +${b} && !(${b} % 1))`).assign(C, (0, r._)`+${b}`);
           return;
         case "boolean":
-          v.elseIf((0, r._)`${g} === "false" || ${g} === 0 || ${g} === null`).assign(j, !1).elseIf((0, r._)`${g} === "true" || ${g} === 1`).assign(j, !0);
+          w.elseIf((0, r._)`${b} === "false" || ${b} === 0 || ${b} === null`).assign(C, !1).elseIf((0, r._)`${b} === "true" || ${b} === 1`).assign(C, !0);
           return;
         case "null":
-          v.elseIf((0, r._)`${g} === "" || ${g} === 0 || ${g} === false`), v.assign(j, null);
+          w.elseIf((0, r._)`${b} === "" || ${b} === 0 || ${b} === false`), w.assign(C, null);
           return;
         case "array":
-          v.elseIf((0, r._)`${k} === "string" || ${k} === "number"
-              || ${k} === "boolean" || ${g} === null`).assign(j, (0, r._)`[${g}]`);
+          w.elseIf((0, r._)`${k} === "string" || ${k} === "number"
+              || ${k} === "boolean" || ${b} === null`).assign(C, (0, r._)`[${b}]`);
       }
     }
   }
-  function _({ gen: c, parentData: f, parentDataProperty: m }, v) {
-    c.if((0, r._)`${f} !== undefined`, () => c.assign((0, r._)`${f}[${m}]`, v));
+  function _({ gen: l, parentData: p, parentDataProperty: m }, w) {
+    l.if((0, r._)`${p} !== undefined`, () => l.assign((0, r._)`${p}[${m}]`, w));
   }
-  function S(c, f, m, v = i.Correct) {
-    const g = v === i.Correct ? r.operators.EQ : r.operators.NEQ;
-    let $;
-    switch (c) {
+  function $(l, p, m, w = i.Correct) {
+    const b = w === i.Correct ? r.operators.EQ : r.operators.NEQ;
+    let P;
+    switch (l) {
       case "null":
-        return (0, r._)`${f} ${g} null`;
+        return (0, r._)`${p} ${b} null`;
       case "array":
-        $ = (0, r._)`Array.isArray(${f})`;
+        P = (0, r._)`Array.isArray(${p})`;
         break;
       case "object":
-        $ = (0, r._)`${f} && typeof ${f} == "object" && !Array.isArray(${f})`;
+        P = (0, r._)`${p} && typeof ${p} == "object" && !Array.isArray(${p})`;
         break;
       case "integer":
-        $ = k((0, r._)`!(${f} % 1) && !isNaN(${f})`);
+        P = k((0, r._)`!(${p} % 1) && !isNaN(${p})`);
         break;
       case "number":
-        $ = k();
+        P = k();
         break;
       default:
-        return (0, r._)`typeof ${f} ${g} ${c}`;
+        return (0, r._)`typeof ${p} ${b} ${l}`;
     }
-    return v === i.Correct ? $ : (0, r.not)($);
-    function k(j = r.nil) {
-      return (0, r.and)((0, r._)`typeof ${f} == "number"`, j, m ? (0, r._)`isFinite(${f})` : r.nil);
+    return w === i.Correct ? P : (0, r.not)(P);
+    function k(C = r.nil) {
+      return (0, r.and)((0, r._)`typeof ${p} == "number"`, C, m ? (0, r._)`isFinite(${p})` : r.nil);
     }
   }
-  he.checkDataType = S;
-  function E(c, f, m, v) {
-    if (c.length === 1)
-      return S(c[0], f, m, v);
-    let g;
-    const $ = (0, n.toHash)(c);
-    if ($.array && $.object) {
-      const k = (0, r._)`typeof ${f} != "object"`;
-      g = $.null ? k : (0, r._)`!${f} || ${k}`, delete $.null, delete $.array, delete $.object;
+  fe.checkDataType = $;
+  function S(l, p, m, w) {
+    if (l.length === 1)
+      return $(l[0], p, m, w);
+    let b;
+    const P = (0, n.toHash)(l);
+    if (P.array && P.object) {
+      const k = (0, r._)`typeof ${p} != "object"`;
+      b = P.null ? k : (0, r._)`!${p} || ${k}`, delete P.null, delete P.array, delete P.object;
     } else
-      g = r.nil;
-    $.number && delete $.integer;
-    for (const k in $)
-      g = (0, r.and)(g, S(k, f, m, v));
-    return g;
+      b = r.nil;
+    P.number && delete P.integer;
+    for (const k in P)
+      b = (0, r.and)(b, $(k, p, m, w));
+    return b;
   }
-  he.checkDataTypes = E;
-  const b = {
-    message: ({ schema: c }) => `must be ${c}`,
-    params: ({ schema: c, schemaValue: f }) => typeof c == "string" ? (0, r._)`{type: ${c}}` : (0, r._)`{type: ${f}}`
+  fe.checkDataTypes = S;
+  const g = {
+    message: ({ schema: l }) => `must be ${l}`,
+    params: ({ schema: l, schemaValue: p }) => typeof l == "string" ? (0, r._)`{type: ${l}}` : (0, r._)`{type: ${p}}`
   };
-  function h(c) {
-    const f = d(c);
-    (0, t.reportError)(f, b);
+  function h(l) {
+    const p = f(l);
+    (0, t.reportError)(p, g);
   }
-  he.reportTypeError = h;
-  function d(c) {
-    const { gen: f, data: m, schema: v } = c, g = (0, n.schemaRefOrVal)(c, v, "type");
+  fe.reportTypeError = h;
+  function f(l) {
+    const { gen: p, data: m, schema: w } = l, b = (0, n.schemaRefOrVal)(l, w, "type");
     return {
-      gen: f,
+      gen: p,
       keyword: "type",
       data: m,
-      schema: v.type,
-      schemaCode: g,
-      schemaValue: g,
-      parentSchema: v,
+      schema: w.type,
+      schemaCode: b,
+      schemaValue: b,
+      parentSchema: w,
       params: {},
-      it: c
+      it: l
     };
   }
-  return he;
+  return fe;
 }
-var Ce = {}, mr;
-function Yn() {
-  if (mr) return Ce;
-  mr = 1, Object.defineProperty(Ce, "__esModule", { value: !0 }), Ce.assignDefaults = void 0;
-  const o = Y(), e = Z();
+var De = {}, Mr;
+function ui() {
+  if (Mr) return De;
+  Mr = 1, Object.defineProperty(De, "__esModule", { value: !0 }), De.assignDefaults = void 0;
+  const s = Y(), e = Z();
   function t(n, i) {
-    const { properties: s, items: a } = n.schema;
-    if (i === "object" && s)
-      for (const l in s)
-        r(n, l, s[l].default);
-    else i === "array" && Array.isArray(a) && a.forEach((l, u) => r(n, u, l.default));
+    const { properties: o, items: a } = n.schema;
+    if (i === "object" && o)
+      for (const c in o)
+        r(n, c, o[c].default);
+    else i === "array" && Array.isArray(a) && a.forEach((c, u) => r(n, u, c.default));
   }
-  Ce.assignDefaults = t;
-  function r(n, i, s) {
-    const { gen: a, compositeRule: l, data: u, opts: p } = n;
-    if (s === void 0)
+  De.assignDefaults = t;
+  function r(n, i, o) {
+    const { gen: a, compositeRule: c, data: u, opts: d } = n;
+    if (o === void 0)
       return;
-    const w = (0, o._)`${u}${(0, o.getProperty)(i)}`;
-    if (l) {
-      (0, e.checkStrictMode)(n, `default is ignored for: ${w}`);
+    const v = (0, s._)`${u}${(0, s.getProperty)(i)}`;
+    if (c) {
+      (0, e.checkStrictMode)(n, `default is ignored for: ${v}`);
       return;
     }
-    let _ = (0, o._)`${w} === undefined`;
-    p.useDefaults === "empty" && (_ = (0, o._)`${_} || ${w} === null || ${w} === ""`), a.if(_, (0, o._)`${w} = ${(0, o.stringify)(s)}`);
+    let _ = (0, s._)`${v} === undefined`;
+    d.useDefaults === "empty" && (_ = (0, s._)`${_} || ${v} === null || ${v} === ""`), a.if(_, (0, s._)`${v} = ${(0, s.stringify)(o)}`);
   }
-  return Ce;
+  return De;
 }
-var be = {}, ne = {}, yr;
+var be = {}, ne = {}, Er;
 function we() {
-  if (yr) return ne;
-  yr = 1, Object.defineProperty(ne, "__esModule", { value: !0 }), ne.validateUnion = ne.validateArray = ne.usePattern = ne.callValidateCode = ne.schemaProperties = ne.allSchemaProperties = ne.noPropertyInData = ne.propertyInData = ne.isOwnProperty = ne.hasPropFunc = ne.reportMissingProp = ne.checkMissingProp = ne.checkReportMissingProp = void 0;
-  const o = Y(), e = Z(), t = Me(), r = Z();
-  function n(c, f) {
-    const { gen: m, data: v, it: g } = c;
-    m.if(p(m, v, f, g.opts.ownProperties), () => {
-      c.setParams({ missingProperty: (0, o._)`${f}` }, !0), c.error();
+  if (Er) return ne;
+  Er = 1, Object.defineProperty(ne, "__esModule", { value: !0 }), ne.validateUnion = ne.validateArray = ne.usePattern = ne.callValidateCode = ne.schemaProperties = ne.allSchemaProperties = ne.noPropertyInData = ne.propertyInData = ne.isOwnProperty = ne.hasPropFunc = ne.reportMissingProp = ne.checkMissingProp = ne.checkReportMissingProp = void 0;
+  const s = Y(), e = Z(), t = ke(), r = Z();
+  function n(l, p) {
+    const { gen: m, data: w, it: b } = l;
+    m.if(d(m, w, p, b.opts.ownProperties), () => {
+      l.setParams({ missingProperty: (0, s._)`${p}` }, !0), l.error();
     });
   }
   ne.checkReportMissingProp = n;
-  function i({ gen: c, data: f, it: { opts: m } }, v, g) {
-    return (0, o.or)(...v.map(($) => (0, o.and)(p(c, f, $, m.ownProperties), (0, o._)`${g} = ${$}`)));
+  function i({ gen: l, data: p, it: { opts: m } }, w, b) {
+    return (0, s.or)(...w.map((P) => (0, s.and)(d(l, p, P, m.ownProperties), (0, s._)`${b} = ${P}`)));
   }
   ne.checkMissingProp = i;
-  function s(c, f) {
-    c.setParams({ missingProperty: f }, !0), c.error();
+  function o(l, p) {
+    l.setParams({ missingProperty: p }, !0), l.error();
   }
-  ne.reportMissingProp = s;
-  function a(c) {
-    return c.scopeValue("func", {
+  ne.reportMissingProp = o;
+  function a(l) {
+    return l.scopeValue("func", {
       // eslint-disable-next-line @typescript-eslint/unbound-method
       ref: Object.prototype.hasOwnProperty,
-      code: (0, o._)`Object.prototype.hasOwnProperty`
+      code: (0, s._)`Object.prototype.hasOwnProperty`
     });
   }
   ne.hasPropFunc = a;
-  function l(c, f, m) {
-    return (0, o._)`${a(c)}.call(${f}, ${m})`;
+  function c(l, p, m) {
+    return (0, s._)`${a(l)}.call(${p}, ${m})`;
   }
-  ne.isOwnProperty = l;
-  function u(c, f, m, v) {
-    const g = (0, o._)`${f}${(0, o.getProperty)(m)} !== undefined`;
-    return v ? (0, o._)`${g} && ${l(c, f, m)}` : g;
+  ne.isOwnProperty = c;
+  function u(l, p, m, w) {
+    const b = (0, s._)`${p}${(0, s.getProperty)(m)} !== undefined`;
+    return w ? (0, s._)`${b} && ${c(l, p, m)}` : b;
   }
   ne.propertyInData = u;
-  function p(c, f, m, v) {
-    const g = (0, o._)`${f}${(0, o.getProperty)(m)} === undefined`;
-    return v ? (0, o.or)(g, (0, o.not)(l(c, f, m))) : g;
+  function d(l, p, m, w) {
+    const b = (0, s._)`${p}${(0, s.getProperty)(m)} === undefined`;
+    return w ? (0, s.or)(b, (0, s.not)(c(l, p, m))) : b;
   }
-  ne.noPropertyInData = p;
-  function w(c) {
-    return c ? Object.keys(c).filter((f) => f !== "__proto__") : [];
+  ne.noPropertyInData = d;
+  function v(l) {
+    return l ? Object.keys(l).filter((p) => p !== "__proto__") : [];
   }
-  ne.allSchemaProperties = w;
-  function _(c, f) {
-    return w(f).filter((m) => !(0, e.alwaysValidSchema)(c, f[m]));
+  ne.allSchemaProperties = v;
+  function _(l, p) {
+    return v(p).filter((m) => !(0, e.alwaysValidSchema)(l, p[m]));
   }
   ne.schemaProperties = _;
-  function S({ schemaCode: c, data: f, it: { gen: m, topSchemaRef: v, schemaPath: g, errorPath: $ }, it: k }, j, D, V) {
-    const B = V ? (0, o._)`${c}, ${f}, ${v}${g}` : f, L = [
-      [t.default.instancePath, (0, o.strConcat)(t.default.instancePath, $)],
+  function $({ schemaCode: l, data: p, it: { gen: m, topSchemaRef: w, schemaPath: b, errorPath: P }, it: k }, C, x, z) {
+    const B = z ? (0, s._)`${l}, ${p}, ${w}${b}` : p, L = [
+      [t.default.instancePath, (0, s.strConcat)(t.default.instancePath, P)],
       [t.default.parentData, k.parentData],
       [t.default.parentDataProperty, k.parentDataProperty],
       [t.default.rootData, t.default.rootData]
     ];
     k.opts.dynamicRef && L.push([t.default.dynamicAnchors, t.default.dynamicAnchors]);
-    const H = (0, o._)`${B}, ${m.object(...L)}`;
-    return D !== o.nil ? (0, o._)`${j}.call(${D}, ${H})` : (0, o._)`${j}(${H})`;
+    const H = (0, s._)`${B}, ${m.object(...L)}`;
+    return x !== s.nil ? (0, s._)`${C}.call(${x}, ${H})` : (0, s._)`${C}(${H})`;
   }
-  ne.callValidateCode = S;
-  const E = (0, o._)`new RegExp`;
-  function b({ gen: c, it: { opts: f } }, m) {
-    const v = f.unicodeRegExp ? "u" : "", { regExp: g } = f.code, $ = g(m, v);
-    return c.scopeValue("pattern", {
-      key: $.toString(),
-      ref: $,
-      code: (0, o._)`${g.code === "new RegExp" ? E : (0, r.useFunc)(c, g)}(${m}, ${v})`
+  ne.callValidateCode = $;
+  const S = (0, s._)`new RegExp`;
+  function g({ gen: l, it: { opts: p } }, m) {
+    const w = p.unicodeRegExp ? "u" : "", { regExp: b } = p.code, P = b(m, w);
+    return l.scopeValue("pattern", {
+      key: P.toString(),
+      ref: P,
+      code: (0, s._)`${b.code === "new RegExp" ? S : (0, r.useFunc)(l, b)}(${m}, ${w})`
     });
   }
-  ne.usePattern = b;
-  function h(c) {
-    const { gen: f, data: m, keyword: v, it: g } = c, $ = f.name("valid");
-    if (g.allErrors) {
-      const j = f.let("valid", !0);
-      return k(() => f.assign(j, !1)), j;
+  ne.usePattern = g;
+  function h(l) {
+    const { gen: p, data: m, keyword: w, it: b } = l, P = p.name("valid");
+    if (b.allErrors) {
+      const C = p.let("valid", !0);
+      return k(() => p.assign(C, !1)), C;
     }
-    return f.var($, !0), k(() => f.break()), $;
-    function k(j) {
-      const D = f.const("len", (0, o._)`${m}.length`);
-      f.forRange("i", 0, D, (V) => {
-        c.subschema({
-          keyword: v,
-          dataProp: V,
+    return p.var(P, !0), k(() => p.break()), P;
+    function k(C) {
+      const x = p.const("len", (0, s._)`${m}.length`);
+      p.forRange("i", 0, x, (z) => {
+        l.subschema({
+          keyword: w,
+          dataProp: z,
           dataPropType: e.Type.Num
-        }, $), f.if((0, o.not)($), j);
+        }, P), p.if((0, s.not)(P), C);
       });
     }
   }
   ne.validateArray = h;
-  function d(c) {
-    const { gen: f, schema: m, keyword: v, it: g } = c;
+  function f(l) {
+    const { gen: p, schema: m, keyword: w, it: b } = l;
     if (!Array.isArray(m))
       throw new Error("ajv implementation error");
-    if (m.some((D) => (0, e.alwaysValidSchema)(g, D)) && !g.opts.unevaluated)
+    if (m.some((x) => (0, e.alwaysValidSchema)(b, x)) && !b.opts.unevaluated)
       return;
-    const k = f.let("valid", !1), j = f.name("_valid");
-    f.block(() => m.forEach((D, V) => {
-      const B = c.subschema({
-        keyword: v,
-        schemaProp: V,
+    const k = p.let("valid", !1), C = p.name("_valid");
+    p.block(() => m.forEach((x, z) => {
+      const B = l.subschema({
+        keyword: w,
+        schemaProp: z,
         compositeRule: !0
-      }, j);
-      f.assign(k, (0, o._)`${k} || ${j}`), c.mergeValidEvaluated(B, j) || f.if((0, o.not)(k));
-    })), c.result(k, () => c.reset(), () => c.error(!0));
+      }, C);
+      p.assign(k, (0, s._)`${k} || ${C}`), l.mergeValidEvaluated(B, C) || p.if((0, s.not)(k));
+    })), l.result(k, () => l.reset(), () => l.error(!0));
   }
-  return ne.validateUnion = d, ne;
+  return ne.validateUnion = f, ne;
 }
-var gr;
-function Qn() {
-  if (gr) return be;
-  gr = 1, Object.defineProperty(be, "__esModule", { value: !0 }), be.validateKeywordUsage = be.validSchemaType = be.funcKeywordCode = be.macroKeywordCode = void 0;
-  const o = Y(), e = Me(), t = we(), r = Nt();
-  function n(_, S) {
-    const { gen: E, keyword: b, schema: h, parentSchema: d, it: c } = _, f = S.macro.call(c.self, h, d, c), m = u(E, b, f);
-    c.opts.validateSchema !== !1 && c.self.validateSchema(f, !0);
-    const v = E.name("valid");
+var Tr;
+function di() {
+  if (Tr) return be;
+  Tr = 1, Object.defineProperty(be, "__esModule", { value: !0 }), be.validateKeywordUsage = be.validSchemaType = be.funcKeywordCode = be.macroKeywordCode = void 0;
+  const s = Y(), e = ke(), t = we(), r = Ot();
+  function n(_, $) {
+    const { gen: S, keyword: g, schema: h, parentSchema: f, it: l } = _, p = $.macro.call(l.self, h, f, l), m = u(S, g, p);
+    l.opts.validateSchema !== !1 && l.self.validateSchema(p, !0);
+    const w = S.name("valid");
     _.subschema({
-      schema: f,
-      schemaPath: o.nil,
-      errSchemaPath: `${c.errSchemaPath}/${b}`,
+      schema: p,
+      schemaPath: s.nil,
+      errSchemaPath: `${l.errSchemaPath}/${g}`,
       topSchemaRef: m,
       compositeRule: !0
-    }, v), _.pass(v, () => _.error(!0));
+    }, w), _.pass(w, () => _.error(!0));
   }
   be.macroKeywordCode = n;
-  function i(_, S) {
-    var E;
-    const { gen: b, keyword: h, schema: d, parentSchema: c, $data: f, it: m } = _;
-    l(m, S);
-    const v = !f && S.compile ? S.compile.call(m.self, d, c, m) : S.validate, g = u(b, h, v), $ = b.let("valid");
-    _.block$data($, k), _.ok((E = S.valid) !== null && E !== void 0 ? E : $);
+  function i(_, $) {
+    var S;
+    const { gen: g, keyword: h, schema: f, parentSchema: l, $data: p, it: m } = _;
+    c(m, $);
+    const w = !p && $.compile ? $.compile.call(m.self, f, l, m) : $.validate, b = u(g, h, w), P = g.let("valid");
+    _.block$data(P, k), _.ok((S = $.valid) !== null && S !== void 0 ? S : P);
     function k() {
-      if (S.errors === !1)
-        V(), S.modifying && s(_), B(() => _.error());
+      if ($.errors === !1)
+        z(), $.modifying && o(_), B(() => _.error());
       else {
-        const L = S.async ? j() : D();
-        S.modifying && s(_), B(() => a(_, L));
+        const L = $.async ? C() : x();
+        $.modifying && o(_), B(() => a(_, L));
       }
     }
-    function j() {
-      const L = b.let("ruleErrs", null);
-      return b.try(() => V((0, o._)`await `), (H) => b.assign($, !1).if((0, o._)`${H} instanceof ${m.ValidationError}`, () => b.assign(L, (0, o._)`${H}.errors`), () => b.throw(H))), L;
+    function C() {
+      const L = g.let("ruleErrs", null);
+      return g.try(() => z((0, s._)`await `), (H) => g.assign(P, !1).if((0, s._)`${H} instanceof ${m.ValidationError}`, () => g.assign(L, (0, s._)`${H}.errors`), () => g.throw(H))), L;
     }
-    function D() {
-      const L = (0, o._)`${g}.errors`;
-      return b.assign(L, null), V(o.nil), L;
+    function x() {
+      const L = (0, s._)`${b}.errors`;
+      return g.assign(L, null), z(s.nil), L;
     }
-    function V(L = S.async ? (0, o._)`await ` : o.nil) {
-      const H = m.opts.passContext ? e.default.this : e.default.self, ce = !("compile" in S && !f || S.schema === !1);
-      b.assign($, (0, o._)`${L}${(0, t.callValidateCode)(_, g, H, ce)}`, S.modifying);
+    function z(L = $.async ? (0, s._)`await ` : s.nil) {
+      const H = m.opts.passContext ? e.default.this : e.default.self, ce = !("compile" in $ && !p || $.schema === !1);
+      g.assign(P, (0, s._)`${L}${(0, t.callValidateCode)(_, b, H, ce)}`, $.modifying);
     }
     function B(L) {
       var H;
-      b.if((0, o.not)((H = S.valid) !== null && H !== void 0 ? H : $), L);
+      g.if((0, s.not)((H = $.valid) !== null && H !== void 0 ? H : P), L);
     }
   }
   be.funcKeywordCode = i;
-  function s(_) {
-    const { gen: S, data: E, it: b } = _;
-    S.if(b.parentData, () => S.assign(E, (0, o._)`${b.parentData}[${b.parentDataProperty}]`));
+  function o(_) {
+    const { gen: $, data: S, it: g } = _;
+    $.if(g.parentData, () => $.assign(S, (0, s._)`${g.parentData}[${g.parentDataProperty}]`));
   }
-  function a(_, S) {
-    const { gen: E } = _;
-    E.if((0, o._)`Array.isArray(${S})`, () => {
-      E.assign(e.default.vErrors, (0, o._)`${e.default.vErrors} === null ? ${S} : ${e.default.vErrors}.concat(${S})`).assign(e.default.errors, (0, o._)`${e.default.vErrors}.length`), (0, r.extendErrors)(_);
+  function a(_, $) {
+    const { gen: S } = _;
+    S.if((0, s._)`Array.isArray(${$})`, () => {
+      S.assign(e.default.vErrors, (0, s._)`${e.default.vErrors} === null ? ${$} : ${e.default.vErrors}.concat(${$})`).assign(e.default.errors, (0, s._)`${e.default.vErrors}.length`), (0, r.extendErrors)(_);
     }, () => _.error());
   }
-  function l({ schemaEnv: _ }, S) {
-    if (S.async && !_.$async)
+  function c({ schemaEnv: _ }, $) {
+    if ($.async && !_.$async)
       throw new Error("async keyword in sync schema");
   }
-  function u(_, S, E) {
-    if (E === void 0)
-      throw new Error(`keyword "${S}" failed to compile`);
-    return _.scopeValue("keyword", typeof E == "function" ? { ref: E } : { ref: E, code: (0, o.stringify)(E) });
+  function u(_, $, S) {
+    if (S === void 0)
+      throw new Error(`keyword "${$}" failed to compile`);
+    return _.scopeValue("keyword", typeof S == "function" ? { ref: S } : { ref: S, code: (0, s.stringify)(S) });
   }
-  function p(_, S, E = !1) {
-    return !S.length || S.some((b) => b === "array" ? Array.isArray(_) : b === "object" ? _ && typeof _ == "object" && !Array.isArray(_) : typeof _ == b || E && typeof _ > "u");
+  function d(_, $, S = !1) {
+    return !$.length || $.some((g) => g === "array" ? Array.isArray(_) : g === "object" ? _ && typeof _ == "object" && !Array.isArray(_) : typeof _ == g || S && typeof _ > "u");
   }
-  be.validSchemaType = p;
-  function w({ schema: _, opts: S, self: E, errSchemaPath: b }, h, d) {
-    if (Array.isArray(h.keyword) ? !h.keyword.includes(d) : h.keyword !== d)
+  be.validSchemaType = d;
+  function v({ schema: _, opts: $, self: S, errSchemaPath: g }, h, f) {
+    if (Array.isArray(h.keyword) ? !h.keyword.includes(f) : h.keyword !== f)
       throw new Error("ajv implementation error");
-    const c = h.dependencies;
-    if (c?.some((f) => !Object.prototype.hasOwnProperty.call(_, f)))
-      throw new Error(`parent schema must have dependencies of ${d}: ${c.join(",")}`);
-    if (h.validateSchema && !h.validateSchema(_[d])) {
-      const m = `keyword "${d}" value is invalid at path "${b}": ` + E.errorsText(h.validateSchema.errors);
-      if (S.validateSchema === "log")
-        E.logger.error(m);
+    const l = h.dependencies;
+    if (l?.some((p) => !Object.prototype.hasOwnProperty.call(_, p)))
+      throw new Error(`parent schema must have dependencies of ${f}: ${l.join(",")}`);
+    if (h.validateSchema && !h.validateSchema(_[f])) {
+      const m = `keyword "${f}" value is invalid at path "${g}": ` + S.errorsText(h.validateSchema.errors);
+      if ($.validateSchema === "log")
+        S.logger.error(m);
       else
         throw new Error(m);
     }
   }
-  return be.validateKeywordUsage = w, be;
+  return be.validateKeywordUsage = v, be;
 }
-var Pe = {}, vr;
-function Xn() {
-  if (vr) return Pe;
-  vr = 1, Object.defineProperty(Pe, "__esModule", { value: !0 }), Pe.extendSubschemaMode = Pe.extendSubschemaData = Pe.getSubschema = void 0;
-  const o = Y(), e = Z();
-  function t(i, { keyword: s, schemaProp: a, schema: l, schemaPath: u, errSchemaPath: p, topSchemaRef: w }) {
-    if (s !== void 0 && l !== void 0)
+var Ee = {}, kr;
+function hi() {
+  if (kr) return Ee;
+  kr = 1, Object.defineProperty(Ee, "__esModule", { value: !0 }), Ee.extendSubschemaMode = Ee.extendSubschemaData = Ee.getSubschema = void 0;
+  const s = Y(), e = Z();
+  function t(i, { keyword: o, schemaProp: a, schema: c, schemaPath: u, errSchemaPath: d, topSchemaRef: v }) {
+    if (o !== void 0 && c !== void 0)
       throw new Error('both "keyword" and "schema" passed, only one allowed');
-    if (s !== void 0) {
-      const _ = i.schema[s];
+    if (o !== void 0) {
+      const _ = i.schema[o];
       return a === void 0 ? {
         schema: _,
-        schemaPath: (0, o._)`${i.schemaPath}${(0, o.getProperty)(s)}`,
-        errSchemaPath: `${i.errSchemaPath}/${s}`
+        schemaPath: (0, s._)`${i.schemaPath}${(0, s.getProperty)(o)}`,
+        errSchemaPath: `${i.errSchemaPath}/${o}`
       } : {
         schema: _[a],
-        schemaPath: (0, o._)`${i.schemaPath}${(0, o.getProperty)(s)}${(0, o.getProperty)(a)}`,
-        errSchemaPath: `${i.errSchemaPath}/${s}/${(0, e.escapeFragment)(a)}`
+        schemaPath: (0, s._)`${i.schemaPath}${(0, s.getProperty)(o)}${(0, s.getProperty)(a)}`,
+        errSchemaPath: `${i.errSchemaPath}/${o}/${(0, e.escapeFragment)(a)}`
       };
     }
-    if (l !== void 0) {
-      if (u === void 0 || p === void 0 || w === void 0)
+    if (c !== void 0) {
+      if (u === void 0 || d === void 0 || v === void 0)
         throw new Error('"schemaPath", "errSchemaPath" and "topSchemaRef" are required with "schema"');
       return {
-        schema: l,
+        schema: c,
         schemaPath: u,
-        topSchemaRef: w,
-        errSchemaPath: p
+        topSchemaRef: v,
+        errSchemaPath: d
       };
     }
     throw new Error('either "keyword" or "schema" must be passed');
   }
-  Pe.getSubschema = t;
-  function r(i, s, { dataProp: a, dataPropType: l, data: u, dataTypes: p, propertyName: w }) {
+  Ee.getSubschema = t;
+  function r(i, o, { dataProp: a, dataPropType: c, data: u, dataTypes: d, propertyName: v }) {
     if (u !== void 0 && a !== void 0)
       throw new Error('both "data" and "dataProp" passed, only one allowed');
-    const { gen: _ } = s;
+    const { gen: _ } = o;
     if (a !== void 0) {
-      const { errorPath: E, dataPathArr: b, opts: h } = s, d = _.let("data", (0, o._)`${s.data}${(0, o.getProperty)(a)}`, !0);
-      S(d), i.errorPath = (0, o.str)`${E}${(0, e.getErrorPath)(a, l, h.jsPropertySyntax)}`, i.parentDataProperty = (0, o._)`${a}`, i.dataPathArr = [...b, i.parentDataProperty];
+      const { errorPath: S, dataPathArr: g, opts: h } = o, f = _.let("data", (0, s._)`${o.data}${(0, s.getProperty)(a)}`, !0);
+      $(f), i.errorPath = (0, s.str)`${S}${(0, e.getErrorPath)(a, c, h.jsPropertySyntax)}`, i.parentDataProperty = (0, s._)`${a}`, i.dataPathArr = [...g, i.parentDataProperty];
     }
     if (u !== void 0) {
-      const E = u instanceof o.Name ? u : _.let("data", u, !0);
-      S(E), w !== void 0 && (i.propertyName = w);
+      const S = u instanceof s.Name ? u : _.let("data", u, !0);
+      $(S), v !== void 0 && (i.propertyName = v);
     }
-    p && (i.dataTypes = p);
-    function S(E) {
-      i.data = E, i.dataLevel = s.dataLevel + 1, i.dataTypes = [], s.definedProperties = /* @__PURE__ */ new Set(), i.parentData = s.data, i.dataNames = [...s.dataNames, E];
+    d && (i.dataTypes = d);
+    function $(S) {
+      i.data = S, i.dataLevel = o.dataLevel + 1, i.dataTypes = [], o.definedProperties = /* @__PURE__ */ new Set(), i.parentData = o.data, i.dataNames = [...o.dataNames, S];
     }
   }
-  Pe.extendSubschemaData = r;
-  function n(i, { jtdDiscriminator: s, jtdMetadata: a, compositeRule: l, createErrors: u, allErrors: p }) {
-    l !== void 0 && (i.compositeRule = l), u !== void 0 && (i.createErrors = u), p !== void 0 && (i.allErrors = p), i.jtdDiscriminator = s, i.jtdMetadata = a;
+  Ee.extendSubschemaData = r;
+  function n(i, { jtdDiscriminator: o, jtdMetadata: a, compositeRule: c, createErrors: u, allErrors: d }) {
+    c !== void 0 && (i.compositeRule = c), u !== void 0 && (i.createErrors = u), d !== void 0 && (i.allErrors = d), i.jtdDiscriminator = o, i.jtdMetadata = a;
   }
-  return Pe.extendSubschemaMode = n, Pe;
+  return Ee.extendSubschemaMode = n, Ee;
 }
-var pe = {}, Vt, br;
-function _n() {
-  return br || (br = 1, Vt = function o(e, t) {
+var pe = {}, Kt, Nr;
+function In() {
+  return Nr || (Nr = 1, Kt = function s(e, t) {
     if (e === t) return !0;
     if (e && t && typeof e == "object" && typeof t == "object") {
       if (e.constructor !== t.constructor) return !1;
@@ -1577,7 +1577,7 @@ function _n() {
       if (Array.isArray(e)) {
         if (r = e.length, r != t.length) return !1;
         for (n = r; n-- !== 0; )
-          if (!o(e[n], t[n])) return !1;
+          if (!s(e[n], t[n])) return !1;
         return !0;
       }
       if (e.constructor === RegExp) return e.source === t.source && e.flags === t.flags;
@@ -1587,26 +1587,26 @@ function _n() {
       for (n = r; n-- !== 0; )
         if (!Object.prototype.hasOwnProperty.call(t, i[n])) return !1;
       for (n = r; n-- !== 0; ) {
-        var s = i[n];
-        if (!o(e[s], t[s])) return !1;
+        var o = i[n];
+        if (!s(e[o], t[o])) return !1;
       }
       return !0;
     }
     return e !== e && t !== t;
-  }), Vt;
+  }), Kt;
 }
-var zt = { exports: {} }, wr;
-function Zn() {
-  if (wr) return zt.exports;
-  wr = 1;
-  var o = zt.exports = function(r, n, i) {
+var Ht = { exports: {} }, Ar;
+function fi() {
+  if (Ar) return Ht.exports;
+  Ar = 1;
+  var s = Ht.exports = function(r, n, i) {
     typeof n == "function" && (i = n, n = {}), i = n.cb || i;
-    var s = typeof i == "function" ? i : i.pre || function() {
+    var o = typeof i == "function" ? i : i.pre || function() {
     }, a = i.post || function() {
     };
-    e(n, s, a, r, "", r);
+    e(n, o, a, r, "", r);
   };
-  o.keywords = {
+  s.keywords = {
     additionalItems: !0,
     items: !0,
     contains: !0,
@@ -1616,18 +1616,18 @@ function Zn() {
     if: !0,
     then: !0,
     else: !0
-  }, o.arrayKeywords = {
+  }, s.arrayKeywords = {
     items: !0,
     allOf: !0,
     anyOf: !0,
     oneOf: !0
-  }, o.propsKeywords = {
+  }, s.propsKeywords = {
     $defs: !0,
     definitions: !0,
     properties: !0,
     patternProperties: !0,
     dependencies: !0
-  }, o.skipKeywords = {
+  }, s.skipKeywords = {
     default: !0,
     enum: !0,
     const: !0,
@@ -1647,34 +1647,34 @@ function Zn() {
     maxProperties: !0,
     minProperties: !0
   };
-  function e(r, n, i, s, a, l, u, p, w, _) {
-    if (s && typeof s == "object" && !Array.isArray(s)) {
-      n(s, a, l, u, p, w, _);
-      for (var S in s) {
-        var E = s[S];
-        if (Array.isArray(E)) {
-          if (S in o.arrayKeywords)
-            for (var b = 0; b < E.length; b++)
-              e(r, n, i, E[b], a + "/" + S + "/" + b, l, a, S, s, b);
-        } else if (S in o.propsKeywords) {
-          if (E && typeof E == "object")
-            for (var h in E)
-              e(r, n, i, E[h], a + "/" + S + "/" + t(h), l, a, S, s, h);
-        } else (S in o.keywords || r.allKeys && !(S in o.skipKeywords)) && e(r, n, i, E, a + "/" + S, l, a, S, s);
+  function e(r, n, i, o, a, c, u, d, v, _) {
+    if (o && typeof o == "object" && !Array.isArray(o)) {
+      n(o, a, c, u, d, v, _);
+      for (var $ in o) {
+        var S = o[$];
+        if (Array.isArray(S)) {
+          if ($ in s.arrayKeywords)
+            for (var g = 0; g < S.length; g++)
+              e(r, n, i, S[g], a + "/" + $ + "/" + g, c, a, $, o, g);
+        } else if ($ in s.propsKeywords) {
+          if (S && typeof S == "object")
+            for (var h in S)
+              e(r, n, i, S[h], a + "/" + $ + "/" + t(h), c, a, $, o, h);
+        } else ($ in s.keywords || r.allKeys && !($ in s.skipKeywords)) && e(r, n, i, S, a + "/" + $, c, a, $, o);
       }
-      i(s, a, l, u, p, w, _);
+      i(o, a, c, u, d, v, _);
     }
   }
   function t(r) {
     return r.replace(/~/g, "~0").replace(/\//g, "~1");
   }
-  return zt.exports;
+  return Ht.exports;
 }
-var $r;
-function Rt() {
-  if ($r) return pe;
-  $r = 1, Object.defineProperty(pe, "__esModule", { value: !0 }), pe.getSchemaRefs = pe.resolveUrl = pe.normalizeId = pe._getFullPath = pe.getFullPath = pe.inlineRef = void 0;
-  const o = Z(), e = _n(), t = Zn(), r = /* @__PURE__ */ new Set([
+var Rr;
+function xt() {
+  if (Rr) return pe;
+  Rr = 1, Object.defineProperty(pe, "__esModule", { value: !0 }), pe.getSchemaRefs = pe.resolveUrl = pe.normalizeId = pe._getFullPath = pe.getFullPath = pe.inlineRef = void 0;
+  const s = Z(), e = In(), t = fi(), r = /* @__PURE__ */ new Set([
     "type",
     "format",
     "pattern",
@@ -1692,8 +1692,8 @@ function Rt() {
     "enum",
     "const"
   ]);
-  function n(b, h = !0) {
-    return typeof b == "boolean" ? !0 : h === !0 ? !s(b) : h ? a(b) <= h : !1;
+  function n(g, h = !0) {
+    return typeof g == "boolean" ? !0 : h === !0 ? !o(g) : h ? a(g) <= h : !1;
   }
   pe.inlineRef = n;
   const i = /* @__PURE__ */ new Set([
@@ -1703,270 +1703,270 @@ function Rt() {
     "$dynamicRef",
     "$dynamicAnchor"
   ]);
-  function s(b) {
-    for (const h in b) {
+  function o(g) {
+    for (const h in g) {
       if (i.has(h))
         return !0;
-      const d = b[h];
-      if (Array.isArray(d) && d.some(s) || typeof d == "object" && s(d))
+      const f = g[h];
+      if (Array.isArray(f) && f.some(o) || typeof f == "object" && o(f))
         return !0;
     }
     return !1;
   }
-  function a(b) {
+  function a(g) {
     let h = 0;
-    for (const d in b) {
-      if (d === "$ref")
+    for (const f in g) {
+      if (f === "$ref")
         return 1 / 0;
-      if (h++, !r.has(d) && (typeof b[d] == "object" && (0, o.eachItem)(b[d], (c) => h += a(c)), h === 1 / 0))
+      if (h++, !r.has(f) && (typeof g[f] == "object" && (0, s.eachItem)(g[f], (l) => h += a(l)), h === 1 / 0))
         return 1 / 0;
     }
     return h;
   }
-  function l(b, h = "", d) {
-    d !== !1 && (h = w(h));
-    const c = b.parse(h);
-    return u(b, c);
+  function c(g, h = "", f) {
+    f !== !1 && (h = v(h));
+    const l = g.parse(h);
+    return u(g, l);
   }
-  pe.getFullPath = l;
-  function u(b, h) {
-    return b.serialize(h).split("#")[0] + "#";
+  pe.getFullPath = c;
+  function u(g, h) {
+    return g.serialize(h).split("#")[0] + "#";
   }
   pe._getFullPath = u;
-  const p = /#\/?$/;
-  function w(b) {
-    return b ? b.replace(p, "") : "";
+  const d = /#\/?$/;
+  function v(g) {
+    return g ? g.replace(d, "") : "";
   }
-  pe.normalizeId = w;
-  function _(b, h, d) {
-    return d = w(d), b.resolve(h, d);
+  pe.normalizeId = v;
+  function _(g, h, f) {
+    return f = v(f), g.resolve(h, f);
   }
   pe.resolveUrl = _;
-  const S = /^[a-z_][-a-z0-9._]*$/i;
-  function E(b, h) {
-    if (typeof b == "boolean")
+  const $ = /^[a-z_][-a-z0-9._]*$/i;
+  function S(g, h) {
+    if (typeof g == "boolean")
       return {};
-    const { schemaId: d, uriResolver: c } = this.opts, f = w(b[d] || h), m = { "": f }, v = l(c, f, !1), g = {}, $ = /* @__PURE__ */ new Set();
-    return t(b, { allKeys: !0 }, (D, V, B, L) => {
+    const { schemaId: f, uriResolver: l } = this.opts, p = v(g[f] || h), m = { "": p }, w = c(l, p, !1), b = {}, P = /* @__PURE__ */ new Set();
+    return t(g, { allKeys: !0 }, (x, z, B, L) => {
       if (L === void 0)
         return;
-      const H = v + V;
+      const H = w + z;
       let ce = m[L];
-      typeof D[d] == "string" && (ce = me.call(this, D[d])), ye.call(this, D.$anchor), ye.call(this, D.$dynamicAnchor), m[V] = ce;
+      typeof x[f] == "string" && (ce = me.call(this, x[f])), ye.call(this, x.$anchor), ye.call(this, x.$dynamicAnchor), m[z] = ce;
       function me(ee) {
-        const z = this.opts.uriResolver.resolve;
-        if (ee = w(ce ? z(ce, ee) : ee), $.has(ee))
-          throw j(ee);
-        $.add(ee);
-        let q = this.refs[ee];
-        return typeof q == "string" && (q = this.refs[q]), typeof q == "object" ? k(D, q.schema, ee) : ee !== w(H) && (ee[0] === "#" ? (k(D, g[ee], ee), g[ee] = D) : this.refs[ee] = H), ee;
+        const V = this.opts.uriResolver.resolve;
+        if (ee = v(ce ? V(ce, ee) : ee), P.has(ee))
+          throw C(ee);
+        P.add(ee);
+        let O = this.refs[ee];
+        return typeof O == "string" && (O = this.refs[O]), typeof O == "object" ? k(x, O.schema, ee) : ee !== v(H) && (ee[0] === "#" ? (k(x, b[ee], ee), b[ee] = x) : this.refs[ee] = H), ee;
       }
       function ye(ee) {
         if (typeof ee == "string") {
-          if (!S.test(ee))
+          if (!$.test(ee))
             throw new Error(`invalid anchor "${ee}"`);
           me.call(this, `#${ee}`);
         }
       }
-    }), g;
-    function k(D, V, B) {
-      if (V !== void 0 && !e(D, V))
-        throw j(B);
+    }), b;
+    function k(x, z, B) {
+      if (z !== void 0 && !e(x, z))
+        throw C(B);
     }
-    function j(D) {
-      return new Error(`reference "${D}" resolves to more than one schema`);
+    function C(x) {
+      return new Error(`reference "${x}" resolves to more than one schema`);
     }
   }
-  return pe.getSchemaRefs = E, pe;
+  return pe.getSchemaRefs = S, pe;
 }
-var _r;
-function At() {
-  if (_r) return $e;
-  _r = 1, Object.defineProperty($e, "__esModule", { value: !0 }), $e.getData = $e.KeywordCxt = $e.validateFunctionCode = void 0;
-  const o = Wn(), e = Tt(), t = $n(), r = Tt(), n = Yn(), i = Qn(), s = Xn(), a = Y(), l = Me(), u = Rt(), p = Z(), w = Nt();
-  function _(P) {
-    if (v(P) && ($(P), m(P))) {
-      h(P);
+var Cr;
+function Dt() {
+  if (Cr) return Pe;
+  Cr = 1, Object.defineProperty(Pe, "__esModule", { value: !0 }), Pe.getData = Pe.KeywordCxt = Pe.validateFunctionCode = void 0;
+  const s = li(), e = jt(), t = Cn(), r = jt(), n = ui(), i = di(), o = hi(), a = Y(), c = ke(), u = xt(), d = Z(), v = Ot();
+  function _(M) {
+    if (w(M) && (P(M), m(M))) {
+      h(M);
       return;
     }
-    S(P, () => (0, o.topBoolOrEmptySchema)(P));
+    $(M, () => (0, s.topBoolOrEmptySchema)(M));
   }
-  $e.validateFunctionCode = _;
-  function S({ gen: P, validateName: T, schema: C, schemaEnv: O, opts: x }, U) {
-    x.code.es5 ? P.func(T, (0, a._)`${l.default.data}, ${l.default.valCxt}`, O.$async, () => {
-      P.code((0, a._)`"use strict"; ${c(C, x)}`), b(P, x), P.code(U);
-    }) : P.func(T, (0, a._)`${l.default.data}, ${E(x)}`, O.$async, () => P.code(c(C, x)).code(U));
+  Pe.validateFunctionCode = _;
+  function $({ gen: M, validateName: T, schema: I, schemaEnv: q, opts: D }, U) {
+    D.code.es5 ? M.func(T, (0, a._)`${c.default.data}, ${c.default.valCxt}`, q.$async, () => {
+      M.code((0, a._)`"use strict"; ${l(I, D)}`), g(M, D), M.code(U);
+    }) : M.func(T, (0, a._)`${c.default.data}, ${S(D)}`, q.$async, () => M.code(l(I, D)).code(U));
   }
-  function E(P) {
-    return (0, a._)`{${l.default.instancePath}="", ${l.default.parentData}, ${l.default.parentDataProperty}, ${l.default.rootData}=${l.default.data}${P.dynamicRef ? (0, a._)`, ${l.default.dynamicAnchors}={}` : a.nil}}={}`;
+  function S(M) {
+    return (0, a._)`{${c.default.instancePath}="", ${c.default.parentData}, ${c.default.parentDataProperty}, ${c.default.rootData}=${c.default.data}${M.dynamicRef ? (0, a._)`, ${c.default.dynamicAnchors}={}` : a.nil}}={}`;
   }
-  function b(P, T) {
-    P.if(l.default.valCxt, () => {
-      P.var(l.default.instancePath, (0, a._)`${l.default.valCxt}.${l.default.instancePath}`), P.var(l.default.parentData, (0, a._)`${l.default.valCxt}.${l.default.parentData}`), P.var(l.default.parentDataProperty, (0, a._)`${l.default.valCxt}.${l.default.parentDataProperty}`), P.var(l.default.rootData, (0, a._)`${l.default.valCxt}.${l.default.rootData}`), T.dynamicRef && P.var(l.default.dynamicAnchors, (0, a._)`${l.default.valCxt}.${l.default.dynamicAnchors}`);
+  function g(M, T) {
+    M.if(c.default.valCxt, () => {
+      M.var(c.default.instancePath, (0, a._)`${c.default.valCxt}.${c.default.instancePath}`), M.var(c.default.parentData, (0, a._)`${c.default.valCxt}.${c.default.parentData}`), M.var(c.default.parentDataProperty, (0, a._)`${c.default.valCxt}.${c.default.parentDataProperty}`), M.var(c.default.rootData, (0, a._)`${c.default.valCxt}.${c.default.rootData}`), T.dynamicRef && M.var(c.default.dynamicAnchors, (0, a._)`${c.default.valCxt}.${c.default.dynamicAnchors}`);
     }, () => {
-      P.var(l.default.instancePath, (0, a._)`""`), P.var(l.default.parentData, (0, a._)`undefined`), P.var(l.default.parentDataProperty, (0, a._)`undefined`), P.var(l.default.rootData, l.default.data), T.dynamicRef && P.var(l.default.dynamicAnchors, (0, a._)`{}`);
+      M.var(c.default.instancePath, (0, a._)`""`), M.var(c.default.parentData, (0, a._)`undefined`), M.var(c.default.parentDataProperty, (0, a._)`undefined`), M.var(c.default.rootData, c.default.data), T.dynamicRef && M.var(c.default.dynamicAnchors, (0, a._)`{}`);
     });
   }
-  function h(P) {
-    const { schema: T, opts: C, gen: O } = P;
-    S(P, () => {
-      C.$comment && T.$comment && L(P), D(P), O.let(l.default.vErrors, null), O.let(l.default.errors, 0), C.unevaluated && d(P), k(P), H(P);
+  function h(M) {
+    const { schema: T, opts: I, gen: q } = M;
+    $(M, () => {
+      I.$comment && T.$comment && L(M), x(M), q.let(c.default.vErrors, null), q.let(c.default.errors, 0), I.unevaluated && f(M), k(M), H(M);
     });
   }
-  function d(P) {
-    const { gen: T, validateName: C } = P;
-    P.evaluated = T.const("evaluated", (0, a._)`${C}.evaluated`), T.if((0, a._)`${P.evaluated}.dynamicProps`, () => T.assign((0, a._)`${P.evaluated}.props`, (0, a._)`undefined`)), T.if((0, a._)`${P.evaluated}.dynamicItems`, () => T.assign((0, a._)`${P.evaluated}.items`, (0, a._)`undefined`));
+  function f(M) {
+    const { gen: T, validateName: I } = M;
+    M.evaluated = T.const("evaluated", (0, a._)`${I}.evaluated`), T.if((0, a._)`${M.evaluated}.dynamicProps`, () => T.assign((0, a._)`${M.evaluated}.props`, (0, a._)`undefined`)), T.if((0, a._)`${M.evaluated}.dynamicItems`, () => T.assign((0, a._)`${M.evaluated}.items`, (0, a._)`undefined`));
   }
-  function c(P, T) {
-    const C = typeof P == "object" && P[T.schemaId];
-    return C && (T.code.source || T.code.process) ? (0, a._)`/*# sourceURL=${C} */` : a.nil;
+  function l(M, T) {
+    const I = typeof M == "object" && M[T.schemaId];
+    return I && (T.code.source || T.code.process) ? (0, a._)`/*# sourceURL=${I} */` : a.nil;
   }
-  function f(P, T) {
-    if (v(P) && ($(P), m(P))) {
-      g(P, T);
+  function p(M, T) {
+    if (w(M) && (P(M), m(M))) {
+      b(M, T);
       return;
     }
-    (0, o.boolOrEmptySchema)(P, T);
+    (0, s.boolOrEmptySchema)(M, T);
   }
-  function m({ schema: P, self: T }) {
-    if (typeof P == "boolean")
-      return !P;
-    for (const C in P)
-      if (T.RULES.all[C])
+  function m({ schema: M, self: T }) {
+    if (typeof M == "boolean")
+      return !M;
+    for (const I in M)
+      if (T.RULES.all[I])
         return !0;
     return !1;
   }
-  function v(P) {
-    return typeof P.schema != "boolean";
+  function w(M) {
+    return typeof M.schema != "boolean";
   }
-  function g(P, T) {
-    const { schema: C, gen: O, opts: x } = P;
-    x.$comment && C.$comment && L(P), V(P), B(P);
-    const U = O.const("_errs", l.default.errors);
-    k(P, U), O.var(T, (0, a._)`${U} === ${l.default.errors}`);
+  function b(M, T) {
+    const { schema: I, gen: q, opts: D } = M;
+    D.$comment && I.$comment && L(M), z(M), B(M);
+    const U = q.const("_errs", c.default.errors);
+    k(M, U), q.var(T, (0, a._)`${U} === ${c.default.errors}`);
   }
-  function $(P) {
-    (0, p.checkUnknownRules)(P), j(P);
+  function P(M) {
+    (0, d.checkUnknownRules)(M), C(M);
   }
-  function k(P, T) {
-    if (P.opts.jtd)
-      return me(P, [], !1, T);
-    const C = (0, e.getSchemaTypes)(P.schema), O = (0, e.coerceAndCheckDataType)(P, C);
-    me(P, C, !O, T);
+  function k(M, T) {
+    if (M.opts.jtd)
+      return me(M, [], !1, T);
+    const I = (0, e.getSchemaTypes)(M.schema), q = (0, e.coerceAndCheckDataType)(M, I);
+    me(M, I, !q, T);
   }
-  function j(P) {
-    const { schema: T, errSchemaPath: C, opts: O, self: x } = P;
-    T.$ref && O.ignoreKeywordsWithRef && (0, p.schemaHasRulesButRef)(T, x.RULES) && x.logger.warn(`$ref: keywords ignored in schema at path "${C}"`);
+  function C(M) {
+    const { schema: T, errSchemaPath: I, opts: q, self: D } = M;
+    T.$ref && q.ignoreKeywordsWithRef && (0, d.schemaHasRulesButRef)(T, D.RULES) && D.logger.warn(`$ref: keywords ignored in schema at path "${I}"`);
   }
-  function D(P) {
-    const { schema: T, opts: C } = P;
-    T.default !== void 0 && C.useDefaults && C.strictSchema && (0, p.checkStrictMode)(P, "default is ignored in the schema root");
+  function x(M) {
+    const { schema: T, opts: I } = M;
+    T.default !== void 0 && I.useDefaults && I.strictSchema && (0, d.checkStrictMode)(M, "default is ignored in the schema root");
   }
-  function V(P) {
-    const T = P.schema[P.opts.schemaId];
-    T && (P.baseId = (0, u.resolveUrl)(P.opts.uriResolver, P.baseId, T));
+  function z(M) {
+    const T = M.schema[M.opts.schemaId];
+    T && (M.baseId = (0, u.resolveUrl)(M.opts.uriResolver, M.baseId, T));
   }
-  function B(P) {
-    if (P.schema.$async && !P.schemaEnv.$async)
+  function B(M) {
+    if (M.schema.$async && !M.schemaEnv.$async)
       throw new Error("async schema in sync schema");
   }
-  function L({ gen: P, schemaEnv: T, schema: C, errSchemaPath: O, opts: x }) {
-    const U = C.$comment;
-    if (x.$comment === !0)
-      P.code((0, a._)`${l.default.self}.logger.log(${U})`);
-    else if (typeof x.$comment == "function") {
-      const X = (0, a.str)`${O}/$comment`, te = P.scopeValue("root", { ref: T.root });
-      P.code((0, a._)`${l.default.self}.opts.$comment(${U}, ${X}, ${te}.schema)`);
+  function L({ gen: M, schemaEnv: T, schema: I, errSchemaPath: q, opts: D }) {
+    const U = I.$comment;
+    if (D.$comment === !0)
+      M.code((0, a._)`${c.default.self}.logger.log(${U})`);
+    else if (typeof D.$comment == "function") {
+      const X = (0, a.str)`${q}/$comment`, te = M.scopeValue("root", { ref: T.root });
+      M.code((0, a._)`${c.default.self}.opts.$comment(${U}, ${X}, ${te}.schema)`);
     }
   }
-  function H(P) {
-    const { gen: T, schemaEnv: C, validateName: O, ValidationError: x, opts: U } = P;
-    C.$async ? T.if((0, a._)`${l.default.errors} === 0`, () => T.return(l.default.data), () => T.throw((0, a._)`new ${x}(${l.default.vErrors})`)) : (T.assign((0, a._)`${O}.errors`, l.default.vErrors), U.unevaluated && ce(P), T.return((0, a._)`${l.default.errors} === 0`));
+  function H(M) {
+    const { gen: T, schemaEnv: I, validateName: q, ValidationError: D, opts: U } = M;
+    I.$async ? T.if((0, a._)`${c.default.errors} === 0`, () => T.return(c.default.data), () => T.throw((0, a._)`new ${D}(${c.default.vErrors})`)) : (T.assign((0, a._)`${q}.errors`, c.default.vErrors), U.unevaluated && ce(M), T.return((0, a._)`${c.default.errors} === 0`));
   }
-  function ce({ gen: P, evaluated: T, props: C, items: O }) {
-    C instanceof a.Name && P.assign((0, a._)`${T}.props`, C), O instanceof a.Name && P.assign((0, a._)`${T}.items`, O);
+  function ce({ gen: M, evaluated: T, props: I, items: q }) {
+    I instanceof a.Name && M.assign((0, a._)`${T}.props`, I), q instanceof a.Name && M.assign((0, a._)`${T}.items`, q);
   }
-  function me(P, T, C, O) {
-    const { gen: x, schema: U, data: X, allErrors: te, opts: oe, self: le } = P, { RULES: se } = le;
-    if (U.$ref && (oe.ignoreKeywordsWithRef || !(0, p.schemaHasRulesButRef)(U, se))) {
-      x.block(() => F(P, "$ref", se.all.$ref.definition));
+  function me(M, T, I, q) {
+    const { gen: D, schema: U, data: X, allErrors: te, opts: se, self: le } = M, { RULES: oe } = le;
+    if (U.$ref && (se.ignoreKeywordsWithRef || !(0, d.schemaHasRulesButRef)(U, oe))) {
+      D.block(() => F(M, "$ref", oe.all.$ref.definition));
       return;
     }
-    oe.jtd || ee(P, T), x.block(() => {
-      for (const ue of se.rules)
+    se.jtd || ee(M, T), D.block(() => {
+      for (const ue of oe.rules)
         ae(ue);
-      ae(se.post);
+      ae(oe.post);
     });
     function ae(ue) {
-      (0, t.shouldUseGroup)(U, ue) && (ue.type ? (x.if((0, r.checkDataType)(ue.type, X, oe.strictNumbers)), ye(P, ue), T.length === 1 && T[0] === ue.type && C && (x.else(), (0, r.reportTypeError)(P)), x.endIf()) : ye(P, ue), te || x.if((0, a._)`${l.default.errors} === ${O || 0}`));
+      (0, t.shouldUseGroup)(U, ue) && (ue.type ? (D.if((0, r.checkDataType)(ue.type, X, se.strictNumbers)), ye(M, ue), T.length === 1 && T[0] === ue.type && I && (D.else(), (0, r.reportTypeError)(M)), D.endIf()) : ye(M, ue), te || D.if((0, a._)`${c.default.errors} === ${q || 0}`));
     }
   }
-  function ye(P, T) {
-    const { gen: C, schema: O, opts: { useDefaults: x } } = P;
-    x && (0, n.assignDefaults)(P, T.type), C.block(() => {
+  function ye(M, T) {
+    const { gen: I, schema: q, opts: { useDefaults: D } } = M;
+    D && (0, n.assignDefaults)(M, T.type), I.block(() => {
       for (const U of T.rules)
-        (0, t.shouldUseRule)(O, U) && F(P, U.keyword, U.definition, T.type);
+        (0, t.shouldUseRule)(q, U) && F(M, U.keyword, U.definition, T.type);
     });
   }
-  function ee(P, T) {
-    P.schemaEnv.meta || !P.opts.strictTypes || (z(P, T), P.opts.allowUnionTypes || q(P, T), N(P, P.dataTypes));
+  function ee(M, T) {
+    M.schemaEnv.meta || !M.opts.strictTypes || (V(M, T), M.opts.allowUnionTypes || O(M, T), N(M, M.dataTypes));
   }
-  function z(P, T) {
+  function V(M, T) {
     if (T.length) {
-      if (!P.dataTypes.length) {
-        P.dataTypes = T;
+      if (!M.dataTypes.length) {
+        M.dataTypes = T;
         return;
       }
-      T.forEach((C) => {
-        R(P.dataTypes, C) || M(P, `type "${C}" not allowed by context "${P.dataTypes.join(",")}"`);
-      }), y(P, T);
+      T.forEach((I) => {
+        A(M.dataTypes, I) || E(M, `type "${I}" not allowed by context "${M.dataTypes.join(",")}"`);
+      }), y(M, T);
     }
   }
-  function q(P, T) {
-    T.length > 1 && !(T.length === 2 && T.includes("null")) && M(P, "use allowUnionTypes to allow union type keyword");
+  function O(M, T) {
+    T.length > 1 && !(T.length === 2 && T.includes("null")) && E(M, "use allowUnionTypes to allow union type keyword");
   }
-  function N(P, T) {
-    const C = P.self.RULES.all;
-    for (const O in C) {
-      const x = C[O];
-      if (typeof x == "object" && (0, t.shouldUseRule)(P.schema, x)) {
-        const { type: U } = x.definition;
-        U.length && !U.some((X) => I(T, X)) && M(P, `missing type "${U.join(",")}" for keyword "${O}"`);
+  function N(M, T) {
+    const I = M.self.RULES.all;
+    for (const q in I) {
+      const D = I[q];
+      if (typeof D == "object" && (0, t.shouldUseRule)(M.schema, D)) {
+        const { type: U } = D.definition;
+        U.length && !U.some((X) => j(T, X)) && E(M, `missing type "${U.join(",")}" for keyword "${q}"`);
       }
     }
   }
-  function I(P, T) {
-    return P.includes(T) || T === "number" && P.includes("integer");
+  function j(M, T) {
+    return M.includes(T) || T === "number" && M.includes("integer");
   }
-  function R(P, T) {
-    return P.includes(T) || T === "integer" && P.includes("number");
+  function A(M, T) {
+    return M.includes(T) || T === "integer" && M.includes("number");
   }
-  function y(P, T) {
-    const C = [];
-    for (const O of P.dataTypes)
-      R(T, O) ? C.push(O) : T.includes("integer") && O === "number" && C.push("integer");
-    P.dataTypes = C;
+  function y(M, T) {
+    const I = [];
+    for (const q of M.dataTypes)
+      A(T, q) ? I.push(q) : T.includes("integer") && q === "number" && I.push("integer");
+    M.dataTypes = I;
   }
-  function M(P, T) {
-    const C = P.schemaEnv.baseId + P.errSchemaPath;
-    T += ` at "${C}" (strictTypes)`, (0, p.checkStrictMode)(P, T, P.opts.strictTypes);
+  function E(M, T) {
+    const I = M.schemaEnv.baseId + M.errSchemaPath;
+    T += ` at "${I}" (strictTypes)`, (0, d.checkStrictMode)(M, T, M.opts.strictTypes);
   }
-  class A {
-    constructor(T, C, O) {
-      if ((0, i.validateKeywordUsage)(T, C, O), this.gen = T.gen, this.allErrors = T.allErrors, this.keyword = O, this.data = T.data, this.schema = T.schema[O], this.$data = C.$data && T.opts.$data && this.schema && this.schema.$data, this.schemaValue = (0, p.schemaRefOrVal)(T, this.schema, O, this.$data), this.schemaType = C.schemaType, this.parentSchema = T.schema, this.params = {}, this.it = T, this.def = C, this.$data)
+  class R {
+    constructor(T, I, q) {
+      if ((0, i.validateKeywordUsage)(T, I, q), this.gen = T.gen, this.allErrors = T.allErrors, this.keyword = q, this.data = T.data, this.schema = T.schema[q], this.$data = I.$data && T.opts.$data && this.schema && this.schema.$data, this.schemaValue = (0, d.schemaRefOrVal)(T, this.schema, q, this.$data), this.schemaType = I.schemaType, this.parentSchema = T.schema, this.params = {}, this.it = T, this.def = I, this.$data)
         this.schemaCode = T.gen.const("vSchema", W(this.$data, T));
-      else if (this.schemaCode = this.schemaValue, !(0, i.validSchemaType)(this.schema, C.schemaType, C.allowUndefined))
-        throw new Error(`${O} value must be ${JSON.stringify(C.schemaType)}`);
-      ("code" in C ? C.trackErrors : C.errors !== !1) && (this.errsCount = T.gen.const("_errs", l.default.errors));
+      else if (this.schemaCode = this.schemaValue, !(0, i.validSchemaType)(this.schema, I.schemaType, I.allowUndefined))
+        throw new Error(`${q} value must be ${JSON.stringify(I.schemaType)}`);
+      ("code" in I ? I.trackErrors : I.errors !== !1) && (this.errsCount = T.gen.const("_errs", c.default.errors));
     }
-    result(T, C, O) {
-      this.failResult((0, a.not)(T), C, O);
+    result(T, I, q) {
+      this.failResult((0, a.not)(T), I, q);
     }
-    failResult(T, C, O) {
-      this.gen.if(T), O ? O() : this.error(), C ? (this.gen.else(), C(), this.allErrors && this.gen.endIf()) : this.allErrors ? this.gen.endIf() : this.gen.else();
+    failResult(T, I, q) {
+      this.gen.if(T), q ? q() : this.error(), I ? (this.gen.else(), I(), this.allErrors && this.gen.endIf()) : this.allErrors ? this.gen.endIf() : this.gen.else();
     }
-    pass(T, C) {
-      this.failResult((0, a.not)(T), void 0, C);
+    pass(T, I) {
+      this.failResult((0, a.not)(T), void 0, I);
     }
     fail(T) {
       if (T === void 0) {
@@ -1978,312 +1978,312 @@ function At() {
     fail$data(T) {
       if (!this.$data)
         return this.fail(T);
-      const { schemaCode: C } = this;
-      this.fail((0, a._)`${C} !== undefined && (${(0, a.or)(this.invalid$data(), T)})`);
+      const { schemaCode: I } = this;
+      this.fail((0, a._)`${I} !== undefined && (${(0, a.or)(this.invalid$data(), T)})`);
     }
-    error(T, C, O) {
-      if (C) {
-        this.setParams(C), this._error(T, O), this.setParams({});
+    error(T, I, q) {
+      if (I) {
+        this.setParams(I), this._error(T, q), this.setParams({});
         return;
       }
-      this._error(T, O);
+      this._error(T, q);
     }
-    _error(T, C) {
-      (T ? w.reportExtraError : w.reportError)(this, this.def.error, C);
+    _error(T, I) {
+      (T ? v.reportExtraError : v.reportError)(this, this.def.error, I);
     }
     $dataError() {
-      (0, w.reportError)(this, this.def.$dataError || w.keyword$DataError);
+      (0, v.reportError)(this, this.def.$dataError || v.keyword$DataError);
     }
     reset() {
       if (this.errsCount === void 0)
         throw new Error('add "trackErrors" to keyword definition');
-      (0, w.resetErrorsCount)(this.gen, this.errsCount);
+      (0, v.resetErrorsCount)(this.gen, this.errsCount);
     }
     ok(T) {
       this.allErrors || this.gen.if(T);
     }
-    setParams(T, C) {
-      C ? Object.assign(this.params, T) : this.params = T;
+    setParams(T, I) {
+      I ? Object.assign(this.params, T) : this.params = T;
     }
-    block$data(T, C, O = a.nil) {
+    block$data(T, I, q = a.nil) {
       this.gen.block(() => {
-        this.check$data(T, O), C();
+        this.check$data(T, q), I();
       });
     }
-    check$data(T = a.nil, C = a.nil) {
+    check$data(T = a.nil, I = a.nil) {
       if (!this.$data)
         return;
-      const { gen: O, schemaCode: x, schemaType: U, def: X } = this;
-      O.if((0, a.or)((0, a._)`${x} === undefined`, C)), T !== a.nil && O.assign(T, !0), (U.length || X.validateSchema) && (O.elseIf(this.invalid$data()), this.$dataError(), T !== a.nil && O.assign(T, !1)), O.else();
+      const { gen: q, schemaCode: D, schemaType: U, def: X } = this;
+      q.if((0, a.or)((0, a._)`${D} === undefined`, I)), T !== a.nil && q.assign(T, !0), (U.length || X.validateSchema) && (q.elseIf(this.invalid$data()), this.$dataError(), T !== a.nil && q.assign(T, !1)), q.else();
     }
     invalid$data() {
-      const { gen: T, schemaCode: C, schemaType: O, def: x, it: U } = this;
+      const { gen: T, schemaCode: I, schemaType: q, def: D, it: U } = this;
       return (0, a.or)(X(), te());
       function X() {
-        if (O.length) {
-          if (!(C instanceof a.Name))
+        if (q.length) {
+          if (!(I instanceof a.Name))
             throw new Error("ajv implementation error");
-          const oe = Array.isArray(O) ? O : [O];
-          return (0, a._)`${(0, r.checkDataTypes)(oe, C, U.opts.strictNumbers, r.DataType.Wrong)}`;
+          const se = Array.isArray(q) ? q : [q];
+          return (0, a._)`${(0, r.checkDataTypes)(se, I, U.opts.strictNumbers, r.DataType.Wrong)}`;
         }
         return a.nil;
       }
       function te() {
-        if (x.validateSchema) {
-          const oe = T.scopeValue("validate$data", { ref: x.validateSchema });
-          return (0, a._)`!${oe}(${C})`;
+        if (D.validateSchema) {
+          const se = T.scopeValue("validate$data", { ref: D.validateSchema });
+          return (0, a._)`!${se}(${I})`;
         }
         return a.nil;
       }
     }
-    subschema(T, C) {
-      const O = (0, s.getSubschema)(this.it, T);
-      (0, s.extendSubschemaData)(O, this.it, T), (0, s.extendSubschemaMode)(O, T);
-      const x = { ...this.it, ...O, items: void 0, props: void 0 };
-      return f(x, C), x;
+    subschema(T, I) {
+      const q = (0, o.getSubschema)(this.it, T);
+      (0, o.extendSubschemaData)(q, this.it, T), (0, o.extendSubschemaMode)(q, T);
+      const D = { ...this.it, ...q, items: void 0, props: void 0 };
+      return p(D, I), D;
     }
-    mergeEvaluated(T, C) {
-      const { it: O, gen: x } = this;
-      O.opts.unevaluated && (O.props !== !0 && T.props !== void 0 && (O.props = p.mergeEvaluated.props(x, T.props, O.props, C)), O.items !== !0 && T.items !== void 0 && (O.items = p.mergeEvaluated.items(x, T.items, O.items, C)));
+    mergeEvaluated(T, I) {
+      const { it: q, gen: D } = this;
+      q.opts.unevaluated && (q.props !== !0 && T.props !== void 0 && (q.props = d.mergeEvaluated.props(D, T.props, q.props, I)), q.items !== !0 && T.items !== void 0 && (q.items = d.mergeEvaluated.items(D, T.items, q.items, I)));
     }
-    mergeValidEvaluated(T, C) {
-      const { it: O, gen: x } = this;
-      if (O.opts.unevaluated && (O.props !== !0 || O.items !== !0))
-        return x.if(C, () => this.mergeEvaluated(T, a.Name)), !0;
+    mergeValidEvaluated(T, I) {
+      const { it: q, gen: D } = this;
+      if (q.opts.unevaluated && (q.props !== !0 || q.items !== !0))
+        return D.if(I, () => this.mergeEvaluated(T, a.Name)), !0;
     }
   }
-  $e.KeywordCxt = A;
-  function F(P, T, C, O) {
-    const x = new A(P, C, T);
-    "code" in C ? C.code(x, O) : x.$data && C.validate ? (0, i.funcKeywordCode)(x, C) : "macro" in C ? (0, i.macroKeywordCode)(x, C) : (C.compile || C.validate) && (0, i.funcKeywordCode)(x, C);
+  Pe.KeywordCxt = R;
+  function F(M, T, I, q) {
+    const D = new R(M, I, T);
+    "code" in I ? I.code(D, q) : D.$data && I.validate ? (0, i.funcKeywordCode)(D, I) : "macro" in I ? (0, i.macroKeywordCode)(D, I) : (I.compile || I.validate) && (0, i.funcKeywordCode)(D, I);
   }
   const G = /^\/(?:[^~]|~0|~1)*$/, Q = /^([0-9]+)(#|\/(?:[^~]|~0|~1)*)?$/;
-  function W(P, { dataLevel: T, dataNames: C, dataPathArr: O }) {
-    let x, U;
-    if (P === "")
-      return l.default.rootData;
-    if (P[0] === "/") {
-      if (!G.test(P))
-        throw new Error(`Invalid JSON-pointer: ${P}`);
-      x = P, U = l.default.rootData;
+  function W(M, { dataLevel: T, dataNames: I, dataPathArr: q }) {
+    let D, U;
+    if (M === "")
+      return c.default.rootData;
+    if (M[0] === "/") {
+      if (!G.test(M))
+        throw new Error(`Invalid JSON-pointer: ${M}`);
+      D = M, U = c.default.rootData;
     } else {
-      const le = Q.exec(P);
+      const le = Q.exec(M);
       if (!le)
-        throw new Error(`Invalid JSON-pointer: ${P}`);
-      const se = +le[1];
-      if (x = le[2], x === "#") {
-        if (se >= T)
-          throw new Error(oe("property/index", se));
-        return O[T - se];
+        throw new Error(`Invalid JSON-pointer: ${M}`);
+      const oe = +le[1];
+      if (D = le[2], D === "#") {
+        if (oe >= T)
+          throw new Error(se("property/index", oe));
+        return q[T - oe];
       }
-      if (se > T)
-        throw new Error(oe("data", se));
-      if (U = C[T - se], !x)
+      if (oe > T)
+        throw new Error(se("data", oe));
+      if (U = I[T - oe], !D)
         return U;
     }
     let X = U;
-    const te = x.split("/");
+    const te = D.split("/");
     for (const le of te)
-      le && (U = (0, a._)`${U}${(0, a.getProperty)((0, p.unescapeJsonPointer)(le))}`, X = (0, a._)`${X} && ${U}`);
+      le && (U = (0, a._)`${U}${(0, a.getProperty)((0, d.unescapeJsonPointer)(le))}`, X = (0, a._)`${X} && ${U}`);
     return X;
-    function oe(le, se) {
-      return `Cannot access ${le} ${se} levels up, current level is ${T}`;
+    function se(le, oe) {
+      return `Cannot access ${le} ${oe} levels up, current level is ${T}`;
     }
   }
-  return $e.getData = W, $e;
+  return Pe.getData = W, Pe;
 }
-var Ue = {}, Pr;
-function Wt() {
-  if (Pr) return Ue;
-  Pr = 1, Object.defineProperty(Ue, "__esModule", { value: !0 });
-  class o extends Error {
+var We = {}, Ir;
+function rr() {
+  if (Ir) return We;
+  Ir = 1, Object.defineProperty(We, "__esModule", { value: !0 });
+  class s extends Error {
     constructor(t) {
       super("validation failed"), this.errors = t, this.ajv = this.validation = !0;
     }
   }
-  return Ue.default = o, Ue;
+  return We.default = s, We;
 }
-var Ge = {}, Sr;
-function jt() {
-  if (Sr) return Ge;
-  Sr = 1, Object.defineProperty(Ge, "__esModule", { value: !0 });
-  const o = Rt();
+var Ye = {}, jr;
+function zt() {
+  if (jr) return Ye;
+  jr = 1, Object.defineProperty(Ye, "__esModule", { value: !0 });
+  const s = xt();
   class e extends Error {
-    constructor(r, n, i, s) {
-      super(s || `can't resolve reference ${i} from id ${n}`), this.missingRef = (0, o.resolveUrl)(r, n, i), this.missingSchema = (0, o.normalizeId)((0, o.getFullPath)(r, this.missingRef));
+    constructor(r, n, i, o) {
+      super(o || `can't resolve reference ${i} from id ${n}`), this.missingRef = (0, s.resolveUrl)(r, n, i), this.missingSchema = (0, s.normalizeId)((0, s.getFullPath)(r, this.missingRef));
     }
   }
-  return Ge.default = e, Ge;
+  return Ye.default = e, Ye;
 }
-var ge = {}, Er;
-function Yt() {
-  if (Er) return ge;
-  Er = 1, Object.defineProperty(ge, "__esModule", { value: !0 }), ge.resolveSchema = ge.getCompilingSchema = ge.resolveRef = ge.compileSchema = ge.SchemaEnv = void 0;
-  const o = Y(), e = Wt(), t = Me(), r = Rt(), n = Z(), i = At();
-  class s {
-    constructor(d) {
-      var c;
+var ge = {}, qr;
+function nr() {
+  if (qr) return ge;
+  qr = 1, Object.defineProperty(ge, "__esModule", { value: !0 }), ge.resolveSchema = ge.getCompilingSchema = ge.resolveRef = ge.compileSchema = ge.SchemaEnv = void 0;
+  const s = Y(), e = rr(), t = ke(), r = xt(), n = Z(), i = Dt();
+  class o {
+    constructor(f) {
+      var l;
       this.refs = {}, this.dynamicAnchors = {};
-      let f;
-      typeof d.schema == "object" && (f = d.schema), this.schema = d.schema, this.schemaId = d.schemaId, this.root = d.root || this, this.baseId = (c = d.baseId) !== null && c !== void 0 ? c : (0, r.normalizeId)(f?.[d.schemaId || "$id"]), this.schemaPath = d.schemaPath, this.localRefs = d.localRefs, this.meta = d.meta, this.$async = f?.$async, this.refs = {};
+      let p;
+      typeof f.schema == "object" && (p = f.schema), this.schema = f.schema, this.schemaId = f.schemaId, this.root = f.root || this, this.baseId = (l = f.baseId) !== null && l !== void 0 ? l : (0, r.normalizeId)(p?.[f.schemaId || "$id"]), this.schemaPath = f.schemaPath, this.localRefs = f.localRefs, this.meta = f.meta, this.$async = p?.$async, this.refs = {};
     }
   }
-  ge.SchemaEnv = s;
+  ge.SchemaEnv = o;
   function a(h) {
-    const d = p.call(this, h);
-    if (d)
-      return d;
-    const c = (0, r.getFullPath)(this.opts.uriResolver, h.root.baseId), { es5: f, lines: m } = this.opts.code, { ownProperties: v } = this.opts, g = new o.CodeGen(this.scope, { es5: f, lines: m, ownProperties: v });
-    let $;
-    h.$async && ($ = g.scopeValue("Error", {
+    const f = d.call(this, h);
+    if (f)
+      return f;
+    const l = (0, r.getFullPath)(this.opts.uriResolver, h.root.baseId), { es5: p, lines: m } = this.opts.code, { ownProperties: w } = this.opts, b = new s.CodeGen(this.scope, { es5: p, lines: m, ownProperties: w });
+    let P;
+    h.$async && (P = b.scopeValue("Error", {
       ref: e.default,
-      code: (0, o._)`require("ajv/dist/runtime/validation_error").default`
+      code: (0, s._)`require("ajv/dist/runtime/validation_error").default`
     }));
-    const k = g.scopeName("validate");
+    const k = b.scopeName("validate");
     h.validateName = k;
-    const j = {
-      gen: g,
+    const C = {
+      gen: b,
       allErrors: this.opts.allErrors,
       data: t.default.data,
       parentData: t.default.parentData,
       parentDataProperty: t.default.parentDataProperty,
       dataNames: [t.default.data],
-      dataPathArr: [o.nil],
+      dataPathArr: [s.nil],
       // TODO can its length be used as dataLevel if nil is removed?
       dataLevel: 0,
       dataTypes: [],
       definedProperties: /* @__PURE__ */ new Set(),
-      topSchemaRef: g.scopeValue("schema", this.opts.code.source === !0 ? { ref: h.schema, code: (0, o.stringify)(h.schema) } : { ref: h.schema }),
+      topSchemaRef: b.scopeValue("schema", this.opts.code.source === !0 ? { ref: h.schema, code: (0, s.stringify)(h.schema) } : { ref: h.schema }),
       validateName: k,
-      ValidationError: $,
+      ValidationError: P,
       schema: h.schema,
       schemaEnv: h,
-      rootId: c,
-      baseId: h.baseId || c,
-      schemaPath: o.nil,
+      rootId: l,
+      baseId: h.baseId || l,
+      schemaPath: s.nil,
       errSchemaPath: h.schemaPath || (this.opts.jtd ? "" : "#"),
-      errorPath: (0, o._)`""`,
+      errorPath: (0, s._)`""`,
       opts: this.opts,
       self: this
     };
-    let D;
+    let x;
     try {
-      this._compilations.add(h), (0, i.validateFunctionCode)(j), g.optimize(this.opts.code.optimize);
-      const V = g.toString();
-      D = `${g.scopeRefs(t.default.scope)}return ${V}`, this.opts.code.process && (D = this.opts.code.process(D, h));
-      const L = new Function(`${t.default.self}`, `${t.default.scope}`, D)(this, this.scope.get());
-      if (this.scope.value(k, { ref: L }), L.errors = null, L.schema = h.schema, L.schemaEnv = h, h.$async && (L.$async = !0), this.opts.code.source === !0 && (L.source = { validateName: k, validateCode: V, scopeValues: g._values }), this.opts.unevaluated) {
-        const { props: H, items: ce } = j;
+      this._compilations.add(h), (0, i.validateFunctionCode)(C), b.optimize(this.opts.code.optimize);
+      const z = b.toString();
+      x = `${b.scopeRefs(t.default.scope)}return ${z}`, this.opts.code.process && (x = this.opts.code.process(x, h));
+      const L = new Function(`${t.default.self}`, `${t.default.scope}`, x)(this, this.scope.get());
+      if (this.scope.value(k, { ref: L }), L.errors = null, L.schema = h.schema, L.schemaEnv = h, h.$async && (L.$async = !0), this.opts.code.source === !0 && (L.source = { validateName: k, validateCode: z, scopeValues: b._values }), this.opts.unevaluated) {
+        const { props: H, items: ce } = C;
         L.evaluated = {
-          props: H instanceof o.Name ? void 0 : H,
-          items: ce instanceof o.Name ? void 0 : ce,
-          dynamicProps: H instanceof o.Name,
-          dynamicItems: ce instanceof o.Name
-        }, L.source && (L.source.evaluated = (0, o.stringify)(L.evaluated));
+          props: H instanceof s.Name ? void 0 : H,
+          items: ce instanceof s.Name ? void 0 : ce,
+          dynamicProps: H instanceof s.Name,
+          dynamicItems: ce instanceof s.Name
+        }, L.source && (L.source.evaluated = (0, s.stringify)(L.evaluated));
       }
       return h.validate = L, h;
-    } catch (V) {
-      throw delete h.validate, delete h.validateName, D && this.logger.error("Error compiling schema, function code:", D), V;
+    } catch (z) {
+      throw delete h.validate, delete h.validateName, x && this.logger.error("Error compiling schema, function code:", x), z;
     } finally {
       this._compilations.delete(h);
     }
   }
   ge.compileSchema = a;
-  function l(h, d, c) {
-    var f;
-    c = (0, r.resolveUrl)(this.opts.uriResolver, d, c);
-    const m = h.refs[c];
+  function c(h, f, l) {
+    var p;
+    l = (0, r.resolveUrl)(this.opts.uriResolver, f, l);
+    const m = h.refs[l];
     if (m)
       return m;
-    let v = _.call(this, h, c);
-    if (v === void 0) {
-      const g = (f = h.localRefs) === null || f === void 0 ? void 0 : f[c], { schemaId: $ } = this.opts;
-      g && (v = new s({ schema: g, schemaId: $, root: h, baseId: d }));
+    let w = _.call(this, h, l);
+    if (w === void 0) {
+      const b = (p = h.localRefs) === null || p === void 0 ? void 0 : p[l], { schemaId: P } = this.opts;
+      b && (w = new o({ schema: b, schemaId: P, root: h, baseId: f }));
     }
-    if (v !== void 0)
-      return h.refs[c] = u.call(this, v);
+    if (w !== void 0)
+      return h.refs[l] = u.call(this, w);
   }
-  ge.resolveRef = l;
+  ge.resolveRef = c;
   function u(h) {
     return (0, r.inlineRef)(h.schema, this.opts.inlineRefs) ? h.schema : h.validate ? h : a.call(this, h);
   }
-  function p(h) {
-    for (const d of this._compilations)
-      if (w(d, h))
-        return d;
+  function d(h) {
+    for (const f of this._compilations)
+      if (v(f, h))
+        return f;
   }
-  ge.getCompilingSchema = p;
-  function w(h, d) {
-    return h.schema === d.schema && h.root === d.root && h.baseId === d.baseId;
+  ge.getCompilingSchema = d;
+  function v(h, f) {
+    return h.schema === f.schema && h.root === f.root && h.baseId === f.baseId;
   }
-  function _(h, d) {
-    let c;
-    for (; typeof (c = this.refs[d]) == "string"; )
-      d = c;
-    return c || this.schemas[d] || S.call(this, h, d);
+  function _(h, f) {
+    let l;
+    for (; typeof (l = this.refs[f]) == "string"; )
+      f = l;
+    return l || this.schemas[f] || $.call(this, h, f);
   }
-  function S(h, d) {
-    const c = this.opts.uriResolver.parse(d), f = (0, r._getFullPath)(this.opts.uriResolver, c);
+  function $(h, f) {
+    const l = this.opts.uriResolver.parse(f), p = (0, r._getFullPath)(this.opts.uriResolver, l);
     let m = (0, r.getFullPath)(this.opts.uriResolver, h.baseId, void 0);
-    if (Object.keys(h.schema).length > 0 && f === m)
-      return b.call(this, c, h);
-    const v = (0, r.normalizeId)(f), g = this.refs[v] || this.schemas[v];
-    if (typeof g == "string") {
-      const $ = S.call(this, h, g);
-      return typeof $?.schema != "object" ? void 0 : b.call(this, c, $);
+    if (Object.keys(h.schema).length > 0 && p === m)
+      return g.call(this, l, h);
+    const w = (0, r.normalizeId)(p), b = this.refs[w] || this.schemas[w];
+    if (typeof b == "string") {
+      const P = $.call(this, h, b);
+      return typeof P?.schema != "object" ? void 0 : g.call(this, l, P);
     }
-    if (typeof g?.schema == "object") {
-      if (g.validate || a.call(this, g), v === (0, r.normalizeId)(d)) {
-        const { schema: $ } = g, { schemaId: k } = this.opts, j = $[k];
-        return j && (m = (0, r.resolveUrl)(this.opts.uriResolver, m, j)), new s({ schema: $, schemaId: k, root: h, baseId: m });
+    if (typeof b?.schema == "object") {
+      if (b.validate || a.call(this, b), w === (0, r.normalizeId)(f)) {
+        const { schema: P } = b, { schemaId: k } = this.opts, C = P[k];
+        return C && (m = (0, r.resolveUrl)(this.opts.uriResolver, m, C)), new o({ schema: P, schemaId: k, root: h, baseId: m });
       }
-      return b.call(this, c, g);
+      return g.call(this, l, b);
     }
   }
-  ge.resolveSchema = S;
-  const E = /* @__PURE__ */ new Set([
+  ge.resolveSchema = $;
+  const S = /* @__PURE__ */ new Set([
     "properties",
     "patternProperties",
     "enum",
     "dependencies",
     "definitions"
   ]);
-  function b(h, { baseId: d, schema: c, root: f }) {
+  function g(h, { baseId: f, schema: l, root: p }) {
     var m;
     if (((m = h.fragment) === null || m === void 0 ? void 0 : m[0]) !== "/")
       return;
-    for (const $ of h.fragment.slice(1).split("/")) {
-      if (typeof c == "boolean")
+    for (const P of h.fragment.slice(1).split("/")) {
+      if (typeof l == "boolean")
         return;
-      const k = c[(0, n.unescapeFragment)($)];
+      const k = l[(0, n.unescapeFragment)(P)];
       if (k === void 0)
         return;
-      c = k;
-      const j = typeof c == "object" && c[this.opts.schemaId];
-      !E.has($) && j && (d = (0, r.resolveUrl)(this.opts.uriResolver, d, j));
+      l = k;
+      const C = typeof l == "object" && l[this.opts.schemaId];
+      !S.has(P) && C && (f = (0, r.resolveUrl)(this.opts.uriResolver, f, C));
     }
-    let v;
-    if (typeof c != "boolean" && c.$ref && !(0, n.schemaHasRulesButRef)(c, this.RULES)) {
-      const $ = (0, r.resolveUrl)(this.opts.uriResolver, d, c.$ref);
-      v = S.call(this, f, $);
+    let w;
+    if (typeof l != "boolean" && l.$ref && !(0, n.schemaHasRulesButRef)(l, this.RULES)) {
+      const P = (0, r.resolveUrl)(this.opts.uriResolver, f, l.$ref);
+      w = $.call(this, p, P);
     }
-    const { schemaId: g } = this.opts;
-    if (v = v || new s({ schema: c, schemaId: g, root: f, baseId: d }), v.schema !== v.root.schema)
-      return v;
+    const { schemaId: b } = this.opts;
+    if (w = w || new o({ schema: l, schemaId: b, root: p, baseId: f }), w.schema !== w.root.schema)
+      return w;
   }
   return ge;
 }
-const ei = "https://raw.githubusercontent.com/ajv-validator/ajv/master/lib/refs/data.json#", ti = "Meta-schema for $data reference (JSON AnySchema extension proposal)", ri = "object", ni = ["$data"], ii = { $data: { type: "string", anyOf: [{ format: "relative-json-pointer" }, { format: "json-pointer" }] } }, oi = !1, si = {
-  $id: ei,
-  description: ti,
-  type: ri,
-  required: ni,
-  properties: ii,
-  additionalProperties: oi
+const pi = "https://raw.githubusercontent.com/ajv-validator/ajv/master/lib/refs/data.json#", mi = "Meta-schema for $data reference (JSON AnySchema extension proposal)", yi = "object", gi = ["$data"], vi = { $data: { type: "string", anyOf: [{ format: "relative-json-pointer" }, { format: "json-pointer" }] } }, bi = !1, wi = {
+  $id: pi,
+  description: mi,
+  type: yi,
+  required: gi,
+  properties: vi,
+  additionalProperties: bi
 };
-var Be = {}, Ie = { exports: {} }, Ft, Mr;
-function ai() {
-  return Mr || (Mr = 1, Ft = {
+var Qe = {}, ze = { exports: {} }, Jt, Or;
+function $i() {
+  return Or || (Or = 1, Jt = {
     HEX: {
       0: 0,
       1: 1,
@@ -2308,256 +2308,256 @@ function ai() {
       f: 15,
       F: 15
     }
-  }), Ft;
+  }), Jt;
 }
-var Lt, Tr;
-function ci() {
-  if (Tr) return Lt;
-  Tr = 1;
-  const { HEX: o } = ai(), e = /^(?:(?:25[0-5]|2[0-4]\d|1\d{2}|[1-9]\d|\d)\.){3}(?:25[0-5]|2[0-4]\d|1\d{2}|[1-9]\d|\d)$/u;
-  function t(b) {
-    if (a(b, ".") < 3)
-      return { host: b, isIPV4: !1 };
-    const h = b.match(e) || [], [d] = h;
-    return d ? { host: s(d, "."), isIPV4: !0 } : { host: b, isIPV4: !1 };
+var Wt, xr;
+function _i() {
+  if (xr) return Wt;
+  xr = 1;
+  const { HEX: s } = $i(), e = /^(?:(?:25[0-5]|2[0-4]\d|1\d{2}|[1-9]\d|\d)\.){3}(?:25[0-5]|2[0-4]\d|1\d{2}|[1-9]\d|\d)$/u;
+  function t(g) {
+    if (a(g, ".") < 3)
+      return { host: g, isIPV4: !1 };
+    const h = g.match(e) || [], [f] = h;
+    return f ? { host: o(f, "."), isIPV4: !0 } : { host: g, isIPV4: !1 };
   }
-  function r(b, h = !1) {
-    let d = "", c = !0;
-    for (const f of b) {
-      if (o[f] === void 0) return;
-      f !== "0" && c === !0 && (c = !1), c || (d += f);
+  function r(g, h = !1) {
+    let f = "", l = !0;
+    for (const p of g) {
+      if (s[p] === void 0) return;
+      p !== "0" && l === !0 && (l = !1), l || (f += p);
     }
-    return h && d.length === 0 && (d = "0"), d;
+    return h && f.length === 0 && (f = "0"), f;
   }
-  function n(b) {
+  function n(g) {
     let h = 0;
-    const d = { error: !1, address: "", zone: "" }, c = [], f = [];
-    let m = !1, v = !1, g = !1;
-    function $() {
-      if (f.length) {
+    const f = { error: !1, address: "", zone: "" }, l = [], p = [];
+    let m = !1, w = !1, b = !1;
+    function P() {
+      if (p.length) {
         if (m === !1) {
-          const k = r(f);
+          const k = r(p);
           if (k !== void 0)
-            c.push(k);
+            l.push(k);
           else
-            return d.error = !0, !1;
+            return f.error = !0, !1;
         }
-        f.length = 0;
+        p.length = 0;
       }
       return !0;
     }
-    for (let k = 0; k < b.length; k++) {
-      const j = b[k];
-      if (!(j === "[" || j === "]"))
-        if (j === ":") {
-          if (v === !0 && (g = !0), !$())
+    for (let k = 0; k < g.length; k++) {
+      const C = g[k];
+      if (!(C === "[" || C === "]"))
+        if (C === ":") {
+          if (w === !0 && (b = !0), !P())
             break;
-          if (h++, c.push(":"), h > 7) {
-            d.error = !0;
+          if (h++, l.push(":"), h > 7) {
+            f.error = !0;
             break;
           }
-          k - 1 >= 0 && b[k - 1] === ":" && (v = !0);
+          k - 1 >= 0 && g[k - 1] === ":" && (w = !0);
           continue;
-        } else if (j === "%") {
-          if (!$())
+        } else if (C === "%") {
+          if (!P())
             break;
           m = !0;
         } else {
-          f.push(j);
+          p.push(C);
           continue;
         }
     }
-    return f.length && (m ? d.zone = f.join("") : g ? c.push(f.join("")) : c.push(r(f))), d.address = c.join(""), d;
+    return p.length && (m ? f.zone = p.join("") : b ? l.push(p.join("")) : l.push(r(p))), f.address = l.join(""), f;
   }
-  function i(b) {
-    if (a(b, ":") < 2)
-      return { host: b, isIPV6: !1 };
-    const h = n(b);
+  function i(g) {
+    if (a(g, ":") < 2)
+      return { host: g, isIPV6: !1 };
+    const h = n(g);
     if (h.error)
-      return { host: b, isIPV6: !1 };
+      return { host: g, isIPV6: !1 };
     {
-      let d = h.address, c = h.address;
-      return h.zone && (d += "%" + h.zone, c += "%25" + h.zone), { host: d, escapedHost: c, isIPV6: !0 };
+      let f = h.address, l = h.address;
+      return h.zone && (f += "%" + h.zone, l += "%25" + h.zone), { host: f, escapedHost: l, isIPV6: !0 };
     }
   }
-  function s(b, h) {
-    let d = "", c = !0;
-    const f = b.length;
-    for (let m = 0; m < f; m++) {
-      const v = b[m];
-      v === "0" && c ? (m + 1 <= f && b[m + 1] === h || m + 1 === f) && (d += v, c = !1) : (v === h ? c = !0 : c = !1, d += v);
+  function o(g, h) {
+    let f = "", l = !0;
+    const p = g.length;
+    for (let m = 0; m < p; m++) {
+      const w = g[m];
+      w === "0" && l ? (m + 1 <= p && g[m + 1] === h || m + 1 === p) && (f += w, l = !1) : (w === h ? l = !0 : l = !1, f += w);
     }
-    return d;
+    return f;
   }
-  function a(b, h) {
-    let d = 0;
-    for (let c = 0; c < b.length; c++)
-      b[c] === h && d++;
-    return d;
+  function a(g, h) {
+    let f = 0;
+    for (let l = 0; l < g.length; l++)
+      g[l] === h && f++;
+    return f;
   }
-  const l = /^\.\.?\//u, u = /^\/\.(?:\/|$)/u, p = /^\/\.\.(?:\/|$)/u, w = /^\/?(?:.|\n)*?(?=\/|$)/u;
-  function _(b) {
+  const c = /^\.\.?\//u, u = /^\/\.(?:\/|$)/u, d = /^\/\.\.(?:\/|$)/u, v = /^\/?(?:.|\n)*?(?=\/|$)/u;
+  function _(g) {
     const h = [];
-    for (; b.length; )
-      if (b.match(l))
-        b = b.replace(l, "");
-      else if (b.match(u))
-        b = b.replace(u, "/");
-      else if (b.match(p))
-        b = b.replace(p, "/"), h.pop();
-      else if (b === "." || b === "..")
-        b = "";
+    for (; g.length; )
+      if (g.match(c))
+        g = g.replace(c, "");
+      else if (g.match(u))
+        g = g.replace(u, "/");
+      else if (g.match(d))
+        g = g.replace(d, "/"), h.pop();
+      else if (g === "." || g === "..")
+        g = "";
       else {
-        const d = b.match(w);
-        if (d) {
-          const c = d[0];
-          b = b.slice(c.length), h.push(c);
+        const f = g.match(v);
+        if (f) {
+          const l = f[0];
+          g = g.slice(l.length), h.push(l);
         } else
           throw new Error("Unexpected dot segment condition");
       }
     return h.join("");
   }
-  function S(b, h) {
-    const d = h !== !0 ? escape : unescape;
-    return b.scheme !== void 0 && (b.scheme = d(b.scheme)), b.userinfo !== void 0 && (b.userinfo = d(b.userinfo)), b.host !== void 0 && (b.host = d(b.host)), b.path !== void 0 && (b.path = d(b.path)), b.query !== void 0 && (b.query = d(b.query)), b.fragment !== void 0 && (b.fragment = d(b.fragment)), b;
+  function $(g, h) {
+    const f = h !== !0 ? escape : unescape;
+    return g.scheme !== void 0 && (g.scheme = f(g.scheme)), g.userinfo !== void 0 && (g.userinfo = f(g.userinfo)), g.host !== void 0 && (g.host = f(g.host)), g.path !== void 0 && (g.path = f(g.path)), g.query !== void 0 && (g.query = f(g.query)), g.fragment !== void 0 && (g.fragment = f(g.fragment)), g;
   }
-  function E(b) {
+  function S(g) {
     const h = [];
-    if (b.userinfo !== void 0 && (h.push(b.userinfo), h.push("@")), b.host !== void 0) {
-      let d = unescape(b.host);
-      const c = t(d);
-      if (c.isIPV4)
-        d = c.host;
+    if (g.userinfo !== void 0 && (h.push(g.userinfo), h.push("@")), g.host !== void 0) {
+      let f = unescape(g.host);
+      const l = t(f);
+      if (l.isIPV4)
+        f = l.host;
       else {
-        const f = i(c.host);
-        f.isIPV6 === !0 ? d = `[${f.escapedHost}]` : d = b.host;
+        const p = i(l.host);
+        p.isIPV6 === !0 ? f = `[${p.escapedHost}]` : f = g.host;
       }
-      h.push(d);
+      h.push(f);
     }
-    return (typeof b.port == "number" || typeof b.port == "string") && (h.push(":"), h.push(String(b.port))), h.length ? h.join("") : void 0;
+    return (typeof g.port == "number" || typeof g.port == "string") && (h.push(":"), h.push(String(g.port))), h.length ? h.join("") : void 0;
   }
-  return Lt = {
-    recomposeAuthority: E,
-    normalizeComponentEncoding: S,
+  return Wt = {
+    recomposeAuthority: S,
+    normalizeComponentEncoding: $,
     removeDotSegments: _,
     normalizeIPv4: t,
     normalizeIPv6: i,
     stringArrayToHexStripped: r
-  }, Lt;
+  }, Wt;
 }
-var Ut, kr;
-function li() {
-  if (kr) return Ut;
-  kr = 1;
-  const o = /^[\da-f]{8}-[\da-f]{4}-[\da-f]{4}-[\da-f]{4}-[\da-f]{12}$/iu, e = /([\da-z][\d\-a-z]{0,31}):((?:[\w!$'()*+,\-.:;=@]|%[\da-f]{2})+)/iu;
-  function t(c) {
-    return typeof c.secure == "boolean" ? c.secure : String(c.scheme).toLowerCase() === "wss";
+var Yt, Dr;
+function Si() {
+  if (Dr) return Yt;
+  Dr = 1;
+  const s = /^[\da-f]{8}-[\da-f]{4}-[\da-f]{4}-[\da-f]{4}-[\da-f]{12}$/iu, e = /([\da-z][\d\-a-z]{0,31}):((?:[\w!$'()*+,\-.:;=@]|%[\da-f]{2})+)/iu;
+  function t(l) {
+    return typeof l.secure == "boolean" ? l.secure : String(l.scheme).toLowerCase() === "wss";
   }
-  function r(c) {
-    return c.host || (c.error = c.error || "HTTP URIs must have a host."), c;
+  function r(l) {
+    return l.host || (l.error = l.error || "HTTP URIs must have a host."), l;
   }
-  function n(c) {
-    const f = String(c.scheme).toLowerCase() === "https";
-    return (c.port === (f ? 443 : 80) || c.port === "") && (c.port = void 0), c.path || (c.path = "/"), c;
+  function n(l) {
+    const p = String(l.scheme).toLowerCase() === "https";
+    return (l.port === (p ? 443 : 80) || l.port === "") && (l.port = void 0), l.path || (l.path = "/"), l;
   }
-  function i(c) {
-    return c.secure = t(c), c.resourceName = (c.path || "/") + (c.query ? "?" + c.query : ""), c.path = void 0, c.query = void 0, c;
+  function i(l) {
+    return l.secure = t(l), l.resourceName = (l.path || "/") + (l.query ? "?" + l.query : ""), l.path = void 0, l.query = void 0, l;
   }
-  function s(c) {
-    if ((c.port === (t(c) ? 443 : 80) || c.port === "") && (c.port = void 0), typeof c.secure == "boolean" && (c.scheme = c.secure ? "wss" : "ws", c.secure = void 0), c.resourceName) {
-      const [f, m] = c.resourceName.split("?");
-      c.path = f && f !== "/" ? f : void 0, c.query = m, c.resourceName = void 0;
+  function o(l) {
+    if ((l.port === (t(l) ? 443 : 80) || l.port === "") && (l.port = void 0), typeof l.secure == "boolean" && (l.scheme = l.secure ? "wss" : "ws", l.secure = void 0), l.resourceName) {
+      const [p, m] = l.resourceName.split("?");
+      l.path = p && p !== "/" ? p : void 0, l.query = m, l.resourceName = void 0;
     }
-    return c.fragment = void 0, c;
+    return l.fragment = void 0, l;
   }
-  function a(c, f) {
-    if (!c.path)
-      return c.error = "URN can not be parsed", c;
-    const m = c.path.match(e);
+  function a(l, p) {
+    if (!l.path)
+      return l.error = "URN can not be parsed", l;
+    const m = l.path.match(e);
     if (m) {
-      const v = f.scheme || c.scheme || "urn";
-      c.nid = m[1].toLowerCase(), c.nss = m[2];
-      const g = `${v}:${f.nid || c.nid}`, $ = d[g];
-      c.path = void 0, $ && (c = $.parse(c, f));
+      const w = p.scheme || l.scheme || "urn";
+      l.nid = m[1].toLowerCase(), l.nss = m[2];
+      const b = `${w}:${p.nid || l.nid}`, P = f[b];
+      l.path = void 0, P && (l = P.parse(l, p));
     } else
-      c.error = c.error || "URN can not be parsed.";
-    return c;
+      l.error = l.error || "URN can not be parsed.";
+    return l;
   }
-  function l(c, f) {
-    const m = f.scheme || c.scheme || "urn", v = c.nid.toLowerCase(), g = `${m}:${f.nid || v}`, $ = d[g];
-    $ && (c = $.serialize(c, f));
-    const k = c, j = c.nss;
-    return k.path = `${v || f.nid}:${j}`, f.skipEscape = !0, k;
+  function c(l, p) {
+    const m = p.scheme || l.scheme || "urn", w = l.nid.toLowerCase(), b = `${m}:${p.nid || w}`, P = f[b];
+    P && (l = P.serialize(l, p));
+    const k = l, C = l.nss;
+    return k.path = `${w || p.nid}:${C}`, p.skipEscape = !0, k;
   }
-  function u(c, f) {
-    const m = c;
-    return m.uuid = m.nss, m.nss = void 0, !f.tolerant && (!m.uuid || !o.test(m.uuid)) && (m.error = m.error || "UUID is not valid."), m;
+  function u(l, p) {
+    const m = l;
+    return m.uuid = m.nss, m.nss = void 0, !p.tolerant && (!m.uuid || !s.test(m.uuid)) && (m.error = m.error || "UUID is not valid."), m;
   }
-  function p(c) {
-    const f = c;
-    return f.nss = (c.uuid || "").toLowerCase(), f;
+  function d(l) {
+    const p = l;
+    return p.nss = (l.uuid || "").toLowerCase(), p;
   }
-  const w = {
+  const v = {
     scheme: "http",
     domainHost: !0,
     parse: r,
     serialize: n
   }, _ = {
     scheme: "https",
-    domainHost: w.domainHost,
+    domainHost: v.domainHost,
     parse: r,
     serialize: n
-  }, S = {
+  }, $ = {
     scheme: "ws",
     domainHost: !0,
     parse: i,
-    serialize: s
-  }, E = {
+    serialize: o
+  }, S = {
     scheme: "wss",
-    domainHost: S.domainHost,
-    parse: S.parse,
-    serialize: S.serialize
-  }, d = {
-    http: w,
+    domainHost: $.domainHost,
+    parse: $.parse,
+    serialize: $.serialize
+  }, f = {
+    http: v,
     https: _,
-    ws: S,
-    wss: E,
+    ws: $,
+    wss: S,
     urn: {
       scheme: "urn",
       parse: a,
-      serialize: l,
+      serialize: c,
       skipNormalize: !0
     },
     "urn:uuid": {
       scheme: "urn:uuid",
       parse: u,
-      serialize: p,
+      serialize: d,
       skipNormalize: !0
     }
   };
-  return Ut = d, Ut;
+  return Yt = f, Yt;
 }
-var Nr;
-function ui() {
-  if (Nr) return Ie.exports;
-  Nr = 1;
-  const { normalizeIPv6: o, normalizeIPv4: e, removeDotSegments: t, recomposeAuthority: r, normalizeComponentEncoding: n } = ci(), i = li();
-  function s(h, d) {
-    return typeof h == "string" ? h = p(E(h, d), d) : typeof h == "object" && (h = E(p(h, d), d)), h;
+var zr;
+function Pi() {
+  if (zr) return ze.exports;
+  zr = 1;
+  const { normalizeIPv6: s, normalizeIPv4: e, removeDotSegments: t, recomposeAuthority: r, normalizeComponentEncoding: n } = _i(), i = Si();
+  function o(h, f) {
+    return typeof h == "string" ? h = d(S(h, f), f) : typeof h == "object" && (h = S(d(h, f), f)), h;
   }
-  function a(h, d, c) {
-    const f = Object.assign({ scheme: "null" }, c), m = l(E(h, f), E(d, f), f, !0);
-    return p(m, { ...f, skipEscape: !0 });
+  function a(h, f, l) {
+    const p = Object.assign({ scheme: "null" }, l), m = c(S(h, p), S(f, p), p, !0);
+    return d(m, { ...p, skipEscape: !0 });
   }
-  function l(h, d, c, f) {
+  function c(h, f, l, p) {
     const m = {};
-    return f || (h = E(p(h, c), c), d = E(p(d, c), c)), c = c || {}, !c.tolerant && d.scheme ? (m.scheme = d.scheme, m.userinfo = d.userinfo, m.host = d.host, m.port = d.port, m.path = t(d.path || ""), m.query = d.query) : (d.userinfo !== void 0 || d.host !== void 0 || d.port !== void 0 ? (m.userinfo = d.userinfo, m.host = d.host, m.port = d.port, m.path = t(d.path || ""), m.query = d.query) : (d.path ? (d.path.charAt(0) === "/" ? m.path = t(d.path) : ((h.userinfo !== void 0 || h.host !== void 0 || h.port !== void 0) && !h.path ? m.path = "/" + d.path : h.path ? m.path = h.path.slice(0, h.path.lastIndexOf("/") + 1) + d.path : m.path = d.path, m.path = t(m.path)), m.query = d.query) : (m.path = h.path, d.query !== void 0 ? m.query = d.query : m.query = h.query), m.userinfo = h.userinfo, m.host = h.host, m.port = h.port), m.scheme = h.scheme), m.fragment = d.fragment, m;
+    return p || (h = S(d(h, l), l), f = S(d(f, l), l)), l = l || {}, !l.tolerant && f.scheme ? (m.scheme = f.scheme, m.userinfo = f.userinfo, m.host = f.host, m.port = f.port, m.path = t(f.path || ""), m.query = f.query) : (f.userinfo !== void 0 || f.host !== void 0 || f.port !== void 0 ? (m.userinfo = f.userinfo, m.host = f.host, m.port = f.port, m.path = t(f.path || ""), m.query = f.query) : (f.path ? (f.path.charAt(0) === "/" ? m.path = t(f.path) : ((h.userinfo !== void 0 || h.host !== void 0 || h.port !== void 0) && !h.path ? m.path = "/" + f.path : h.path ? m.path = h.path.slice(0, h.path.lastIndexOf("/") + 1) + f.path : m.path = f.path, m.path = t(m.path)), m.query = f.query) : (m.path = h.path, f.query !== void 0 ? m.query = f.query : m.query = h.query), m.userinfo = h.userinfo, m.host = h.host, m.port = h.port), m.scheme = h.scheme), m.fragment = f.fragment, m;
   }
-  function u(h, d, c) {
-    return typeof h == "string" ? (h = unescape(h), h = p(n(E(h, c), !0), { ...c, skipEscape: !0 })) : typeof h == "object" && (h = p(n(h, !0), { ...c, skipEscape: !0 })), typeof d == "string" ? (d = unescape(d), d = p(n(E(d, c), !0), { ...c, skipEscape: !0 })) : typeof d == "object" && (d = p(n(d, !0), { ...c, skipEscape: !0 })), h.toLowerCase() === d.toLowerCase();
+  function u(h, f, l) {
+    return typeof h == "string" ? (h = unescape(h), h = d(n(S(h, l), !0), { ...l, skipEscape: !0 })) : typeof h == "object" && (h = d(n(h, !0), { ...l, skipEscape: !0 })), typeof f == "string" ? (f = unescape(f), f = d(n(S(f, l), !0), { ...l, skipEscape: !0 })) : typeof f == "object" && (f = d(n(f, !0), { ...l, skipEscape: !0 })), h.toLowerCase() === f.toLowerCase();
   }
-  function p(h, d) {
-    const c = {
+  function d(h, f) {
+    const l = {
       host: h.host,
       scheme: h.scheme,
       userinfo: h.userinfo,
@@ -2572,26 +2572,26 @@ function ui() {
       resourceName: h.resourceName,
       secure: h.secure,
       error: ""
-    }, f = Object.assign({}, d), m = [], v = i[(f.scheme || c.scheme || "").toLowerCase()];
-    v && v.serialize && v.serialize(c, f), c.path !== void 0 && (f.skipEscape ? c.path = unescape(c.path) : (c.path = escape(c.path), c.scheme !== void 0 && (c.path = c.path.split("%3A").join(":")))), f.reference !== "suffix" && c.scheme && m.push(c.scheme, ":");
-    const g = r(c);
-    if (g !== void 0 && (f.reference !== "suffix" && m.push("//"), m.push(g), c.path && c.path.charAt(0) !== "/" && m.push("/")), c.path !== void 0) {
-      let $ = c.path;
-      !f.absolutePath && (!v || !v.absolutePath) && ($ = t($)), g === void 0 && ($ = $.replace(/^\/\//u, "/%2F")), m.push($);
+    }, p = Object.assign({}, f), m = [], w = i[(p.scheme || l.scheme || "").toLowerCase()];
+    w && w.serialize && w.serialize(l, p), l.path !== void 0 && (p.skipEscape ? l.path = unescape(l.path) : (l.path = escape(l.path), l.scheme !== void 0 && (l.path = l.path.split("%3A").join(":")))), p.reference !== "suffix" && l.scheme && m.push(l.scheme, ":");
+    const b = r(l);
+    if (b !== void 0 && (p.reference !== "suffix" && m.push("//"), m.push(b), l.path && l.path.charAt(0) !== "/" && m.push("/")), l.path !== void 0) {
+      let P = l.path;
+      !p.absolutePath && (!w || !w.absolutePath) && (P = t(P)), b === void 0 && (P = P.replace(/^\/\//u, "/%2F")), m.push(P);
     }
-    return c.query !== void 0 && m.push("?", c.query), c.fragment !== void 0 && m.push("#", c.fragment), m.join("");
+    return l.query !== void 0 && m.push("?", l.query), l.fragment !== void 0 && m.push("#", l.fragment), m.join("");
   }
-  const w = Array.from({ length: 127 }, (h, d) => /[^!"$&'()*+,\-.;=_`a-z{}~]/u.test(String.fromCharCode(d)));
+  const v = Array.from({ length: 127 }, (h, f) => /[^!"$&'()*+,\-.;=_`a-z{}~]/u.test(String.fromCharCode(f)));
   function _(h) {
-    let d = 0;
-    for (let c = 0, f = h.length; c < f; ++c)
-      if (d = h.charCodeAt(c), d > 126 || w[d])
+    let f = 0;
+    for (let l = 0, p = h.length; l < p; ++l)
+      if (f = h.charCodeAt(l), f > 126 || v[f])
         return !0;
     return !1;
   }
-  const S = /^(?:([^#/:?]+):)?(?:\/\/((?:([^#/?@]*)@)?(\[[^#/?\]]+\]|[^#/:?]*)(?::(\d*))?))?([^#?]*)(?:\?([^#]*))?(?:#((?:.|[\n\r])*))?/u;
-  function E(h, d) {
-    const c = Object.assign({}, d), f = {
+  const $ = /^(?:([^#/:?]+):)?(?:\/\/((?:([^#/?@]*)@)?(\[[^#/?\]]+\]|[^#/:?]*)(?::(\d*))?))?([^#?]*)(?:\?([^#]*))?(?:#((?:.|[\n\r])*))?/u;
+  function S(h, f) {
+    const l = Object.assign({}, f), p = {
       scheme: void 0,
       userinfo: void 0,
       host: "",
@@ -2600,74 +2600,74 @@ function ui() {
       query: void 0,
       fragment: void 0
     }, m = h.indexOf("%") !== -1;
-    let v = !1;
-    c.reference === "suffix" && (h = (c.scheme ? c.scheme + ":" : "") + "//" + h);
-    const g = h.match(S);
-    if (g) {
-      if (f.scheme = g[1], f.userinfo = g[3], f.host = g[4], f.port = parseInt(g[5], 10), f.path = g[6] || "", f.query = g[7], f.fragment = g[8], isNaN(f.port) && (f.port = g[5]), f.host) {
-        const k = e(f.host);
+    let w = !1;
+    l.reference === "suffix" && (h = (l.scheme ? l.scheme + ":" : "") + "//" + h);
+    const b = h.match($);
+    if (b) {
+      if (p.scheme = b[1], p.userinfo = b[3], p.host = b[4], p.port = parseInt(b[5], 10), p.path = b[6] || "", p.query = b[7], p.fragment = b[8], isNaN(p.port) && (p.port = b[5]), p.host) {
+        const k = e(p.host);
         if (k.isIPV4 === !1) {
-          const j = o(k.host);
-          f.host = j.host.toLowerCase(), v = j.isIPV6;
+          const C = s(k.host);
+          p.host = C.host.toLowerCase(), w = C.isIPV6;
         } else
-          f.host = k.host, v = !0;
+          p.host = k.host, w = !0;
       }
-      f.scheme === void 0 && f.userinfo === void 0 && f.host === void 0 && f.port === void 0 && f.query === void 0 && !f.path ? f.reference = "same-document" : f.scheme === void 0 ? f.reference = "relative" : f.fragment === void 0 ? f.reference = "absolute" : f.reference = "uri", c.reference && c.reference !== "suffix" && c.reference !== f.reference && (f.error = f.error || "URI is not a " + c.reference + " reference.");
-      const $ = i[(c.scheme || f.scheme || "").toLowerCase()];
-      if (!c.unicodeSupport && (!$ || !$.unicodeSupport) && f.host && (c.domainHost || $ && $.domainHost) && v === !1 && _(f.host))
+      p.scheme === void 0 && p.userinfo === void 0 && p.host === void 0 && p.port === void 0 && p.query === void 0 && !p.path ? p.reference = "same-document" : p.scheme === void 0 ? p.reference = "relative" : p.fragment === void 0 ? p.reference = "absolute" : p.reference = "uri", l.reference && l.reference !== "suffix" && l.reference !== p.reference && (p.error = p.error || "URI is not a " + l.reference + " reference.");
+      const P = i[(l.scheme || p.scheme || "").toLowerCase()];
+      if (!l.unicodeSupport && (!P || !P.unicodeSupport) && p.host && (l.domainHost || P && P.domainHost) && w === !1 && _(p.host))
         try {
-          f.host = URL.domainToASCII(f.host.toLowerCase());
+          p.host = URL.domainToASCII(p.host.toLowerCase());
         } catch (k) {
-          f.error = f.error || "Host's domain name can not be converted to ASCII: " + k;
+          p.error = p.error || "Host's domain name can not be converted to ASCII: " + k;
         }
-      (!$ || $ && !$.skipNormalize) && (m && f.scheme !== void 0 && (f.scheme = unescape(f.scheme)), m && f.host !== void 0 && (f.host = unescape(f.host)), f.path && (f.path = escape(unescape(f.path))), f.fragment && (f.fragment = encodeURI(decodeURIComponent(f.fragment)))), $ && $.parse && $.parse(f, c);
+      (!P || P && !P.skipNormalize) && (m && p.scheme !== void 0 && (p.scheme = unescape(p.scheme)), m && p.host !== void 0 && (p.host = unescape(p.host)), p.path && (p.path = escape(unescape(p.path))), p.fragment && (p.fragment = encodeURI(decodeURIComponent(p.fragment)))), P && P.parse && P.parse(p, l);
     } else
-      f.error = f.error || "URI can not be parsed.";
-    return f;
+      p.error = p.error || "URI can not be parsed.";
+    return p;
   }
-  const b = {
+  const g = {
     SCHEMES: i,
-    normalize: s,
+    normalize: o,
     resolve: a,
-    resolveComponents: l,
+    resolveComponents: c,
     equal: u,
-    serialize: p,
-    parse: E
+    serialize: d,
+    parse: S
   };
-  return Ie.exports = b, Ie.exports.default = b, Ie.exports.fastUri = b, Ie.exports;
+  return ze.exports = g, ze.exports.default = g, ze.exports.fastUri = g, ze.exports;
 }
-var Rr;
-function di() {
-  if (Rr) return Be;
-  Rr = 1, Object.defineProperty(Be, "__esModule", { value: !0 });
-  const o = ui();
-  return o.code = 'require("ajv/dist/runtime/uri").default', Be.default = o, Be;
+var Vr;
+function Mi() {
+  if (Vr) return Qe;
+  Vr = 1, Object.defineProperty(Qe, "__esModule", { value: !0 });
+  const s = Pi();
+  return s.code = 'require("ajv/dist/runtime/uri").default', Qe.default = s, Qe;
 }
-var Ar;
-function fi() {
-  return Ar || (Ar = 1, (function(o) {
-    Object.defineProperty(o, "__esModule", { value: !0 }), o.CodeGen = o.Name = o.nil = o.stringify = o.str = o._ = o.KeywordCxt = void 0;
-    var e = At();
-    Object.defineProperty(o, "KeywordCxt", { enumerable: !0, get: function() {
+var Fr;
+function Ei() {
+  return Fr || (Fr = 1, (function(s) {
+    Object.defineProperty(s, "__esModule", { value: !0 }), s.CodeGen = s.Name = s.nil = s.stringify = s.str = s._ = s.KeywordCxt = void 0;
+    var e = Dt();
+    Object.defineProperty(s, "KeywordCxt", { enumerable: !0, get: function() {
       return e.KeywordCxt;
     } });
     var t = Y();
-    Object.defineProperty(o, "_", { enumerable: !0, get: function() {
+    Object.defineProperty(s, "_", { enumerable: !0, get: function() {
       return t._;
-    } }), Object.defineProperty(o, "str", { enumerable: !0, get: function() {
+    } }), Object.defineProperty(s, "str", { enumerable: !0, get: function() {
       return t.str;
-    } }), Object.defineProperty(o, "stringify", { enumerable: !0, get: function() {
+    } }), Object.defineProperty(s, "stringify", { enumerable: !0, get: function() {
       return t.stringify;
-    } }), Object.defineProperty(o, "nil", { enumerable: !0, get: function() {
+    } }), Object.defineProperty(s, "nil", { enumerable: !0, get: function() {
       return t.nil;
-    } }), Object.defineProperty(o, "Name", { enumerable: !0, get: function() {
+    } }), Object.defineProperty(s, "Name", { enumerable: !0, get: function() {
       return t.Name;
-    } }), Object.defineProperty(o, "CodeGen", { enumerable: !0, get: function() {
+    } }), Object.defineProperty(s, "CodeGen", { enumerable: !0, get: function() {
       return t.CodeGen;
     } });
-    const r = Wt(), n = jt(), i = wn(), s = Yt(), a = Y(), l = Rt(), u = Tt(), p = Z(), w = si, _ = di(), S = (q, N) => new RegExp(q, N);
-    S.code = "new RegExp";
-    const E = ["removeAdditional", "useDefaults", "coerceTypes"], b = /* @__PURE__ */ new Set([
+    const r = rr(), n = zt(), i = Rn(), o = nr(), a = Y(), c = xt(), u = jt(), d = Z(), v = wi, _ = Mi(), $ = (O, N) => new RegExp(O, N);
+    $.code = "new RegExp";
+    const S = ["removeAdditional", "useDefaults", "coerceTypes"], g = /* @__PURE__ */ new Set([
       "validate",
       "serialize",
       "parse",
@@ -2697,162 +2697,162 @@ function fi() {
       cache: "Map is used as cache, schema object as key.",
       serialize: "Map is used as cache, schema object as key.",
       ajvErrors: "It is default now."
-    }, d = {
+    }, f = {
       ignoreKeywordsWithRef: "",
       jsPropertySyntax: "",
       unicode: '"minLength"/"maxLength" account for unicode characters by default.'
-    }, c = 200;
-    function f(q) {
-      var N, I, R, y, M, A, F, G, Q, W, P, T, C, O, x, U, X, te, oe, le, se, ae, ue, re, K;
-      const ie = q.strict, fe = (N = q.code) === null || N === void 0 ? void 0 : N.optimize, ve = fe === !0 || fe === void 0 ? 1 : fe || 0, je = (R = (I = q.code) === null || I === void 0 ? void 0 : I.regExp) !== null && R !== void 0 ? R : S, xe = (y = q.uriResolver) !== null && y !== void 0 ? y : _.default;
+    }, l = 200;
+    function p(O) {
+      var N, j, A, y, E, R, F, G, Q, W, M, T, I, q, D, U, X, te, se, le, oe, ae, ue, re, K;
+      const ie = O.strict, he = (N = O.code) === null || N === void 0 ? void 0 : N.optimize, ve = he === !0 || he === void 0 ? 1 : he || 0, xe = (A = (j = O.code) === null || j === void 0 ? void 0 : j.regExp) !== null && A !== void 0 ? A : $, Ge = (y = O.uriResolver) !== null && y !== void 0 ? y : _.default;
       return {
-        strictSchema: (A = (M = q.strictSchema) !== null && M !== void 0 ? M : ie) !== null && A !== void 0 ? A : !0,
-        strictNumbers: (G = (F = q.strictNumbers) !== null && F !== void 0 ? F : ie) !== null && G !== void 0 ? G : !0,
-        strictTypes: (W = (Q = q.strictTypes) !== null && Q !== void 0 ? Q : ie) !== null && W !== void 0 ? W : "log",
-        strictTuples: (T = (P = q.strictTuples) !== null && P !== void 0 ? P : ie) !== null && T !== void 0 ? T : "log",
-        strictRequired: (O = (C = q.strictRequired) !== null && C !== void 0 ? C : ie) !== null && O !== void 0 ? O : !1,
-        code: q.code ? { ...q.code, optimize: ve, regExp: je } : { optimize: ve, regExp: je },
-        loopRequired: (x = q.loopRequired) !== null && x !== void 0 ? x : c,
-        loopEnum: (U = q.loopEnum) !== null && U !== void 0 ? U : c,
-        meta: (X = q.meta) !== null && X !== void 0 ? X : !0,
-        messages: (te = q.messages) !== null && te !== void 0 ? te : !0,
-        inlineRefs: (oe = q.inlineRefs) !== null && oe !== void 0 ? oe : !0,
-        schemaId: (le = q.schemaId) !== null && le !== void 0 ? le : "$id",
-        addUsedSchema: (se = q.addUsedSchema) !== null && se !== void 0 ? se : !0,
-        validateSchema: (ae = q.validateSchema) !== null && ae !== void 0 ? ae : !0,
-        validateFormats: (ue = q.validateFormats) !== null && ue !== void 0 ? ue : !0,
-        unicodeRegExp: (re = q.unicodeRegExp) !== null && re !== void 0 ? re : !0,
-        int32range: (K = q.int32range) !== null && K !== void 0 ? K : !0,
-        uriResolver: xe
+        strictSchema: (R = (E = O.strictSchema) !== null && E !== void 0 ? E : ie) !== null && R !== void 0 ? R : !0,
+        strictNumbers: (G = (F = O.strictNumbers) !== null && F !== void 0 ? F : ie) !== null && G !== void 0 ? G : !0,
+        strictTypes: (W = (Q = O.strictTypes) !== null && Q !== void 0 ? Q : ie) !== null && W !== void 0 ? W : "log",
+        strictTuples: (T = (M = O.strictTuples) !== null && M !== void 0 ? M : ie) !== null && T !== void 0 ? T : "log",
+        strictRequired: (q = (I = O.strictRequired) !== null && I !== void 0 ? I : ie) !== null && q !== void 0 ? q : !1,
+        code: O.code ? { ...O.code, optimize: ve, regExp: xe } : { optimize: ve, regExp: xe },
+        loopRequired: (D = O.loopRequired) !== null && D !== void 0 ? D : l,
+        loopEnum: (U = O.loopEnum) !== null && U !== void 0 ? U : l,
+        meta: (X = O.meta) !== null && X !== void 0 ? X : !0,
+        messages: (te = O.messages) !== null && te !== void 0 ? te : !0,
+        inlineRefs: (se = O.inlineRefs) !== null && se !== void 0 ? se : !0,
+        schemaId: (le = O.schemaId) !== null && le !== void 0 ? le : "$id",
+        addUsedSchema: (oe = O.addUsedSchema) !== null && oe !== void 0 ? oe : !0,
+        validateSchema: (ae = O.validateSchema) !== null && ae !== void 0 ? ae : !0,
+        validateFormats: (ue = O.validateFormats) !== null && ue !== void 0 ? ue : !0,
+        unicodeRegExp: (re = O.unicodeRegExp) !== null && re !== void 0 ? re : !0,
+        int32range: (K = O.int32range) !== null && K !== void 0 ? K : !0,
+        uriResolver: Ge
       };
     }
     class m {
       constructor(N = {}) {
-        this.schemas = {}, this.refs = {}, this.formats = {}, this._compilations = /* @__PURE__ */ new Set(), this._loading = {}, this._cache = /* @__PURE__ */ new Map(), N = this.opts = { ...N, ...f(N) };
-        const { es5: I, lines: R } = this.opts.code;
-        this.scope = new a.ValueScope({ scope: {}, prefixes: b, es5: I, lines: R }), this.logger = B(N.logger);
+        this.schemas = {}, this.refs = {}, this.formats = {}, this._compilations = /* @__PURE__ */ new Set(), this._loading = {}, this._cache = /* @__PURE__ */ new Map(), N = this.opts = { ...N, ...p(N) };
+        const { es5: j, lines: A } = this.opts.code;
+        this.scope = new a.ValueScope({ scope: {}, prefixes: g, es5: j, lines: A }), this.logger = B(N.logger);
         const y = N.validateFormats;
-        N.validateFormats = !1, this.RULES = (0, i.getRules)(), v.call(this, h, N, "NOT SUPPORTED"), v.call(this, d, N, "DEPRECATED", "warn"), this._metaOpts = D.call(this), N.formats && k.call(this), this._addVocabularies(), this._addDefaultMetaSchema(), N.keywords && j.call(this, N.keywords), typeof N.meta == "object" && this.addMetaSchema(N.meta), $.call(this), N.validateFormats = y;
+        N.validateFormats = !1, this.RULES = (0, i.getRules)(), w.call(this, h, N, "NOT SUPPORTED"), w.call(this, f, N, "DEPRECATED", "warn"), this._metaOpts = x.call(this), N.formats && k.call(this), this._addVocabularies(), this._addDefaultMetaSchema(), N.keywords && C.call(this, N.keywords), typeof N.meta == "object" && this.addMetaSchema(N.meta), P.call(this), N.validateFormats = y;
       }
       _addVocabularies() {
         this.addKeyword("$async");
       }
       _addDefaultMetaSchema() {
-        const { $data: N, meta: I, schemaId: R } = this.opts;
-        let y = w;
-        R === "id" && (y = { ...w }, y.id = y.$id, delete y.$id), I && N && this.addMetaSchema(y, y[R], !1);
+        const { $data: N, meta: j, schemaId: A } = this.opts;
+        let y = v;
+        A === "id" && (y = { ...v }, y.id = y.$id, delete y.$id), j && N && this.addMetaSchema(y, y[A], !1);
       }
       defaultMeta() {
-        const { meta: N, schemaId: I } = this.opts;
-        return this.opts.defaultMeta = typeof N == "object" ? N[I] || N : void 0;
+        const { meta: N, schemaId: j } = this.opts;
+        return this.opts.defaultMeta = typeof N == "object" ? N[j] || N : void 0;
       }
-      validate(N, I) {
-        let R;
+      validate(N, j) {
+        let A;
         if (typeof N == "string") {
-          if (R = this.getSchema(N), !R)
+          if (A = this.getSchema(N), !A)
             throw new Error(`no schema with key or ref "${N}"`);
         } else
-          R = this.compile(N);
-        const y = R(I);
-        return "$async" in R || (this.errors = R.errors), y;
+          A = this.compile(N);
+        const y = A(j);
+        return "$async" in A || (this.errors = A.errors), y;
       }
-      compile(N, I) {
-        const R = this._addSchema(N, I);
-        return R.validate || this._compileSchemaEnv(R);
+      compile(N, j) {
+        const A = this._addSchema(N, j);
+        return A.validate || this._compileSchemaEnv(A);
       }
-      compileAsync(N, I) {
+      compileAsync(N, j) {
         if (typeof this.opts.loadSchema != "function")
           throw new Error("options.loadSchema should be a function");
-        const { loadSchema: R } = this.opts;
-        return y.call(this, N, I);
-        async function y(W, P) {
-          await M.call(this, W.$schema);
-          const T = this._addSchema(W, P);
-          return T.validate || A.call(this, T);
+        const { loadSchema: A } = this.opts;
+        return y.call(this, N, j);
+        async function y(W, M) {
+          await E.call(this, W.$schema);
+          const T = this._addSchema(W, M);
+          return T.validate || R.call(this, T);
         }
-        async function M(W) {
+        async function E(W) {
           W && !this.getSchema(W) && await y.call(this, { $ref: W }, !0);
         }
-        async function A(W) {
+        async function R(W) {
           try {
             return this._compileSchemaEnv(W);
-          } catch (P) {
-            if (!(P instanceof n.default))
-              throw P;
-            return F.call(this, P), await G.call(this, P.missingSchema), A.call(this, W);
+          } catch (M) {
+            if (!(M instanceof n.default))
+              throw M;
+            return F.call(this, M), await G.call(this, M.missingSchema), R.call(this, W);
           }
         }
-        function F({ missingSchema: W, missingRef: P }) {
+        function F({ missingSchema: W, missingRef: M }) {
           if (this.refs[W])
-            throw new Error(`AnySchema ${W} is loaded but ${P} cannot be resolved`);
+            throw new Error(`AnySchema ${W} is loaded but ${M} cannot be resolved`);
         }
         async function G(W) {
-          const P = await Q.call(this, W);
-          this.refs[W] || await M.call(this, P.$schema), this.refs[W] || this.addSchema(P, W, I);
+          const M = await Q.call(this, W);
+          this.refs[W] || await E.call(this, M.$schema), this.refs[W] || this.addSchema(M, W, j);
         }
         async function Q(W) {
-          const P = this._loading[W];
-          if (P)
-            return P;
+          const M = this._loading[W];
+          if (M)
+            return M;
           try {
-            return await (this._loading[W] = R(W));
+            return await (this._loading[W] = A(W));
           } finally {
             delete this._loading[W];
           }
         }
       }
       // Adds schema to the instance
-      addSchema(N, I, R, y = this.opts.validateSchema) {
+      addSchema(N, j, A, y = this.opts.validateSchema) {
         if (Array.isArray(N)) {
-          for (const A of N)
-            this.addSchema(A, void 0, R, y);
+          for (const R of N)
+            this.addSchema(R, void 0, A, y);
           return this;
         }
-        let M;
+        let E;
         if (typeof N == "object") {
-          const { schemaId: A } = this.opts;
-          if (M = N[A], M !== void 0 && typeof M != "string")
-            throw new Error(`schema ${A} must be string`);
+          const { schemaId: R } = this.opts;
+          if (E = N[R], E !== void 0 && typeof E != "string")
+            throw new Error(`schema ${R} must be string`);
         }
-        return I = (0, l.normalizeId)(I || M), this._checkUnique(I), this.schemas[I] = this._addSchema(N, R, I, y, !0), this;
+        return j = (0, c.normalizeId)(j || E), this._checkUnique(j), this.schemas[j] = this._addSchema(N, A, j, y, !0), this;
       }
       // Add schema that will be used to validate other schemas
       // options in META_IGNORE_OPTIONS are alway set to false
-      addMetaSchema(N, I, R = this.opts.validateSchema) {
-        return this.addSchema(N, I, !0, R), this;
+      addMetaSchema(N, j, A = this.opts.validateSchema) {
+        return this.addSchema(N, j, !0, A), this;
       }
       //  Validate schema against its meta-schema
-      validateSchema(N, I) {
+      validateSchema(N, j) {
         if (typeof N == "boolean")
           return !0;
-        let R;
-        if (R = N.$schema, R !== void 0 && typeof R != "string")
+        let A;
+        if (A = N.$schema, A !== void 0 && typeof A != "string")
           throw new Error("$schema must be a string");
-        if (R = R || this.opts.defaultMeta || this.defaultMeta(), !R)
+        if (A = A || this.opts.defaultMeta || this.defaultMeta(), !A)
           return this.logger.warn("meta-schema not available"), this.errors = null, !0;
-        const y = this.validate(R, N);
-        if (!y && I) {
-          const M = "schema is invalid: " + this.errorsText();
+        const y = this.validate(A, N);
+        if (!y && j) {
+          const E = "schema is invalid: " + this.errorsText();
           if (this.opts.validateSchema === "log")
-            this.logger.error(M);
+            this.logger.error(E);
           else
-            throw new Error(M);
+            throw new Error(E);
         }
         return y;
       }
       // Get compiled schema by `key` or `ref`.
       // (`key` that was passed to `addSchema` or full schema reference - `schema.$id` or resolved id)
       getSchema(N) {
-        let I;
-        for (; typeof (I = g.call(this, N)) == "string"; )
-          N = I;
-        if (I === void 0) {
-          const { schemaId: R } = this.opts, y = new s.SchemaEnv({ schema: {}, schemaId: R });
-          if (I = s.resolveSchema.call(this, y, N), !I)
+        let j;
+        for (; typeof (j = b.call(this, N)) == "string"; )
+          N = j;
+        if (j === void 0) {
+          const { schemaId: A } = this.opts, y = new o.SchemaEnv({ schema: {}, schemaId: A });
+          if (j = o.resolveSchema.call(this, y, N), !j)
             return;
-          this.refs[N] = I;
+          this.refs[N] = j;
         }
-        return I.validate || this._compileSchemaEnv(I);
+        return j.validate || this._compileSchemaEnv(j);
       }
       // Remove cached schema(s).
       // If no parameter is passed all schemas but meta-schemas are removed.
@@ -2865,14 +2865,14 @@ function fi() {
           case "undefined":
             return this._removeAllSchemas(this.schemas), this._removeAllSchemas(this.refs), this._cache.clear(), this;
           case "string": {
-            const I = g.call(this, N);
-            return typeof I == "object" && this._cache.delete(I.schema), delete this.schemas[N], delete this.refs[N], this;
+            const j = b.call(this, N);
+            return typeof j == "object" && this._cache.delete(j.schema), delete this.schemas[N], delete this.refs[N], this;
           }
           case "object": {
-            const I = N;
-            this._cache.delete(I);
-            let R = N[this.opts.schemaId];
-            return R && (R = (0, l.normalizeId)(R), delete this.schemas[R], delete this.refs[R]), this;
+            const j = N;
+            this._cache.delete(j);
+            let A = N[this.opts.schemaId];
+            return A && (A = (0, c.normalizeId)(A), delete this.schemas[A], delete this.refs[A]), this;
           }
           default:
             throw new Error("ajv.removeSchema: invalid parameter");
@@ -2880,79 +2880,79 @@ function fi() {
       }
       // add "vocabulary" - a collection of keywords
       addVocabulary(N) {
-        for (const I of N)
-          this.addKeyword(I);
+        for (const j of N)
+          this.addKeyword(j);
         return this;
       }
-      addKeyword(N, I) {
-        let R;
+      addKeyword(N, j) {
+        let A;
         if (typeof N == "string")
-          R = N, typeof I == "object" && (this.logger.warn("these parameters are deprecated, see docs for addKeyword"), I.keyword = R);
-        else if (typeof N == "object" && I === void 0) {
-          if (I = N, R = I.keyword, Array.isArray(R) && !R.length)
+          A = N, typeof j == "object" && (this.logger.warn("these parameters are deprecated, see docs for addKeyword"), j.keyword = A);
+        else if (typeof N == "object" && j === void 0) {
+          if (j = N, A = j.keyword, Array.isArray(A) && !A.length)
             throw new Error("addKeywords: keyword must be string or non-empty array");
         } else
           throw new Error("invalid addKeywords parameters");
-        if (H.call(this, R, I), !I)
-          return (0, p.eachItem)(R, (M) => ce.call(this, M)), this;
-        ye.call(this, I);
+        if (H.call(this, A, j), !j)
+          return (0, d.eachItem)(A, (E) => ce.call(this, E)), this;
+        ye.call(this, j);
         const y = {
-          ...I,
-          type: (0, u.getJSONTypes)(I.type),
-          schemaType: (0, u.getJSONTypes)(I.schemaType)
+          ...j,
+          type: (0, u.getJSONTypes)(j.type),
+          schemaType: (0, u.getJSONTypes)(j.schemaType)
         };
-        return (0, p.eachItem)(R, y.type.length === 0 ? (M) => ce.call(this, M, y) : (M) => y.type.forEach((A) => ce.call(this, M, y, A))), this;
+        return (0, d.eachItem)(A, y.type.length === 0 ? (E) => ce.call(this, E, y) : (E) => y.type.forEach((R) => ce.call(this, E, y, R))), this;
       }
       getKeyword(N) {
-        const I = this.RULES.all[N];
-        return typeof I == "object" ? I.definition : !!I;
+        const j = this.RULES.all[N];
+        return typeof j == "object" ? j.definition : !!j;
       }
       // Remove keyword
       removeKeyword(N) {
-        const { RULES: I } = this;
-        delete I.keywords[N], delete I.all[N];
-        for (const R of I.rules) {
-          const y = R.rules.findIndex((M) => M.keyword === N);
-          y >= 0 && R.rules.splice(y, 1);
+        const { RULES: j } = this;
+        delete j.keywords[N], delete j.all[N];
+        for (const A of j.rules) {
+          const y = A.rules.findIndex((E) => E.keyword === N);
+          y >= 0 && A.rules.splice(y, 1);
         }
         return this;
       }
       // Add format
-      addFormat(N, I) {
-        return typeof I == "string" && (I = new RegExp(I)), this.formats[N] = I, this;
+      addFormat(N, j) {
+        return typeof j == "string" && (j = new RegExp(j)), this.formats[N] = j, this;
       }
-      errorsText(N = this.errors, { separator: I = ", ", dataVar: R = "data" } = {}) {
-        return !N || N.length === 0 ? "No errors" : N.map((y) => `${R}${y.instancePath} ${y.message}`).reduce((y, M) => y + I + M);
+      errorsText(N = this.errors, { separator: j = ", ", dataVar: A = "data" } = {}) {
+        return !N || N.length === 0 ? "No errors" : N.map((y) => `${A}${y.instancePath} ${y.message}`).reduce((y, E) => y + j + E);
       }
-      $dataMetaSchema(N, I) {
-        const R = this.RULES.all;
+      $dataMetaSchema(N, j) {
+        const A = this.RULES.all;
         N = JSON.parse(JSON.stringify(N));
-        for (const y of I) {
-          const M = y.split("/").slice(1);
-          let A = N;
-          for (const F of M)
-            A = A[F];
-          for (const F in R) {
-            const G = R[F];
+        for (const y of j) {
+          const E = y.split("/").slice(1);
+          let R = N;
+          for (const F of E)
+            R = R[F];
+          for (const F in A) {
+            const G = A[F];
             if (typeof G != "object")
               continue;
-            const { $data: Q } = G.definition, W = A[F];
-            Q && W && (A[F] = z(W));
+            const { $data: Q } = G.definition, W = R[F];
+            Q && W && (R[F] = V(W));
           }
         }
         return N;
       }
-      _removeAllSchemas(N, I) {
-        for (const R in N) {
-          const y = N[R];
-          (!I || I.test(R)) && (typeof y == "string" ? delete N[R] : y && !y.meta && (this._cache.delete(y.schema), delete N[R]));
+      _removeAllSchemas(N, j) {
+        for (const A in N) {
+          const y = N[A];
+          (!j || j.test(A)) && (typeof y == "string" ? delete N[A] : y && !y.meta && (this._cache.delete(y.schema), delete N[A]));
         }
       }
-      _addSchema(N, I, R, y = this.opts.validateSchema, M = this.opts.addUsedSchema) {
-        let A;
+      _addSchema(N, j, A, y = this.opts.validateSchema, E = this.opts.addUsedSchema) {
+        let R;
         const { schemaId: F } = this.opts;
         if (typeof N == "object")
-          A = N[F];
+          R = N[F];
         else {
           if (this.opts.jtd)
             throw new Error("schema must be object");
@@ -2962,257 +2962,257 @@ function fi() {
         let G = this._cache.get(N);
         if (G !== void 0)
           return G;
-        R = (0, l.normalizeId)(A || R);
-        const Q = l.getSchemaRefs.call(this, N, R);
-        return G = new s.SchemaEnv({ schema: N, schemaId: F, meta: I, baseId: R, localRefs: Q }), this._cache.set(G.schema, G), M && !R.startsWith("#") && (R && this._checkUnique(R), this.refs[R] = G), y && this.validateSchema(N, !0), G;
+        A = (0, c.normalizeId)(R || A);
+        const Q = c.getSchemaRefs.call(this, N, A);
+        return G = new o.SchemaEnv({ schema: N, schemaId: F, meta: j, baseId: A, localRefs: Q }), this._cache.set(G.schema, G), E && !A.startsWith("#") && (A && this._checkUnique(A), this.refs[A] = G), y && this.validateSchema(N, !0), G;
       }
       _checkUnique(N) {
         if (this.schemas[N] || this.refs[N])
           throw new Error(`schema with key or id "${N}" already exists`);
       }
       _compileSchemaEnv(N) {
-        if (N.meta ? this._compileMetaSchema(N) : s.compileSchema.call(this, N), !N.validate)
+        if (N.meta ? this._compileMetaSchema(N) : o.compileSchema.call(this, N), !N.validate)
           throw new Error("ajv implementation error");
         return N.validate;
       }
       _compileMetaSchema(N) {
-        const I = this.opts;
+        const j = this.opts;
         this.opts = this._metaOpts;
         try {
-          s.compileSchema.call(this, N);
+          o.compileSchema.call(this, N);
         } finally {
-          this.opts = I;
+          this.opts = j;
         }
       }
     }
-    m.ValidationError = r.default, m.MissingRefError = n.default, o.default = m;
-    function v(q, N, I, R = "error") {
-      for (const y in q) {
-        const M = y;
-        M in N && this.logger[R](`${I}: option ${y}. ${q[M]}`);
+    m.ValidationError = r.default, m.MissingRefError = n.default, s.default = m;
+    function w(O, N, j, A = "error") {
+      for (const y in O) {
+        const E = y;
+        E in N && this.logger[A](`${j}: option ${y}. ${O[E]}`);
       }
     }
-    function g(q) {
-      return q = (0, l.normalizeId)(q), this.schemas[q] || this.refs[q];
+    function b(O) {
+      return O = (0, c.normalizeId)(O), this.schemas[O] || this.refs[O];
     }
-    function $() {
-      const q = this.opts.schemas;
-      if (q)
-        if (Array.isArray(q))
-          this.addSchema(q);
+    function P() {
+      const O = this.opts.schemas;
+      if (O)
+        if (Array.isArray(O))
+          this.addSchema(O);
         else
-          for (const N in q)
-            this.addSchema(q[N], N);
+          for (const N in O)
+            this.addSchema(O[N], N);
     }
     function k() {
-      for (const q in this.opts.formats) {
-        const N = this.opts.formats[q];
-        N && this.addFormat(q, N);
+      for (const O in this.opts.formats) {
+        const N = this.opts.formats[O];
+        N && this.addFormat(O, N);
       }
     }
-    function j(q) {
-      if (Array.isArray(q)) {
-        this.addVocabulary(q);
+    function C(O) {
+      if (Array.isArray(O)) {
+        this.addVocabulary(O);
         return;
       }
       this.logger.warn("keywords option as map is deprecated, pass array");
-      for (const N in q) {
-        const I = q[N];
-        I.keyword || (I.keyword = N), this.addKeyword(I);
+      for (const N in O) {
+        const j = O[N];
+        j.keyword || (j.keyword = N), this.addKeyword(j);
       }
     }
-    function D() {
-      const q = { ...this.opts };
-      for (const N of E)
-        delete q[N];
-      return q;
+    function x() {
+      const O = { ...this.opts };
+      for (const N of S)
+        delete O[N];
+      return O;
     }
-    const V = { log() {
+    const z = { log() {
     }, warn() {
     }, error() {
     } };
-    function B(q) {
-      if (q === !1)
-        return V;
-      if (q === void 0)
+    function B(O) {
+      if (O === !1)
+        return z;
+      if (O === void 0)
         return console;
-      if (q.log && q.warn && q.error)
-        return q;
+      if (O.log && O.warn && O.error)
+        return O;
       throw new Error("logger must implement log, warn and error methods");
     }
     const L = /^[a-z_$][a-z0-9_$:-]*$/i;
-    function H(q, N) {
-      const { RULES: I } = this;
-      if ((0, p.eachItem)(q, (R) => {
-        if (I.keywords[R])
-          throw new Error(`Keyword ${R} is already defined`);
-        if (!L.test(R))
-          throw new Error(`Keyword ${R} has invalid name`);
+    function H(O, N) {
+      const { RULES: j } = this;
+      if ((0, d.eachItem)(O, (A) => {
+        if (j.keywords[A])
+          throw new Error(`Keyword ${A} is already defined`);
+        if (!L.test(A))
+          throw new Error(`Keyword ${A} has invalid name`);
       }), !!N && N.$data && !("code" in N || "validate" in N))
         throw new Error('$data keyword must have "code" or "validate" function');
     }
-    function ce(q, N, I) {
-      var R;
+    function ce(O, N, j) {
+      var A;
       const y = N?.post;
-      if (I && y)
+      if (j && y)
         throw new Error('keyword with "post" flag cannot have "type"');
-      const { RULES: M } = this;
-      let A = y ? M.post : M.rules.find(({ type: G }) => G === I);
-      if (A || (A = { type: I, rules: [] }, M.rules.push(A)), M.keywords[q] = !0, !N)
+      const { RULES: E } = this;
+      let R = y ? E.post : E.rules.find(({ type: G }) => G === j);
+      if (R || (R = { type: j, rules: [] }, E.rules.push(R)), E.keywords[O] = !0, !N)
         return;
       const F = {
-        keyword: q,
+        keyword: O,
         definition: {
           ...N,
           type: (0, u.getJSONTypes)(N.type),
           schemaType: (0, u.getJSONTypes)(N.schemaType)
         }
       };
-      N.before ? me.call(this, A, F, N.before) : A.rules.push(F), M.all[q] = F, (R = N.implements) === null || R === void 0 || R.forEach((G) => this.addKeyword(G));
+      N.before ? me.call(this, R, F, N.before) : R.rules.push(F), E.all[O] = F, (A = N.implements) === null || A === void 0 || A.forEach((G) => this.addKeyword(G));
     }
-    function me(q, N, I) {
-      const R = q.rules.findIndex((y) => y.keyword === I);
-      R >= 0 ? q.rules.splice(R, 0, N) : (q.rules.push(N), this.logger.warn(`rule ${I} is not defined`));
+    function me(O, N, j) {
+      const A = O.rules.findIndex((y) => y.keyword === j);
+      A >= 0 ? O.rules.splice(A, 0, N) : (O.rules.push(N), this.logger.warn(`rule ${j} is not defined`));
     }
-    function ye(q) {
-      let { metaSchema: N } = q;
-      N !== void 0 && (q.$data && this.opts.$data && (N = z(N)), q.validateSchema = this.compile(N, !0));
+    function ye(O) {
+      let { metaSchema: N } = O;
+      N !== void 0 && (O.$data && this.opts.$data && (N = V(N)), O.validateSchema = this.compile(N, !0));
     }
     const ee = {
       $ref: "https://raw.githubusercontent.com/ajv-validator/ajv/master/lib/refs/data.json#"
     };
-    function z(q) {
-      return { anyOf: [q, ee] };
+    function V(O) {
+      return { anyOf: [O, ee] };
     }
-  })(It)), It;
+  })(Ft)), Ft;
 }
-var Ke = {}, He = {}, Je = {}, jr;
-function hi() {
-  if (jr) return Je;
-  jr = 1, Object.defineProperty(Je, "__esModule", { value: !0 });
-  const o = {
+var Xe = {}, Ze = {}, et = {}, Lr;
+function Ti() {
+  if (Lr) return et;
+  Lr = 1, Object.defineProperty(et, "__esModule", { value: !0 });
+  const s = {
     keyword: "id",
     code() {
       throw new Error('NOT SUPPORTED: keyword "id", use "$id" for schema ID');
     }
   };
-  return Je.default = o, Je;
+  return et.default = s, et;
 }
-var Se = {}, Cr;
-function pi() {
-  if (Cr) return Se;
-  Cr = 1, Object.defineProperty(Se, "__esModule", { value: !0 }), Se.callRef = Se.getValidate = void 0;
-  const o = jt(), e = we(), t = Y(), r = Me(), n = Yt(), i = Z(), s = {
+var Te = {}, Ur;
+function ki() {
+  if (Ur) return Te;
+  Ur = 1, Object.defineProperty(Te, "__esModule", { value: !0 }), Te.callRef = Te.getValidate = void 0;
+  const s = zt(), e = we(), t = Y(), r = ke(), n = nr(), i = Z(), o = {
     keyword: "$ref",
     schemaType: "string",
     code(u) {
-      const { gen: p, schema: w, it: _ } = u, { baseId: S, schemaEnv: E, validateName: b, opts: h, self: d } = _, { root: c } = E;
-      if ((w === "#" || w === "#/") && S === c.baseId)
+      const { gen: d, schema: v, it: _ } = u, { baseId: $, schemaEnv: S, validateName: g, opts: h, self: f } = _, { root: l } = S;
+      if ((v === "#" || v === "#/") && $ === l.baseId)
         return m();
-      const f = n.resolveRef.call(d, c, S, w);
-      if (f === void 0)
-        throw new o.default(_.opts.uriResolver, S, w);
-      if (f instanceof n.SchemaEnv)
-        return v(f);
-      return g(f);
+      const p = n.resolveRef.call(f, l, $, v);
+      if (p === void 0)
+        throw new s.default(_.opts.uriResolver, $, v);
+      if (p instanceof n.SchemaEnv)
+        return w(p);
+      return b(p);
       function m() {
-        if (E === c)
-          return l(u, b, E, E.$async);
-        const $ = p.scopeValue("root", { ref: c });
-        return l(u, (0, t._)`${$}.validate`, c, c.$async);
+        if (S === l)
+          return c(u, g, S, S.$async);
+        const P = d.scopeValue("root", { ref: l });
+        return c(u, (0, t._)`${P}.validate`, l, l.$async);
       }
-      function v($) {
-        const k = a(u, $);
-        l(u, k, $, $.$async);
+      function w(P) {
+        const k = a(u, P);
+        c(u, k, P, P.$async);
       }
-      function g($) {
-        const k = p.scopeValue("schema", h.code.source === !0 ? { ref: $, code: (0, t.stringify)($) } : { ref: $ }), j = p.name("valid"), D = u.subschema({
-          schema: $,
+      function b(P) {
+        const k = d.scopeValue("schema", h.code.source === !0 ? { ref: P, code: (0, t.stringify)(P) } : { ref: P }), C = d.name("valid"), x = u.subschema({
+          schema: P,
           dataTypes: [],
           schemaPath: t.nil,
           topSchemaRef: k,
-          errSchemaPath: w
-        }, j);
-        u.mergeEvaluated(D), u.ok(j);
+          errSchemaPath: v
+        }, C);
+        u.mergeEvaluated(x), u.ok(C);
       }
     }
   };
-  function a(u, p) {
-    const { gen: w } = u;
-    return p.validate ? w.scopeValue("validate", { ref: p.validate }) : (0, t._)`${w.scopeValue("wrapper", { ref: p })}.validate`;
+  function a(u, d) {
+    const { gen: v } = u;
+    return d.validate ? v.scopeValue("validate", { ref: d.validate }) : (0, t._)`${v.scopeValue("wrapper", { ref: d })}.validate`;
   }
-  Se.getValidate = a;
-  function l(u, p, w, _) {
-    const { gen: S, it: E } = u, { allErrors: b, schemaEnv: h, opts: d } = E, c = d.passContext ? r.default.this : t.nil;
-    _ ? f() : m();
-    function f() {
+  Te.getValidate = a;
+  function c(u, d, v, _) {
+    const { gen: $, it: S } = u, { allErrors: g, schemaEnv: h, opts: f } = S, l = f.passContext ? r.default.this : t.nil;
+    _ ? p() : m();
+    function p() {
       if (!h.$async)
         throw new Error("async schema referenced by sync schema");
-      const $ = S.let("valid");
-      S.try(() => {
-        S.code((0, t._)`await ${(0, e.callValidateCode)(u, p, c)}`), g(p), b || S.assign($, !0);
+      const P = $.let("valid");
+      $.try(() => {
+        $.code((0, t._)`await ${(0, e.callValidateCode)(u, d, l)}`), b(d), g || $.assign(P, !0);
       }, (k) => {
-        S.if((0, t._)`!(${k} instanceof ${E.ValidationError})`, () => S.throw(k)), v(k), b || S.assign($, !1);
-      }), u.ok($);
+        $.if((0, t._)`!(${k} instanceof ${S.ValidationError})`, () => $.throw(k)), w(k), g || $.assign(P, !1);
+      }), u.ok(P);
     }
     function m() {
-      u.result((0, e.callValidateCode)(u, p, c), () => g(p), () => v(p));
+      u.result((0, e.callValidateCode)(u, d, l), () => b(d), () => w(d));
     }
-    function v($) {
-      const k = (0, t._)`${$}.errors`;
-      S.assign(r.default.vErrors, (0, t._)`${r.default.vErrors} === null ? ${k} : ${r.default.vErrors}.concat(${k})`), S.assign(r.default.errors, (0, t._)`${r.default.vErrors}.length`);
+    function w(P) {
+      const k = (0, t._)`${P}.errors`;
+      $.assign(r.default.vErrors, (0, t._)`${r.default.vErrors} === null ? ${k} : ${r.default.vErrors}.concat(${k})`), $.assign(r.default.errors, (0, t._)`${r.default.vErrors}.length`);
     }
-    function g($) {
+    function b(P) {
       var k;
-      if (!E.opts.unevaluated)
+      if (!S.opts.unevaluated)
         return;
-      const j = (k = w?.validate) === null || k === void 0 ? void 0 : k.evaluated;
-      if (E.props !== !0)
-        if (j && !j.dynamicProps)
-          j.props !== void 0 && (E.props = i.mergeEvaluated.props(S, j.props, E.props));
+      const C = (k = v?.validate) === null || k === void 0 ? void 0 : k.evaluated;
+      if (S.props !== !0)
+        if (C && !C.dynamicProps)
+          C.props !== void 0 && (S.props = i.mergeEvaluated.props($, C.props, S.props));
         else {
-          const D = S.var("props", (0, t._)`${$}.evaluated.props`);
-          E.props = i.mergeEvaluated.props(S, D, E.props, t.Name);
+          const x = $.var("props", (0, t._)`${P}.evaluated.props`);
+          S.props = i.mergeEvaluated.props($, x, S.props, t.Name);
         }
-      if (E.items !== !0)
-        if (j && !j.dynamicItems)
-          j.items !== void 0 && (E.items = i.mergeEvaluated.items(S, j.items, E.items));
+      if (S.items !== !0)
+        if (C && !C.dynamicItems)
+          C.items !== void 0 && (S.items = i.mergeEvaluated.items($, C.items, S.items));
         else {
-          const D = S.var("items", (0, t._)`${$}.evaluated.items`);
-          E.items = i.mergeEvaluated.items(S, D, E.items, t.Name);
+          const x = $.var("items", (0, t._)`${P}.evaluated.items`);
+          S.items = i.mergeEvaluated.items($, x, S.items, t.Name);
         }
     }
   }
-  return Se.callRef = l, Se.default = s, Se;
+  return Te.callRef = c, Te.default = o, Te;
 }
-var Ir;
-function mi() {
-  if (Ir) return He;
-  Ir = 1, Object.defineProperty(He, "__esModule", { value: !0 });
-  const o = hi(), e = pi(), t = [
+var Gr;
+function Ni() {
+  if (Gr) return Ze;
+  Gr = 1, Object.defineProperty(Ze, "__esModule", { value: !0 });
+  const s = Ti(), e = ki(), t = [
     "$schema",
     "$id",
     "$defs",
     "$vocabulary",
     { keyword: "$comment" },
     "definitions",
-    o.default,
+    s.default,
     e.default
   ];
-  return He.default = t, He;
+  return Ze.default = t, Ze;
 }
-var We = {}, Ye = {}, Or;
-function yi() {
-  if (Or) return Ye;
-  Or = 1, Object.defineProperty(Ye, "__esModule", { value: !0 });
-  const o = Y(), e = o.operators, t = {
+var tt = {}, rt = {}, Br;
+function Ai() {
+  if (Br) return rt;
+  Br = 1, Object.defineProperty(rt, "__esModule", { value: !0 });
+  const s = Y(), e = s.operators, t = {
     maximum: { okStr: "<=", ok: e.LTE, fail: e.GT },
     minimum: { okStr: ">=", ok: e.GTE, fail: e.LT },
     exclusiveMaximum: { okStr: "<", ok: e.LT, fail: e.GTE },
     exclusiveMinimum: { okStr: ">", ok: e.GT, fail: e.LTE }
   }, r = {
-    message: ({ keyword: i, schemaCode: s }) => (0, o.str)`must be ${t[i].okStr} ${s}`,
-    params: ({ keyword: i, schemaCode: s }) => (0, o._)`{comparison: ${t[i].okStr}, limit: ${s}}`
+    message: ({ keyword: i, schemaCode: o }) => (0, s.str)`must be ${t[i].okStr} ${o}`,
+    params: ({ keyword: i, schemaCode: o }) => (0, s._)`{comparison: ${t[i].okStr}, limit: ${o}}`
   }, n = {
     keyword: Object.keys(t),
     type: "number",
@@ -3220,73 +3220,73 @@ function yi() {
     $data: !0,
     error: r,
     code(i) {
-      const { keyword: s, data: a, schemaCode: l } = i;
-      i.fail$data((0, o._)`${a} ${t[s].fail} ${l} || isNaN(${a})`);
+      const { keyword: o, data: a, schemaCode: c } = i;
+      i.fail$data((0, s._)`${a} ${t[o].fail} ${c} || isNaN(${a})`);
     }
   };
-  return Ye.default = n, Ye;
+  return rt.default = n, rt;
 }
-var Qe = {}, qr;
-function gi() {
-  if (qr) return Qe;
-  qr = 1, Object.defineProperty(Qe, "__esModule", { value: !0 });
-  const o = Y(), t = {
+var nt = {}, Kr;
+function Ri() {
+  if (Kr) return nt;
+  Kr = 1, Object.defineProperty(nt, "__esModule", { value: !0 });
+  const s = Y(), t = {
     keyword: "multipleOf",
     type: "number",
     schemaType: "number",
     $data: !0,
     error: {
-      message: ({ schemaCode: r }) => (0, o.str)`must be multiple of ${r}`,
-      params: ({ schemaCode: r }) => (0, o._)`{multipleOf: ${r}}`
+      message: ({ schemaCode: r }) => (0, s.str)`must be multiple of ${r}`,
+      params: ({ schemaCode: r }) => (0, s._)`{multipleOf: ${r}}`
     },
     code(r) {
-      const { gen: n, data: i, schemaCode: s, it: a } = r, l = a.opts.multipleOfPrecision, u = n.let("res"), p = l ? (0, o._)`Math.abs(Math.round(${u}) - ${u}) > 1e-${l}` : (0, o._)`${u} !== parseInt(${u})`;
-      r.fail$data((0, o._)`(${s} === 0 || (${u} = ${i}/${s}, ${p}))`);
+      const { gen: n, data: i, schemaCode: o, it: a } = r, c = a.opts.multipleOfPrecision, u = n.let("res"), d = c ? (0, s._)`Math.abs(Math.round(${u}) - ${u}) > 1e-${c}` : (0, s._)`${u} !== parseInt(${u})`;
+      r.fail$data((0, s._)`(${o} === 0 || (${u} = ${i}/${o}, ${d}))`);
     }
   };
-  return Qe.default = t, Qe;
+  return nt.default = t, nt;
 }
-var Xe = {}, Ze = {}, Dr;
-function vi() {
-  if (Dr) return Ze;
-  Dr = 1, Object.defineProperty(Ze, "__esModule", { value: !0 });
-  function o(e) {
+var it = {}, st = {}, Hr;
+function Ci() {
+  if (Hr) return st;
+  Hr = 1, Object.defineProperty(st, "__esModule", { value: !0 });
+  function s(e) {
     const t = e.length;
     let r = 0, n = 0, i;
     for (; n < t; )
       r++, i = e.charCodeAt(n++), i >= 55296 && i <= 56319 && n < t && (i = e.charCodeAt(n), (i & 64512) === 56320 && n++);
     return r;
   }
-  return Ze.default = o, o.code = 'require("ajv/dist/runtime/ucs2length").default', Ze;
+  return st.default = s, s.code = 'require("ajv/dist/runtime/ucs2length").default', st;
 }
-var xr;
-function bi() {
-  if (xr) return Xe;
-  xr = 1, Object.defineProperty(Xe, "__esModule", { value: !0 });
-  const o = Y(), e = Z(), t = vi(), n = {
+var Jr;
+function Ii() {
+  if (Jr) return it;
+  Jr = 1, Object.defineProperty(it, "__esModule", { value: !0 });
+  const s = Y(), e = Z(), t = Ci(), n = {
     keyword: ["maxLength", "minLength"],
     type: "string",
     schemaType: "number",
     $data: !0,
     error: {
-      message({ keyword: i, schemaCode: s }) {
+      message({ keyword: i, schemaCode: o }) {
         const a = i === "maxLength" ? "more" : "fewer";
-        return (0, o.str)`must NOT have ${a} than ${s} characters`;
+        return (0, s.str)`must NOT have ${a} than ${o} characters`;
       },
-      params: ({ schemaCode: i }) => (0, o._)`{limit: ${i}}`
+      params: ({ schemaCode: i }) => (0, s._)`{limit: ${i}}`
     },
     code(i) {
-      const { keyword: s, data: a, schemaCode: l, it: u } = i, p = s === "maxLength" ? o.operators.GT : o.operators.LT, w = u.opts.unicode === !1 ? (0, o._)`${a}.length` : (0, o._)`${(0, e.useFunc)(i.gen, t.default)}(${a})`;
-      i.fail$data((0, o._)`${w} ${p} ${l}`);
+      const { keyword: o, data: a, schemaCode: c, it: u } = i, d = o === "maxLength" ? s.operators.GT : s.operators.LT, v = u.opts.unicode === !1 ? (0, s._)`${a}.length` : (0, s._)`${(0, e.useFunc)(i.gen, t.default)}(${a})`;
+      i.fail$data((0, s._)`${v} ${d} ${c}`);
     }
   };
-  return Xe.default = n, Xe;
+  return it.default = n, it;
 }
-var et = {}, Vr;
-function wi() {
-  if (Vr) return et;
-  Vr = 1, Object.defineProperty(et, "__esModule", { value: !0 });
-  const o = we(), e = Y(), r = {
+var ot = {}, Wr;
+function ji() {
+  if (Wr) return ot;
+  Wr = 1, Object.defineProperty(ot, "__esModule", { value: !0 });
+  const s = we(), e = Y(), r = {
     keyword: "pattern",
     type: "string",
     schemaType: "string",
@@ -3296,17 +3296,17 @@ function wi() {
       params: ({ schemaCode: n }) => (0, e._)`{pattern: ${n}}`
     },
     code(n) {
-      const { data: i, $data: s, schema: a, schemaCode: l, it: u } = n, p = u.opts.unicodeRegExp ? "u" : "", w = s ? (0, e._)`(new RegExp(${l}, ${p}))` : (0, o.usePattern)(n, a);
-      n.fail$data((0, e._)`!${w}.test(${i})`);
+      const { data: i, $data: o, schema: a, schemaCode: c, it: u } = n, d = u.opts.unicodeRegExp ? "u" : "", v = o ? (0, e._)`(new RegExp(${c}, ${d}))` : (0, s.usePattern)(n, a);
+      n.fail$data((0, e._)`!${v}.test(${i})`);
     }
   };
-  return et.default = r, et;
+  return ot.default = r, ot;
 }
-var tt = {}, zr;
-function $i() {
-  if (zr) return tt;
-  zr = 1, Object.defineProperty(tt, "__esModule", { value: !0 });
-  const o = Y(), t = {
+var at = {}, Yr;
+function qi() {
+  if (Yr) return at;
+  Yr = 1, Object.defineProperty(at, "__esModule", { value: !0 });
+  const s = Y(), t = {
     keyword: ["maxProperties", "minProperties"],
     type: "object",
     schemaType: "number",
@@ -3314,22 +3314,22 @@ function $i() {
     error: {
       message({ keyword: r, schemaCode: n }) {
         const i = r === "maxProperties" ? "more" : "fewer";
-        return (0, o.str)`must NOT have ${i} than ${n} properties`;
+        return (0, s.str)`must NOT have ${i} than ${n} properties`;
       },
-      params: ({ schemaCode: r }) => (0, o._)`{limit: ${r}}`
+      params: ({ schemaCode: r }) => (0, s._)`{limit: ${r}}`
     },
     code(r) {
-      const { keyword: n, data: i, schemaCode: s } = r, a = n === "maxProperties" ? o.operators.GT : o.operators.LT;
-      r.fail$data((0, o._)`Object.keys(${i}).length ${a} ${s}`);
+      const { keyword: n, data: i, schemaCode: o } = r, a = n === "maxProperties" ? s.operators.GT : s.operators.LT;
+      r.fail$data((0, s._)`Object.keys(${i}).length ${a} ${o}`);
     }
   };
-  return tt.default = t, tt;
+  return at.default = t, at;
 }
-var rt = {}, Fr;
-function _i() {
-  if (Fr) return rt;
-  Fr = 1, Object.defineProperty(rt, "__esModule", { value: !0 });
-  const o = we(), e = Y(), t = Z(), n = {
+var ct = {}, Qr;
+function Oi() {
+  if (Qr) return ct;
+  Qr = 1, Object.defineProperty(ct, "__esModule", { value: !0 });
+  const s = we(), e = Y(), t = Z(), n = {
     keyword: "required",
     type: "object",
     schemaType: "array",
@@ -3339,54 +3339,54 @@ function _i() {
       params: ({ params: { missingProperty: i } }) => (0, e._)`{missingProperty: ${i}}`
     },
     code(i) {
-      const { gen: s, schema: a, schemaCode: l, data: u, $data: p, it: w } = i, { opts: _ } = w;
-      if (!p && a.length === 0)
+      const { gen: o, schema: a, schemaCode: c, data: u, $data: d, it: v } = i, { opts: _ } = v;
+      if (!d && a.length === 0)
         return;
-      const S = a.length >= _.loopRequired;
-      if (w.allErrors ? E() : b(), _.strictRequired) {
-        const c = i.parentSchema.properties, { definedProperties: f } = i.it;
+      const $ = a.length >= _.loopRequired;
+      if (v.allErrors ? S() : g(), _.strictRequired) {
+        const l = i.parentSchema.properties, { definedProperties: p } = i.it;
         for (const m of a)
-          if (c?.[m] === void 0 && !f.has(m)) {
-            const v = w.schemaEnv.baseId + w.errSchemaPath, g = `required property "${m}" is not defined at "${v}" (strictRequired)`;
-            (0, t.checkStrictMode)(w, g, w.opts.strictRequired);
+          if (l?.[m] === void 0 && !p.has(m)) {
+            const w = v.schemaEnv.baseId + v.errSchemaPath, b = `required property "${m}" is not defined at "${w}" (strictRequired)`;
+            (0, t.checkStrictMode)(v, b, v.opts.strictRequired);
           }
       }
-      function E() {
-        if (S || p)
+      function S() {
+        if ($ || d)
           i.block$data(e.nil, h);
         else
-          for (const c of a)
-            (0, o.checkReportMissingProp)(i, c);
+          for (const l of a)
+            (0, s.checkReportMissingProp)(i, l);
       }
-      function b() {
-        const c = s.let("missing");
-        if (S || p) {
-          const f = s.let("valid", !0);
-          i.block$data(f, () => d(c, f)), i.ok(f);
+      function g() {
+        const l = o.let("missing");
+        if ($ || d) {
+          const p = o.let("valid", !0);
+          i.block$data(p, () => f(l, p)), i.ok(p);
         } else
-          s.if((0, o.checkMissingProp)(i, a, c)), (0, o.reportMissingProp)(i, c), s.else();
+          o.if((0, s.checkMissingProp)(i, a, l)), (0, s.reportMissingProp)(i, l), o.else();
       }
       function h() {
-        s.forOf("prop", l, (c) => {
-          i.setParams({ missingProperty: c }), s.if((0, o.noPropertyInData)(s, u, c, _.ownProperties), () => i.error());
+        o.forOf("prop", c, (l) => {
+          i.setParams({ missingProperty: l }), o.if((0, s.noPropertyInData)(o, u, l, _.ownProperties), () => i.error());
         });
       }
-      function d(c, f) {
-        i.setParams({ missingProperty: c }), s.forOf(c, l, () => {
-          s.assign(f, (0, o.propertyInData)(s, u, c, _.ownProperties)), s.if((0, e.not)(f), () => {
-            i.error(), s.break();
+      function f(l, p) {
+        i.setParams({ missingProperty: l }), o.forOf(l, c, () => {
+          o.assign(p, (0, s.propertyInData)(o, u, l, _.ownProperties)), o.if((0, e.not)(p), () => {
+            i.error(), o.break();
           });
         }, e.nil);
       }
     }
   };
-  return rt.default = n, rt;
+  return ct.default = n, ct;
 }
-var nt = {}, Lr;
-function Pi() {
-  if (Lr) return nt;
-  Lr = 1, Object.defineProperty(nt, "__esModule", { value: !0 });
-  const o = Y(), t = {
+var lt = {}, Xr;
+function xi() {
+  if (Xr) return lt;
+  Xr = 1, Object.defineProperty(lt, "__esModule", { value: !0 });
+  const s = Y(), t = {
     keyword: ["maxItems", "minItems"],
     type: "array",
     schemaType: "number",
@@ -3394,133 +3394,133 @@ function Pi() {
     error: {
       message({ keyword: r, schemaCode: n }) {
         const i = r === "maxItems" ? "more" : "fewer";
-        return (0, o.str)`must NOT have ${i} than ${n} items`;
+        return (0, s.str)`must NOT have ${i} than ${n} items`;
       },
-      params: ({ schemaCode: r }) => (0, o._)`{limit: ${r}}`
+      params: ({ schemaCode: r }) => (0, s._)`{limit: ${r}}`
     },
     code(r) {
-      const { keyword: n, data: i, schemaCode: s } = r, a = n === "maxItems" ? o.operators.GT : o.operators.LT;
-      r.fail$data((0, o._)`${i}.length ${a} ${s}`);
+      const { keyword: n, data: i, schemaCode: o } = r, a = n === "maxItems" ? s.operators.GT : s.operators.LT;
+      r.fail$data((0, s._)`${i}.length ${a} ${o}`);
     }
   };
-  return nt.default = t, nt;
+  return lt.default = t, lt;
 }
-var it = {}, ot = {}, Ur;
-function Qt() {
-  if (Ur) return ot;
-  Ur = 1, Object.defineProperty(ot, "__esModule", { value: !0 });
-  const o = _n();
-  return o.code = 'require("ajv/dist/runtime/equal").default', ot.default = o, ot;
+var ut = {}, dt = {}, Zr;
+function ir() {
+  if (Zr) return dt;
+  Zr = 1, Object.defineProperty(dt, "__esModule", { value: !0 });
+  const s = In();
+  return s.code = 'require("ajv/dist/runtime/equal").default', dt.default = s, dt;
 }
-var Gr;
-function Si() {
-  if (Gr) return it;
-  Gr = 1, Object.defineProperty(it, "__esModule", { value: !0 });
-  const o = Tt(), e = Y(), t = Z(), r = Qt(), i = {
+var en;
+function Di() {
+  if (en) return ut;
+  en = 1, Object.defineProperty(ut, "__esModule", { value: !0 });
+  const s = jt(), e = Y(), t = Z(), r = ir(), i = {
     keyword: "uniqueItems",
     type: "array",
     schemaType: "boolean",
     $data: !0,
     error: {
-      message: ({ params: { i: s, j: a } }) => (0, e.str)`must NOT have duplicate items (items ## ${a} and ${s} are identical)`,
-      params: ({ params: { i: s, j: a } }) => (0, e._)`{i: ${s}, j: ${a}}`
+      message: ({ params: { i: o, j: a } }) => (0, e.str)`must NOT have duplicate items (items ## ${a} and ${o} are identical)`,
+      params: ({ params: { i: o, j: a } }) => (0, e._)`{i: ${o}, j: ${a}}`
     },
-    code(s) {
-      const { gen: a, data: l, $data: u, schema: p, parentSchema: w, schemaCode: _, it: S } = s;
-      if (!u && !p)
+    code(o) {
+      const { gen: a, data: c, $data: u, schema: d, parentSchema: v, schemaCode: _, it: $ } = o;
+      if (!u && !d)
         return;
-      const E = a.let("valid"), b = w.items ? (0, o.getSchemaTypes)(w.items) : [];
-      s.block$data(E, h, (0, e._)`${_} === false`), s.ok(E);
+      const S = a.let("valid"), g = v.items ? (0, s.getSchemaTypes)(v.items) : [];
+      o.block$data(S, h, (0, e._)`${_} === false`), o.ok(S);
       function h() {
-        const m = a.let("i", (0, e._)`${l}.length`), v = a.let("j");
-        s.setParams({ i: m, j: v }), a.assign(E, !0), a.if((0, e._)`${m} > 1`, () => (d() ? c : f)(m, v));
+        const m = a.let("i", (0, e._)`${c}.length`), w = a.let("j");
+        o.setParams({ i: m, j: w }), a.assign(S, !0), a.if((0, e._)`${m} > 1`, () => (f() ? l : p)(m, w));
       }
-      function d() {
-        return b.length > 0 && !b.some((m) => m === "object" || m === "array");
+      function f() {
+        return g.length > 0 && !g.some((m) => m === "object" || m === "array");
       }
-      function c(m, v) {
-        const g = a.name("item"), $ = (0, o.checkDataTypes)(b, g, S.opts.strictNumbers, o.DataType.Wrong), k = a.const("indices", (0, e._)`{}`);
+      function l(m, w) {
+        const b = a.name("item"), P = (0, s.checkDataTypes)(g, b, $.opts.strictNumbers, s.DataType.Wrong), k = a.const("indices", (0, e._)`{}`);
         a.for((0, e._)`;${m}--;`, () => {
-          a.let(g, (0, e._)`${l}[${m}]`), a.if($, (0, e._)`continue`), b.length > 1 && a.if((0, e._)`typeof ${g} == "string"`, (0, e._)`${g} += "_"`), a.if((0, e._)`typeof ${k}[${g}] == "number"`, () => {
-            a.assign(v, (0, e._)`${k}[${g}]`), s.error(), a.assign(E, !1).break();
-          }).code((0, e._)`${k}[${g}] = ${m}`);
+          a.let(b, (0, e._)`${c}[${m}]`), a.if(P, (0, e._)`continue`), g.length > 1 && a.if((0, e._)`typeof ${b} == "string"`, (0, e._)`${b} += "_"`), a.if((0, e._)`typeof ${k}[${b}] == "number"`, () => {
+            a.assign(w, (0, e._)`${k}[${b}]`), o.error(), a.assign(S, !1).break();
+          }).code((0, e._)`${k}[${b}] = ${m}`);
         });
       }
-      function f(m, v) {
-        const g = (0, t.useFunc)(a, r.default), $ = a.name("outer");
-        a.label($).for((0, e._)`;${m}--;`, () => a.for((0, e._)`${v} = ${m}; ${v}--;`, () => a.if((0, e._)`${g}(${l}[${m}], ${l}[${v}])`, () => {
-          s.error(), a.assign(E, !1).break($);
+      function p(m, w) {
+        const b = (0, t.useFunc)(a, r.default), P = a.name("outer");
+        a.label(P).for((0, e._)`;${m}--;`, () => a.for((0, e._)`${w} = ${m}; ${w}--;`, () => a.if((0, e._)`${b}(${c}[${m}], ${c}[${w}])`, () => {
+          o.error(), a.assign(S, !1).break(P);
         })));
       }
     }
   };
-  return it.default = i, it;
+  return ut.default = i, ut;
 }
-var st = {}, Br;
-function Ei() {
-  if (Br) return st;
-  Br = 1, Object.defineProperty(st, "__esModule", { value: !0 });
-  const o = Y(), e = Z(), t = Qt(), n = {
+var ht = {}, tn;
+function zi() {
+  if (tn) return ht;
+  tn = 1, Object.defineProperty(ht, "__esModule", { value: !0 });
+  const s = Y(), e = Z(), t = ir(), n = {
     keyword: "const",
     $data: !0,
     error: {
       message: "must be equal to constant",
-      params: ({ schemaCode: i }) => (0, o._)`{allowedValue: ${i}}`
+      params: ({ schemaCode: i }) => (0, s._)`{allowedValue: ${i}}`
     },
     code(i) {
-      const { gen: s, data: a, $data: l, schemaCode: u, schema: p } = i;
-      l || p && typeof p == "object" ? i.fail$data((0, o._)`!${(0, e.useFunc)(s, t.default)}(${a}, ${u})`) : i.fail((0, o._)`${p} !== ${a}`);
+      const { gen: o, data: a, $data: c, schemaCode: u, schema: d } = i;
+      c || d && typeof d == "object" ? i.fail$data((0, s._)`!${(0, e.useFunc)(o, t.default)}(${a}, ${u})`) : i.fail((0, s._)`${d} !== ${a}`);
     }
   };
-  return st.default = n, st;
+  return ht.default = n, ht;
 }
-var at = {}, Kr;
-function Mi() {
-  if (Kr) return at;
-  Kr = 1, Object.defineProperty(at, "__esModule", { value: !0 });
-  const o = Y(), e = Z(), t = Qt(), n = {
+var ft = {}, rn;
+function Vi() {
+  if (rn) return ft;
+  rn = 1, Object.defineProperty(ft, "__esModule", { value: !0 });
+  const s = Y(), e = Z(), t = ir(), n = {
     keyword: "enum",
     schemaType: "array",
     $data: !0,
     error: {
       message: "must be equal to one of the allowed values",
-      params: ({ schemaCode: i }) => (0, o._)`{allowedValues: ${i}}`
+      params: ({ schemaCode: i }) => (0, s._)`{allowedValues: ${i}}`
     },
     code(i) {
-      const { gen: s, data: a, $data: l, schema: u, schemaCode: p, it: w } = i;
-      if (!l && u.length === 0)
+      const { gen: o, data: a, $data: c, schema: u, schemaCode: d, it: v } = i;
+      if (!c && u.length === 0)
         throw new Error("enum must have non-empty array");
-      const _ = u.length >= w.opts.loopEnum;
-      let S;
-      const E = () => S ?? (S = (0, e.useFunc)(s, t.default));
-      let b;
-      if (_ || l)
-        b = s.let("valid"), i.block$data(b, h);
+      const _ = u.length >= v.opts.loopEnum;
+      let $;
+      const S = () => $ ?? ($ = (0, e.useFunc)(o, t.default));
+      let g;
+      if (_ || c)
+        g = o.let("valid"), i.block$data(g, h);
       else {
         if (!Array.isArray(u))
           throw new Error("ajv implementation error");
-        const c = s.const("vSchema", p);
-        b = (0, o.or)(...u.map((f, m) => d(c, m)));
+        const l = o.const("vSchema", d);
+        g = (0, s.or)(...u.map((p, m) => f(l, m)));
       }
-      i.pass(b);
+      i.pass(g);
       function h() {
-        s.assign(b, !1), s.forOf("v", p, (c) => s.if((0, o._)`${E()}(${a}, ${c})`, () => s.assign(b, !0).break()));
+        o.assign(g, !1), o.forOf("v", d, (l) => o.if((0, s._)`${S()}(${a}, ${l})`, () => o.assign(g, !0).break()));
       }
-      function d(c, f) {
-        const m = u[f];
-        return typeof m == "object" && m !== null ? (0, o._)`${E()}(${a}, ${c}[${f}])` : (0, o._)`${a} === ${m}`;
+      function f(l, p) {
+        const m = u[p];
+        return typeof m == "object" && m !== null ? (0, s._)`${S()}(${a}, ${l}[${p}])` : (0, s._)`${a} === ${m}`;
       }
     }
   };
-  return at.default = n, at;
+  return ft.default = n, ft;
 }
-var Hr;
-function Ti() {
-  if (Hr) return We;
-  Hr = 1, Object.defineProperty(We, "__esModule", { value: !0 });
-  const o = yi(), e = gi(), t = bi(), r = wi(), n = $i(), i = _i(), s = Pi(), a = Si(), l = Ei(), u = Mi(), p = [
+var nn;
+function Fi() {
+  if (nn) return tt;
+  nn = 1, Object.defineProperty(tt, "__esModule", { value: !0 });
+  const s = Ai(), e = Ri(), t = Ii(), r = ji(), n = qi(), i = Oi(), o = xi(), a = Di(), c = zi(), u = Vi(), d = [
     // number
-    o.default,
+    s.default,
     e.default,
     // string
     t.default,
@@ -3529,293 +3529,293 @@ function Ti() {
     n.default,
     i.default,
     // array
-    s.default,
+    o.default,
     a.default,
     // any
     { keyword: "type", schemaType: ["string", "array"] },
     { keyword: "nullable", schemaType: "boolean" },
-    l.default,
+    c.default,
     u.default
   ];
-  return We.default = p, We;
+  return tt.default = d, tt;
 }
-var ct = {}, Re = {}, Jr;
-function Pn() {
-  if (Jr) return Re;
-  Jr = 1, Object.defineProperty(Re, "__esModule", { value: !0 }), Re.validateAdditionalItems = void 0;
-  const o = Y(), e = Z(), r = {
+var pt = {}, Ce = {}, sn;
+function jn() {
+  if (sn) return Ce;
+  sn = 1, Object.defineProperty(Ce, "__esModule", { value: !0 }), Ce.validateAdditionalItems = void 0;
+  const s = Y(), e = Z(), r = {
     keyword: "additionalItems",
     type: "array",
     schemaType: ["boolean", "object"],
     before: "uniqueItems",
     error: {
-      message: ({ params: { len: i } }) => (0, o.str)`must NOT have more than ${i} items`,
-      params: ({ params: { len: i } }) => (0, o._)`{limit: ${i}}`
+      message: ({ params: { len: i } }) => (0, s.str)`must NOT have more than ${i} items`,
+      params: ({ params: { len: i } }) => (0, s._)`{limit: ${i}}`
     },
     code(i) {
-      const { parentSchema: s, it: a } = i, { items: l } = s;
-      if (!Array.isArray(l)) {
+      const { parentSchema: o, it: a } = i, { items: c } = o;
+      if (!Array.isArray(c)) {
         (0, e.checkStrictMode)(a, '"additionalItems" is ignored when "items" is not an array of schemas');
         return;
       }
-      n(i, l);
+      n(i, c);
     }
   };
-  function n(i, s) {
-    const { gen: a, schema: l, data: u, keyword: p, it: w } = i;
-    w.items = !0;
-    const _ = a.const("len", (0, o._)`${u}.length`);
-    if (l === !1)
-      i.setParams({ len: s.length }), i.pass((0, o._)`${_} <= ${s.length}`);
-    else if (typeof l == "object" && !(0, e.alwaysValidSchema)(w, l)) {
-      const E = a.var("valid", (0, o._)`${_} <= ${s.length}`);
-      a.if((0, o.not)(E), () => S(E)), i.ok(E);
+  function n(i, o) {
+    const { gen: a, schema: c, data: u, keyword: d, it: v } = i;
+    v.items = !0;
+    const _ = a.const("len", (0, s._)`${u}.length`);
+    if (c === !1)
+      i.setParams({ len: o.length }), i.pass((0, s._)`${_} <= ${o.length}`);
+    else if (typeof c == "object" && !(0, e.alwaysValidSchema)(v, c)) {
+      const S = a.var("valid", (0, s._)`${_} <= ${o.length}`);
+      a.if((0, s.not)(S), () => $(S)), i.ok(S);
     }
-    function S(E) {
-      a.forRange("i", s.length, _, (b) => {
-        i.subschema({ keyword: p, dataProp: b, dataPropType: e.Type.Num }, E), w.allErrors || a.if((0, o.not)(E), () => a.break());
+    function $(S) {
+      a.forRange("i", o.length, _, (g) => {
+        i.subschema({ keyword: d, dataProp: g, dataPropType: e.Type.Num }, S), v.allErrors || a.if((0, s.not)(S), () => a.break());
       });
     }
   }
-  return Re.validateAdditionalItems = n, Re.default = r, Re;
+  return Ce.validateAdditionalItems = n, Ce.default = r, Ce;
 }
-var lt = {}, Ae = {}, Wr;
-function Sn() {
-  if (Wr) return Ae;
-  Wr = 1, Object.defineProperty(Ae, "__esModule", { value: !0 }), Ae.validateTuple = void 0;
-  const o = Y(), e = Z(), t = we(), r = {
+var mt = {}, Ie = {}, on;
+function qn() {
+  if (on) return Ie;
+  on = 1, Object.defineProperty(Ie, "__esModule", { value: !0 }), Ie.validateTuple = void 0;
+  const s = Y(), e = Z(), t = we(), r = {
     keyword: "items",
     type: "array",
     schemaType: ["object", "array", "boolean"],
     before: "uniqueItems",
     code(i) {
-      const { schema: s, it: a } = i;
-      if (Array.isArray(s))
-        return n(i, "additionalItems", s);
-      a.items = !0, !(0, e.alwaysValidSchema)(a, s) && i.ok((0, t.validateArray)(i));
+      const { schema: o, it: a } = i;
+      if (Array.isArray(o))
+        return n(i, "additionalItems", o);
+      a.items = !0, !(0, e.alwaysValidSchema)(a, o) && i.ok((0, t.validateArray)(i));
     }
   };
-  function n(i, s, a = i.schema) {
-    const { gen: l, parentSchema: u, data: p, keyword: w, it: _ } = i;
-    b(u), _.opts.unevaluated && a.length && _.items !== !0 && (_.items = e.mergeEvaluated.items(l, a.length, _.items));
-    const S = l.name("valid"), E = l.const("len", (0, o._)`${p}.length`);
-    a.forEach((h, d) => {
-      (0, e.alwaysValidSchema)(_, h) || (l.if((0, o._)`${E} > ${d}`, () => i.subschema({
-        keyword: w,
-        schemaProp: d,
-        dataProp: d
-      }, S)), i.ok(S));
+  function n(i, o, a = i.schema) {
+    const { gen: c, parentSchema: u, data: d, keyword: v, it: _ } = i;
+    g(u), _.opts.unevaluated && a.length && _.items !== !0 && (_.items = e.mergeEvaluated.items(c, a.length, _.items));
+    const $ = c.name("valid"), S = c.const("len", (0, s._)`${d}.length`);
+    a.forEach((h, f) => {
+      (0, e.alwaysValidSchema)(_, h) || (c.if((0, s._)`${S} > ${f}`, () => i.subschema({
+        keyword: v,
+        schemaProp: f,
+        dataProp: f
+      }, $)), i.ok($));
     });
-    function b(h) {
-      const { opts: d, errSchemaPath: c } = _, f = a.length, m = f === h.minItems && (f === h.maxItems || h[s] === !1);
-      if (d.strictTuples && !m) {
-        const v = `"${w}" is ${f}-tuple, but minItems or maxItems/${s} are not specified or different at path "${c}"`;
-        (0, e.checkStrictMode)(_, v, d.strictTuples);
+    function g(h) {
+      const { opts: f, errSchemaPath: l } = _, p = a.length, m = p === h.minItems && (p === h.maxItems || h[o] === !1);
+      if (f.strictTuples && !m) {
+        const w = `"${v}" is ${p}-tuple, but minItems or maxItems/${o} are not specified or different at path "${l}"`;
+        (0, e.checkStrictMode)(_, w, f.strictTuples);
       }
     }
   }
-  return Ae.validateTuple = n, Ae.default = r, Ae;
+  return Ie.validateTuple = n, Ie.default = r, Ie;
 }
-var Yr;
-function ki() {
-  if (Yr) return lt;
-  Yr = 1, Object.defineProperty(lt, "__esModule", { value: !0 });
-  const o = Sn(), e = {
+var an;
+function Li() {
+  if (an) return mt;
+  an = 1, Object.defineProperty(mt, "__esModule", { value: !0 });
+  const s = qn(), e = {
     keyword: "prefixItems",
     type: "array",
     schemaType: ["array"],
     before: "uniqueItems",
-    code: (t) => (0, o.validateTuple)(t, "items")
+    code: (t) => (0, s.validateTuple)(t, "items")
   };
-  return lt.default = e, lt;
+  return mt.default = e, mt;
 }
-var ut = {}, Qr;
-function Ni() {
-  if (Qr) return ut;
-  Qr = 1, Object.defineProperty(ut, "__esModule", { value: !0 });
-  const o = Y(), e = Z(), t = we(), r = Pn(), i = {
+var yt = {}, cn;
+function Ui() {
+  if (cn) return yt;
+  cn = 1, Object.defineProperty(yt, "__esModule", { value: !0 });
+  const s = Y(), e = Z(), t = we(), r = jn(), i = {
     keyword: "items",
     type: "array",
     schemaType: ["object", "boolean"],
     before: "uniqueItems",
     error: {
-      message: ({ params: { len: s } }) => (0, o.str)`must NOT have more than ${s} items`,
-      params: ({ params: { len: s } }) => (0, o._)`{limit: ${s}}`
+      message: ({ params: { len: o } }) => (0, s.str)`must NOT have more than ${o} items`,
+      params: ({ params: { len: o } }) => (0, s._)`{limit: ${o}}`
     },
-    code(s) {
-      const { schema: a, parentSchema: l, it: u } = s, { prefixItems: p } = l;
-      u.items = !0, !(0, e.alwaysValidSchema)(u, a) && (p ? (0, r.validateAdditionalItems)(s, p) : s.ok((0, t.validateArray)(s)));
+    code(o) {
+      const { schema: a, parentSchema: c, it: u } = o, { prefixItems: d } = c;
+      u.items = !0, !(0, e.alwaysValidSchema)(u, a) && (d ? (0, r.validateAdditionalItems)(o, d) : o.ok((0, t.validateArray)(o)));
     }
   };
-  return ut.default = i, ut;
+  return yt.default = i, yt;
 }
-var dt = {}, Xr;
-function Ri() {
-  if (Xr) return dt;
-  Xr = 1, Object.defineProperty(dt, "__esModule", { value: !0 });
-  const o = Y(), e = Z(), r = {
+var gt = {}, ln;
+function Gi() {
+  if (ln) return gt;
+  ln = 1, Object.defineProperty(gt, "__esModule", { value: !0 });
+  const s = Y(), e = Z(), r = {
     keyword: "contains",
     type: "array",
     schemaType: ["object", "boolean"],
     before: "uniqueItems",
     trackErrors: !0,
     error: {
-      message: ({ params: { min: n, max: i } }) => i === void 0 ? (0, o.str)`must contain at least ${n} valid item(s)` : (0, o.str)`must contain at least ${n} and no more than ${i} valid item(s)`,
-      params: ({ params: { min: n, max: i } }) => i === void 0 ? (0, o._)`{minContains: ${n}}` : (0, o._)`{minContains: ${n}, maxContains: ${i}}`
+      message: ({ params: { min: n, max: i } }) => i === void 0 ? (0, s.str)`must contain at least ${n} valid item(s)` : (0, s.str)`must contain at least ${n} and no more than ${i} valid item(s)`,
+      params: ({ params: { min: n, max: i } }) => i === void 0 ? (0, s._)`{minContains: ${n}}` : (0, s._)`{minContains: ${n}, maxContains: ${i}}`
     },
     code(n) {
-      const { gen: i, schema: s, parentSchema: a, data: l, it: u } = n;
-      let p, w;
-      const { minContains: _, maxContains: S } = a;
-      u.opts.next ? (p = _ === void 0 ? 1 : _, w = S) : p = 1;
-      const E = i.const("len", (0, o._)`${l}.length`);
-      if (n.setParams({ min: p, max: w }), w === void 0 && p === 0) {
+      const { gen: i, schema: o, parentSchema: a, data: c, it: u } = n;
+      let d, v;
+      const { minContains: _, maxContains: $ } = a;
+      u.opts.next ? (d = _ === void 0 ? 1 : _, v = $) : d = 1;
+      const S = i.const("len", (0, s._)`${c}.length`);
+      if (n.setParams({ min: d, max: v }), v === void 0 && d === 0) {
         (0, e.checkStrictMode)(u, '"minContains" == 0 without "maxContains": "contains" keyword ignored');
         return;
       }
-      if (w !== void 0 && p > w) {
+      if (v !== void 0 && d > v) {
         (0, e.checkStrictMode)(u, '"minContains" > "maxContains" is always invalid'), n.fail();
         return;
       }
-      if ((0, e.alwaysValidSchema)(u, s)) {
-        let f = (0, o._)`${E} >= ${p}`;
-        w !== void 0 && (f = (0, o._)`${f} && ${E} <= ${w}`), n.pass(f);
+      if ((0, e.alwaysValidSchema)(u, o)) {
+        let p = (0, s._)`${S} >= ${d}`;
+        v !== void 0 && (p = (0, s._)`${p} && ${S} <= ${v}`), n.pass(p);
         return;
       }
       u.items = !0;
-      const b = i.name("valid");
-      w === void 0 && p === 1 ? d(b, () => i.if(b, () => i.break())) : p === 0 ? (i.let(b, !0), w !== void 0 && i.if((0, o._)`${l}.length > 0`, h)) : (i.let(b, !1), h()), n.result(b, () => n.reset());
+      const g = i.name("valid");
+      v === void 0 && d === 1 ? f(g, () => i.if(g, () => i.break())) : d === 0 ? (i.let(g, !0), v !== void 0 && i.if((0, s._)`${c}.length > 0`, h)) : (i.let(g, !1), h()), n.result(g, () => n.reset());
       function h() {
-        const f = i.name("_valid"), m = i.let("count", 0);
-        d(f, () => i.if(f, () => c(m)));
+        const p = i.name("_valid"), m = i.let("count", 0);
+        f(p, () => i.if(p, () => l(m)));
       }
-      function d(f, m) {
-        i.forRange("i", 0, E, (v) => {
+      function f(p, m) {
+        i.forRange("i", 0, S, (w) => {
           n.subschema({
             keyword: "contains",
-            dataProp: v,
+            dataProp: w,
             dataPropType: e.Type.Num,
             compositeRule: !0
-          }, f), m();
+          }, p), m();
         });
       }
-      function c(f) {
-        i.code((0, o._)`${f}++`), w === void 0 ? i.if((0, o._)`${f} >= ${p}`, () => i.assign(b, !0).break()) : (i.if((0, o._)`${f} > ${w}`, () => i.assign(b, !1).break()), p === 1 ? i.assign(b, !0) : i.if((0, o._)`${f} >= ${p}`, () => i.assign(b, !0)));
+      function l(p) {
+        i.code((0, s._)`${p}++`), v === void 0 ? i.if((0, s._)`${p} >= ${d}`, () => i.assign(g, !0).break()) : (i.if((0, s._)`${p} > ${v}`, () => i.assign(g, !1).break()), d === 1 ? i.assign(g, !0) : i.if((0, s._)`${p} >= ${d}`, () => i.assign(g, !0)));
       }
     }
   };
-  return dt.default = r, dt;
+  return gt.default = r, gt;
 }
-var Gt = {}, Zr;
-function Ai() {
-  return Zr || (Zr = 1, (function(o) {
-    Object.defineProperty(o, "__esModule", { value: !0 }), o.validateSchemaDeps = o.validatePropertyDeps = o.error = void 0;
+var Qt = {}, un;
+function Bi() {
+  return un || (un = 1, (function(s) {
+    Object.defineProperty(s, "__esModule", { value: !0 }), s.validateSchemaDeps = s.validatePropertyDeps = s.error = void 0;
     const e = Y(), t = Z(), r = we();
-    o.error = {
-      message: ({ params: { property: l, depsCount: u, deps: p } }) => {
-        const w = u === 1 ? "property" : "properties";
-        return (0, e.str)`must have ${w} ${p} when property ${l} is present`;
+    s.error = {
+      message: ({ params: { property: c, depsCount: u, deps: d } }) => {
+        const v = u === 1 ? "property" : "properties";
+        return (0, e.str)`must have ${v} ${d} when property ${c} is present`;
       },
-      params: ({ params: { property: l, depsCount: u, deps: p, missingProperty: w } }) => (0, e._)`{property: ${l},
-    missingProperty: ${w},
+      params: ({ params: { property: c, depsCount: u, deps: d, missingProperty: v } }) => (0, e._)`{property: ${c},
+    missingProperty: ${v},
     depsCount: ${u},
-    deps: ${p}}`
+    deps: ${d}}`
       // TODO change to reference
     };
     const n = {
       keyword: "dependencies",
       type: "object",
       schemaType: "object",
-      error: o.error,
-      code(l) {
-        const [u, p] = i(l);
-        s(l, u), a(l, p);
+      error: s.error,
+      code(c) {
+        const [u, d] = i(c);
+        o(c, u), a(c, d);
       }
     };
-    function i({ schema: l }) {
-      const u = {}, p = {};
-      for (const w in l) {
-        if (w === "__proto__")
+    function i({ schema: c }) {
+      const u = {}, d = {};
+      for (const v in c) {
+        if (v === "__proto__")
           continue;
-        const _ = Array.isArray(l[w]) ? u : p;
-        _[w] = l[w];
+        const _ = Array.isArray(c[v]) ? u : d;
+        _[v] = c[v];
       }
-      return [u, p];
+      return [u, d];
     }
-    function s(l, u = l.schema) {
-      const { gen: p, data: w, it: _ } = l;
+    function o(c, u = c.schema) {
+      const { gen: d, data: v, it: _ } = c;
       if (Object.keys(u).length === 0)
         return;
-      const S = p.let("missing");
-      for (const E in u) {
-        const b = u[E];
-        if (b.length === 0)
+      const $ = d.let("missing");
+      for (const S in u) {
+        const g = u[S];
+        if (g.length === 0)
           continue;
-        const h = (0, r.propertyInData)(p, w, E, _.opts.ownProperties);
-        l.setParams({
-          property: E,
-          depsCount: b.length,
-          deps: b.join(", ")
-        }), _.allErrors ? p.if(h, () => {
-          for (const d of b)
-            (0, r.checkReportMissingProp)(l, d);
-        }) : (p.if((0, e._)`${h} && (${(0, r.checkMissingProp)(l, b, S)})`), (0, r.reportMissingProp)(l, S), p.else());
+        const h = (0, r.propertyInData)(d, v, S, _.opts.ownProperties);
+        c.setParams({
+          property: S,
+          depsCount: g.length,
+          deps: g.join(", ")
+        }), _.allErrors ? d.if(h, () => {
+          for (const f of g)
+            (0, r.checkReportMissingProp)(c, f);
+        }) : (d.if((0, e._)`${h} && (${(0, r.checkMissingProp)(c, g, $)})`), (0, r.reportMissingProp)(c, $), d.else());
       }
     }
-    o.validatePropertyDeps = s;
-    function a(l, u = l.schema) {
-      const { gen: p, data: w, keyword: _, it: S } = l, E = p.name("valid");
-      for (const b in u)
-        (0, t.alwaysValidSchema)(S, u[b]) || (p.if(
-          (0, r.propertyInData)(p, w, b, S.opts.ownProperties),
+    s.validatePropertyDeps = o;
+    function a(c, u = c.schema) {
+      const { gen: d, data: v, keyword: _, it: $ } = c, S = d.name("valid");
+      for (const g in u)
+        (0, t.alwaysValidSchema)($, u[g]) || (d.if(
+          (0, r.propertyInData)(d, v, g, $.opts.ownProperties),
           () => {
-            const h = l.subschema({ keyword: _, schemaProp: b }, E);
-            l.mergeValidEvaluated(h, E);
+            const h = c.subschema({ keyword: _, schemaProp: g }, S);
+            c.mergeValidEvaluated(h, S);
           },
-          () => p.var(E, !0)
+          () => d.var(S, !0)
           // TODO var
-        ), l.ok(E));
+        ), c.ok(S));
     }
-    o.validateSchemaDeps = a, o.default = n;
-  })(Gt)), Gt;
+    s.validateSchemaDeps = a, s.default = n;
+  })(Qt)), Qt;
 }
-var ft = {}, en;
-function ji() {
-  if (en) return ft;
-  en = 1, Object.defineProperty(ft, "__esModule", { value: !0 });
-  const o = Y(), e = Z(), r = {
+var vt = {}, dn;
+function Ki() {
+  if (dn) return vt;
+  dn = 1, Object.defineProperty(vt, "__esModule", { value: !0 });
+  const s = Y(), e = Z(), r = {
     keyword: "propertyNames",
     type: "object",
     schemaType: ["object", "boolean"],
     error: {
       message: "property name must be valid",
-      params: ({ params: n }) => (0, o._)`{propertyName: ${n.propertyName}}`
+      params: ({ params: n }) => (0, s._)`{propertyName: ${n.propertyName}}`
     },
     code(n) {
-      const { gen: i, schema: s, data: a, it: l } = n;
-      if ((0, e.alwaysValidSchema)(l, s))
+      const { gen: i, schema: o, data: a, it: c } = n;
+      if ((0, e.alwaysValidSchema)(c, o))
         return;
       const u = i.name("valid");
-      i.forIn("key", a, (p) => {
-        n.setParams({ propertyName: p }), n.subschema({
+      i.forIn("key", a, (d) => {
+        n.setParams({ propertyName: d }), n.subschema({
           keyword: "propertyNames",
-          data: p,
+          data: d,
           dataTypes: ["string"],
-          propertyName: p,
+          propertyName: d,
           compositeRule: !0
-        }, u), i.if((0, o.not)(u), () => {
-          n.error(!0), l.allErrors || i.break();
+        }, u), i.if((0, s.not)(u), () => {
+          n.error(!0), c.allErrors || i.break();
         });
       }), n.ok(u);
     }
   };
-  return ft.default = r, ft;
+  return vt.default = r, vt;
 }
-var ht = {}, tn;
-function En() {
-  if (tn) return ht;
-  tn = 1, Object.defineProperty(ht, "__esModule", { value: !0 });
-  const o = we(), e = Y(), t = Me(), r = Z(), i = {
+var bt = {}, hn;
+function On() {
+  if (hn) return bt;
+  hn = 1, Object.defineProperty(bt, "__esModule", { value: !0 });
+  const s = we(), e = Y(), t = ke(), r = Z(), i = {
     keyword: "additionalProperties",
     type: ["object"],
     schemaType: ["boolean", "object"],
@@ -3823,171 +3823,171 @@ function En() {
     trackErrors: !0,
     error: {
       message: "must NOT have additional properties",
-      params: ({ params: s }) => (0, e._)`{additionalProperty: ${s.additionalProperty}}`
+      params: ({ params: o }) => (0, e._)`{additionalProperty: ${o.additionalProperty}}`
     },
-    code(s) {
-      const { gen: a, schema: l, parentSchema: u, data: p, errsCount: w, it: _ } = s;
-      if (!w)
+    code(o) {
+      const { gen: a, schema: c, parentSchema: u, data: d, errsCount: v, it: _ } = o;
+      if (!v)
         throw new Error("ajv implementation error");
-      const { allErrors: S, opts: E } = _;
-      if (_.props = !0, E.removeAdditional !== "all" && (0, r.alwaysValidSchema)(_, l))
+      const { allErrors: $, opts: S } = _;
+      if (_.props = !0, S.removeAdditional !== "all" && (0, r.alwaysValidSchema)(_, c))
         return;
-      const b = (0, o.allSchemaProperties)(u.properties), h = (0, o.allSchemaProperties)(u.patternProperties);
-      d(), s.ok((0, e._)`${w} === ${t.default.errors}`);
-      function d() {
-        a.forIn("key", p, (g) => {
-          !b.length && !h.length ? m(g) : a.if(c(g), () => m(g));
+      const g = (0, s.allSchemaProperties)(u.properties), h = (0, s.allSchemaProperties)(u.patternProperties);
+      f(), o.ok((0, e._)`${v} === ${t.default.errors}`);
+      function f() {
+        a.forIn("key", d, (b) => {
+          !g.length && !h.length ? m(b) : a.if(l(b), () => m(b));
         });
       }
-      function c(g) {
-        let $;
-        if (b.length > 8) {
+      function l(b) {
+        let P;
+        if (g.length > 8) {
           const k = (0, r.schemaRefOrVal)(_, u.properties, "properties");
-          $ = (0, o.isOwnProperty)(a, k, g);
-        } else b.length ? $ = (0, e.or)(...b.map((k) => (0, e._)`${g} === ${k}`)) : $ = e.nil;
-        return h.length && ($ = (0, e.or)($, ...h.map((k) => (0, e._)`${(0, o.usePattern)(s, k)}.test(${g})`))), (0, e.not)($);
+          P = (0, s.isOwnProperty)(a, k, b);
+        } else g.length ? P = (0, e.or)(...g.map((k) => (0, e._)`${b} === ${k}`)) : P = e.nil;
+        return h.length && (P = (0, e.or)(P, ...h.map((k) => (0, e._)`${(0, s.usePattern)(o, k)}.test(${b})`))), (0, e.not)(P);
       }
-      function f(g) {
-        a.code((0, e._)`delete ${p}[${g}]`);
+      function p(b) {
+        a.code((0, e._)`delete ${d}[${b}]`);
       }
-      function m(g) {
-        if (E.removeAdditional === "all" || E.removeAdditional && l === !1) {
-          f(g);
+      function m(b) {
+        if (S.removeAdditional === "all" || S.removeAdditional && c === !1) {
+          p(b);
           return;
         }
-        if (l === !1) {
-          s.setParams({ additionalProperty: g }), s.error(), S || a.break();
+        if (c === !1) {
+          o.setParams({ additionalProperty: b }), o.error(), $ || a.break();
           return;
         }
-        if (typeof l == "object" && !(0, r.alwaysValidSchema)(_, l)) {
-          const $ = a.name("valid");
-          E.removeAdditional === "failing" ? (v(g, $, !1), a.if((0, e.not)($), () => {
-            s.reset(), f(g);
-          })) : (v(g, $), S || a.if((0, e.not)($), () => a.break()));
+        if (typeof c == "object" && !(0, r.alwaysValidSchema)(_, c)) {
+          const P = a.name("valid");
+          S.removeAdditional === "failing" ? (w(b, P, !1), a.if((0, e.not)(P), () => {
+            o.reset(), p(b);
+          })) : (w(b, P), $ || a.if((0, e.not)(P), () => a.break()));
         }
       }
-      function v(g, $, k) {
-        const j = {
+      function w(b, P, k) {
+        const C = {
           keyword: "additionalProperties",
-          dataProp: g,
+          dataProp: b,
           dataPropType: r.Type.Str
         };
-        k === !1 && Object.assign(j, {
+        k === !1 && Object.assign(C, {
           compositeRule: !0,
           createErrors: !1,
           allErrors: !1
-        }), s.subschema(j, $);
+        }), o.subschema(C, P);
       }
     }
   };
-  return ht.default = i, ht;
+  return bt.default = i, bt;
 }
-var pt = {}, rn;
-function Ci() {
-  if (rn) return pt;
-  rn = 1, Object.defineProperty(pt, "__esModule", { value: !0 });
-  const o = At(), e = we(), t = Z(), r = En(), n = {
+var wt = {}, fn;
+function Hi() {
+  if (fn) return wt;
+  fn = 1, Object.defineProperty(wt, "__esModule", { value: !0 });
+  const s = Dt(), e = we(), t = Z(), r = On(), n = {
     keyword: "properties",
     type: "object",
     schemaType: "object",
     code(i) {
-      const { gen: s, schema: a, parentSchema: l, data: u, it: p } = i;
-      p.opts.removeAdditional === "all" && l.additionalProperties === void 0 && r.default.code(new o.KeywordCxt(p, r.default, "additionalProperties"));
-      const w = (0, e.allSchemaProperties)(a);
-      for (const h of w)
-        p.definedProperties.add(h);
-      p.opts.unevaluated && w.length && p.props !== !0 && (p.props = t.mergeEvaluated.props(s, (0, t.toHash)(w), p.props));
-      const _ = w.filter((h) => !(0, t.alwaysValidSchema)(p, a[h]));
+      const { gen: o, schema: a, parentSchema: c, data: u, it: d } = i;
+      d.opts.removeAdditional === "all" && c.additionalProperties === void 0 && r.default.code(new s.KeywordCxt(d, r.default, "additionalProperties"));
+      const v = (0, e.allSchemaProperties)(a);
+      for (const h of v)
+        d.definedProperties.add(h);
+      d.opts.unevaluated && v.length && d.props !== !0 && (d.props = t.mergeEvaluated.props(o, (0, t.toHash)(v), d.props));
+      const _ = v.filter((h) => !(0, t.alwaysValidSchema)(d, a[h]));
       if (_.length === 0)
         return;
-      const S = s.name("valid");
+      const $ = o.name("valid");
       for (const h of _)
-        E(h) ? b(h) : (s.if((0, e.propertyInData)(s, u, h, p.opts.ownProperties)), b(h), p.allErrors || s.else().var(S, !0), s.endIf()), i.it.definedProperties.add(h), i.ok(S);
-      function E(h) {
-        return p.opts.useDefaults && !p.compositeRule && a[h].default !== void 0;
+        S(h) ? g(h) : (o.if((0, e.propertyInData)(o, u, h, d.opts.ownProperties)), g(h), d.allErrors || o.else().var($, !0), o.endIf()), i.it.definedProperties.add(h), i.ok($);
+      function S(h) {
+        return d.opts.useDefaults && !d.compositeRule && a[h].default !== void 0;
       }
-      function b(h) {
+      function g(h) {
         i.subschema({
           keyword: "properties",
           schemaProp: h,
           dataProp: h
-        }, S);
+        }, $);
       }
     }
   };
-  return pt.default = n, pt;
+  return wt.default = n, wt;
 }
-var mt = {}, nn;
-function Ii() {
-  if (nn) return mt;
-  nn = 1, Object.defineProperty(mt, "__esModule", { value: !0 });
-  const o = we(), e = Y(), t = Z(), r = Z(), n = {
+var $t = {}, pn;
+function Ji() {
+  if (pn) return $t;
+  pn = 1, Object.defineProperty($t, "__esModule", { value: !0 });
+  const s = we(), e = Y(), t = Z(), r = Z(), n = {
     keyword: "patternProperties",
     type: "object",
     schemaType: "object",
     code(i) {
-      const { gen: s, schema: a, data: l, parentSchema: u, it: p } = i, { opts: w } = p, _ = (0, o.allSchemaProperties)(a), S = _.filter((m) => (0, t.alwaysValidSchema)(p, a[m]));
-      if (_.length === 0 || S.length === _.length && (!p.opts.unevaluated || p.props === !0))
+      const { gen: o, schema: a, data: c, parentSchema: u, it: d } = i, { opts: v } = d, _ = (0, s.allSchemaProperties)(a), $ = _.filter((m) => (0, t.alwaysValidSchema)(d, a[m]));
+      if (_.length === 0 || $.length === _.length && (!d.opts.unevaluated || d.props === !0))
         return;
-      const E = w.strictSchema && !w.allowMatchingProperties && u.properties, b = s.name("valid");
-      p.props !== !0 && !(p.props instanceof e.Name) && (p.props = (0, r.evaluatedPropsToName)(s, p.props));
-      const { props: h } = p;
-      d();
-      function d() {
+      const S = v.strictSchema && !v.allowMatchingProperties && u.properties, g = o.name("valid");
+      d.props !== !0 && !(d.props instanceof e.Name) && (d.props = (0, r.evaluatedPropsToName)(o, d.props));
+      const { props: h } = d;
+      f();
+      function f() {
         for (const m of _)
-          E && c(m), p.allErrors ? f(m) : (s.var(b, !0), f(m), s.if(b));
+          S && l(m), d.allErrors ? p(m) : (o.var(g, !0), p(m), o.if(g));
       }
-      function c(m) {
-        for (const v in E)
-          new RegExp(m).test(v) && (0, t.checkStrictMode)(p, `property ${v} matches pattern ${m} (use allowMatchingProperties)`);
+      function l(m) {
+        for (const w in S)
+          new RegExp(m).test(w) && (0, t.checkStrictMode)(d, `property ${w} matches pattern ${m} (use allowMatchingProperties)`);
       }
-      function f(m) {
-        s.forIn("key", l, (v) => {
-          s.if((0, e._)`${(0, o.usePattern)(i, m)}.test(${v})`, () => {
-            const g = S.includes(m);
-            g || i.subschema({
+      function p(m) {
+        o.forIn("key", c, (w) => {
+          o.if((0, e._)`${(0, s.usePattern)(i, m)}.test(${w})`, () => {
+            const b = $.includes(m);
+            b || i.subschema({
               keyword: "patternProperties",
               schemaProp: m,
-              dataProp: v,
+              dataProp: w,
               dataPropType: r.Type.Str
-            }, b), p.opts.unevaluated && h !== !0 ? s.assign((0, e._)`${h}[${v}]`, !0) : !g && !p.allErrors && s.if((0, e.not)(b), () => s.break());
+            }, g), d.opts.unevaluated && h !== !0 ? o.assign((0, e._)`${h}[${w}]`, !0) : !b && !d.allErrors && o.if((0, e.not)(g), () => o.break());
           });
         });
       }
     }
   };
-  return mt.default = n, mt;
+  return $t.default = n, $t;
 }
-var yt = {}, on;
-function Oi() {
-  if (on) return yt;
-  on = 1, Object.defineProperty(yt, "__esModule", { value: !0 });
-  const o = Z(), e = {
+var _t = {}, mn;
+function Wi() {
+  if (mn) return _t;
+  mn = 1, Object.defineProperty(_t, "__esModule", { value: !0 });
+  const s = Z(), e = {
     keyword: "not",
     schemaType: ["object", "boolean"],
     trackErrors: !0,
     code(t) {
       const { gen: r, schema: n, it: i } = t;
-      if ((0, o.alwaysValidSchema)(i, n)) {
+      if ((0, s.alwaysValidSchema)(i, n)) {
         t.fail();
         return;
       }
-      const s = r.name("valid");
+      const o = r.name("valid");
       t.subschema({
         keyword: "not",
         compositeRule: !0,
         createErrors: !1,
         allErrors: !1
-      }, s), t.failResult(s, () => t.reset(), () => t.error());
+      }, o), t.failResult(o, () => t.reset(), () => t.error());
     },
     error: { message: "must NOT be valid" }
   };
-  return yt.default = e, yt;
+  return _t.default = e, _t;
 }
-var gt = {}, sn;
-function qi() {
-  if (sn) return gt;
-  sn = 1, Object.defineProperty(gt, "__esModule", { value: !0 });
+var St = {}, yn;
+function Yi() {
+  if (yn) return St;
+  yn = 1, Object.defineProperty(St, "__esModule", { value: !0 });
   const e = {
     keyword: "anyOf",
     schemaType: "array",
@@ -3995,230 +3995,230 @@ function qi() {
     code: we().validateUnion,
     error: { message: "must match a schema in anyOf" }
   };
-  return gt.default = e, gt;
+  return St.default = e, St;
 }
-var vt = {}, an;
-function Di() {
-  if (an) return vt;
-  an = 1, Object.defineProperty(vt, "__esModule", { value: !0 });
-  const o = Y(), e = Z(), r = {
+var Pt = {}, gn;
+function Qi() {
+  if (gn) return Pt;
+  gn = 1, Object.defineProperty(Pt, "__esModule", { value: !0 });
+  const s = Y(), e = Z(), r = {
     keyword: "oneOf",
     schemaType: "array",
     trackErrors: !0,
     error: {
       message: "must match exactly one schema in oneOf",
-      params: ({ params: n }) => (0, o._)`{passingSchemas: ${n.passing}}`
+      params: ({ params: n }) => (0, s._)`{passingSchemas: ${n.passing}}`
     },
     code(n) {
-      const { gen: i, schema: s, parentSchema: a, it: l } = n;
-      if (!Array.isArray(s))
+      const { gen: i, schema: o, parentSchema: a, it: c } = n;
+      if (!Array.isArray(o))
         throw new Error("ajv implementation error");
-      if (l.opts.discriminator && a.discriminator)
+      if (c.opts.discriminator && a.discriminator)
         return;
-      const u = s, p = i.let("valid", !1), w = i.let("passing", null), _ = i.name("_valid");
-      n.setParams({ passing: w }), i.block(S), n.result(p, () => n.reset(), () => n.error(!0));
-      function S() {
-        u.forEach((E, b) => {
+      const u = o, d = i.let("valid", !1), v = i.let("passing", null), _ = i.name("_valid");
+      n.setParams({ passing: v }), i.block($), n.result(d, () => n.reset(), () => n.error(!0));
+      function $() {
+        u.forEach((S, g) => {
           let h;
-          (0, e.alwaysValidSchema)(l, E) ? i.var(_, !0) : h = n.subschema({
+          (0, e.alwaysValidSchema)(c, S) ? i.var(_, !0) : h = n.subschema({
             keyword: "oneOf",
-            schemaProp: b,
+            schemaProp: g,
             compositeRule: !0
-          }, _), b > 0 && i.if((0, o._)`${_} && ${p}`).assign(p, !1).assign(w, (0, o._)`[${w}, ${b}]`).else(), i.if(_, () => {
-            i.assign(p, !0), i.assign(w, b), h && n.mergeEvaluated(h, o.Name);
+          }, _), g > 0 && i.if((0, s._)`${_} && ${d}`).assign(d, !1).assign(v, (0, s._)`[${v}, ${g}]`).else(), i.if(_, () => {
+            i.assign(d, !0), i.assign(v, g), h && n.mergeEvaluated(h, s.Name);
           });
         });
       }
     }
   };
-  return vt.default = r, vt;
+  return Pt.default = r, Pt;
 }
-var bt = {}, cn;
-function xi() {
-  if (cn) return bt;
-  cn = 1, Object.defineProperty(bt, "__esModule", { value: !0 });
-  const o = Z(), e = {
+var Mt = {}, vn;
+function Xi() {
+  if (vn) return Mt;
+  vn = 1, Object.defineProperty(Mt, "__esModule", { value: !0 });
+  const s = Z(), e = {
     keyword: "allOf",
     schemaType: "array",
     code(t) {
       const { gen: r, schema: n, it: i } = t;
       if (!Array.isArray(n))
         throw new Error("ajv implementation error");
-      const s = r.name("valid");
-      n.forEach((a, l) => {
-        if ((0, o.alwaysValidSchema)(i, a))
+      const o = r.name("valid");
+      n.forEach((a, c) => {
+        if ((0, s.alwaysValidSchema)(i, a))
           return;
-        const u = t.subschema({ keyword: "allOf", schemaProp: l }, s);
-        t.ok(s), t.mergeEvaluated(u);
+        const u = t.subschema({ keyword: "allOf", schemaProp: c }, o);
+        t.ok(o), t.mergeEvaluated(u);
       });
     }
   };
-  return bt.default = e, bt;
+  return Mt.default = e, Mt;
 }
-var wt = {}, ln;
-function Vi() {
-  if (ln) return wt;
-  ln = 1, Object.defineProperty(wt, "__esModule", { value: !0 });
-  const o = Y(), e = Z(), r = {
+var Et = {}, bn;
+function Zi() {
+  if (bn) return Et;
+  bn = 1, Object.defineProperty(Et, "__esModule", { value: !0 });
+  const s = Y(), e = Z(), r = {
     keyword: "if",
     schemaType: ["object", "boolean"],
     trackErrors: !0,
     error: {
-      message: ({ params: i }) => (0, o.str)`must match "${i.ifClause}" schema`,
-      params: ({ params: i }) => (0, o._)`{failingKeyword: ${i.ifClause}}`
+      message: ({ params: i }) => (0, s.str)`must match "${i.ifClause}" schema`,
+      params: ({ params: i }) => (0, s._)`{failingKeyword: ${i.ifClause}}`
     },
     code(i) {
-      const { gen: s, parentSchema: a, it: l } = i;
-      a.then === void 0 && a.else === void 0 && (0, e.checkStrictMode)(l, '"if" without "then" and "else" is ignored');
-      const u = n(l, "then"), p = n(l, "else");
-      if (!u && !p)
+      const { gen: o, parentSchema: a, it: c } = i;
+      a.then === void 0 && a.else === void 0 && (0, e.checkStrictMode)(c, '"if" without "then" and "else" is ignored');
+      const u = n(c, "then"), d = n(c, "else");
+      if (!u && !d)
         return;
-      const w = s.let("valid", !0), _ = s.name("_valid");
-      if (S(), i.reset(), u && p) {
-        const b = s.let("ifClause");
-        i.setParams({ ifClause: b }), s.if(_, E("then", b), E("else", b));
-      } else u ? s.if(_, E("then")) : s.if((0, o.not)(_), E("else"));
-      i.pass(w, () => i.error(!0));
-      function S() {
-        const b = i.subschema({
+      const v = o.let("valid", !0), _ = o.name("_valid");
+      if ($(), i.reset(), u && d) {
+        const g = o.let("ifClause");
+        i.setParams({ ifClause: g }), o.if(_, S("then", g), S("else", g));
+      } else u ? o.if(_, S("then")) : o.if((0, s.not)(_), S("else"));
+      i.pass(v, () => i.error(!0));
+      function $() {
+        const g = i.subschema({
           keyword: "if",
           compositeRule: !0,
           createErrors: !1,
           allErrors: !1
         }, _);
-        i.mergeEvaluated(b);
+        i.mergeEvaluated(g);
       }
-      function E(b, h) {
+      function S(g, h) {
         return () => {
-          const d = i.subschema({ keyword: b }, _);
-          s.assign(w, _), i.mergeValidEvaluated(d, w), h ? s.assign(h, (0, o._)`${b}`) : i.setParams({ ifClause: b });
+          const f = i.subschema({ keyword: g }, _);
+          o.assign(v, _), i.mergeValidEvaluated(f, v), h ? o.assign(h, (0, s._)`${g}`) : i.setParams({ ifClause: g });
         };
       }
     }
   };
-  function n(i, s) {
-    const a = i.schema[s];
+  function n(i, o) {
+    const a = i.schema[o];
     return a !== void 0 && !(0, e.alwaysValidSchema)(i, a);
   }
-  return wt.default = r, wt;
+  return Et.default = r, Et;
 }
-var $t = {}, un;
-function zi() {
-  if (un) return $t;
-  un = 1, Object.defineProperty($t, "__esModule", { value: !0 });
-  const o = Z(), e = {
+var Tt = {}, wn;
+function es() {
+  if (wn) return Tt;
+  wn = 1, Object.defineProperty(Tt, "__esModule", { value: !0 });
+  const s = Z(), e = {
     keyword: ["then", "else"],
     schemaType: ["object", "boolean"],
     code({ keyword: t, parentSchema: r, it: n }) {
-      r.if === void 0 && (0, o.checkStrictMode)(n, `"${t}" without "if" is ignored`);
+      r.if === void 0 && (0, s.checkStrictMode)(n, `"${t}" without "if" is ignored`);
     }
   };
-  return $t.default = e, $t;
+  return Tt.default = e, Tt;
 }
-var dn;
-function Fi() {
-  if (dn) return ct;
-  dn = 1, Object.defineProperty(ct, "__esModule", { value: !0 });
-  const o = Pn(), e = ki(), t = Sn(), r = Ni(), n = Ri(), i = Ai(), s = ji(), a = En(), l = Ci(), u = Ii(), p = Oi(), w = qi(), _ = Di(), S = xi(), E = Vi(), b = zi();
-  function h(d = !1) {
-    const c = [
+var $n;
+function ts() {
+  if ($n) return pt;
+  $n = 1, Object.defineProperty(pt, "__esModule", { value: !0 });
+  const s = jn(), e = Li(), t = qn(), r = Ui(), n = Gi(), i = Bi(), o = Ki(), a = On(), c = Hi(), u = Ji(), d = Wi(), v = Yi(), _ = Qi(), $ = Xi(), S = Zi(), g = es();
+  function h(f = !1) {
+    const l = [
       // any
-      p.default,
-      w.default,
+      d.default,
+      v.default,
       _.default,
+      $.default,
       S.default,
-      E.default,
-      b.default,
+      g.default,
       // object
-      s.default,
+      o.default,
       a.default,
       i.default,
-      l.default,
+      c.default,
       u.default
     ];
-    return d ? c.push(e.default, r.default) : c.push(o.default, t.default), c.push(n.default), c;
+    return f ? l.push(e.default, r.default) : l.push(s.default, t.default), l.push(n.default), l;
   }
-  return ct.default = h, ct;
+  return pt.default = h, pt;
 }
-var _t = {}, Pt = {}, fn;
-function Li() {
-  if (fn) return Pt;
-  fn = 1, Object.defineProperty(Pt, "__esModule", { value: !0 });
-  const o = Y(), t = {
+var kt = {}, Nt = {}, _n;
+function rs() {
+  if (_n) return Nt;
+  _n = 1, Object.defineProperty(Nt, "__esModule", { value: !0 });
+  const s = Y(), t = {
     keyword: "format",
     type: ["number", "string"],
     schemaType: "string",
     $data: !0,
     error: {
-      message: ({ schemaCode: r }) => (0, o.str)`must match format "${r}"`,
-      params: ({ schemaCode: r }) => (0, o._)`{format: ${r}}`
+      message: ({ schemaCode: r }) => (0, s.str)`must match format "${r}"`,
+      params: ({ schemaCode: r }) => (0, s._)`{format: ${r}}`
     },
     code(r, n) {
-      const { gen: i, data: s, $data: a, schema: l, schemaCode: u, it: p } = r, { opts: w, errSchemaPath: _, schemaEnv: S, self: E } = p;
-      if (!w.validateFormats)
+      const { gen: i, data: o, $data: a, schema: c, schemaCode: u, it: d } = r, { opts: v, errSchemaPath: _, schemaEnv: $, self: S } = d;
+      if (!v.validateFormats)
         return;
-      a ? b() : h();
-      function b() {
-        const d = i.scopeValue("formats", {
-          ref: E.formats,
-          code: w.code.formats
-        }), c = i.const("fDef", (0, o._)`${d}[${u}]`), f = i.let("fType"), m = i.let("format");
-        i.if((0, o._)`typeof ${c} == "object" && !(${c} instanceof RegExp)`, () => i.assign(f, (0, o._)`${c}.type || "string"`).assign(m, (0, o._)`${c}.validate`), () => i.assign(f, (0, o._)`"string"`).assign(m, c)), r.fail$data((0, o.or)(v(), g()));
-        function v() {
-          return w.strictSchema === !1 ? o.nil : (0, o._)`${u} && !${m}`;
+      a ? g() : h();
+      function g() {
+        const f = i.scopeValue("formats", {
+          ref: S.formats,
+          code: v.code.formats
+        }), l = i.const("fDef", (0, s._)`${f}[${u}]`), p = i.let("fType"), m = i.let("format");
+        i.if((0, s._)`typeof ${l} == "object" && !(${l} instanceof RegExp)`, () => i.assign(p, (0, s._)`${l}.type || "string"`).assign(m, (0, s._)`${l}.validate`), () => i.assign(p, (0, s._)`"string"`).assign(m, l)), r.fail$data((0, s.or)(w(), b()));
+        function w() {
+          return v.strictSchema === !1 ? s.nil : (0, s._)`${u} && !${m}`;
         }
-        function g() {
-          const $ = S.$async ? (0, o._)`(${c}.async ? await ${m}(${s}) : ${m}(${s}))` : (0, o._)`${m}(${s})`, k = (0, o._)`(typeof ${m} == "function" ? ${$} : ${m}.test(${s}))`;
-          return (0, o._)`${m} && ${m} !== true && ${f} === ${n} && !${k}`;
+        function b() {
+          const P = $.$async ? (0, s._)`(${l}.async ? await ${m}(${o}) : ${m}(${o}))` : (0, s._)`${m}(${o})`, k = (0, s._)`(typeof ${m} == "function" ? ${P} : ${m}.test(${o}))`;
+          return (0, s._)`${m} && ${m} !== true && ${p} === ${n} && !${k}`;
         }
       }
       function h() {
-        const d = E.formats[l];
-        if (!d) {
-          v();
+        const f = S.formats[c];
+        if (!f) {
+          w();
           return;
         }
-        if (d === !0)
+        if (f === !0)
           return;
-        const [c, f, m] = g(d);
-        c === n && r.pass($());
-        function v() {
-          if (w.strictSchema === !1) {
-            E.logger.warn(k());
+        const [l, p, m] = b(f);
+        l === n && r.pass(P());
+        function w() {
+          if (v.strictSchema === !1) {
+            S.logger.warn(k());
             return;
           }
           throw new Error(k());
           function k() {
-            return `unknown format "${l}" ignored in schema at path "${_}"`;
+            return `unknown format "${c}" ignored in schema at path "${_}"`;
           }
         }
-        function g(k) {
-          const j = k instanceof RegExp ? (0, o.regexpCode)(k) : w.code.formats ? (0, o._)`${w.code.formats}${(0, o.getProperty)(l)}` : void 0, D = i.scopeValue("formats", { key: l, ref: k, code: j });
-          return typeof k == "object" && !(k instanceof RegExp) ? [k.type || "string", k.validate, (0, o._)`${D}.validate`] : ["string", k, D];
+        function b(k) {
+          const C = k instanceof RegExp ? (0, s.regexpCode)(k) : v.code.formats ? (0, s._)`${v.code.formats}${(0, s.getProperty)(c)}` : void 0, x = i.scopeValue("formats", { key: c, ref: k, code: C });
+          return typeof k == "object" && !(k instanceof RegExp) ? [k.type || "string", k.validate, (0, s._)`${x}.validate`] : ["string", k, x];
         }
-        function $() {
-          if (typeof d == "object" && !(d instanceof RegExp) && d.async) {
-            if (!S.$async)
+        function P() {
+          if (typeof f == "object" && !(f instanceof RegExp) && f.async) {
+            if (!$.$async)
               throw new Error("async format in sync schema");
-            return (0, o._)`await ${m}(${s})`;
+            return (0, s._)`await ${m}(${o})`;
           }
-          return typeof f == "function" ? (0, o._)`${m}(${s})` : (0, o._)`${m}.test(${s})`;
+          return typeof p == "function" ? (0, s._)`${m}(${o})` : (0, s._)`${m}.test(${o})`;
         }
       }
     }
   };
-  return Pt.default = t, Pt;
+  return Nt.default = t, Nt;
 }
-var hn;
-function Ui() {
-  if (hn) return _t;
-  hn = 1, Object.defineProperty(_t, "__esModule", { value: !0 });
-  const e = [Li().default];
-  return _t.default = e, _t;
+var Sn;
+function ns() {
+  if (Sn) return kt;
+  Sn = 1, Object.defineProperty(kt, "__esModule", { value: !0 });
+  const e = [rs().default];
+  return kt.default = e, kt;
 }
-var Ne = {}, pn;
-function Gi() {
-  return pn || (pn = 1, Object.defineProperty(Ne, "__esModule", { value: !0 }), Ne.contentVocabulary = Ne.metadataVocabulary = void 0, Ne.metadataVocabulary = [
+var Re = {}, Pn;
+function is() {
+  return Pn || (Pn = 1, Object.defineProperty(Re, "__esModule", { value: !0 }), Re.contentVocabulary = Re.metadataVocabulary = void 0, Re.metadataVocabulary = [
     "title",
     "description",
     "default",
@@ -4226,205 +4226,205 @@ function Gi() {
     "readOnly",
     "writeOnly",
     "examples"
-  ], Ne.contentVocabulary = [
+  ], Re.contentVocabulary = [
     "contentMediaType",
     "contentEncoding",
     "contentSchema"
-  ]), Ne;
+  ]), Re;
 }
-var mn;
-function Bi() {
-  if (mn) return Ke;
-  mn = 1, Object.defineProperty(Ke, "__esModule", { value: !0 });
-  const o = mi(), e = Ti(), t = Fi(), r = Ui(), n = Gi(), i = [
-    o.default,
+var Mn;
+function ss() {
+  if (Mn) return Xe;
+  Mn = 1, Object.defineProperty(Xe, "__esModule", { value: !0 });
+  const s = Ni(), e = Fi(), t = ts(), r = ns(), n = is(), i = [
+    s.default,
     e.default,
     (0, t.default)(),
     r.default,
     n.metadataVocabulary,
     n.contentVocabulary
   ];
-  return Ke.default = i, Ke;
+  return Xe.default = i, Xe;
 }
-var St = {}, Oe = {}, yn;
-function Ki() {
-  if (yn) return Oe;
-  yn = 1, Object.defineProperty(Oe, "__esModule", { value: !0 }), Oe.DiscrError = void 0;
-  var o;
+var At = {}, Ve = {}, En;
+function os() {
+  if (En) return Ve;
+  En = 1, Object.defineProperty(Ve, "__esModule", { value: !0 }), Ve.DiscrError = void 0;
+  var s;
   return (function(e) {
     e.Tag = "tag", e.Mapping = "mapping";
-  })(o || (Oe.DiscrError = o = {})), Oe;
+  })(s || (Ve.DiscrError = s = {})), Ve;
 }
-var gn;
-function Hi() {
-  if (gn) return St;
-  gn = 1, Object.defineProperty(St, "__esModule", { value: !0 });
-  const o = Y(), e = Ki(), t = Yt(), r = jt(), n = Z(), s = {
+var Tn;
+function as() {
+  if (Tn) return At;
+  Tn = 1, Object.defineProperty(At, "__esModule", { value: !0 });
+  const s = Y(), e = os(), t = nr(), r = zt(), n = Z(), o = {
     keyword: "discriminator",
     type: "object",
     schemaType: "object",
     error: {
-      message: ({ params: { discrError: a, tagName: l } }) => a === e.DiscrError.Tag ? `tag "${l}" must be string` : `value of tag "${l}" must be in oneOf`,
-      params: ({ params: { discrError: a, tag: l, tagName: u } }) => (0, o._)`{error: ${a}, tag: ${u}, tagValue: ${l}}`
+      message: ({ params: { discrError: a, tagName: c } }) => a === e.DiscrError.Tag ? `tag "${c}" must be string` : `value of tag "${c}" must be in oneOf`,
+      params: ({ params: { discrError: a, tag: c, tagName: u } }) => (0, s._)`{error: ${a}, tag: ${u}, tagValue: ${c}}`
     },
     code(a) {
-      const { gen: l, data: u, schema: p, parentSchema: w, it: _ } = a, { oneOf: S } = w;
+      const { gen: c, data: u, schema: d, parentSchema: v, it: _ } = a, { oneOf: $ } = v;
       if (!_.opts.discriminator)
         throw new Error("discriminator: requires discriminator option");
-      const E = p.propertyName;
-      if (typeof E != "string")
+      const S = d.propertyName;
+      if (typeof S != "string")
         throw new Error("discriminator: requires propertyName");
-      if (p.mapping)
+      if (d.mapping)
         throw new Error("discriminator: mapping is not supported");
-      if (!S)
+      if (!$)
         throw new Error("discriminator: requires oneOf keyword");
-      const b = l.let("valid", !1), h = l.const("tag", (0, o._)`${u}${(0, o.getProperty)(E)}`);
-      l.if((0, o._)`typeof ${h} == "string"`, () => d(), () => a.error(!1, { discrError: e.DiscrError.Tag, tag: h, tagName: E })), a.ok(b);
-      function d() {
-        const m = f();
-        l.if(!1);
-        for (const v in m)
-          l.elseIf((0, o._)`${h} === ${v}`), l.assign(b, c(m[v]));
-        l.else(), a.error(!1, { discrError: e.DiscrError.Mapping, tag: h, tagName: E }), l.endIf();
-      }
-      function c(m) {
-        const v = l.name("valid"), g = a.subschema({ keyword: "oneOf", schemaProp: m }, v);
-        return a.mergeEvaluated(g, o.Name), v;
-      }
+      const g = c.let("valid", !1), h = c.const("tag", (0, s._)`${u}${(0, s.getProperty)(S)}`);
+      c.if((0, s._)`typeof ${h} == "string"`, () => f(), () => a.error(!1, { discrError: e.DiscrError.Tag, tag: h, tagName: S })), a.ok(g);
       function f() {
+        const m = p();
+        c.if(!1);
+        for (const w in m)
+          c.elseIf((0, s._)`${h} === ${w}`), c.assign(g, l(m[w]));
+        c.else(), a.error(!1, { discrError: e.DiscrError.Mapping, tag: h, tagName: S }), c.endIf();
+      }
+      function l(m) {
+        const w = c.name("valid"), b = a.subschema({ keyword: "oneOf", schemaProp: m }, w);
+        return a.mergeEvaluated(b, s.Name), w;
+      }
+      function p() {
         var m;
-        const v = {}, g = k(w);
-        let $ = !0;
-        for (let V = 0; V < S.length; V++) {
-          let B = S[V];
+        const w = {}, b = k(v);
+        let P = !0;
+        for (let z = 0; z < $.length; z++) {
+          let B = $[z];
           if (B?.$ref && !(0, n.schemaHasRulesButRef)(B, _.self.RULES)) {
             const H = B.$ref;
             if (B = t.resolveRef.call(_.self, _.schemaEnv.root, _.baseId, H), B instanceof t.SchemaEnv && (B = B.schema), B === void 0)
               throw new r.default(_.opts.uriResolver, _.baseId, H);
           }
-          const L = (m = B?.properties) === null || m === void 0 ? void 0 : m[E];
+          const L = (m = B?.properties) === null || m === void 0 ? void 0 : m[S];
           if (typeof L != "object")
-            throw new Error(`discriminator: oneOf subschemas (or referenced schemas) must have "properties/${E}"`);
-          $ = $ && (g || k(B)), j(L, V);
+            throw new Error(`discriminator: oneOf subschemas (or referenced schemas) must have "properties/${S}"`);
+          P = P && (b || k(B)), C(L, z);
         }
-        if (!$)
-          throw new Error(`discriminator: "${E}" must be required`);
-        return v;
-        function k({ required: V }) {
-          return Array.isArray(V) && V.includes(E);
+        if (!P)
+          throw new Error(`discriminator: "${S}" must be required`);
+        return w;
+        function k({ required: z }) {
+          return Array.isArray(z) && z.includes(S);
         }
-        function j(V, B) {
-          if (V.const)
-            D(V.const, B);
-          else if (V.enum)
-            for (const L of V.enum)
-              D(L, B);
+        function C(z, B) {
+          if (z.const)
+            x(z.const, B);
+          else if (z.enum)
+            for (const L of z.enum)
+              x(L, B);
           else
-            throw new Error(`discriminator: "properties/${E}" must have "const" or "enum"`);
+            throw new Error(`discriminator: "properties/${S}" must have "const" or "enum"`);
         }
-        function D(V, B) {
-          if (typeof V != "string" || V in v)
-            throw new Error(`discriminator: "${E}" values must be unique strings`);
-          v[V] = B;
+        function x(z, B) {
+          if (typeof z != "string" || z in w)
+            throw new Error(`discriminator: "${S}" values must be unique strings`);
+          w[z] = B;
         }
       }
     }
   };
-  return St.default = s, St;
+  return At.default = o, At;
 }
-const Ji = "http://json-schema.org/draft-07/schema#", Wi = "http://json-schema.org/draft-07/schema#", Yi = "Core schema meta-schema", Qi = { schemaArray: { type: "array", minItems: 1, items: { $ref: "#" } }, nonNegativeInteger: { type: "integer", minimum: 0 }, nonNegativeIntegerDefault0: { allOf: [{ $ref: "#/definitions/nonNegativeInteger" }, { default: 0 }] }, simpleTypes: { enum: ["array", "boolean", "integer", "null", "number", "object", "string"] }, stringArray: { type: "array", items: { type: "string" }, uniqueItems: !0, default: [] } }, Xi = ["object", "boolean"], Zi = { $id: { type: "string", format: "uri-reference" }, $schema: { type: "string", format: "uri" }, $ref: { type: "string", format: "uri-reference" }, $comment: { type: "string" }, title: { type: "string" }, description: { type: "string" }, default: !0, readOnly: { type: "boolean", default: !1 }, examples: { type: "array", items: !0 }, multipleOf: { type: "number", exclusiveMinimum: 0 }, maximum: { type: "number" }, exclusiveMaximum: { type: "number" }, minimum: { type: "number" }, exclusiveMinimum: { type: "number" }, maxLength: { $ref: "#/definitions/nonNegativeInteger" }, minLength: { $ref: "#/definitions/nonNegativeIntegerDefault0" }, pattern: { type: "string", format: "regex" }, additionalItems: { $ref: "#" }, items: { anyOf: [{ $ref: "#" }, { $ref: "#/definitions/schemaArray" }], default: !0 }, maxItems: { $ref: "#/definitions/nonNegativeInteger" }, minItems: { $ref: "#/definitions/nonNegativeIntegerDefault0" }, uniqueItems: { type: "boolean", default: !1 }, contains: { $ref: "#" }, maxProperties: { $ref: "#/definitions/nonNegativeInteger" }, minProperties: { $ref: "#/definitions/nonNegativeIntegerDefault0" }, required: { $ref: "#/definitions/stringArray" }, additionalProperties: { $ref: "#" }, definitions: { type: "object", additionalProperties: { $ref: "#" }, default: {} }, properties: { type: "object", additionalProperties: { $ref: "#" }, default: {} }, patternProperties: { type: "object", additionalProperties: { $ref: "#" }, propertyNames: { format: "regex" }, default: {} }, dependencies: { type: "object", additionalProperties: { anyOf: [{ $ref: "#" }, { $ref: "#/definitions/stringArray" }] } }, propertyNames: { $ref: "#" }, const: !0, enum: { type: "array", items: !0, minItems: 1, uniqueItems: !0 }, type: { anyOf: [{ $ref: "#/definitions/simpleTypes" }, { type: "array", items: { $ref: "#/definitions/simpleTypes" }, minItems: 1, uniqueItems: !0 }] }, format: { type: "string" }, contentMediaType: { type: "string" }, contentEncoding: { type: "string" }, if: { $ref: "#" }, then: { $ref: "#" }, else: { $ref: "#" }, allOf: { $ref: "#/definitions/schemaArray" }, anyOf: { $ref: "#/definitions/schemaArray" }, oneOf: { $ref: "#/definitions/schemaArray" }, not: { $ref: "#" } }, eo = {
-  $schema: Ji,
-  $id: Wi,
-  title: Yi,
-  definitions: Qi,
-  type: Xi,
-  properties: Zi,
+const cs = "http://json-schema.org/draft-07/schema#", ls = "http://json-schema.org/draft-07/schema#", us = "Core schema meta-schema", ds = { schemaArray: { type: "array", minItems: 1, items: { $ref: "#" } }, nonNegativeInteger: { type: "integer", minimum: 0 }, nonNegativeIntegerDefault0: { allOf: [{ $ref: "#/definitions/nonNegativeInteger" }, { default: 0 }] }, simpleTypes: { enum: ["array", "boolean", "integer", "null", "number", "object", "string"] }, stringArray: { type: "array", items: { type: "string" }, uniqueItems: !0, default: [] } }, hs = ["object", "boolean"], fs = { $id: { type: "string", format: "uri-reference" }, $schema: { type: "string", format: "uri" }, $ref: { type: "string", format: "uri-reference" }, $comment: { type: "string" }, title: { type: "string" }, description: { type: "string" }, default: !0, readOnly: { type: "boolean", default: !1 }, examples: { type: "array", items: !0 }, multipleOf: { type: "number", exclusiveMinimum: 0 }, maximum: { type: "number" }, exclusiveMaximum: { type: "number" }, minimum: { type: "number" }, exclusiveMinimum: { type: "number" }, maxLength: { $ref: "#/definitions/nonNegativeInteger" }, minLength: { $ref: "#/definitions/nonNegativeIntegerDefault0" }, pattern: { type: "string", format: "regex" }, additionalItems: { $ref: "#" }, items: { anyOf: [{ $ref: "#" }, { $ref: "#/definitions/schemaArray" }], default: !0 }, maxItems: { $ref: "#/definitions/nonNegativeInteger" }, minItems: { $ref: "#/definitions/nonNegativeIntegerDefault0" }, uniqueItems: { type: "boolean", default: !1 }, contains: { $ref: "#" }, maxProperties: { $ref: "#/definitions/nonNegativeInteger" }, minProperties: { $ref: "#/definitions/nonNegativeIntegerDefault0" }, required: { $ref: "#/definitions/stringArray" }, additionalProperties: { $ref: "#" }, definitions: { type: "object", additionalProperties: { $ref: "#" }, default: {} }, properties: { type: "object", additionalProperties: { $ref: "#" }, default: {} }, patternProperties: { type: "object", additionalProperties: { $ref: "#" }, propertyNames: { format: "regex" }, default: {} }, dependencies: { type: "object", additionalProperties: { anyOf: [{ $ref: "#" }, { $ref: "#/definitions/stringArray" }] } }, propertyNames: { $ref: "#" }, const: !0, enum: { type: "array", items: !0, minItems: 1, uniqueItems: !0 }, type: { anyOf: [{ $ref: "#/definitions/simpleTypes" }, { type: "array", items: { $ref: "#/definitions/simpleTypes" }, minItems: 1, uniqueItems: !0 }] }, format: { type: "string" }, contentMediaType: { type: "string" }, contentEncoding: { type: "string" }, if: { $ref: "#" }, then: { $ref: "#" }, else: { $ref: "#" }, allOf: { $ref: "#/definitions/schemaArray" }, anyOf: { $ref: "#/definitions/schemaArray" }, oneOf: { $ref: "#/definitions/schemaArray" }, not: { $ref: "#" } }, ps = {
+  $schema: cs,
+  $id: ls,
+  title: us,
+  definitions: ds,
+  type: hs,
+  properties: fs,
   default: !0
 };
-var vn;
-function to() {
-  return vn || (vn = 1, (function(o, e) {
+var kn;
+function ms() {
+  return kn || (kn = 1, (function(s, e) {
     Object.defineProperty(e, "__esModule", { value: !0 }), e.MissingRefError = e.ValidationError = e.CodeGen = e.Name = e.nil = e.stringify = e.str = e._ = e.KeywordCxt = e.Ajv = void 0;
-    const t = fi(), r = Bi(), n = Hi(), i = eo, s = ["/properties"], a = "http://json-schema.org/draft-07/schema";
-    class l extends t.default {
+    const t = Ei(), r = ss(), n = as(), i = ps, o = ["/properties"], a = "http://json-schema.org/draft-07/schema";
+    class c extends t.default {
       _addVocabularies() {
-        super._addVocabularies(), r.default.forEach((E) => this.addVocabulary(E)), this.opts.discriminator && this.addKeyword(n.default);
+        super._addVocabularies(), r.default.forEach((S) => this.addVocabulary(S)), this.opts.discriminator && this.addKeyword(n.default);
       }
       _addDefaultMetaSchema() {
         if (super._addDefaultMetaSchema(), !this.opts.meta)
           return;
-        const E = this.opts.$data ? this.$dataMetaSchema(i, s) : i;
-        this.addMetaSchema(E, a, !1), this.refs["http://json-schema.org/schema"] = a;
+        const S = this.opts.$data ? this.$dataMetaSchema(i, o) : i;
+        this.addMetaSchema(S, a, !1), this.refs["http://json-schema.org/schema"] = a;
       }
       defaultMeta() {
         return this.opts.defaultMeta = super.defaultMeta() || (this.getSchema(a) ? a : void 0);
       }
     }
-    e.Ajv = l, o.exports = e = l, o.exports.Ajv = l, Object.defineProperty(e, "__esModule", { value: !0 }), e.default = l;
-    var u = At();
+    e.Ajv = c, s.exports = e = c, s.exports.Ajv = c, Object.defineProperty(e, "__esModule", { value: !0 }), e.default = c;
+    var u = Dt();
     Object.defineProperty(e, "KeywordCxt", { enumerable: !0, get: function() {
       return u.KeywordCxt;
     } });
-    var p = Y();
+    var d = Y();
     Object.defineProperty(e, "_", { enumerable: !0, get: function() {
-      return p._;
+      return d._;
     } }), Object.defineProperty(e, "str", { enumerable: !0, get: function() {
-      return p.str;
+      return d.str;
     } }), Object.defineProperty(e, "stringify", { enumerable: !0, get: function() {
-      return p.stringify;
+      return d.stringify;
     } }), Object.defineProperty(e, "nil", { enumerable: !0, get: function() {
-      return p.nil;
+      return d.nil;
     } }), Object.defineProperty(e, "Name", { enumerable: !0, get: function() {
-      return p.Name;
+      return d.Name;
     } }), Object.defineProperty(e, "CodeGen", { enumerable: !0, get: function() {
-      return p.CodeGen;
+      return d.CodeGen;
     } });
-    var w = Wt();
+    var v = rr();
     Object.defineProperty(e, "ValidationError", { enumerable: !0, get: function() {
-      return w.default;
+      return v.default;
     } });
-    var _ = jt();
+    var _ = zt();
     Object.defineProperty(e, "MissingRefError", { enumerable: !0, get: function() {
       return _.default;
     } });
-  })(Fe, Fe.exports)), Fe.exports;
+  })(He, He.exports)), He.exports;
 }
-var ro = to();
-const no = /* @__PURE__ */ Jn(ro), io = "http://json-schema.org/draft-07/schema#", oo = "JMON Composition (Multi-Track, Extended)", so = "A declarative music format supporting synthesis, MIDI, score notation, key changes, arbitrary metadata, annotations, and custom presets. Time values should use the bars:beats:ticks format (e.g., '2:1:240') for precise musical timing. This format is independent of BPM and follows professional DAW standards.", ao = "object", co = ["format", "version", "bpm", "tracks"], lo = /* @__PURE__ */ JSON.parse(`{"format":{"type":"string","const":"jmon","description":"The format identifier for the JMON schema."},"version":{"type":"string","description":"JMON schema version."},"bpm":{"type":"number","minimum":20,"maximum":400,"description":"Tempo in beats per minute."},"keySignature":{"type":"string","pattern":"^[A-G](#|b)?m?$","description":"Key signature (e.g., 'C', 'Am', 'F#')."},"keySignatureMap":{"type":"array","description":"Map of key signature changes over time.","items":{"type":"object","required":["time","keySignature"],"properties":{"time":{"oneOf":[{"type":"string","pattern":"^\\\\d+:\\\\d+(\\\\.\\\\d+)?:\\\\d+$","description":"Musical time in bars:beats:ticks format (e.g., '2:0:0')."},{"type":"number","description":"Legacy: Time in beats (deprecated)."}],"description":"Time of the key signature change."},"keySignature":{"type":"string","pattern":"^[A-G](#|b)?m?$","description":"New key signature at this time."}},"additionalProperties":false}},"timeSignature":{"type":"string","pattern":"^\\\\d+/\\\\d+$","description":"Time signature for the composition (e.g., '4/4')."},"tempoMap":{"type":"array","description":"Map of tempo changes over time.","items":{"type":"object","required":["time","bpm"],"properties":{"time":{"oneOf":[{"type":"string","pattern":"^\\\\d+:\\\\d+(\\\\.\\\\d+)?:\\\\d+$","description":"Musical time in bars:beats:ticks format (e.g., '4:0:0')."},{"type":"number","description":"Legacy: Time in beats (deprecated)."}],"description":"The time point for the tempo change."},"bpm":{"type":"number","minimum":20,"maximum":400,"description":"Tempo in beats per minute at this time point."}},"additionalProperties":false}},"transport":{"type":"object","description":"Settings controlling global playback and looping.","properties":{"startOffset":{"oneOf":[{"type":"string","pattern":"^\\\\d+:\\\\d+(\\\\.\\\\d+)?:\\\\d+$","description":"Musical time in bars:beats:ticks format (e.g., '0:2:0')."},{"type":"number","description":"Legacy: Time in beats (deprecated)."}],"description":"Offset for when playback should start."},"globalLoop":{"type":"boolean","description":"Whether the entire project should loop."},"globalLoopEnd":{"type":"string","pattern":"^\\\\d+:\\\\d+(\\\\.\\\\d+)?:\\\\d+$","description":"Musical time in bars:beats:ticks format where the global loop should end (e.g., '8:0:0')."},"swing":{"type":"number","minimum":0,"maximum":1,"description":"Swing amount (0-1)."}},"additionalProperties":false},"metadata":{"type":"object","description":"Metadata for the composition, allowing arbitrary fields.","properties":{"name":{"type":"string","description":"Name of the composition."},"author":{"type":"string","description":"Author or composer."},"description":{"type":"string","description":"Description of the composition."}},"additionalProperties":true},"customPresets":{"type":"array","description":"Array of custom user-defined presets for synths or effects.","items":{"type":"object","required":["id","type","options"],"properties":{"id":{"type":"string","description":"Unique identifier for this preset."},"type":{"type":"string","description":"Type of preset (e.g., 'Synth', 'Effect', 'Sampler')."},"options":{"type":"object","description":"Preset options."}},"additionalProperties":false}},"audioGraph":{"type":"array","description":"Audio node graph for synthesis. If not provided, a default synth->master setup will be created automatically.","default":[{"id":"synth","type":"Synth","options":{}},{"id":"master","type":"Destination","options":{}}],"items":{"type":"object","required":["id","type","options"],"properties":{"id":{"type":"string","description":"Unique identifier for this node."},"type":{"type":"string","enum":["Synth","PolySynth","MonoSynth","AMSynth","FMSynth","DuoSynth","PluckSynth","NoiseSynth","Sampler","Filter","AutoFilter","Reverb","FeedbackDelay","PingPongDelay","Delay","Chorus","Phaser","Tremolo","Vibrato","AutoWah","Distortion","Chebyshev","BitCrusher","Compressor","Limiter","Gate","FrequencyShifter","PitchShift","JCReverb","Freeverb","StereoWidener","MidSideCompressor","Destination"],"description":"Type of audio node (Synth, Sampler, Effect, etc.)."},"options":{"type":"object","description":"Options for this node. Content varies by node type."},"target":{"type":"string","description":"Target node for audio routing."},"presetRef":{"type":"string","description":"Reference to a custom preset."}},"allOf":[{"if":{"properties":{"type":{"const":"Sampler"}}},"then":{"properties":{"options":{"type":"object","properties":{"urls":{"type":"object","description":"Sample URLs for Sampler nodes (note -> file path mapping)","patternProperties":{"^[A-G](#|b)?[0-8]$":{"type":"string","description":"File path to sample for this note"}}},"envelope":{"type":"object","description":"Automatic envelope for Samplers to smooth attack/release","properties":{"enabled":{"type":"boolean","default":true,"description":"Whether to apply automatic envelope"},"attack":{"type":"number","minimum":0,"maximum":2,"default":0.02,"description":"Attack time in seconds"},"decay":{"type":"number","minimum":0,"maximum":2,"default":0.1,"description":"Decay time in seconds"},"sustain":{"type":"number","minimum":0,"maximum":1,"default":0.8,"description":"Sustain level (0-1)"},"release":{"type":"number","minimum":0,"maximum":5,"default":0.3,"description":"Release time in seconds"}},"additionalProperties":false}},"additionalProperties":false}}}},{"if":{"properties":{"type":{"enum":["Synth","PolySynth","MonoSynth","AMSynth","FMSynth","DuoSynth","PluckSynth","NoiseSynth"]}}},"then":{"properties":{"options":{"type":"object","properties":{"oscillator":{"type":"object","description":"Oscillator settings for synths"},"envelope":{"type":"object","description":"ADSR envelope settings for synths"},"filter":{"type":"object","description":"Filter settings for synths"}},"additionalProperties":true}}}},{"if":{"properties":{"type":{"enum":["Reverb","JCReverb","Freeverb"]}}},"then":{"properties":{"options":{"type":"object","properties":{"wet":{"type":"number","minimum":0,"maximum":1,"default":0.5,"description":"Wet/dry mix (0=dry, 1=wet)"},"roomSize":{"type":"number","minimum":0,"maximum":1,"default":0.7,"description":"Room size for reverb effects"},"dampening":{"type":"number","minimum":0,"maximum":1,"default":0.3,"description":"Dampening for reverb effects"}},"additionalProperties":false}}}},{"if":{"properties":{"type":{"enum":["Delay","FeedbackDelay","PingPongDelay"]}}},"then":{"properties":{"options":{"type":"object","properties":{"wet":{"type":"number","minimum":0,"maximum":1,"default":0.5,"description":"Wet/dry mix (0=dry, 1=wet)"},"delayTime":{"type":"string","default":"8n","description":"Delay time (note values like '8n' or seconds)"},"feedback":{"type":"number","minimum":0,"maximum":0.95,"default":0.4,"description":"Feedback amount for delay effects"}},"additionalProperties":false}}}},{"if":{"properties":{"type":{"enum":["Filter","AutoFilter"]}}},"then":{"properties":{"options":{"type":"object","properties":{"frequency":{"type":"number","minimum":20,"maximum":20000,"default":1000,"description":"Filter frequency"},"Q":{"type":"number","minimum":0.1,"maximum":50,"default":1,"description":"Filter Q/resonance"},"type":{"type":"string","enum":["lowpass","highpass","bandpass","notch"],"default":"lowpass","description":"Filter type"}},"additionalProperties":false}}}},{"if":{"properties":{"type":{"enum":["Chorus","Phaser"]}}},"then":{"properties":{"options":{"type":"object","properties":{"wet":{"type":"number","minimum":0,"maximum":1,"default":0.5,"description":"Wet/dry mix (0=dry, 1=wet)"},"depth":{"type":"number","minimum":0,"maximum":1,"default":0.5,"description":"Modulation depth"},"rate":{"type":"string","default":"4n","description":"Modulation rate (note values or Hz)"}},"additionalProperties":false}}}},{"if":{"properties":{"type":{"enum":["Compressor","Limiter","Gate"]}}},"then":{"properties":{"options":{"type":"object","properties":{"threshold":{"type":"number","minimum":-60,"maximum":0,"default":-24,"description":"Threshold in dB"},"ratio":{"type":"number","minimum":1,"maximum":20,"default":4,"description":"Compression ratio"},"attack":{"type":"number","minimum":0,"maximum":1,"default":0.003,"description":"Attack time for compressor/gate"},"release":{"type":"number","minimum":0,"maximum":1,"default":0.1,"description":"Release time for compressor/gate"}},"additionalProperties":false}}}},{"if":{"properties":{"type":{"enum":["Distortion","Chebyshev"]}}},"then":{"properties":{"options":{"type":"object","properties":{"wet":{"type":"number","minimum":0,"maximum":1,"default":0.5,"description":"Wet/dry mix (0=dry, 1=wet)"},"distortion":{"type":"number","minimum":0,"maximum":1,"default":0.4,"description":"Distortion amount"}},"additionalProperties":false}}}},{"if":{"properties":{"type":{"const":"BitCrusher"}}},"then":{"properties":{"options":{"type":"object","properties":{"wet":{"type":"number","minimum":0,"maximum":1,"default":0.5,"description":"Wet/dry mix (0=dry, 1=wet)"},"bits":{"type":"number","minimum":1,"maximum":16,"default":4,"description":"Bit depth for BitCrusher"}},"additionalProperties":false}}}},{"if":{"properties":{"type":{"const":"Tremolo"}}},"then":{"properties":{"options":{"type":"object","properties":{"wet":{"type":"number","minimum":0,"maximum":1,"default":1,"description":"Wet/dry mix (0=dry, 1=wet)"},"frequency":{"type":"number","minimum":0.1,"maximum":20,"default":4,"description":"Tremolo frequency in Hz"},"depth":{"type":"number","minimum":0,"maximum":1,"default":0.5,"description":"Tremolo depth"}},"additionalProperties":false}}}},{"if":{"properties":{"type":{"const":"Destination"}}},"then":{"properties":{"options":{"type":"object","properties":{},"additionalProperties":false}}}}],"additionalProperties":false}},"connections":{"type":"array","description":"Array of audio graph connections. Each is a two-element array [source, target]. If not provided, default connections will be created automatically.","default":[["synth","master"]],"items":{"type":"array","minItems":2,"maxItems":2,"items":{"type":"string"}}},"tracks":{"type":"array","description":"Musical tracks (sequences or parts).","items":{"type":"object","required":["label","notes"],"properties":{"label":{"type":"string","description":"Label for this sequence (e.g., 'lead', 'bass', etc.)."},"midiChannel":{"type":"integer","minimum":0,"maximum":15,"description":"Default MIDI channel for this sequence (0-15)."},"synth":{"type":"object","required":["type"],"properties":{"type":{"type":"string","enum":["Synth","PolySynth","MonoSynth","AMSynth","FMSynth","DuoSynth","PluckSynth","NoiseSynth","Sampler"],"description":"Type of synthesizer (Synth, Sampler, AMSynth, FMSynth, etc.)."},"options":{"type":"object","description":"Synthesizer options."},"presetRef":{"type":"string","description":"Reference to a custom preset."},"modulationTarget":{"type":"string","enum":["vibrato","tremolo","glissando","filter"],"description":"Target for modulation wheel (CC1) control. Determines how modulation wheel affects the synth."}},"additionalProperties":false,"description":"Synthesizer definition for this sequence."},"synthRef":{"type":"string","description":"Reference to an audioGraph node to use as the synth."},"notes":{"type":"array","description":"Array of note events.","items":{"type":"object","required":["pitch","time","duration"],"properties":{"pitch":{"oneOf":[{"type":"number","description":"MIDI note number (preferred)."},{"type":"string","description":"Note name (e.g., 'C4', 'G#3')."},{"type":"array","description":"Chord (array of MIDI numbers or note names).","items":{"oneOf":[{"type":"number"},{"type":"string"}]}}]},"time":{"oneOf":[{"type":"string","pattern":"^\\\\d+:\\\\d+(\\\\.\\\\d+)?:\\\\d+$","description":"Musical time in bars:beats:ticks format (e.g., '0:2:0', '1:3.5:240'). Preferred format for precise musical timing."},{"type":"string","pattern":"^(\\\\d+n|\\\\d+t)$","description":"Tone.js note values (e.g., '4n', '8t') for relative timing."},{"type":"number","description":"Legacy: Time in beats (deprecated, use bars:beats:ticks format instead)."}]},"duration":{"oneOf":[{"type":"string","pattern":"^(\\\\d+n|\\\\d+t|\\\\d+:\\\\d+(\\\\.\\\\d+)?:\\\\d+)$","description":"Musical duration using Tone.js note values (e.g., '4n', '8n', '2t') or bars:beats:ticks format (e.g., '1:0:0')."},{"type":"number","description":"Legacy: Duration in seconds (deprecated, use note values instead)."}]},"velocity":{"type":"number","minimum":0,"maximum":1,"description":"Note velocity (0-1)."},"articulation":{"type":"string","enum":["staccato","accent","tenuto","legato","marcato"],"description":"Performance instruction that affects how a note is played (e.g., 'staccato', 'accent')."},"ornaments":{"type":"array","description":"Array of melodic ornaments to apply to this note","items":{"type":"object","required":["type"],"properties":{"type":{"type":"string","enum":["grace_note","trill","mordent","turn","arpeggio"],"description":"Type of ornament"},"parameters":{"type":"object","description":"Parameters specific to this ornament type","oneOf":[{"if":{"properties":{"type":{"const":"grace_note"}}},"then":{"properties":{"graceNoteType":{"type":"string","enum":["acciaccatura","appoggiatura"],"description":"Type of grace note"},"gracePitches":{"type":"array","items":{"oneOf":[{"type":"number","description":"MIDI note number"},{"type":"string","description":"Note name (e.g., 'C4')"}]},"description":"Optional specific pitches for the grace note(s)"}},"required":["graceNoteType"]}},{"if":{"properties":{"type":{"const":"trill"}}},"then":{"properties":{"by":{"type":"number","default":1,"description":"Interval for the trill (in scale steps)"},"trillRate":{"type":"number","default":0.125,"description":"Duration of each note in the trill"}}}},{"if":{"properties":{"type":{"const":"mordent"}}},"then":{"properties":{"by":{"type":"number","default":1,"description":"Interval for the mordent (in scale steps)"}}}},{"if":{"properties":{"type":{"const":"turn"}}},"then":{"properties":{"scale":{"type":"string","description":"Optional scale context for the turn"}}}},{"if":{"properties":{"type":{"const":"arpeggio"}}},"then":{"properties":{"arpeggioDegrees":{"type":"array","items":{"type":"number"},"description":"Scale degrees for the arpeggio"},"direction":{"type":"string","enum":["up","down","both"],"default":"up","description":"Direction of the arpeggio"}},"required":["arpeggioDegrees"]}}]}},"additionalProperties":false}},"microtuning":{"type":"number","description":"Microtuning adjustment in semitones."},"channel":{"type":"integer","minimum":0,"maximum":15,"description":"Override sequence MIDI channel for this note (0-15)."},"modulations":{"type":"array","description":"Per-note modulation events (CC, pitch bend, aftertouch).","items":{"type":"object","required":["type","value","time"],"properties":{"type":{"type":"string","enum":["cc","pitchBend","aftertouch"],"description":"Type of MIDI modulation event."},"controller":{"type":"integer","description":"MIDI CC number (required for type: 'cc')."},"value":{"type":"number","description":"Value for this modulation: 0-127 for CC, -8192 to +8192 for pitchBend (14-bit, maps to ±2 semitones), 0-127 for aftertouch."},"time":{"oneOf":[{"type":"string","pattern":"^(\\\\d+n|\\\\d+t|\\\\d+:\\\\d+(\\\\.\\\\d+)?:\\\\d+)$","description":"Relative time using note values (e.g., '8n') or bars:beats:ticks (e.g., '0:0:240')."},{"type":"number","description":"Legacy: Relative time in seconds (deprecated)."}],"description":"When this modulation event happens (relative to note start)."}},"additionalProperties":false}}},"additionalProperties":false}},"loop":{"oneOf":[{"type":"boolean"},{"type":"string"}],"description":"Whether this sequence loops, or string for musical duration."},"loopEnd":{"type":"string","pattern":"^\\\\d+:\\\\d+(\\\\.\\\\d+)?:\\\\d+$","description":"Musical time in bars:beats:ticks format to end the loop (e.g., '4:0:0')."},"effects":{"type":"array","description":"Sequence-level effects.","items":{"type":"object","required":["type"],"properties":{"type":{"type":"string","description":"Type of effect (e.g., 'Reverb', 'Delay')."},"options":{"type":"object","description":"Options for this effect."},"presetRef":{"type":"string","description":"Reference to a custom preset."}},"additionalProperties":false}},"automation":{"type":"array","description":"Sequence-level automation channels affecting only this sequence.","items":{"$ref":"#/definitions/automationChannel"}}},"additionalProperties":false}},"automation":{"type":"object","description":"Multi-level automation system with interpolation support.","properties":{"enabled":{"type":"boolean","default":true,"description":"Whether automation is enabled globally."},"global":{"type":"array","description":"Global automation channels affecting the entire composition.","items":{"$ref":"#/definitions/automationChannel"}},"tracks":{"type":"object","description":"Sequence-level automation channels organized by sequence ID.","patternProperties":{".*":{"type":"array","description":"Automation channels for this sequence.","items":{"$ref":"#/definitions/automationChannel"}}},"additionalProperties":false},"events":{"type":"array","description":"Legacy automation events (deprecated, use channels instead).","items":{"type":"object","required":["target","time","value"],"properties":{"target":{"type":"string","description":"Parameter to automate, e.g., 'synth.frequency', 'effect.mix', 'midi.cc1'."},"time":{"oneOf":[{"type":"string","pattern":"^\\\\d+:\\\\d+(\\\\.\\\\d+)?:\\\\d+$","description":"Musical time in bars:beats:ticks format."},{"type":"number","description":"Legacy: Time in beats (deprecated)."}]},"value":{"type":"number","description":"Target value for the parameter."}},"additionalProperties":false}}},"additionalProperties":false},"annotations":{"type":"array","description":"Annotations (e.g., lyrics, rehearsal marks, comments) in the composition.","items":{"type":"object","required":["text","time"],"properties":{"text":{"type":"string","description":"Annotation text (e.g., lyric, instruction, label)."},"time":{"oneOf":[{"type":"string","pattern":"^\\\\d+:\\\\d+(\\\\.\\\\d+)?:\\\\d+$","description":"Musical time in bars:beats:ticks format (e.g., '1:2:0')."},{"type":"number","description":"Legacy: Time in beats (deprecated)."}]},"type":{"type":"string","description":"Type of annotation (e.g., 'lyric', 'marker', 'comment', 'rehearsal')."},"duration":{"oneOf":[{"type":"string","pattern":"^(\\\\d+n|\\\\d+t|\\\\d+:\\\\d+(\\\\.\\\\d+)?:\\\\d+)$","description":"Musical duration using note values (e.g., '4n') or bars:beats:ticks (e.g., '1:0:0')."},{"type":"number","description":"Legacy: Duration in seconds (deprecated)."}],"description":"Optional duration for annotation (e.g., for lyrics or extended comments)."}},"additionalProperties":false}},"timeSignatureMap":{"type":"array","description":"Map of time signature changes over time.","items":{"type":"object","required":["time","timeSignature"],"properties":{"time":{"oneOf":[{"type":"string","pattern":"^\\\\d+:\\\\d+(\\\\.\\\\d+)?:\\\\d+$","description":"Musical time in bars:beats:ticks format (e.g., '8:0:0')."},{"type":"number","description":"Legacy: Time in beats (deprecated)."}],"description":"Time of the time signature change."},"timeSignature":{"type":"string","pattern":"^\\\\d+/\\\\d+$","description":"New time signature at this time."}},"additionalProperties":false}},"synthConfig":{"type":"object","description":"Global synthesizer configuration that applies to all tracks unless overridden.","properties":{"type":{"type":"string","enum":["Synth","PolySynth","MonoSynth","AMSynth","FMSynth","DuoSynth","PluckSynth","NoiseSynth","Sampler"],"description":"Default synthesizer type (Synth, Sampler, AMSynth, FMSynth, etc.)."},"modulationTarget":{"type":"string","enum":["vibrato","tremolo","glissando","filter"],"description":"Default target for modulation wheel (CC1) control across all tracks."},"options":{"type":"object","description":"Default synthesizer options applied globally.","properties":{"envelope":{"type":"object","description":"Automatic envelope settings for Samplers to avoid abrupt cuts","properties":{"enabled":{"type":"boolean","default":true,"description":"Whether to apply automatic envelope to Samplers"},"attack":{"type":"number","minimum":0,"maximum":2,"default":0.02,"description":"Attack time in seconds"},"decay":{"type":"number","minimum":0,"maximum":2,"default":0.1,"description":"Decay time in seconds"},"sustain":{"type":"number","minimum":0,"maximum":1,"default":0.8,"description":"Sustain level (0-1)"},"release":{"type":"number","minimum":0,"maximum":5,"default":0.3,"description":"Release time in seconds"}},"additionalProperties":false}}}},"additionalProperties":false},"converterHints":{"type":"object","description":"Optional hints to guide specific converters.","properties":{"tone":{"type":"object","description":"Hints for jmon-tone.js converter.","patternProperties":{"^cc[0-9]+$":{"type":"object","description":"Hint configuration for a MIDI CC controller mapping.","properties":{"target":{"type":"string","description":"Target for this CC mapping - can be legacy target (filter, vibrato, tremolo, glissando) or specific effect node ID from audioGraph."},"parameter":{"type":"string","description":"Parameter name to control on the target effect (e.g., 'frequency', 'depth', 'Q')."},"frequency":{"type":"number","description":"Modulation rate in Hz (for vibrato/tremolo)."},"depthRange":{"type":"array","description":"Min/max depth or frequency range for the parameter.","items":{"type":"number"},"minItems":2,"maxItems":2}},"required":["target"],"additionalProperties":false}},"additionalProperties":false},"midi":{"type":"object","description":"Hints for jmon-midi.js converter.","properties":{"channel":{"type":"integer","minimum":0,"maximum":15,"description":"Default MIDI channel for outgoing messages."},"port":{"type":"string","description":"MIDI port name or identifier."}},"additionalProperties":false}},"additionalProperties":false}}`), uo = { automationChannel: { type: "object", description: "Automation channel with interpolation support and anchor points.", required: ["id", "target", "anchorPoints"], properties: { id: { type: "string", description: "Unique identifier for this automation channel." }, name: { type: "string", description: "Human-readable name for this automation channel." }, target: { type: "string", description: "JMON target parameter (e.g., 'synth.frequency', 'midi.cc1', 'effect.mix')." }, level: { type: "string", enum: ["global", "sequence", "note"], default: "global", description: "Automation level: global (entire composition), sequence (per track), or note (per note velocity)." }, sequenceId: { type: "string", description: "Target sequence ID for sequence-level automation." }, range: { type: "array", items: { type: "number" }, minItems: 2, maxItems: 2, default: [0, 127], description: "Value range [min, max] for this automation parameter." }, interpolation: { type: "string", enum: ["linear", "quadratic", "cubic", "daw"], default: "daw", description: "Interpolation type: linear, quadratic (curve), cubic (smoothstep), or daw (Hermite splines)." }, enabled: { type: "boolean", default: !0, description: "Whether this automation channel is enabled." }, anchorPoints: { type: "array", description: "Automation anchor points defining the curve.", items: { type: "object", required: ["time", "value"], properties: { time: { oneOf: [{ type: "string", pattern: "^\\d+:\\d+(\\.\\d+)?:\\d+$", description: "Musical time in bars:beats:ticks format (e.g., '2:1:240')." }, { type: "number", description: "Time in measures (e.g., 2.5 = 2 bars + 2 beats in 4/4)." }] }, value: { type: "number", description: "Automation value at this time point." }, tangent: { type: "number", description: "Optional tangent/slope for Hermite interpolation (DAW mode)." } }, additionalProperties: !1 } } }, additionalProperties: !1 } }, fo = !1, ho = {
-  $schema: io,
-  title: oo,
-  description: so,
-  type: ao,
-  required: co,
-  properties: lo,
-  definitions: uo,
-  additionalProperties: fo
+var ys = ms();
+const gs = /* @__PURE__ */ ci(ys), vs = "http://json-schema.org/draft-07/schema#", bs = "JMON Composition (Multi-Track, Extended)", ws = "A declarative music format supporting synthesis, MIDI, score notation, key changes, arbitrary metadata, annotations, and custom presets. Time values use numeric format in quarter notes (e.g., 4.5) for MIDI compatibility and algorithmic processing. The bars:beats:ticks format is available for display and conversion purposes only.", $s = "object", _s = ["format", "version", "bpm", "tracks"], Ss = /* @__PURE__ */ JSON.parse(`{"format":{"type":"string","const":"jmon","description":"The format identifier for the JMON schema."},"version":{"type":"string","description":"JMON schema version."},"bpm":{"type":"number","minimum":20,"maximum":400,"description":"Tempo in beats per minute."},"keySignature":{"type":"string","pattern":"^[A-G](#|b)?m?$","description":"Key signature (e.g., 'C', 'Am', 'F#')."},"keySignatureMap":{"type":"array","description":"Map of key signature changes over time.","items":{"type":"object","required":["time","keySignature"],"properties":{"time":{"oneOf":[{"type":"number","description":"Time in quarter notes (e.g., 8.0 for beat 1 of bar 3 in 4/4 time)."},{"type":"string","pattern":"^\\\\d+:\\\\d+(\\\\.\\\\d+)?:\\\\d+$","description":"Optional: Musical time in bars:beats:ticks format for display (e.g., '2:0:0')."}],"description":"Time of the key signature change."},"keySignature":{"type":"string","pattern":"^[A-G](#|b)?m?$","description":"New key signature at this time."}},"additionalProperties":false}},"timeSignature":{"type":"string","pattern":"^\\\\d+/\\\\d+$","description":"Time signature for the composition (e.g., '4/4')."},"tempoMap":{"type":"array","description":"Map of tempo changes over time.","items":{"type":"object","required":["time","bpm"],"properties":{"time":{"oneOf":[{"type":"number","description":"Time in quarter notes (e.g., 16.0 for beat 1 of bar 5 in 4/4 time)."},{"type":"string","pattern":"^\\\\d+:\\\\d+(\\\\.\\\\d+)?:\\\\d+$","description":"Optional: Musical time in bars:beats:ticks format for display (e.g., '4:0:0')."}],"description":"The time point for the tempo change."},"bpm":{"type":"number","minimum":20,"maximum":400,"description":"Tempo in beats per minute at this time point."}},"additionalProperties":false}},"transport":{"type":"object","description":"Settings controlling global playback and looping.","properties":{"startOffset":{"oneOf":[{"type":"number","description":"Offset in quarter notes for when playback should start (e.g., 2.0 for beat 3)."},{"type":"string","pattern":"^\\\\d+:\\\\d+(\\\\.\\\\d+)?:\\\\d+$","description":"Optional: Musical time in bars:beats:ticks format for display (e.g., '0:2:0')."}],"description":"Offset for when playback should start."},"globalLoop":{"type":"boolean","description":"Whether the entire project should loop."},"globalLoopEnd":{"oneOf":[{"type":"number","description":"End time in quarter notes where the global loop should end (e.g., 32.0 for bar 9 in 4/4)."},{"type":"string","pattern":"^\\\\d+:\\\\d+(\\\\.\\\\d+)?:\\\\d+$","description":"Optional: Musical time in bars:beats:ticks format for display (e.g., '8:0:0')."}],"description":"Where the global loop should end."},"swing":{"type":"number","minimum":0,"maximum":1,"description":"Swing amount (0-1)."}},"additionalProperties":false},"metadata":{"type":"object","description":"Metadata for the composition, allowing arbitrary fields.","properties":{"name":{"type":"string","description":"Name of the composition."},"author":{"type":"string","description":"Author or composer."},"description":{"type":"string","description":"Description of the composition."}},"additionalProperties":true},"customPresets":{"type":"array","description":"Array of custom user-defined presets for synths or effects.","items":{"type":"object","required":["id","type","options"],"properties":{"id":{"type":"string","description":"Unique identifier for this preset."},"type":{"type":"string","description":"Type of preset (e.g., 'Synth', 'Effect', 'Sampler')."},"options":{"type":"object","description":"Preset options."}},"additionalProperties":false}},"audioGraph":{"type":"array","description":"Audio node graph for synthesis. If not provided, a default synth->master setup will be created automatically.","default":[{"id":"synth","type":"Synth","options":{}},{"id":"master","type":"Destination","options":{}}],"items":{"type":"object","required":["id","type","options"],"properties":{"id":{"type":"string","description":"Unique identifier for this node."},"type":{"type":"string","enum":["Synth","PolySynth","MonoSynth","AMSynth","FMSynth","DuoSynth","PluckSynth","NoiseSynth","Sampler","Filter","AutoFilter","Reverb","FeedbackDelay","PingPongDelay","Delay","Chorus","Phaser","Tremolo","Vibrato","AutoWah","Distortion","Chebyshev","BitCrusher","Compressor","Limiter","Gate","FrequencyShifter","PitchShift","JCReverb","Freeverb","StereoWidener","MidSideCompressor","Destination"],"description":"Type of audio node (Synth, Sampler, Effect, etc.)."},"options":{"type":"object","description":"Options for this node. Content varies by node type."},"target":{"type":"string","description":"Target node for audio routing."},"presetRef":{"type":"string","description":"Reference to a custom preset."}},"allOf":[{"if":{"properties":{"type":{"const":"Sampler"}}},"then":{"properties":{"options":{"type":"object","properties":{"urls":{"type":"object","description":"Sample URLs for Sampler nodes (note -> file path mapping)","patternProperties":{"^[A-G](#|b)?[0-8]$":{"type":"string","description":"File path to sample for this note"}}},"envelope":{"type":"object","description":"Automatic envelope for Samplers to smooth attack/release","properties":{"enabled":{"type":"boolean","default":true,"description":"Whether to apply automatic envelope"},"attack":{"type":"number","minimum":0,"maximum":2,"default":0.02,"description":"Attack time in seconds"},"decay":{"type":"number","minimum":0,"maximum":2,"default":0.1,"description":"Decay time in seconds"},"sustain":{"type":"number","minimum":0,"maximum":1,"default":0.8,"description":"Sustain level (0-1)"},"release":{"type":"number","minimum":0,"maximum":5,"default":0.3,"description":"Release time in seconds"}},"additionalProperties":false}},"additionalProperties":false}}}},{"if":{"properties":{"type":{"enum":["Synth","PolySynth","MonoSynth","AMSynth","FMSynth","DuoSynth","PluckSynth","NoiseSynth"]}}},"then":{"properties":{"options":{"type":"object","properties":{"oscillator":{"type":"object","description":"Oscillator settings for synths"},"envelope":{"type":"object","description":"ADSR envelope settings for synths"},"filter":{"type":"object","description":"Filter settings for synths"}},"additionalProperties":true}}}},{"if":{"properties":{"type":{"enum":["Reverb","JCReverb","Freeverb"]}}},"then":{"properties":{"options":{"type":"object","properties":{"wet":{"type":"number","minimum":0,"maximum":1,"default":0.5,"description":"Wet/dry mix (0=dry, 1=wet)"},"roomSize":{"type":"number","minimum":0,"maximum":1,"default":0.7,"description":"Room size for reverb effects"},"dampening":{"type":"number","minimum":0,"maximum":1,"default":0.3,"description":"Dampening for reverb effects"}},"additionalProperties":false}}}},{"if":{"properties":{"type":{"enum":["Delay","FeedbackDelay","PingPongDelay"]}}},"then":{"properties":{"options":{"type":"object","properties":{"wet":{"type":"number","minimum":0,"maximum":1,"default":0.5,"description":"Wet/dry mix (0=dry, 1=wet)"},"delayTime":{"type":"string","default":"8n","description":"Delay time (note values like '8n' or seconds)"},"feedback":{"type":"number","minimum":0,"maximum":0.95,"default":0.4,"description":"Feedback amount for delay effects"}},"additionalProperties":false}}}},{"if":{"properties":{"type":{"enum":["Filter","AutoFilter"]}}},"then":{"properties":{"options":{"type":"object","properties":{"frequency":{"type":"number","minimum":20,"maximum":20000,"default":1000,"description":"Filter frequency"},"Q":{"type":"number","minimum":0.1,"maximum":50,"default":1,"description":"Filter Q/resonance"},"type":{"type":"string","enum":["lowpass","highpass","bandpass","notch"],"default":"lowpass","description":"Filter type"}},"additionalProperties":false}}}},{"if":{"properties":{"type":{"enum":["Chorus","Phaser"]}}},"then":{"properties":{"options":{"type":"object","properties":{"wet":{"type":"number","minimum":0,"maximum":1,"default":0.5,"description":"Wet/dry mix (0=dry, 1=wet)"},"depth":{"type":"number","minimum":0,"maximum":1,"default":0.5,"description":"Modulation depth"},"rate":{"type":"string","default":"4n","description":"Modulation rate (note values or Hz)"}},"additionalProperties":false}}}},{"if":{"properties":{"type":{"enum":["Compressor","Limiter","Gate"]}}},"then":{"properties":{"options":{"type":"object","properties":{"threshold":{"type":"number","minimum":-60,"maximum":0,"default":-24,"description":"Threshold in dB"},"ratio":{"type":"number","minimum":1,"maximum":20,"default":4,"description":"Compression ratio"},"attack":{"type":"number","minimum":0,"maximum":1,"default":0.003,"description":"Attack time for compressor/gate"},"release":{"type":"number","minimum":0,"maximum":1,"default":0.1,"description":"Release time for compressor/gate"}},"additionalProperties":false}}}},{"if":{"properties":{"type":{"enum":["Distortion","Chebyshev"]}}},"then":{"properties":{"options":{"type":"object","properties":{"wet":{"type":"number","minimum":0,"maximum":1,"default":0.5,"description":"Wet/dry mix (0=dry, 1=wet)"},"distortion":{"type":"number","minimum":0,"maximum":1,"default":0.4,"description":"Distortion amount"}},"additionalProperties":false}}}},{"if":{"properties":{"type":{"const":"BitCrusher"}}},"then":{"properties":{"options":{"type":"object","properties":{"wet":{"type":"number","minimum":0,"maximum":1,"default":0.5,"description":"Wet/dry mix (0=dry, 1=wet)"},"bits":{"type":"number","minimum":1,"maximum":16,"default":4,"description":"Bit depth for BitCrusher"}},"additionalProperties":false}}}},{"if":{"properties":{"type":{"const":"Tremolo"}}},"then":{"properties":{"options":{"type":"object","properties":{"wet":{"type":"number","minimum":0,"maximum":1,"default":1,"description":"Wet/dry mix (0=dry, 1=wet)"},"frequency":{"type":"number","minimum":0.1,"maximum":20,"default":4,"description":"Tremolo frequency in Hz"},"depth":{"type":"number","minimum":0,"maximum":1,"default":0.5,"description":"Tremolo depth"}},"additionalProperties":false}}}},{"if":{"properties":{"type":{"const":"Destination"}}},"then":{"properties":{"options":{"type":"object","properties":{},"additionalProperties":false}}}}],"additionalProperties":false}},"connections":{"type":"array","description":"Array of audio graph connections. Each is a two-element array [source, target]. If not provided, default connections will be created automatically.","default":[["synth","master"]],"items":{"type":"array","minItems":2,"maxItems":2,"items":{"type":"string"}}},"tracks":{"type":"array","description":"Musical tracks (sequences or parts).","items":{"type":"object","required":["label","notes"],"properties":{"label":{"type":"string","description":"Label for this sequence (e.g., 'lead', 'bass', etc.)."},"midiChannel":{"type":"integer","minimum":0,"maximum":15,"description":"Default MIDI channel for this sequence (0-15)."},"synth":{"type":"object","required":["type"],"properties":{"type":{"type":"string","enum":["Synth","PolySynth","MonoSynth","AMSynth","FMSynth","DuoSynth","PluckSynth","NoiseSynth","Sampler"],"description":"Type of synthesizer (Synth, Sampler, AMSynth, FMSynth, etc.)."},"options":{"type":"object","description":"Synthesizer options."},"presetRef":{"type":"string","description":"Reference to a custom preset."},"modulationTarget":{"type":"string","enum":["vibrato","tremolo","glissando","filter"],"description":"Target for modulation wheel (CC1) control. Determines how modulation wheel affects the synth."}},"additionalProperties":false,"description":"Synthesizer definition for this sequence."},"synthRef":{"type":"string","description":"Reference to an audioGraph node to use as the synth."},"notes":{"type":"array","description":"Array of note events.","items":{"type":"object","required":["pitch","time","duration"],"properties":{"pitch":{"oneOf":[{"type":"number","description":"MIDI note number (preferred)."},{"type":"string","description":"Note name (e.g., 'C4', 'G#3')."},{"type":"array","description":"Chord (array of MIDI numbers or note names).","items":{"oneOf":[{"type":"number"},{"type":"string"}]}}]},"time":{"oneOf":[{"type":"number","description":"Time in quarter notes (e.g., 4.5 for beat 1.5 of bar 2 in 4/4). Primary format for MIDI compatibility."},{"type":"string","pattern":"^(\\\\d+n|\\\\d+t)$","description":"Tone.js note values (e.g., '4n', '8t') for relative timing."},{"type":"string","pattern":"^\\\\d+:\\\\d+(\\\\.\\\\d+)?:\\\\d+$","description":"Optional: Musical time in bars:beats:ticks format for display (e.g., '0:2:0', '1:3.5:240')."}]},"duration":{"oneOf":[{"type":"string","pattern":"^(\\\\d+n|\\\\d+t|\\\\d+:\\\\d+(\\\\.\\\\d+)?:\\\\d+)$","description":"Musical duration using Tone.js note values (e.g., '4n', '8n', '2t') or bars:beats:ticks format (e.g., '1:0:0')."},{"type":"number","description":"Legacy: Duration in seconds (deprecated, use note values instead)."}]},"velocity":{"type":"number","minimum":0,"maximum":1,"description":"Note velocity (0-1)."},"articulation":{"type":"string","enum":["staccato","accent","tenuto","legato","marcato"],"description":"Performance instruction that affects how a note is played (e.g., 'staccato', 'accent')."},"ornaments":{"type":"array","description":"Array of melodic ornaments to apply to this note","items":{"type":"object","required":["type"],"properties":{"type":{"type":"string","enum":["grace_note","trill","mordent","turn","arpeggio"],"description":"Type of ornament"},"parameters":{"type":"object","description":"Parameters specific to this ornament type","oneOf":[{"if":{"properties":{"type":{"const":"grace_note"}}},"then":{"properties":{"graceNoteType":{"type":"string","enum":["acciaccatura","appoggiatura"],"description":"Type of grace note"},"gracePitches":{"type":"array","items":{"oneOf":[{"type":"number","description":"MIDI note number"},{"type":"string","description":"Note name (e.g., 'C4')"}]},"description":"Optional specific pitches for the grace note(s)"}},"required":["graceNoteType"]}},{"if":{"properties":{"type":{"const":"trill"}}},"then":{"properties":{"by":{"type":"number","default":1,"description":"Interval for the trill (in scale steps)"},"trillRate":{"type":"number","default":0.125,"description":"Duration of each note in the trill"}}}},{"if":{"properties":{"type":{"const":"mordent"}}},"then":{"properties":{"by":{"type":"number","default":1,"description":"Interval for the mordent (in scale steps)"}}}},{"if":{"properties":{"type":{"const":"turn"}}},"then":{"properties":{"scale":{"type":"string","description":"Optional scale context for the turn"}}}},{"if":{"properties":{"type":{"const":"arpeggio"}}},"then":{"properties":{"arpeggioDegrees":{"type":"array","items":{"type":"number"},"description":"Scale degrees for the arpeggio"},"direction":{"type":"string","enum":["up","down","both"],"default":"up","description":"Direction of the arpeggio"}},"required":["arpeggioDegrees"]}}]}},"additionalProperties":false}},"microtuning":{"type":"number","description":"Microtuning adjustment in semitones."},"channel":{"type":"integer","minimum":0,"maximum":15,"description":"Override sequence MIDI channel for this note (0-15)."},"modulations":{"type":"array","description":"Per-note modulation events (CC, pitch bend, aftertouch).","items":{"type":"object","required":["type","value","time"],"properties":{"type":{"type":"string","enum":["cc","pitchBend","aftertouch"],"description":"Type of MIDI modulation event."},"controller":{"type":"integer","description":"MIDI CC number (required for type: 'cc')."},"value":{"type":"number","description":"Value for this modulation: 0-127 for CC, -8192 to +8192 for pitchBend (14-bit, maps to ±2 semitones), 0-127 for aftertouch."},"time":{"oneOf":[{"type":"string","pattern":"^(\\\\d+n|\\\\d+t|\\\\d+:\\\\d+(\\\\.\\\\d+)?:\\\\d+)$","description":"Relative time using note values (e.g., '8n') or bars:beats:ticks (e.g., '0:0:240')."},{"type":"number","description":"Legacy: Relative time in seconds (deprecated)."}],"description":"When this modulation event happens (relative to note start)."}},"additionalProperties":false}}},"additionalProperties":false}},"loop":{"oneOf":[{"type":"boolean"},{"type":"string"}],"description":"Whether this sequence loops, or string for musical duration."},"loopEnd":{"type":"string","pattern":"^\\\\d+:\\\\d+(\\\\.\\\\d+)?:\\\\d+$","description":"Musical time in bars:beats:ticks format to end the loop (e.g., '4:0:0')."},"effects":{"type":"array","description":"Sequence-level effects.","items":{"type":"object","required":["type"],"properties":{"type":{"type":"string","description":"Type of effect (e.g., 'Reverb', 'Delay')."},"options":{"type":"object","description":"Options for this effect."},"presetRef":{"type":"string","description":"Reference to a custom preset."}},"additionalProperties":false}},"automation":{"type":"array","description":"Sequence-level automation channels affecting only this sequence.","items":{"$ref":"#/definitions/automationChannel"}}},"additionalProperties":false}},"automation":{"type":"object","description":"Multi-level automation system with interpolation support.","properties":{"enabled":{"type":"boolean","default":true,"description":"Whether automation is enabled globally."},"global":{"type":"array","description":"Global automation channels affecting the entire composition.","items":{"$ref":"#/definitions/automationChannel"}},"tracks":{"type":"object","description":"Sequence-level automation channels organized by sequence ID.","patternProperties":{".*":{"type":"array","description":"Automation channels for this sequence.","items":{"$ref":"#/definitions/automationChannel"}}},"additionalProperties":false},"events":{"type":"array","description":"Legacy automation events (deprecated, use channels instead).","items":{"type":"object","required":["target","time","value"],"properties":{"target":{"type":"string","description":"Parameter to automate, e.g., 'synth.frequency', 'effect.mix', 'midi.cc1'."},"time":{"oneOf":[{"type":"string","pattern":"^\\\\d+:\\\\d+(\\\\.\\\\d+)?:\\\\d+$","description":"Musical time in bars:beats:ticks format."},{"type":"number","description":"Legacy: Time in beats (deprecated)."}]},"value":{"type":"number","description":"Target value for the parameter."}},"additionalProperties":false}}},"additionalProperties":false},"annotations":{"type":"array","description":"Annotations (e.g., lyrics, rehearsal marks, comments) in the composition.","items":{"type":"object","required":["text","time"],"properties":{"text":{"type":"string","description":"Annotation text (e.g., lyric, instruction, label)."},"time":{"oneOf":[{"type":"string","pattern":"^\\\\d+:\\\\d+(\\\\.\\\\d+)?:\\\\d+$","description":"Musical time in bars:beats:ticks format (e.g., '1:2:0')."},{"type":"number","description":"Legacy: Time in beats (deprecated)."}]},"type":{"type":"string","description":"Type of annotation (e.g., 'lyric', 'marker', 'comment', 'rehearsal')."},"duration":{"oneOf":[{"type":"string","pattern":"^(\\\\d+n|\\\\d+t|\\\\d+:\\\\d+(\\\\.\\\\d+)?:\\\\d+)$","description":"Musical duration using note values (e.g., '4n') or bars:beats:ticks (e.g., '1:0:0')."},{"type":"number","description":"Legacy: Duration in seconds (deprecated)."}],"description":"Optional duration for annotation (e.g., for lyrics or extended comments)."}},"additionalProperties":false}},"timeSignatureMap":{"type":"array","description":"Map of time signature changes over time.","items":{"type":"object","required":["time","timeSignature"],"properties":{"time":{"oneOf":[{"type":"string","pattern":"^\\\\d+:\\\\d+(\\\\.\\\\d+)?:\\\\d+$","description":"Musical time in bars:beats:ticks format (e.g., '8:0:0')."},{"type":"number","description":"Legacy: Time in beats (deprecated)."}],"description":"Time of the time signature change."},"timeSignature":{"type":"string","pattern":"^\\\\d+/\\\\d+$","description":"New time signature at this time."}},"additionalProperties":false}},"synthConfig":{"type":"object","description":"Global synthesizer configuration that applies to all tracks unless overridden.","properties":{"type":{"type":"string","enum":["Synth","PolySynth","MonoSynth","AMSynth","FMSynth","DuoSynth","PluckSynth","NoiseSynth","Sampler"],"description":"Default synthesizer type (Synth, Sampler, AMSynth, FMSynth, etc.)."},"modulationTarget":{"type":"string","enum":["vibrato","tremolo","glissando","filter"],"description":"Default target for modulation wheel (CC1) control across all tracks."},"options":{"type":"object","description":"Default synthesizer options applied globally.","properties":{"envelope":{"type":"object","description":"Automatic envelope settings for Samplers to avoid abrupt cuts","properties":{"enabled":{"type":"boolean","default":true,"description":"Whether to apply automatic envelope to Samplers"},"attack":{"type":"number","minimum":0,"maximum":2,"default":0.02,"description":"Attack time in seconds"},"decay":{"type":"number","minimum":0,"maximum":2,"default":0.1,"description":"Decay time in seconds"},"sustain":{"type":"number","minimum":0,"maximum":1,"default":0.8,"description":"Sustain level (0-1)"},"release":{"type":"number","minimum":0,"maximum":5,"default":0.3,"description":"Release time in seconds"}},"additionalProperties":false}}}},"additionalProperties":false},"converterHints":{"type":"object","description":"Optional hints to guide specific converters.","properties":{"tone":{"type":"object","description":"Hints for jmon-tone.js converter.","patternProperties":{"^cc[0-9]+$":{"type":"object","description":"Hint configuration for a MIDI CC controller mapping.","properties":{"target":{"type":"string","description":"Target for this CC mapping - can be legacy target (filter, vibrato, tremolo, glissando) or specific effect node ID from audioGraph."},"parameter":{"type":"string","description":"Parameter name to control on the target effect (e.g., 'frequency', 'depth', 'Q')."},"frequency":{"type":"number","description":"Modulation rate in Hz (for vibrato/tremolo)."},"depthRange":{"type":"array","description":"Min/max depth or frequency range for the parameter.","items":{"type":"number"},"minItems":2,"maxItems":2}},"required":["target"],"additionalProperties":false}},"additionalProperties":false},"midi":{"type":"object","description":"Hints for jmon-midi.js converter.","properties":{"channel":{"type":"integer","minimum":0,"maximum":15,"description":"Default MIDI channel for outgoing messages."},"port":{"type":"string","description":"MIDI port name or identifier."}},"additionalProperties":false}},"additionalProperties":false}}`), Ps = { automationChannel: { type: "object", description: "Automation channel with interpolation support and anchor points.", required: ["id", "target", "anchorPoints"], properties: { id: { type: "string", description: "Unique identifier for this automation channel." }, name: { type: "string", description: "Human-readable name for this automation channel." }, target: { type: "string", description: "JMON target parameter (e.g., 'synth.frequency', 'midi.cc1', 'effect.mix')." }, level: { type: "string", enum: ["global", "sequence", "note"], default: "global", description: "Automation level: global (entire composition), sequence (per track), or note (per note velocity)." }, sequenceId: { type: "string", description: "Target sequence ID for sequence-level automation." }, range: { type: "array", items: { type: "number" }, minItems: 2, maxItems: 2, default: [0, 127], description: "Value range [min, max] for this automation parameter." }, interpolation: { type: "string", enum: ["linear", "quadratic", "cubic", "daw"], default: "daw", description: "Interpolation type: linear, quadratic (curve), cubic (smoothstep), or daw (Hermite splines)." }, enabled: { type: "boolean", default: !0, description: "Whether this automation channel is enabled." }, anchorPoints: { type: "array", description: "Automation anchor points defining the curve.", items: { type: "object", required: ["time", "value"], properties: { time: { oneOf: [{ type: "string", pattern: "^\\d+:\\d+(\\.\\d+)?:\\d+$", description: "Musical time in bars:beats:ticks format (e.g., '2:1:240')." }, { type: "number", description: "Time in measures (e.g., 2.5 = 2 bars + 2 beats in 4/4)." }] }, value: { type: "number", description: "Automation value at this time point." }, tangent: { type: "number", description: "Optional tangent/slope for Hermite interpolation (DAW mode)." } }, additionalProperties: !1 } } }, additionalProperties: !1 } }, Ms = !1, Es = {
+  $schema: vs,
+  title: bs,
+  description: ws,
+  type: $s,
+  required: _s,
+  properties: Ss,
+  definitions: Ps,
+  additionalProperties: Ms
 };
-function po(o) {
-  const e = typeof o == "string" ? parseInt(o, 10) : o;
-  if (!Number.isFinite(e)) return String(o);
+function Ts(s) {
+  const e = typeof s == "string" ? parseInt(s, 10) : s;
+  if (!Number.isFinite(e)) return String(s);
   const r = ["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"][(e % 12 + 12) % 12], n = Math.floor(e / 12) - 1;
   return `${r}${n}`;
 }
-function Mn(o) {
-  return !o || !Array.isArray(o.audioGraph) || o.audioGraph.forEach((e) => {
+function xn(s) {
+  return !s || !Array.isArray(s.audioGraph) || s.audioGraph.forEach((e) => {
     try {
       if (!e || e.type !== "Sampler") return;
       const t = e.options || {}, r = t.urls;
       if (!r || typeof r != "object") return;
       const n = {};
       Object.keys(r).forEach((i) => {
-        const s = String(i);
-        let a = s;
-        /^\d+$/.test(s) && (a = po(parseInt(s, 10))), n[a] = r[i];
+        const o = String(i);
+        let a = o;
+        /^\d+$/.test(o) && (a = Ts(parseInt(o, 10))), n[a] = r[i];
       }), e.options = { ...t, urls: n };
     } catch {
     }
-  }), o;
+  }), s;
 }
-class Xt {
-  constructor(e = ho) {
-    this.ajv = new no({ allErrors: !0, useDefaults: !0 }), this.validate = this.ajv.compile(e);
+class sr {
+  constructor(e = Es) {
+    this.ajv = new gs({ allErrors: !0, useDefaults: !0 }), this.validate = this.ajv.compile(e);
   }
   /**
    * Valide et normalise un objet JMON.
@@ -4433,7 +4433,7 @@ class Xt {
    */
   validateAndNormalize(e) {
     const t = JSON.parse(JSON.stringify(e));
-    Mn(t);
+    xn(t);
     const r = this.validate(t);
     return {
       valid: r,
@@ -4520,10 +4520,10 @@ class de {
     const t = e.match(/^([A-G][#b♭-]?)(-?\d+)$/);
     if (!t)
       throw new Error(`Invalid note name format: ${e}`);
-    const [, r, n] = t, i = this.convertFlatToSharp(r), s = this.chromatic_scale.indexOf(i);
-    if (s === -1)
+    const [, r, n] = t, i = this.convertFlatToSharp(r), o = this.chromatic_scale.indexOf(i);
+    if (o === -1)
       throw new Error(`Invalid note name: ${r}`);
-    return s + (parseInt(n) + 1) * 12;
+    return o + (parseInt(n) + 1) * 12;
   }
   /**
    * Convert MIDI number to note name
@@ -4544,7 +4544,7 @@ class de {
     return [e[0], e[2], e[4]];
   }
 }
-class Tn {
+class Dn {
   /**
    * Create a Scale
    * @param {string} tonic - The tonic note of the scale
@@ -4574,22 +4574,22 @@ class Tn {
     const r = e.start ?? 60;
     if (de.chromatic_scale.indexOf(this.tonic) === -1)
       return console.warn(`Unknown tonic: ${this.tonic}`), [];
-    const i = (a, l) => {
-      const u = l % t.length, p = Math.floor(l / t.length) * 12, w = t[u];
-      return a + w + p;
-    }, s = [];
+    const i = (a, c) => {
+      const u = c % t.length, d = Math.floor(c / t.length) * 12, v = t[u];
+      return a + v + d;
+    }, o = [];
     if (e.end !== void 0)
       for (let a = 0; ; a++) {
-        const l = i(r, a);
-        if (l > e.end) break;
-        s.push(l);
+        const c = i(r, a);
+        if (c > e.end) break;
+        o.push(c);
       }
     else if (e.length)
       for (let a = 0; a < e.length; a++)
-        s.push(i(r, a));
+        o.push(i(r, a));
     else
       return t.map((a) => r + a);
-    return s;
+    return o;
   }
   /**
    * Get the note names of the scale
@@ -4614,30 +4614,30 @@ class Tn {
     return this.generate().map((n) => n % 12).includes(t);
   }
 }
-function mo(o) {
-  if (typeof o == "object" && !Array.isArray(o))
-    return o;
-  if (Array.isArray(o)) {
-    if (o.length === 0)
+function ks(s) {
+  if (typeof s == "object" && !Array.isArray(s))
+    return s;
+  if (Array.isArray(s)) {
+    if (s.length === 0)
       return {};
-    if (o.every((t) => Array.isArray(t) && t.length === 3))
-      return { "track 1": o };
+    if (s.every((t) => Array.isArray(t) && t.length === 3))
+      return { "track 1": s };
     const e = {};
-    return o.forEach((t, r) => {
+    return s.forEach((t, r) => {
       e[`track ${r + 1}`] = t;
     }), e;
   }
   throw new Error("Input must be a list or dict of tracks.");
 }
-function kn(o, e) {
+function zn(s, e) {
   return e.reduce(
-    (t, r) => Math.abs(r - o) < Math.abs(t - o) ? r : t
+    (t, r) => Math.abs(r - s) < Math.abs(t - s) ? r : t
   );
 }
-function Nn(o) {
-  return Math.floor(o / 12) - 1;
+function Vn(s) {
+  return Math.floor(s / 12) - 1;
 }
-function yo(o) {
+function Ns(s) {
   return {
     "D-": "C#",
     "E-": "D#",
@@ -4649,69 +4649,69 @@ function yo(o) {
     Gb: "F#",
     Ab: "G#",
     Bb: "A#"
-  }[o] || o;
+  }[s] || s;
 }
-function Jt(o, e, t) {
-  typeof o == "string" && (o = De(o)), typeof t == "string" && (t = De(t));
+function tr(s, e, t) {
+  typeof s == "string" && (s = Le(s)), typeof t == "string" && (t = Le(t));
   const r = e.indexOf(t);
-  if (e.includes(o))
-    return e.indexOf(o) - r;
+  if (e.includes(s))
+    return e.indexOf(s) - r;
   {
-    const n = kn(o, e), i = e.indexOf(n), s = i > 0 ? i - 1 : i, a = e[s], l = n - o, u = o - a, p = l + u;
-    if (p === 0) return i - r;
-    const w = 1 - l / p, _ = 1 - u / p, S = i - r, E = s - r;
-    return S * w + E * _;
+    const n = zn(s, e), i = e.indexOf(n), o = i > 0 ? i - 1 : i, a = e[o], c = n - s, u = s - a, d = c + u;
+    if (d === 0) return i - r;
+    const v = 1 - c / d, _ = 1 - u / d, $ = i - r, S = o - r;
+    return $ * v + S * _;
   }
 }
-function go(o, e, t) {
-  const r = e.indexOf(t), n = Math.round(r + o);
+function As(s, e, t) {
+  const r = e.indexOf(t), n = Math.round(r + s);
   if (n >= 0 && n < e.length)
     return e[n];
   {
-    const i = Math.max(0, Math.min(n, e.length - 1)), s = Math.min(e.length - 1, Math.max(n, 0)), a = e[i], l = e[s], u = s - n, p = n - i, w = u + p;
-    if (w === 0)
-      return (l + a) / 2;
-    const _ = 1 - u / w, S = 1 - p / w;
-    return l * _ + a * S;
+    const i = Math.max(0, Math.min(n, e.length - 1)), o = Math.min(e.length - 1, Math.max(n, 0)), a = e[i], c = e[o], u = o - n, d = n - i, v = u + d;
+    if (v === 0)
+      return (c + a) / 2;
+    const _ = 1 - u / v, $ = 1 - d / v;
+    return c * _ + a * $;
   }
 }
-function Rn(o) {
-  o.length > 0 && o[0].length === 2 && (o = o.map((r) => [r[0], r[1], 0]));
+function Fn(s) {
+  s.length > 0 && s[0].length === 2 && (s = s.map((r) => [r[0], r[1], 0]));
   const e = [];
   let t = 0;
-  for (const [r, n, i] of o)
+  for (const [r, n, i] of s)
     e.push([r, n, t]), t += n;
   return e;
 }
-function An(o, e = 0) {
-  const t = [...o].sort((i, s) => i[2] - s[2]);
+function Ln(s, e = 0) {
+  const t = [...s].sort((i, o) => i[2] - o[2]);
   let r = 0;
   const n = [];
   for (const i of t) {
-    const [s, a, l] = i, u = e + l;
+    const [o, a, c] = i, u = e + c;
     if (u > r) {
-      const w = [null, u - r, r - e];
-      n.push(w);
+      const v = [null, u - r, r - e];
+      n.push(v);
     }
     n.push(i), r = Math.max(r, u + a);
   }
   return n;
 }
-function jn(o) {
-  o.sort((e, t) => e[2] - t[2]);
-  for (let e = 0; e < o.length - 1; e++) {
-    const t = o[e], r = o[e + 1];
+function Un(s) {
+  s.sort((e, t) => e[2] - t[2]);
+  for (let e = 0; e < s.length - 1; e++) {
+    const t = s[e], r = s[e + 1];
     if (t[2] + t[1] > r[2]) {
       const i = r[2] - t[2];
-      o[e] = [t[0], i, t[2]];
+      s[e] = [t[0], i, t[2]];
     }
   }
-  return o;
+  return s;
 }
-function vo(o) {
-  return jn(An(o));
+function Rs(s) {
+  return Un(Ln(s));
 }
-function De(o) {
+function Le(s) {
   const e = ["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"], t = {
     Db: "C#",
     Eb: "D#",
@@ -4720,84 +4720,84 @@ function De(o) {
     Bb: "A#",
     Cb: "B"
   };
-  let r = 4, n = o;
-  if (o.includes("b")) {
-    const a = o.slice(0, -1);
-    t[a] && (n = t[a] + o.slice(-1));
+  let r = 4, n = s;
+  if (s.includes("b")) {
+    const a = s.slice(0, -1);
+    t[a] && (n = t[a] + s.slice(-1));
   }
   let i;
   return n.length > 2 || n.length === 2 && !isNaN(n[1]) ? (i = n.slice(0, -1), r = parseInt(n.slice(-1))) : i = n[0], 12 * (r + 1) + e.indexOf(i);
 }
-function bo(o) {
-  const e = ["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"], t = Math.floor(o / 12) - 1, r = o % 12;
+function Cs(s) {
+  const e = ["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"], t = Math.floor(s / 12) - 1, r = s % 12;
   return e[r] + t.toString();
 }
-function wo(o, e = "offsets") {
+function Is(s, e = "offsets") {
   const t = [];
   let r = 0;
-  for (const [n, i, s] of o)
+  for (const [n, i, o] of s)
     t.push([n, i, r]), r += i;
   return t;
 }
-function $o(o) {
-  return o.every((e) => Array.isArray(e)) ? "list of tuples" : o.every((e) => !Array.isArray(e)) ? "list" : "unknown";
+function js(s) {
+  return s.every((e) => Array.isArray(e)) ? "list of tuples" : s.every((e) => !Array.isArray(e)) ? "list" : "unknown";
 }
-function _o(o, e, t, r = null, n = null) {
-  const i = r !== null ? r : Math.min(...o), s = n !== null ? n : Math.max(...o);
-  return i === s ? new Array(o.length).fill((e + t) / 2) : o.map(
-    (a) => (a - i) * (t - e) / (s - i) + e
+function qs(s, e, t, r = null, n = null) {
+  const i = r !== null ? r : Math.min(...s), o = n !== null ? n : Math.max(...s);
+  return i === o ? new Array(s.length).fill((e + t) / 2) : s.map(
+    (a) => (a - i) * (t - e) / (o - i) + e
   );
 }
-function Cn(o, e) {
-  return o.map(([t, r, n]) => [t, r, n + e]);
+function Gn(s, e) {
+  return s.map(([t, r, n]) => [t, r, n + e]);
 }
-function Po(o, e, t) {
+function Os(s, e, t) {
   const r = [];
-  for (const [n, i, s] of o) {
-    const a = Math.round(s / t) * t, l = (Math.floor(a / e) + 1) * e;
+  for (const [n, i, o] of s) {
+    const a = Math.round(o / t) * t, c = (Math.floor(a / e) + 1) * e;
     let u = Math.round(i / t) * t;
-    u = Math.min(u, l - a), u > 0 && r.push([n, u, a]);
+    u = Math.min(u, c - a), u > 0 && r.push([n, u, a]);
   }
   return r;
 }
-function So(o, e) {
-  const r = o.filter(([a, , l]) => a !== null && l !== null).sort((a, l) => a[2] - l[2]), n = Math.max(...r.map(([, , a]) => a)), i = Math.floor(n / e) + 1, s = [];
+function xs(s, e) {
+  const r = s.filter(([a, , c]) => a !== null && c !== null).sort((a, c) => a[2] - c[2]), n = Math.max(...r.map(([, , a]) => a)), i = Math.floor(n / e) + 1, o = [];
   for (let a = 0; a < i; a++) {
-    const l = a * e;
-    let u = null, p = 1 / 0;
-    for (const [w, , _] of r) {
-      const S = l - _;
-      if (S >= 0 && S < p && (p = S, u = w), _ > l) break;
+    const c = a * e;
+    let u = null, d = 1 / 0;
+    for (const [v, , _] of r) {
+      const $ = c - _;
+      if ($ >= 0 && $ < d && (d = $, u = v), _ > c) break;
     }
-    u !== null && s.push(u);
+    u !== null && o.push(u);
   }
-  return s;
+  return o;
 }
-function Eo(o, e) {
+function Ds(s, e) {
   return e.reduce(
-    (t, r) => Math.abs(r - o) < Math.abs(t - o) ? r : t
+    (t, r) => Math.abs(r - s) < Math.abs(t - s) ? r : t
   );
 }
-function Mo(o, e) {
-  return 60 / e * o;
+function zs(s, e) {
+  return 60 / e * s;
 }
-function* To(o = 0, e = 1, t = 0, r = 1) {
+function* Vs(s = 0, e = 1, t = 0, r = 1) {
   for (; ; )
-    yield t + r * o, [o, e] = [e, o + e];
+    yield t + r * s, [s, e] = [e, s + e];
 }
-function ko(o, e, t) {
+function Fs(s, e, t) {
   const r = {};
-  for (const [n, i] of Object.entries(o)) {
-    const s = [];
+  for (const [n, i] of Object.entries(s)) {
+    const o = [];
     for (let a = 0; a < e; a++) {
-      const l = a * t, u = Cn(i, l);
-      s.push(...u);
+      const c = a * t, u = Gn(i, c);
+      o.push(...u);
     }
-    r[n] = s;
+    r[n] = o;
   }
   return r;
 }
-const No = {
+const Ls = {
   "Acoustic Grand Piano": 0,
   "Bright Acoustic Piano": 1,
   "Electric Grand Piano": 2,
@@ -4808,33 +4808,33 @@ const No = {
   Clavinet: 7,
   // ... (full mapping truncated for brevity, but would include all 128 instruments)
   Gunshot: 127
-}, Ro = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
+}, Us = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
   __proto__: null,
-  adjustNoteDurationsToPreventOverlaps: jn,
-  cdeToMidi: De,
-  checkInput: $o,
-  fibonacci: To,
-  fillGapsWithRests: An,
-  findClosestPitchAtMeasureStart: So,
-  getDegreeFromPitch: Jt,
-  getOctave: Nn,
-  getPitchFromDegree: go,
-  getSharp: yo,
-  instrumentMapping: No,
-  midiToCde: bo,
-  noOverlap: wo,
-  offsetTrack: Cn,
-  qlToSeconds: Mo,
-  quantizeNotes: Po,
-  repairNotes: vo,
-  repeatPolyloops: ko,
-  roundToList: kn,
-  scaleList: _o,
-  setOffsetsAccordingToDurations: Rn,
-  tracksToDict: mo,
-  tune: Eo
+  adjustNoteDurationsToPreventOverlaps: Un,
+  cdeToMidi: Le,
+  checkInput: js,
+  fibonacci: Vs,
+  fillGapsWithRests: Ln,
+  findClosestPitchAtMeasureStart: xs,
+  getDegreeFromPitch: tr,
+  getOctave: Vn,
+  getPitchFromDegree: As,
+  getSharp: Ns,
+  instrumentMapping: Ls,
+  midiToCde: Cs,
+  noOverlap: Is,
+  offsetTrack: Gn,
+  qlToSeconds: zs,
+  quantizeNotes: Os,
+  repairNotes: Rs,
+  repeatPolyloops: Fs,
+  roundToList: zn,
+  scaleList: qs,
+  setOffsetsAccordingToDurations: Fn,
+  tracksToDict: ks,
+  tune: Ds
 }, Symbol.toStringTag, { value: "Module" }));
-class Ao extends de {
+class Gs extends de {
   /**
    * Initialize a Progression object
    * @param {string} tonicPitch - The tonic pitch of the progression (default: 'C4')
@@ -4844,7 +4844,7 @@ class Ao extends de {
    * @param {Array} weights - Weights for selecting chord types
    */
   constructor(e = "C4", t = "P5", r = "chords", n = [3, 3, 1], i = null) {
-    if (super(), this.tonicMidi = De(e), this.circleOf = t, this.type = r, this.radius = n, this.weights = i || n, !Object.keys(this.intervals).includes(this.circleOf))
+    if (super(), this.tonicMidi = Le(e), this.circleOf = t, this.type = r, this.radius = n, this.weights = i || n, !Object.keys(this.intervals).includes(this.circleOf))
       throw new Error(`Select a circleOf among ${Object.keys(this.intervals).join(", ")}.`);
     if (!["chords", "pitches"].includes(this.type))
       throw new Error("Type must either be 'pitches' or 'chords'.");
@@ -4876,7 +4876,7 @@ class Ao extends de {
       major: [0, 4, 7],
       minor: [0, 3, 7],
       diminished: [0, 3, 6]
-    }[t] || [0, 4, 7]).map((s) => e + s).map((s) => s > 127 ? s - 12 : s);
+    }[t] || [0, 4, 7]).map((o) => e + o).map((o) => o > 127 ? o - 12 : o);
   }
   /**
    * Generate a musical progression
@@ -4886,15 +4886,15 @@ class Ao extends de {
    */
   generate(e = 4, t = null) {
     t !== null && (Math.seedrandom = t);
-    const { major: r, minor: n, diminished: i } = this.computeCircle(), s = [r, n, i], a = ["major", "minor", "diminished"], l = [];
+    const { major: r, minor: n, diminished: i } = this.computeCircle(), o = [r, n, i], a = ["major", "minor", "diminished"], c = [];
     for (let u = 0; u < e; u++) {
-      const p = this.weightedRandomChoice(this.weights);
-      if (s[p].length > 0) {
-        const w = s[p][Math.floor(Math.random() * s[p].length)], _ = a[p], S = Array.isArray(w) ? w[0] : w, E = this.generateChord(S, _);
-        l.push(E);
+      const d = this.weightedRandomChoice(this.weights);
+      if (o[d].length > 0) {
+        const v = o[d][Math.floor(Math.random() * o[d].length)], _ = a[d], $ = Array.isArray(v) ? v[0] : v, S = this.generateChord($, _);
+        c.push(S);
       }
     }
-    return l;
+    return c;
   }
   /**
    * Weighted random choice helper
@@ -4910,7 +4910,7 @@ class Ao extends de {
     return e.length - 1;
   }
 }
-class jo extends de {
+class Bs extends de {
   /**
    * Constructs all the necessary attributes for the voice object
    * @param {string} mode - The type of the scale (default: 'major')
@@ -4918,7 +4918,7 @@ class jo extends de {
    * @param {Array} degrees - Relative degrees for chord formation (default: [0, 2, 4])
    */
   constructor(e = "major", t = "C", r = [0, 2, 4]) {
-    super(), this.tonic = t, this.scale = new Tn(t, e).generate(), this.degrees = r;
+    super(), this.tonic = t, this.scale = new Dn(t, e).generate(), this.degrees = r;
   }
   /**
    * Convert a MIDI note to a chord based on the scale using the specified degrees
@@ -4926,10 +4926,10 @@ class jo extends de {
    * @returns {Array} Array of MIDI notes representing the chord
    */
   pitchToChord(e) {
-    const t = Nn(e), r = this.tonic + t.toString(), n = De(r), i = this.scale.map((l) => Jt(l, this.scale, n)), s = Math.round(Jt(e, this.scale, n)), a = [];
-    for (const l of this.degrees) {
-      const u = s + l, p = i.indexOf(u);
-      p !== -1 && a.push(this.scale[p]);
+    const t = Vn(e), r = this.tonic + t.toString(), n = Le(r), i = this.scale.map((c) => tr(c, this.scale, n)), o = Math.round(tr(e, this.scale, n)), a = [];
+    for (const c of this.degrees) {
+      const u = o + c, d = i.indexOf(u);
+      d !== -1 && a.push(this.scale[d]);
     }
     return a;
   }
@@ -4946,27 +4946,27 @@ class jo extends de {
     let n = e;
     if (typeof e[0] == "number") {
       t === null && (t = [1]);
-      let s = 0, a = 0;
-      n = e.map((l) => {
-        const u = t[s % t.length], p = [l, u, a];
-        return a += u, s++, p;
+      let o = 0, a = 0;
+      n = e.map((c) => {
+        const u = t[o % t.length], d = [c, u, a];
+        return a += u, o++, d;
       });
     }
-    const i = n.map(([s, a, l]) => [this.pitchToChord(s), a, l]);
+    const i = n.map(([o, a, c]) => [this.pitchToChord(o), a, c]);
     if (r) {
-      const s = [];
-      for (const [a, l, u] of i) {
-        const p = l / a.length;
-        a.forEach((w, _) => {
-          s.push([w, p, u + _ * p]);
+      const o = [];
+      for (const [a, c, u] of i) {
+        const d = c / a.length;
+        a.forEach((v, _) => {
+          o.push([v, d, u + _ * d]);
         });
       }
-      return s;
+      return o;
     } else
       return i;
   }
 }
-const bn = {
+const Nn = {
   grace_note: {
     requiredParams: ["graceNoteType"],
     optionalParams: ["gracePitches"],
@@ -4975,7 +4975,7 @@ const bn = {
     defaultParams: {
       graceNoteType: "acciaccatura"
     },
-    validate: (o, e) => ["acciaccatura", "appoggiatura"].includes(e.graceNoteType) ? e.gracePitches && !Array.isArray(e.gracePitches) ? { valid: !1, error: "gracePitches must be an array of pitches" } : { valid: !0 } : { valid: !1, error: "graceNoteType must be either acciaccatura or appoggiatura" }
+    validate: (s, e) => ["acciaccatura", "appoggiatura"].includes(e.graceNoteType) ? e.gracePitches && !Array.isArray(e.gracePitches) ? { valid: !1, error: "gracePitches must be an array of pitches" } : { valid: !0 } : { valid: !1, error: "graceNoteType must be either acciaccatura or appoggiatura" }
   },
   trill: {
     requiredParams: [],
@@ -4987,7 +4987,7 @@ const bn = {
       by: 1,
       trillRate: 0.125
     },
-    validate: (o, e) => e.by && typeof e.by != "number" ? { valid: !1, error: "trill step (by) must be a number" } : e.trillRate && typeof e.trillRate != "number" ? { valid: !1, error: "trillRate must be a number" } : { valid: !0 }
+    validate: (s, e) => e.by && typeof e.by != "number" ? { valid: !1, error: "trill step (by) must be a number" } : e.trillRate && typeof e.trillRate != "number" ? { valid: !1, error: "trillRate must be a number" } : { valid: !0 }
   },
   mordent: {
     requiredParams: [],
@@ -4997,14 +4997,14 @@ const bn = {
     defaultParams: {
       by: 1
     },
-    validate: (o, e) => e.by && typeof e.by != "number" ? { valid: !1, error: "mordent step (by) must be a number" } : { valid: !0 }
+    validate: (s, e) => e.by && typeof e.by != "number" ? { valid: !1, error: "mordent step (by) must be a number" } : { valid: !0 }
   },
   turn: {
     requiredParams: [],
     optionalParams: ["scale"],
     conflicts: [],
     description: "Melodic turn around the main note",
-    validate: (o, e) => e.scale && typeof e.scale != "string" ? { valid: !1, error: "scale must be a string" } : { valid: !0 }
+    validate: (s, e) => e.scale && typeof e.scale != "string" ? { valid: !1, error: "scale must be a string" } : { valid: !0 }
   },
   arpeggio: {
     requiredParams: ["arpeggioDegrees"],
@@ -5014,10 +5014,10 @@ const bn = {
     defaultParams: {
       direction: "up"
     },
-    validate: (o, e) => Array.isArray(e.arpeggioDegrees) ? e.direction && !["up", "down", "both"].includes(e.direction) ? { valid: !1, error: "direction must be up, down, or both" } : { valid: !0 } : { valid: !1, error: "arpeggioDegrees must be an array" }
+    validate: (s, e) => Array.isArray(e.arpeggioDegrees) ? e.direction && !["up", "down", "both"].includes(e.direction) ? { valid: !1, error: "direction must be up, down, or both" } : { valid: !0 } : { valid: !1, error: "arpeggioDegrees must be an array" }
   }
 };
-class Zt {
+class or {
   /**
    * Validate ornament parameters and compatibility
    * @param {Object} note - The note to apply the ornament to
@@ -5030,23 +5030,23 @@ class Zt {
       valid: !1,
       warnings: [],
       errors: []
-    }, i = bn[t];
+    }, i = Nn[t];
     if (!i)
       return n.errors.push(`Unknown ornament type: ${t}`), n;
     if (i.requiredParams) {
-      for (const s of i.requiredParams)
-        if (!(s in r))
-          return n.errors.push(`Missing required parameter '${s}' for ${t}`), n;
+      for (const o of i.requiredParams)
+        if (!(o in r))
+          return n.errors.push(`Missing required parameter '${o}' for ${t}`), n;
     }
     if (i.minDuration && n.warnings.push(`Duration check not implemented for ${t}`), e.ornaments && i.conflicts) {
-      const s = e.ornaments.filter((a) => i.conflicts.includes(a.type)).map((a) => a.type);
-      if (s.length > 0)
-        return n.errors.push(`${t} conflicts with existing ornaments: ${s.join(", ")}`), n;
+      const o = e.ornaments.filter((a) => i.conflicts.includes(a.type)).map((a) => a.type);
+      if (o.length > 0)
+        return n.errors.push(`${t} conflicts with existing ornaments: ${o.join(", ")}`), n;
     }
     if (i.validate) {
-      const s = i.validate(e, r);
-      if (!s.valid)
-        return n.errors.push(s.error), n;
+      const o = i.validate(e, r);
+      if (!o.valid)
+        return n.errors.push(o.error), n;
     }
     return n.valid = !0, n;
   }
@@ -5055,7 +5055,7 @@ class Zt {
    * @param {Object} options - Ornament configuration
    */
   constructor(e) {
-    const t = bn[e.type];
+    const t = Nn[e.type];
     if (!t)
       throw new Error(`Unknown ornament type: ${e.type}`);
     this.type = e.type, this.params = {
@@ -5067,13 +5067,13 @@ class Zt {
    * Generate a scale for pitch-based ornaments
    */
   generateScale(e, t) {
-    const r = de.scale_intervals[t], n = de.chromatic_scale.indexOf(e), i = r.map((a) => (n + a) % 12), s = [];
+    const r = de.scale_intervals[t], n = de.chromatic_scale.indexOf(e), i = r.map((a) => (n + a) % 12), o = [];
     for (let a = -1; a < 10; a++)
-      for (const l of i) {
-        const u = 12 * a + l;
-        u >= 0 && u <= 127 && s.push(u);
+      for (const c of i) {
+        const u = 12 * a + c;
+        u >= 0 && u <= 127 && o.push(u);
       }
-    return s;
+    return o;
   }
   /**
    * Apply the ornament to notes
@@ -5081,7 +5081,7 @@ class Zt {
   apply(e, t = null) {
     if (!Array.isArray(e) || e.length === 0 || (t === null && (t = Math.floor(Math.random() * e.length)), t < 0 || t >= e.length))
       return e;
-    const r = e[t], n = Zt.validateOrnament(r, this.type, this.params);
+    const r = e[t], n = or.validateOrnament(r, this.type, this.params);
     if (!n.valid)
       return console.warn(`Ornament validation failed: ${n.errors.join(", ")}`), e;
     switch (this.type) {
@@ -5103,20 +5103,20 @@ class Zt {
    * Add a grace note
    */
   addGraceNote(e, t) {
-    const r = e[t], n = r.pitch, i = r.duration, s = r.time, a = this.params.gracePitches ? this.params.gracePitches[Math.floor(Math.random() * this.params.gracePitches.length)] : n + 1;
+    const r = e[t], n = r.pitch, i = r.duration, o = r.time, a = this.params.gracePitches ? this.params.gracePitches[Math.floor(Math.random() * this.params.gracePitches.length)] : n + 1;
     if (this.params.graceNoteType === "acciaccatura") {
-      const l = i * 0.125, u = { pitch: n, duration: i, time: s + l };
+      const c = i * 0.125, u = { pitch: n, duration: i, time: o + c };
       return [
         ...e.slice(0, t),
-        { pitch: a, duration: l, time: s },
+        { pitch: a, duration: c, time: o },
         u,
         ...e.slice(t + 1)
       ];
     } else {
-      const l = i / 2, u = { pitch: n, duration: l, time: s + l };
+      const c = i / 2, u = { pitch: n, duration: c, time: o + c };
       return [
         ...e.slice(0, t),
-        { pitch: a, duration: l, time: s },
+        { pitch: a, duration: c, time: o },
         u,
         ...e.slice(t + 1)
       ];
@@ -5126,19 +5126,19 @@ class Zt {
    * Add a trill
    */
   addTrill(e, t) {
-    const r = e[t], n = r.pitch, i = r.duration, s = r.time, a = [];
-    let l = s;
-    const u = this.params.by || 1, p = this.params.trillRate || 0.125;
-    let w;
+    const r = e[t], n = r.pitch, i = r.duration, o = r.time, a = [];
+    let c = o;
+    const u = this.params.by || 1, d = this.params.trillRate || 0.125;
+    let v;
     if (this.scale && this.scale.includes(n)) {
-      const S = (this.scale.indexOf(n) + Math.round(u)) % this.scale.length;
-      w = this.scale[S];
+      const $ = (this.scale.indexOf(n) + Math.round(u)) % this.scale.length;
+      v = this.scale[$];
     } else
-      w = n + u;
-    for (; l < s + i; ) {
-      const _ = s + i - l, S = Math.min(p, _ / 2);
-      if (_ >= S * 2)
-        a.push({ pitch: n, duration: S, time: l }), a.push({ pitch: w, duration: S, time: l + S }), l += 2 * S;
+      v = n + u;
+    for (; c < o + i; ) {
+      const _ = o + i - c, $ = Math.min(d, _ / 2);
+      if (_ >= $ * 2)
+        a.push({ pitch: n, duration: $, time: c }), a.push({ pitch: v, duration: $, time: c + $ }), c += 2 * $;
       else
         break;
     }
@@ -5152,21 +5152,21 @@ class Zt {
    * Add a mordent
    */
   addMordent(e, t) {
-    const r = e[t], n = r.pitch, i = r.duration, s = r.time, a = this.params.by || 1;
-    let l;
+    const r = e[t], n = r.pitch, i = r.duration, o = r.time, a = this.params.by || 1;
+    let c;
     if (this.scale && this.scale.includes(n)) {
       const _ = this.scale.indexOf(n) + Math.round(a);
-      l = this.scale[_] || n + a;
+      c = this.scale[_] || n + a;
     } else
-      l = n + a;
-    const u = i / 3, p = [
-      { pitch: n, duration: u, time: s },
-      { pitch: l, duration: u, time: s + u },
-      { pitch: n, duration: u, time: s + 2 * u }
+      c = n + a;
+    const u = i / 3, d = [
+      { pitch: n, duration: u, time: o },
+      { pitch: c, duration: u, time: o + u },
+      { pitch: n, duration: u, time: o + 2 * u }
     ];
     return [
       ...e.slice(0, t),
-      ...p,
+      ...d,
       ...e.slice(t + 1)
     ];
   }
@@ -5174,22 +5174,22 @@ class Zt {
    * Add a turn
    */
   addTurn(e, t) {
-    const r = e[t], n = r.pitch, i = r.duration, s = r.time, a = i / 4;
-    let l, u;
+    const r = e[t], n = r.pitch, i = r.duration, o = r.time, a = i / 4;
+    let c, u;
     if (this.scale && this.scale.includes(n)) {
-      const w = this.scale.indexOf(n);
-      l = this.scale[w + 1] || n + 2, u = this.scale[w - 1] || n - 2;
+      const v = this.scale.indexOf(n);
+      c = this.scale[v + 1] || n + 2, u = this.scale[v - 1] || n - 2;
     } else
-      l = n + 2, u = n - 2;
-    const p = [
-      { pitch: n, duration: a, time: s },
-      { pitch: l, duration: a, time: s + a },
-      { pitch: n, duration: a, time: s + 2 * a },
-      { pitch: u, duration: a, time: s + 3 * a }
+      c = n + 2, u = n - 2;
+    const d = [
+      { pitch: n, duration: a, time: o },
+      { pitch: c, duration: a, time: o + a },
+      { pitch: n, duration: a, time: o + 2 * a },
+      { pitch: u, duration: a, time: o + 3 * a }
     ];
     return [
       ...e.slice(0, t),
-      ...p,
+      ...d,
       ...e.slice(t + 1)
     ];
   }
@@ -5197,29 +5197,29 @@ class Zt {
    * Add an arpeggio
    */
   addArpeggio(e, t) {
-    const r = e[t], n = r.pitch, i = r.duration, s = r.time, { arpeggioDegrees: a, direction: l = "up" } = this.params;
+    const r = e[t], n = r.pitch, i = r.duration, o = r.time, { arpeggioDegrees: a, direction: c = "up" } = this.params;
     if (!a || !Array.isArray(a))
       return e;
     const u = [];
     if (this.scale && this.scale.includes(n)) {
       const _ = this.scale.indexOf(n);
-      u.push(...a.map((S) => this.scale[_ + S] || n + S));
+      u.push(...a.map(($) => this.scale[_ + $] || n + $));
     } else
       u.push(...a.map((_) => n + _));
-    l === "down" && u.reverse(), l === "both" && u.push(...u.slice(0, -1).reverse());
-    const p = i / u.length, w = u.map((_, S) => ({
+    c === "down" && u.reverse(), c === "both" && u.push(...u.slice(0, -1).reverse());
+    const d = i / u.length, v = u.map((_, $) => ({
       pitch: _,
-      duration: p,
-      time: s + S * p
+      duration: d,
+      time: o + $ * d
     }));
     return [
       ...e.slice(0, t),
-      ...w,
+      ...v,
       ...e.slice(t + 1)
     ];
   }
 }
-const Bt = {
+const Xt = {
   // Simple articulations
   staccato: {
     complex: !1,
@@ -5282,7 +5282,7 @@ const Bt = {
     description: "Gradual volume decrease"
   }
 };
-class Ct {
+class Vt {
   /**
    * Add articulation to a note in a sequence
    * @param {Array} sequence - The note sequence
@@ -5301,20 +5301,20 @@ class Ct {
       return i.errors.push("Sequence must be an array"), i;
     if (r < 0 || r >= e.length)
       return i.errors.push(`Note index ${r} out of bounds (sequence length: ${e.length})`), i;
-    const s = Bt[t];
-    if (!s)
+    const o = Xt[t];
+    if (!o)
       return i.errors.push(`Unknown articulation type: ${t}`), i;
     const a = e[r];
-    return !a || typeof a != "object" ? (i.errors.push(`Invalid note at index ${r}`), i) : s.complex ? this._addComplexArticulation(a, t, s, n, i) : (a.articulation = t, i.success = !0, i);
+    return !a || typeof a != "object" ? (i.errors.push(`Invalid note at index ${r}`), i) : o.complex ? this._addComplexArticulation(a, t, o, n, i) : (a.articulation = t, i.success = !0, i);
   }
   /**
    * Add complex articulation with parameter validation and synchronization
    */
   static _addComplexArticulation(e, t, r, n, i) {
     if (r.requiredParams) {
-      for (const s of r.requiredParams)
-        if (!(s in n))
-          return i.errors.push(`Missing required parameter '${s}' for ${t}`), i;
+      for (const o of r.requiredParams)
+        if (!(o in n))
+          return i.errors.push(`Missing required parameter '${o}' for ${t}`), i;
     }
     switch (t) {
       case "glissando":
@@ -5346,7 +5346,7 @@ class Ct {
       timing: "note_duration"
     };
     return r.speed !== void 0 && (i.speed = r.speed), e.modulations = e.modulations.filter(
-      (s) => !(s.type === "pitch" && s.subtype === t)
+      (o) => !(o.type === "pitch" && o.subtype === t)
     ), e.modulations.push(i), n.success = !0, n.warnings.push(`Added ${t} modulation synchronized with articulation`), n;
   }
   /**
@@ -5419,7 +5419,7 @@ class Ct {
       timing: "note_duration"
     };
     return e.modulations = e.modulations.filter(
-      (s) => !(s.type === "amplitude" && (s.subtype === "crescendo" || s.subtype === "diminuendo"))
+      (o) => !(o.type === "amplitude" && (o.subtype === "crescendo" || o.subtype === "diminuendo"))
     ), e.modulations.push(i), n.success = !0, n.warnings.push(`Added ${t} modulation synchronized with articulation`), n;
   }
   /**
@@ -5433,8 +5433,8 @@ class Ct {
       return { success: !1, error: "Invalid note" };
     const n = r.articulation;
     if (delete r.articulation, delete r.glissTarget, r.modulations && n) {
-      const i = Bt[n];
-      i && i.complex && (r.modulations = r.modulations.filter((s) => s.subtype !== n), r.modulations.length === 0 && delete r.modulations);
+      const i = Xt[n];
+      i && i.complex && (r.modulations = r.modulations.filter((o) => o.subtype !== n), r.modulations.length === 0 && delete r.modulations);
     }
     return {
       success: !0,
@@ -5482,7 +5482,7 @@ class Ct {
    * Get available articulation types with descriptions
    */
   static getAvailableTypes() {
-    return Object.entries(Bt).map(([e, t]) => ({
+    return Object.entries(Xt).map(([e, t]) => ({
       type: e,
       complex: t.complex,
       description: t.description,
@@ -5491,30 +5491,30 @@ class Ct {
     }));
   }
 }
-function In(o, e, t, r) {
-  return Ct.addArticulation(o, e, t, r);
+function Bn(s, e, t, r) {
+  return Vt.addArticulation(s, e, t, r);
 }
-function On(o, e) {
-  return Ct.removeArticulation(o, e);
+function Kn(s, e) {
+  return Vt.removeArticulation(s, e);
 }
-function Co(o) {
-  return Ct.validateSequence(o);
+function Ks(s) {
+  return Vt.validateSequence(s);
 }
-const Io = In, Oo = On, qo = {
-  Scale: Tn,
-  Progression: Ao,
-  Voice: jo,
-  Ornament: Zt,
-  Articulation: Ct,
-  addArticulation: In,
-  addOrnament: Io,
+const Hs = Bn, Js = Kn, Ws = {
+  Scale: Dn,
+  Progression: Gs,
+  Voice: Bs,
+  Ornament: or,
+  Articulation: Vt,
+  addArticulation: Bn,
+  addOrnament: Hs,
   // Include the alias
-  removeArticulation: On,
-  removeOrnament: Oo,
+  removeArticulation: Kn,
+  removeOrnament: Js,
   // Include the alias
-  validateArticulations: Co
+  validateArticulations: Ks
 };
-class Do {
+class Ys {
   /**
    * Constructs all the necessary attributes for the Rhythm object
    * @param {number} measureLength - The length of the measure
@@ -5533,20 +5533,20 @@ class Do {
   random(e = null, t = 0, r = 100) {
     e !== null && (Math.seedrandom = e);
     const n = [];
-    let i = 0, s = 0;
-    for (; i < this.measureLength && s < r; ) {
+    let i = 0, o = 0;
+    for (; i < this.measureLength && o < r; ) {
       const a = this.durations[Math.floor(Math.random() * this.durations.length)];
       if (i + a > this.measureLength) {
-        s++;
+        o++;
         continue;
       }
       if (Math.random() < t) {
-        s++;
+        o++;
         continue;
       }
-      n.push([a, i]), i += a, s++;
+      n.push([a, i]), i += a, o++;
     }
-    return s >= r && console.warn("Max iterations reached. The sum of the durations may not equal the measure length."), n;
+    return o >= r && console.warn("Max iterations reached. The sum of the durations may not equal the measure length."), n;
   }
   /**
    * Executes the Darwinian evolution algorithm to generate the best rhythm
@@ -5557,7 +5557,7 @@ class Do {
    * @returns {Array} The best rhythm found after evolution
    */
   darwin(e = null, t = 10, r = 50, n = 0.1) {
-    return new xo(
+    return new Qs(
       e,
       t,
       this.measureLength,
@@ -5567,9 +5567,9 @@ class Do {
     ).generate();
   }
 }
-class xo {
-  constructor(e, t, r, n, i, s) {
-    e !== null && (Math.seedrandom = e), this.populationSize = t, this.measureLength = r, this.maxGenerations = n, this.mutationRate = i, this.durations = s, this.population = this.initializePopulation();
+class Qs {
+  constructor(e, t, r, n, i, o) {
+    e !== null && (Math.seedrandom = e), this.populationSize = t, this.measureLength = r, this.maxGenerations = n, this.mutationRate = i, this.durations = o, this.population = this.initializePopulation();
   }
   /**
    * Initialize a population of random rhythms
@@ -5640,10 +5640,10 @@ class xo {
    */
   mutate(e) {
     if (Math.random() < this.mutationRate && e.length > 1) {
-      const t = Math.floor(Math.random() * (e.length - 1)), [r, n] = e[t], s = (t === e.length - 1 ? this.measureLength : e[t + 1][1]) - n, a = this.durations.filter((l) => l <= s);
+      const t = Math.floor(Math.random() * (e.length - 1)), [r, n] = e[t], o = (t === e.length - 1 ? this.measureLength : e[t + 1][1]) - n, a = this.durations.filter((c) => c <= o);
       if (a.length > 0) {
-        const l = a[Math.floor(Math.random() * a.length)];
-        e[t] = [l, n];
+        const c = a[Math.floor(Math.random() * a.length)];
+        e[t] = [c, n];
       }
     }
     return e;
@@ -5656,9 +5656,9 @@ class xo {
     for (let t = 0; t < this.maxGenerations; t++) {
       const r = [];
       for (let n = 0; n < this.populationSize; n++) {
-        const i = this.selectParent(), s = this.selectParent();
-        let a = this.crossover(i, s);
-        a = this.mutate(a), a.sort((l, u) => l[1] - u[1]), r.push(a);
+        const i = this.selectParent(), o = this.selectParent();
+        let a = this.crossover(i, o);
+        a = this.mutate(a), a.sort((c, u) => c[1] - u[1]), r.push(a);
       }
       this.population = r;
     }
@@ -5667,37 +5667,181 @@ class xo {
     ).sort((t, r) => t[1] - r[1]);
   }
 }
-function Vo(o, e) {
-  const t = o.map((a) => Array.isArray(a) || typeof a == "object" && a.length ? a[0] : a), r = zo(t.length, e.length), n = [], i = [];
-  for (let a = 0; a < r; a++)
-    n.push(t[a % t.length]), i.push(e[a % e.length]);
-  const s = n.map((a, l) => [a, i[l], 1]);
-  return Rn(s);
+function _e(s, e = 4, t = 480) {
+  const r = Math.floor(s / e), n = s - r * e, i = Math.floor(n), o = n - i, a = Math.round(o * t);
+  return `${r}:${i}:${a}`;
 }
-function zo(o, e) {
+function qe(s, e = 4, t = 480) {
+  if (typeof s == "number") return s;
+  if (typeof s != "string") return 0;
+  const r = s.split(":").map((a) => parseFloat(a || "0")), [n = 0, i = 0, o = 0] = r;
+  return n * e + i + o / t;
+}
+function Hn(s, e = "Untitled Part", t = {}) {
+  const r = ar(s);
+  return {
+    name: e,
+    notes: r,
+    ...t
+  };
+}
+function Xs(s, e = {}) {
+  const t = s.map((n, i) => Array.isArray(n) ? Hn(n, `Track ${i + 1}`) : n.name && n.notes ? {
+    ...n,
+    notes: ar(n.notes)
+  } : n), r = {
+    format: "jmon",
+    version: "1.0",
+    bpm: e.bpm || 120,
+    keySignature: e.keySignature || "C",
+    timeSignature: e.timeSignature || "4/4",
+    tracks: t,
+    ...e
+  };
+  return delete r.metadata?.bpm, delete r.metadata?.keySignature, delete r.metadata?.timeSignature, r;
+}
+function ar(s) {
+  return Array.isArray(s) ? s.map((e, t) => {
+    if (Array.isArray(e)) {
+      const [r, n, i = 0] = e;
+      return {
+        pitch: r,
+        duration: n,
+        time: _e(i)
+      };
+    }
+    if (typeof e == "object" && e !== null) {
+      const { pitch: r, duration: n } = e;
+      let i = "0:0:0";
+      return typeof e.time == "string" ? i = e.time : typeof e.time == "number" ? i = _e(e.time) : typeof e.offset == "number" && (i = _e(e.offset)), {
+        pitch: r,
+        duration: n,
+        time: i,
+        // Preserve other properties
+        ...Object.fromEntries(
+          Object.entries(e).filter(
+            ([o]) => !["time", "offset"].includes(o)
+          )
+        )
+      };
+    }
+    return console.warn(`Unexpected note format at index ${t}:`, e), {
+      pitch: 60,
+      // Default to middle C
+      duration: 1,
+      time: "0:0:0"
+    };
+  }) : [];
+}
+function Zs(s) {
+  return s.map(([e, t, r = 0]) => ({
+    pitch: e,
+    duration: t,
+    time: _e(r)
+  }));
+}
+function eo(s) {
+  return s.map((e) => [
+    e.pitch,
+    e.duration,
+    qe(e.time)
+  ]);
+}
+function to(s, e = 1, t = 0) {
+  let r = t;
+  return s.map((n) => {
+    const i = {
+      pitch: n,
+      duration: e,
+      time: _e(r)
+    };
+    return r += e, i;
+  });
+}
+function Jn(s, e) {
+  return s.map((t) => ({
+    ...t,
+    time: _e(qe(t.time) + e)
+  }));
+}
+function ro(s) {
+  if (s.length === 0) return [];
+  const e = [];
+  let t = 0;
+  for (const r of s) {
+    const n = Jn(r, t);
+    e.push(...n);
+    const i = n.map(
+      (o) => qe(o.time) + o.duration
+    );
+    t = Math.max(...i, t);
+  }
+  return e;
+}
+function no(s) {
+  return s.flat();
+}
+function io(s) {
+  if (s.length === 0) return { start: 0, end: 0, duration: 0 };
+  const e = s.map((i) => qe(i.time)), t = s.map((i) => qe(i.time) + i.duration), r = Math.min(...e), n = Math.max(...t);
+  return {
+    start: r,
+    end: n,
+    duration: n - r,
+    startTime: _e(r),
+    endTime: _e(n)
+  };
+}
+const so = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
+  __proto__: null,
+  beatsToTime: _e,
+  combineSequences: no,
+  concatenateSequences: ro,
+  createComposition: Xs,
+  createPart: Hn,
+  createScale: to,
+  getTimingInfo: io,
+  jmonToTuples: eo,
+  normalizeNotes: ar,
+  offsetNotes: Jn,
+  timeToBeats: qe,
+  tuplesToJmon: Zs
+}, Symbol.toStringTag, { value: "Module" }));
+function oo(s, e, t = {}) {
+  const r = s.map((u) => Array.isArray(u) || typeof u == "object" && u.length ? u[0] : u), n = ao(r.length, e.length), i = [], o = [];
+  for (let u = 0; u < n; u++)
+    i.push(r[u % r.length]), o.push(e[u % e.length]);
+  const a = i.map((u, d) => [u, o[d], 1]), c = Fn(a);
+  return t.legacy ? c : c.map(([u, d, v]) => ({
+    pitch: u,
+    duration: d,
+    time: t.useStringTime ? _e(v) : v
+  }));
+}
+function ao(s, e) {
   const t = (r, n) => n === 0 ? r : t(n, r % n);
-  return Math.abs(o * e) / t(o, e);
+  return Math.abs(s * e) / t(s, e);
 }
-function Fo(o, e) {
+function co(s, e) {
   const t = [];
   let r = 0, n = 0;
-  for (const i of o) {
-    const s = e[n % e.length];
-    t.push([i, s, r]), r += s, n++;
+  for (const i of s) {
+    const o = e[n % e.length];
+    t.push([i, o, r]), r += o, n++;
   }
   return t;
 }
-const Lo = {
-  Rhythm: Do,
-  isorhythm: Vo,
-  beatcycle: Fo
+const lo = {
+  Rhythm: Ys,
+  isorhythm: oo,
+  beatcycle: co
 };
-class Uo {
+class uo {
   // Dummy implementation, replace with actual logic
   constructor() {
   }
 }
-class Ee {
+class $e {
   data;
   // rows: number;
   // columns: number;
@@ -5710,10 +5854,10 @@ class Ee {
       this.data = e.map((r) => [...r]), this.rows = this.data.length, this.columns = this.data[0]?.length || 0;
   }
   static zeros(e, t) {
-    return new Ee(e, t);
+    return new $e(e, t);
   }
   static from2DArray(e) {
-    return new Ee(e);
+    return new $e(e);
   }
   get(e, t) {
     if (e < 0 || e >= this.rows || t < 0 || t >= this.columns)
@@ -5740,41 +5884,72 @@ class Ee {
     for (let t = 0; t < this.rows; t++)
       for (let r = 0; r < this.columns; r++)
         e[r][t] = this.data[t][r];
-    return new Ee(e);
+    return new $e(e);
   }
   clone() {
-    return new Ee(this.data);
+    return new $e(this.data);
   }
   toArray() {
     return this.data.map((e) => [...e]);
   }
 }
-function Kt(o) {
-  return Array.isArray(o[0]) ? Ee.from2DArray(o) : Ee.from2DArray([o]);
+function Zt(s) {
+  return Array.isArray(s[0]) ? $e.from2DArray(s) : $e.from2DArray([s]);
 }
-function Go(o) {
-  if (o.rows !== o.columns)
+function Wn(s) {
+  if (s.rows !== s.columns)
     throw new Error("Matrix must be square for Cholesky decomposition");
-  const e = o.rows, t = Ee.zeros(e, e);
+  const e = s.rows, t = $e.zeros(e, e);
   for (let r = 0; r < e; r++)
     for (let n = 0; n <= r; n++)
       if (r === n) {
         let i = 0;
         for (let a = 0; a < n; a++)
           i += t.get(n, a) * t.get(n, a);
-        const s = o.get(n, n) - i;
-        if (s <= 0)
+        const o = s.get(n, n) - i;
+        if (o <= 0)
           throw new Error(`Matrix is not positive definite at position (${n}, ${n})`);
-        t.set(n, n, Math.sqrt(s));
+        t.set(n, n, Math.sqrt(o));
       } else {
         let i = 0;
-        for (let s = 0; s < n; s++)
-          i += t.get(r, s) * t.get(n, s);
-        t.set(r, n, (o.get(r, n) - i) / t.get(n, n));
+        for (let o = 0; o < n; o++)
+          i += t.get(r, o) * t.get(n, o);
+        t.set(r, n, (s.get(r, n) - i) / t.get(n, n));
       }
   return t;
 }
-class Bo {
+class ho {
+  constructor(e = {}) {
+    this.params = { ...e };
+  }
+  call(e, t) {
+    const r = t || e, n = $e.zeros(e.rows, r.rows);
+    for (let i = 0; i < e.rows; i++)
+      for (let o = 0; o < r.rows; o++)
+        n.set(i, o, this.compute(e.getRow(i), r.getRow(o)));
+    return n;
+  }
+  // compute(x1, x2) { throw new Error('Not implemented'); }
+  getParams() {
+    return { ...this.params };
+  }
+  setParams(e) {
+    Object.assign(this.params, e);
+  }
+  euclideanDistance(e, t) {
+    let r = 0;
+    for (let n = 0; n < e.length; n++)
+      r += Math.pow(e[n] - t[n], 2);
+    return Math.sqrt(r);
+  }
+  squaredEuclideanDistance(e, t) {
+    let r = 0;
+    for (let n = 0; n < e.length; n++)
+      r += Math.pow(e[n] - t[n], 2);
+    return r;
+  }
+}
+class Yn {
   kernel;
   alpha;
   XTrain;
@@ -5785,12 +5960,12 @@ class Bo {
     this.kernel = e, this.alpha = t.alpha || 1e-10;
   }
   fit(e, t) {
-    this.XTrain = Kt(e), this.yTrain = [...t];
+    this.XTrain = Zt(e), this.yTrain = [...t];
     const r = this.kernel.call(this.XTrain);
     for (let n = 0; n < r.rows; n++)
       r.set(n, n, r.get(n, n) + this.alpha);
     try {
-      this.L = Go(r);
+      this.L = Wn(r);
     } catch (n) {
       throw new Error(`Failed to compute Cholesky decomposition: ${n instanceof Error ? n.message : "Unknown error"}`);
     }
@@ -5799,31 +5974,31 @@ class Bo {
   predict(e, t = !1) {
     if (!this.XTrain || !this.yTrain || !this.L || !this.alphaVector)
       throw new Error("Model must be fitted before prediction");
-    const r = Kt(e), n = this.kernel.call(this.XTrain, r), i = new Array(r.rows);
+    const r = Zt(e), n = this.kernel.call(this.XTrain, r), i = new Array(r.rows);
     for (let a = 0; a < r.rows; a++) {
       i[a] = 0;
-      for (let l = 0; l < this.XTrain.rows; l++)
-        i[a] += n.get(l, a) * this.alphaVector[l];
+      for (let c = 0; c < this.XTrain.rows; c++)
+        i[a] += n.get(c, a) * this.alphaVector[c];
     }
-    const s = { mean: i };
+    const o = { mean: i };
     if (t) {
       const a = this.computeStd(r, n);
-      s.std = a;
+      o.std = a;
     }
-    return s;
+    return o;
   }
   sampleY(e, t = 1) {
     if (!this.XTrain || !this.yTrain || !this.L || !this.alphaVector)
       throw new Error("Model must be fitted before sampling");
-    const r = Kt(e), n = this.predict(e, !0);
+    const r = Zt(e), n = this.predict(e, !0);
     if (!n.std)
       throw new Error("Standard deviation computation failed");
     const i = [];
-    for (let s = 0; s < t; s++) {
+    for (let o = 0; o < t; o++) {
       const a = new Array(r.rows);
-      for (let l = 0; l < r.rows; l++) {
-        const u = n.mean[l], p = n.std[l];
-        a[l] = u + p * this.sampleStandardNormal();
+      for (let c = 0; c < r.rows; c++) {
+        const u = n.mean[c], d = n.std[c];
+        a[c] = u + d * this.sampleStandardNormal();
       }
       i.push(a);
     }
@@ -5844,11 +6019,11 @@ class Bo {
       throw new Error("Cholesky decomposition not available");
     const r = new Array(e.rows);
     for (let n = 0; n < e.rows; n++) {
-      const i = this.kernel.compute(e.getRow(n), e.getRow(n)), s = t.getColumn(n), a = this.forwardSubstitution(this.L, s);
-      let l = 0;
-      for (let p = 0; p < a.length; p++)
-        l += a[p] * a[p];
-      const u = i - l;
+      const i = this.kernel.compute(e.getRow(n), e.getRow(n)), o = t.getColumn(n), a = this.forwardSubstitution(this.L, o);
+      let c = 0;
+      for (let d = 0; d < a.length; d++)
+        c += a[d] * a[d];
+      const u = i - c;
       r[n] = Math.sqrt(Math.max(0, u));
     }
     return r;
@@ -5861,8 +6036,8 @@ class Bo {
     const r = e.rows, n = new Array(r);
     for (let i = 0; i < r; i++) {
       n[i] = t[i];
-      for (let s = 0; s < i; s++)
-        n[i] -= e.get(i, s) * n[s];
+      for (let o = 0; o < i; o++)
+        n[i] -= e.get(i, o) * n[o];
       n[i] /= e.get(i, i);
     }
     return n;
@@ -5871,8 +6046,8 @@ class Bo {
     const r = e.rows, n = new Array(r);
     for (let i = r - 1; i >= 0; i--) {
       n[i] = t[i];
-      for (let s = i + 1; s < r; s++)
-        n[i] -= e.get(s, i) * n[s];
+      for (let o = i + 1; o < r; o++)
+        n[i] -= e.get(o, i) * n[o];
       n[i] /= e.get(i, i);
     }
     return n;
@@ -5882,7 +6057,220 @@ class Bo {
     return Math.sqrt(-2 * Math.log(e)) * Math.cos(2 * Math.PI * t);
   }
 }
-class Ko {
+class An extends ho {
+  constructor(e = 1, t = 1) {
+    super({ length_scale: e, variance: t }), this.lengthScale = e, this.variance = t;
+  }
+  compute(e, t) {
+    const r = this.euclideanDistance(e, t);
+    return this.variance * Math.exp(-0.5 * Math.pow(r / this.lengthScale, 2));
+  }
+  getParams() {
+    return {
+      length_scale: this.lengthScale,
+      variance: this.variance
+    };
+  }
+}
+function fo(s = 0, e = 1) {
+  const t = Math.random(), r = Math.random(), n = Math.sqrt(-2 * Math.log(t)) * Math.cos(2 * Math.PI * r);
+  return s + e * n;
+}
+function po(s, e) {
+  const t = s.length, r = Wn(e), n = Array.from({ length: t }, () => fo()), i = new Array(t);
+  for (let o = 0; o < t; o++) {
+    i[o] = s[o];
+    for (let a = 0; a <= o; a++)
+      i[o] += r.get(o, a) * n[a];
+  }
+  return i;
+}
+const Se = {
+  timeSignature: [4, 4],
+  // 4/4 time
+  ticksPerQuarterNote: 480,
+  // Standard MIDI resolution
+  beatsPerBar: 4
+  // Derived from time signature
+};
+function Oe(s, e = Se) {
+  const { timeSignature: t, ticksPerQuarterNote: r } = e, [n, i] = t, o = n * 4 / i, a = Math.floor(s / o), c = s % o, u = Math.floor(c), d = c - u, v = Math.round(d * r);
+  return `${a}:${u}:${v}`;
+}
+function cr(s, e = Se) {
+  const { timeSignature: t, ticksPerQuarterNote: r } = e, [n, i] = t, o = s.split(":");
+  if (o.length !== 3)
+    throw new Error(`Invalid bars:beats:ticks format: ${s}`);
+  const a = parseInt(o[0], 10), c = parseFloat(o[1]), u = parseInt(o[2], 10);
+  if (isNaN(a) || isNaN(c) || isNaN(u))
+    throw new Error(`Invalid numeric values in bars:beats:ticks: ${s}`);
+  const d = n * 4 / i;
+  return a * d + c + u / r;
+}
+function mo(s, e = Se, t = !0) {
+  return s.map((r) => {
+    const n = { ...r };
+    if (r.offset !== void 0 && (n.time = r.offset, delete n.offset), typeof r.time == "string" && r.time.includes(":") && (n.time = cr(r.time, e)), typeof r.duration == "number" && !t) {
+      const i = r.duration;
+      i === 1 ? n.duration = "4n" : i === 0.5 ? n.duration = "8n" : i === 0.25 ? n.duration = "16n" : i === 2 ? n.duration = "2n" : i === 4 && (n.duration = "1n");
+    }
+    return n;
+  });
+}
+function Ue(s, e = {}) {
+  const {
+    label: t = "track",
+    midiChannel: r = 0,
+    synth: n = { type: "Synth" },
+    timingConfig: i = Se,
+    keepNumericDuration: o = !0
+    // Default to numeric for MIDI consistency
+  } = e, a = mo(s, i, o);
+  return {
+    label: t,
+    midiChannel: r,
+    synth: n,
+    notes: a
+  };
+}
+class yo {
+  data;
+  lengthScale;
+  amplitude;
+  noiseLevel;
+  walkAround;
+  timingConfig;
+  isFitted;
+  gpr;
+  constructor(e = [], t = 1, r = 1, n = 0.1, i = !1, o = Se) {
+    this.data = [...e], this.lengthScale = t, this.amplitude = r, this.noiseLevel = n, this.walkAround = i, this.timingConfig = o, this.isFitted = !1, this.gpr = null;
+  }
+  generate(e = {}) {
+    e.length, e.nsamples;
+    const t = e.seed;
+    return e.useStringTime, t !== void 0 && (Math.seedrandom = this.seededRandom(t)), this.data.length > 0 && Array.isArray(this.data[0]) ? this.generateFitted(e) : this.generateUnfitted(e);
+  }
+  /**
+   * Generate from unfitted Gaussian Process
+   */
+  generateUnfitted(e = {}) {
+    const t = e.length || 100, r = e.nsamples || 1, n = e.lengthScale || this.lengthScale, i = e.amplitude || this.amplitude, o = e.noiseLevel || this.noiseLevel;
+    e.useStringTime;
+    const a = [];
+    for (let c = 0; c < r; c++) {
+      const u = Array.from({ length: t }, (g, h) => [h]), d = new $e(u), _ = new An(n, i).call(d);
+      for (let g = 0; g < _.rows; g++)
+        _.set(g, g, _.get(g, g) + o);
+      let $ = new Array(t).fill(this.walkAround || 0);
+      this.walkAround && typeof this.walkAround == "number" && ($ = new Array(t).fill(this.walkAround));
+      const S = po($, _);
+      a.push(S);
+    }
+    return r === 1 ? a[0] : a;
+  }
+  /**
+   * Generate from fitted Gaussian Process using training data
+   */
+  generateFitted(e = {}) {
+    const t = e.length || 100, r = e.nsamples || 1, n = e.lengthScale || this.lengthScale, i = e.amplitude || this.amplitude, o = this.data.map((g) => [g[0]]), a = this.data.map((g) => g[1]), c = new An(n, i);
+    this.gpr = new Yn(c);
+    try {
+      this.gpr.fit(o, a), this.isFitted = !0;
+    } catch (g) {
+      throw new Error(`Failed to fit Gaussian Process: ${g.message}`);
+    }
+    const u = Math.min(...this.data.map((g) => g[0])), v = (Math.max(...this.data.map((g) => g[0])) - u) / (t - 1), _ = Array.from({ length: t }, (g, h) => [u + h * v]), $ = this.gpr.sampleY(_, r), S = _.map((g) => g[0]);
+    return r === 1 ? [S, $[0]] : [S, $];
+  }
+  rbfKernel(e, t) {
+    let r = 0;
+    for (let n = 0; n < e.length; n++)
+      r += Math.pow(e[n] - t[n], 2);
+    return this.amplitude * Math.exp(-r / (2 * Math.pow(this.lengthScale, 2)));
+  }
+  setData(e) {
+    this.data = [...e];
+  }
+  getData() {
+    return [...this.data];
+  }
+  setLengthScale(e) {
+    this.lengthScale = e;
+  }
+  setAmplitude(e) {
+    this.amplitude = e;
+  }
+  setNoiseLevel(e) {
+    this.noiseLevel = e;
+  }
+  /**
+   * Convert GP samples to JMON notes
+   * @param {Array|Array<Array>} samples - GP samples (single array or array of arrays)
+   * @param {Array} durations - Duration sequence
+   * @param {Array} timePoints - Time points (for fitted GP)
+   * @param {Object} options - Conversion options
+   * @returns {Array} JMON note objects
+   */
+  toJmonNotes(e, t = [1], r = null, n = {}) {
+    const {
+      useStringTime: i = !1,
+      mapToScale: o = null,
+      scaleRange: a = [60, 72],
+      quantize: c = !1
+    } = n, u = [];
+    let d = 0;
+    const v = Array.isArray(e[0]) ? e : [e], _ = r || Array.from({ length: v[0].length }, ($, S) => S);
+    for (let $ = 0; $ < v[0].length; $++) {
+      const S = t[$ % t.length], g = r ? _[$] : d, h = v.map((l) => {
+        let p = l[$];
+        if (o) {
+          const m = Math.min(...l), b = Math.max(...l) - m || 1, P = (p - m) / b, k = Math.floor(P * o.length), C = Math.max(0, Math.min(k, o.length - 1));
+          p = o[C];
+        } else {
+          const m = Math.min(...l), b = Math.max(...l) - m || 1, P = (p - m) / b;
+          p = a[0] + P * (a[1] - a[0]);
+        }
+        return c && (p = Math.round(p)), p;
+      }), f = h.length === 1 ? h[0] : h;
+      u.push({
+        pitch: f,
+        duration: S,
+        time: i ? Oe(g, this.timingConfig) : g
+      }), r || (d += S);
+    }
+    return u;
+  }
+  /**
+   * Generate JMON track directly from GP
+   * @param {Object} options - Generation options
+   * @param {Object} trackOptions - Track options
+   * @returns {Object} JMON track
+   */
+  generateTrack(e = {}, t = {}) {
+    const r = this.generate(e), n = e.durations || [1];
+    let i;
+    if (this.isFitted || this.data.length > 0 && Array.isArray(this.data[0])) {
+      const [o, a] = r;
+      i = this.toJmonNotes(a, n, o, e);
+    } else
+      i = this.toJmonNotes(r, n, null, e);
+    return Ue(i, {
+      label: "gaussian-process",
+      midiChannel: 0,
+      synth: { type: "Synth" },
+      ...t
+    });
+  }
+  /**
+   * Simple seeded random number generator
+   */
+  seededRandom(e) {
+    return function() {
+      return e = (e * 9301 + 49297) % 233280, e / 233280;
+    };
+  }
+}
+class go {
   /**
    * @param {CellularAutomataOptions} [options={}] - Configuration options
    */
@@ -5925,8 +6313,8 @@ class Ko {
   updateState() {
     const e = new Array(this.width);
     for (let t = 0; t < this.width; t++) {
-      const r = this.state[(t - 1 + this.width) % this.width], n = this.state[t], i = this.state[(t + 1) % this.width], s = `${r}${n}${i}`;
-      e[t] = this.rules[s] || 0;
+      const r = this.state[(t - 1 + this.width) % this.width], n = this.state[t], i = this.state[(t + 1) % this.width], o = `${r}${n}${i}`;
+      e[t] = this.rules[o] || 0;
     }
     this.state = e;
   }
@@ -6017,7 +6405,7 @@ class Ko {
    * @returns {Object} Observable Plot spec
    */
   async plotEvolution(e) {
-    return (await import("./CAVisualizer-CmIzAtiX.mjs")).CAVisualizer.plotEvolution(this.getHistory(), e);
+    return (await import("./CAVisualizer-CmIzAtiX.js")).CAVisualizer.plotEvolution(this.getHistory(), e);
   }
   /**
    * Create Observable Plot visualization of current generation
@@ -6025,7 +6413,7 @@ class Ko {
    * @returns {Object} Observable Plot spec
    */
   async plotGeneration(e) {
-    return (await import("./CAVisualizer-CmIzAtiX.mjs")).CAVisualizer.plotGeneration(this.getCurrentState(), e);
+    return (await import("./CAVisualizer-CmIzAtiX.js")).CAVisualizer.plotGeneration(this.getCurrentState(), e);
   }
   /**
    * Create Observable Plot density visualization
@@ -6033,10 +6421,10 @@ class Ko {
    * @returns {Object} Observable Plot spec
    */
   async plotDensity(e) {
-    return (await import("./CAVisualizer-CmIzAtiX.mjs")).CAVisualizer.plotDensity(this.getHistory(), e);
+    return (await import("./CAVisualizer-CmIzAtiX.js")).CAVisualizer.plotDensity(this.getHistory(), e);
   }
 }
-class kt {
+class qt {
   /**
    * Initializes a Loop object.
    * 
@@ -6055,8 +6443,8 @@ class kt {
       if (e.length === 0)
         throw new Error("Loops array cannot be empty");
       const n = {};
-      e.forEach((i, s) => {
-        const a = i?.label || `Loop ${s + 1}`;
+      e.forEach((i, o) => {
+        const a = i?.label || `Loop ${o + 1}`;
         n[a] = i;
       }), e = n;
     }
@@ -6066,23 +6454,23 @@ class kt {
     for (const [n, i] of Object.entries(e)) {
       if (!i)
         throw new Error(`Loop data for "${n}" is null or undefined`);
-      const s = Array.isArray(i) ? i : i.notes || [];
-      if (!Array.isArray(s))
+      const o = Array.isArray(i) ? i : i.notes || [];
+      if (!Array.isArray(o))
         throw new Error(`Notes for loop "${n}" must be an array`);
-      const a = s.map((l, u) => {
-        if (!l || typeof l != "object")
+      const a = o.map((c, u) => {
+        if (!c || typeof c != "object")
           throw new Error(`Note ${u} in loop "${n}" must be an object`);
-        if (l.pitch !== null && (typeof l.pitch != "number" || l.pitch < 0 || l.pitch > 127))
-          throw new Error(`Note ${u} in loop "${n}" has invalid pitch: ${l.pitch}`);
-        if (typeof l.time != "number" || l.time < 0)
-          throw new Error(`Note ${u} in loop "${n}" has invalid time: ${l.time}`);
-        if (typeof l.duration != "number" || l.duration <= 0)
-          throw new Error(`Note ${u} in loop "${n}" has invalid duration: ${l.duration}`);
+        if (c.pitch !== null && (typeof c.pitch != "number" || c.pitch < 0 || c.pitch > 127))
+          throw new Error(`Note ${u} in loop "${n}" has invalid pitch: ${c.pitch}`);
+        if (typeof c.time != "number" || c.time < 0)
+          throw new Error(`Note ${u} in loop "${n}" has invalid time: ${c.time}`);
+        if (typeof c.duration != "number" || c.duration <= 0)
+          throw new Error(`Note ${u} in loop "${n}" has invalid duration: ${c.duration}`);
         return {
-          pitch: l.pitch,
-          time: l.time,
-          duration: l.duration,
-          velocity: typeof l.velocity == "number" ? Math.max(0, Math.min(1, l.velocity)) : 0.8
+          pitch: c.pitch,
+          time: c.time,
+          duration: c.duration,
+          velocity: typeof c.velocity == "number" ? Math.max(0, Math.min(1, c.velocity)) : 0.8
         };
       });
       this.loops[n] = {
@@ -6105,7 +6493,7 @@ class kt {
     if (e.length === 0) return e;
     const t = [];
     let r = 0;
-    const n = [...e].sort((i, s) => i.time - s.time);
+    const n = [...e].sort((i, o) => i.time - o.time);
     for (const i of n)
       i.time > r && t.push({
         pitch: null,
@@ -6127,7 +6515,7 @@ class kt {
   static fromTrack(e, t = 4) {
     if ((e.notes || []).length === 0)
       throw new Error("Track must have notes to create loop");
-    return new kt({ [e.label || "Track"]: e }, t);
+    return new qt({ [e.label || "Track"]: e }, t);
   }
   /**
    * Create loop from Euclidean rhythm (JMON format)
@@ -6141,21 +6529,21 @@ class kt {
       throw new Error("pulses cannot be greater than beats");
     if (!Array.isArray(r) || r.length === 0)
       throw new Error("pitches must be a non-empty array");
-    const i = this.generateEuclideanRhythm(e, t), s = [], a = 1;
-    i.forEach((u, p) => {
+    const i = this.generateEuclideanRhythm(e, t), o = [], a = 1;
+    i.forEach((u, d) => {
       if (u) {
-        const w = p * a, _ = r[p % r.length];
-        s.push({
+        const v = d * a, _ = r[d % r.length];
+        o.push({
           pitch: _,
           duration: a * 0.8,
-          time: w,
+          time: v,
           velocity: 0.8
         });
       }
     });
-    const l = {
+    const c = {
       label: n || `Euclidean ${t}/${e}`,
-      notes: s,
+      notes: o,
       synth: {
         type: "Synth",
         options: {
@@ -6164,7 +6552,7 @@ class kt {
         }
       }
     };
-    return new kt({ [l.label]: l }, e);
+    return new qt({ [c.label]: c }, e);
   }
   /**
    * Generate Euclidean rhythm pattern using Bjorklund algorithm
@@ -6182,23 +6570,23 @@ class kt {
       // Groups without pulses
     ];
     for (; r.length > 1; ) {
-      const [s, a] = r;
-      if (s.count <= a.count) {
-        const l = s.count, u = a.count - s.count;
+      const [o, a] = r;
+      if (o.count <= a.count) {
+        const c = o.count, u = a.count - o.count;
         r = [
-          { pattern: [...a.pattern, ...s.pattern], count: l }
+          { pattern: [...a.pattern, ...o.pattern], count: c }
         ], u > 0 && r.push({ pattern: a.pattern, count: u });
       } else {
-        const l = a.count, u = s.count - a.count;
+        const c = a.count, u = o.count - a.count;
         r = [
-          { pattern: [...s.pattern, ...a.pattern], count: l }
-        ], u > 0 && r.push({ pattern: s.pattern, count: u });
+          { pattern: [...o.pattern, ...a.pattern], count: c }
+        ], u > 0 && r.push({ pattern: o.pattern, count: u });
       }
     }
     const n = r[0], i = [];
-    for (let s = 0; s < n.count; s++)
+    for (let o = 0; o < n.count; o++)
       i.push(...n.pattern);
-    return i.map((s) => s === 1);
+    return i.map((o) => o === 1);
   }
   /**
    * Get loops as JMON tracks (already in JMON format)
@@ -6210,7 +6598,7 @@ class kt {
    * Simple plotting method matching Python implementation
    */
   async plot(e = 1 / 4, t = null, r = {}) {
-    const { LoopVisualizer: n } = await import("./LoopVisualizer-DS22P85c.mjs");
+    const { LoopVisualizer: n } = await import("./LoopVisualizer-DS22P85c.js");
     return n.plotLoops(
       this.loops,
       this.measureLength,
@@ -6220,434 +6608,432 @@ class kt {
     );
   }
 }
-class qn {
+class Ct {
   /**
-   * Calculate Gini coefficient for inequality measurement
-   * @param {number[]} values - Values to analyze
-   * @param {number[]} [weights] - Optional weights
-   * @returns {number} Gini coefficient (0-1)
+   * Create a musical index analyzer for a sequence
+   * @param {Array} sequence - Array of musical values (pitches, durations, etc.)
    */
-  static gini(e, t) {
-    if (e.length === 0) return 0;
-    const r = e.length, n = t || Array(r).fill(1), i = e.map((w, _) => ({ value: w, weight: n[_] })).sort((w, _) => w.value - _.value), s = i.map((w) => w.value), a = i.map((w) => w.weight), l = a.reduce((w, _) => w + _, 0);
-    let u = 0, p = 0;
-    for (let w = 0; w < r; w++) {
-      const _ = a.slice(0, w + 1).reduce((S, E) => S + E, 0);
-      u += a[w] * (2 * _ - a[w] - l) * s[w], p += a[w] * s[w] * l;
-    }
-    return p === 0 ? 0 : u / p;
+  constructor(e) {
+    this.sequence = e.filter((t) => t != null), this.originalSequence = e;
   }
   /**
-   * Calculate center of mass (balance point) of a sequence
-   * @param {number[]} values - Values to analyze
-   * @param {number[]} [weights] - Optional weights
-   * @returns {number} Balance point
+   * Calculate Gini coefficient (measure of inequality/diversity)
+   * 0 = perfect equality, 1 = maximum inequality
+   * @returns {number} Gini coefficient
    */
-  static balance(e, t) {
-    if (e.length === 0) return 0;
-    const r = t || Array(e.length).fill(1), n = e.reduce((s, a, l) => s + a * r[l], 0), i = r.reduce((s, a) => s + a, 0);
-    return i === 0 ? 0 : n / i;
-  }
-  /**
-   * Calculate autocorrelation for pattern detection
-   * @param {number[]} values - Values to analyze
-   * @param {number} [maxLag] - Maximum lag to calculate
-   * @returns {number[]} Autocorrelation array
-   */
-  static autocorrelation(e, t) {
-    const r = e.length, n = t || Math.floor(r / 2), i = [], s = e.reduce((l, u) => l + u, 0) / r, a = e.reduce((l, u) => l + Math.pow(u - s, 2), 0) / r;
-    for (let l = 0; l <= n; l++) {
-      let u = 0;
-      for (let p = 0; p < r - l; p++)
-        u += (e[p] - s) * (e[p + l] - s);
-      u /= r - l, i.push(a === 0 ? 0 : u / a);
-    }
-    return i;
-  }
-  /**
-   * Detect and score musical motifs
-   * @param {number[]} values - Values to analyze
-   * @param {number} [patternLength=3] - Length of patterns to detect
-   * @returns {number} Motif score
-   */
-  static motif(e, t = 3) {
-    if (e.length < t * 2) return 0;
-    const r = /* @__PURE__ */ new Map();
-    for (let s = 0; s <= e.length - t; s++) {
-      const a = e.slice(s, s + t).join(",");
-      r.set(a, (r.get(a) || 0) + 1);
-    }
-    const n = Math.max(...r.values()), i = r.size;
-    return i === 0 ? 0 : n / i;
-  }
-  /**
-   * Calculate dissonance/scale conformity
-   * @param {number[]} pitches - MIDI pitch values
-   * @param {number[]} [scale=[0, 2, 4, 5, 7, 9, 11]] - Scale to check against
-   * @returns {number} Dissonance score (0-1)
-   */
-  static dissonance(e, t = [0, 2, 4, 5, 7, 9, 11]) {
-    if (e.length === 0) return 0;
+  gini() {
+    if (this.sequence.length === 0) return 0;
+    const e = [...this.sequence].sort((i, o) => i - o), t = e.length;
     let r = 0;
-    for (const n of e) {
-      const i = (n % 12 + 12) % 12;
-      t.includes(i) && r++;
-    }
-    return 1 - r / e.length;
+    for (let i = 0; i < t; i++)
+      r += (2 * (i + 1) - t - 1) * e[i];
+    const n = e.reduce((i, o) => i + o, 0);
+    return n === 0 ? 0 : r / (t * n);
   }
   /**
-   * Calculate rhythmic fit to a grid
-   * @param {number[]} onsets - Onset times
-   * @param {number} [gridDivision=16] - Grid division
-   * @returns {number} Rhythmic alignment score
+   * Calculate balance (measure of how evenly distributed values are around the mean)
+   * Lower values indicate better balance around the center
+   * @returns {number} Balance metric
    */
-  static rhythmic(e, t = 16) {
-    if (e.length === 0) return 0;
-    let r = 0;
-    const n = 0.1;
-    for (const i of e) {
-      const s = i * t, a = Math.round(s);
-      Math.abs(s - a) <= n && r++;
-    }
-    return r / e.length;
+  balance() {
+    if (this.sequence.length === 0) return 0;
+    const e = this.sequence.reduce((r, n) => r + n, 0) / this.sequence.length, t = this.sequence.reduce((r, n) => r + Math.pow(n - e, 2), 0) / this.sequence.length;
+    return e === 0 ? 0 : Math.sqrt(t) / Math.abs(e);
   }
   /**
-   * Calculate Fibonacci/golden ratio index
-   * @param {number[]} values - Values to analyze
-   * @returns {number} Fibonacci index
+   * Calculate motif strength (measure of repetitive patterns)
+   * Higher values indicate stronger motif presence
+   * @param {number} maxMotifLength - Maximum motif length to consider
+   * @returns {number} Motif strength
    */
-  static fibonacciIndex(e) {
-    if (e.length < 2) return 0;
-    const t = (1 + Math.sqrt(5)) / 2;
+  motif(e = 4) {
+    if (this.sequence.length < 2) return 0;
+    const t = /* @__PURE__ */ new Map();
     let r = 0;
-    for (let n = 1; n < e.length; n++)
-      if (e[n - 1] !== 0) {
-        const i = e[n] / e[n - 1], s = Math.abs(i - t);
-        r += 1 / (1 + s);
+    for (let i = 2; i <= Math.min(e, this.sequence.length); i++)
+      for (let o = 0; o <= this.sequence.length - i; o++) {
+        const a = this.sequence.slice(o, o + i).join(",");
+        t.set(a, (t.get(a) || 0) + 1), r++;
       }
-    return r / (e.length - 1);
+    let n = 0;
+    for (const i of t.values())
+      i > 1 && (n += i * i);
+    return r === 0 ? 0 : n / r;
   }
   /**
-   * Calculate syncopation (off-beat emphasis)
-   * @param {number[]} onsets - Onset times
-   * @param {number} [beatDivision=4] - Beat division
-   * @returns {number} Syncopation score
+   * Calculate dissonance relative to a musical scale
+   * 0 = all notes in scale, higher values = more dissonance
+   * @param {Array} scale - Array of pitches considered consonant
+   * @returns {number} Dissonance level
    */
-  static syncopation(e, t = 4) {
-    if (e.length === 0) return 0;
+  dissonance(e) {
+    if (!e || e.length === 0 || this.sequence.length === 0) return 0;
+    const t = new Set(e.map((n) => n % 12));
     let r = 0;
-    for (const n of e) {
-      const i = n * t % 1;
-      i > 0.2 && i < 0.8 && Math.abs(i - 0.5) > 0.2 && r++;
+    for (const n of this.sequence)
+      if (n != null) {
+        const i = n % 12;
+        t.has(i) || r++;
+      }
+    return r / this.sequence.length;
+  }
+  /**
+   * Calculate rhythmic fitness (how well durations fit within measure boundaries)
+   * 1 = perfect fit, lower values = poor rhythmic alignment
+   * @param {number} measureLength - Length of a measure in beats
+   * @returns {number} Rhythmic fitness
+   */
+  rhythmic(e = 4) {
+    if (this.sequence.length === 0) return 0;
+    let t = 0, r = 0;
+    const n = this.sequence.reduce((i, o) => i + o, 0);
+    for (const i of this.sequence) {
+      const o = t + i, a = Math.floor(t / e), c = Math.floor(o / e);
+      if (a !== c) {
+        const u = e - t % e;
+        u < i && u > 0 && (r += Math.min(u, i - u));
+      }
+      t = o;
     }
-    return r / e.length;
+    return n === 0 ? 0 : 1 - r / n;
   }
   /**
-   * Calculate contour entropy (melodic direction randomness)
-   * @param {number[]} pitches - Pitch values
-   * @returns {number} Contour entropy
+   * Calculate proportion of rests in the sequence
+   * @returns {number} Proportion of rests (0-1)
    */
-  static contourEntropy(e) {
-    if (e.length < 2) return 0;
-    const t = [];
-    for (let s = 1; s < e.length; s++) {
-      const a = e[s] - e[s - 1];
-      a > 0 ? t.push(1) : a < 0 ? t.push(-1) : t.push(0);
-    }
-    const r = { up: 0, down: 0, same: 0 };
-    for (const s of t)
-      s > 0 ? r.up++ : s < 0 ? r.down++ : r.same++;
-    const n = t.length;
-    return -[r.up / n, r.down / n, r.same / n].filter((s) => s > 0).reduce((s, a) => s + a * Math.log2(a), 0);
+  restProportion() {
+    return this.originalSequence.length === 0 ? 0 : this.originalSequence.filter((t) => t == null).length / this.originalSequence.length;
   }
   /**
-   * Calculate interval variance (pitch stability)
-   * @param {number[]} pitches - Pitch values
-   * @returns {number} Interval variance
+   * Calculate all metrics at once for efficiency
+   * @param {Array} scale - Musical scale for dissonance calculation
+   * @param {number} measureLength - Measure length for rhythmic analysis
+   * @returns {Object} All calculated metrics
    */
-  static intervalVariance(e) {
-    if (e.length < 2) return 0;
-    const t = [];
-    for (let i = 1; i < e.length; i++)
-      t.push(Math.abs(e[i] - e[i - 1]));
-    const r = t.reduce((i, s) => i + s, 0) / t.length;
-    return t.reduce((i, s) => i + Math.pow(s - r, 2), 0) / t.length;
-  }
-  /**
-   * Calculate note density (notes per unit time)
-   * @param {JMonNote[]} notes - Array of notes
-   * @param {number} [timeWindow=1] - Time window for density calculation
-   * @returns {number} Note density
-   */
-  static density(e, t = 1) {
-    if (e.length === 0) return 0;
-    const r = e.map((a) => typeof a.time == "string" ? parseFloat(a.time) || 0 : a.time || 0), n = Math.min(...r), s = Math.max(...r) - n || 1;
-    return e.length / (s / t);
-  }
-  /**
-   * Calculate gap variance (timing consistency)
-   * @param {number[]} onsets - Onset times
-   * @returns {number} Gap variance
-   */
-  static gapVariance(e) {
-    if (e.length < 2) return 0;
-    const t = [];
-    for (let i = 1; i < e.length; i++)
-      t.push(e[i] - e[i - 1]);
-    const r = t.reduce((i, s) => i + s, 0) / t.length;
-    return t.reduce((i, s) => i + Math.pow(s - r, 2), 0) / t.length;
-  }
-  /**
-   * Comprehensive analysis of a musical sequence
-   * @param {JMonNote[]} notes - Array of notes to analyze
-   * @param {AnalysisOptions} [options={}] - Analysis options
-   * @returns {AnalysisResult} Analysis results
-   */
-  static analyze(e, t = {}) {
-    const { scale: r = [0, 2, 4, 5, 7, 9, 11] } = t, n = e.map((s) => typeof s.note == "number" ? s.note : typeof s.note == "string" ? 60 : Array.isArray(s.note) ? s.note[0] : 60), i = e.map((s) => typeof s.time == "number" ? s.time : parseFloat(s.time) || 0);
+  calculateAll(e = null, t = 4) {
     return {
-      gini: this.gini(n),
-      balance: this.balance(n),
-      motif: this.motif(n),
-      dissonance: this.dissonance(n, r),
-      rhythmic: this.rhythmic(i),
-      fibonacciIndex: this.fibonacciIndex(n),
-      syncopation: this.syncopation(i),
-      contourEntropy: this.contourEntropy(n),
-      intervalVariance: this.intervalVariance(n),
-      density: this.density(e),
-      gapVariance: this.gapVariance(i)
+      gini: this.gini(),
+      balance: this.balance(),
+      motif: this.motif(),
+      dissonance: e ? this.dissonance(e) : 0,
+      rhythmic: this.rhythmic(t),
+      rest: this.restProportion()
     };
+  }
+  /**
+   * Calculate statistical properties of the sequence
+   * @returns {Object} Statistical properties
+   */
+  getStats() {
+    if (this.sequence.length === 0)
+      return { mean: 0, std: 0, min: 0, max: 0, range: 0 };
+    const e = this.sequence.reduce((o, a) => o + a, 0) / this.sequence.length, t = this.sequence.reduce((o, a) => o + Math.pow(a - e, 2), 0) / this.sequence.length, r = Math.sqrt(t), n = Math.min(...this.sequence), i = Math.max(...this.sequence);
+    return {
+      mean: e,
+      std: r,
+      min: n,
+      max: i,
+      range: i - n
+    };
+  }
+  /**
+   * Compare two sequences and return similarity score
+   * @param {MusicalIndex} other - Another MusicalIndex to compare with
+   * @param {Array} scale - Scale for dissonance comparison
+   * @param {number} measureLength - Measure length for rhythmic comparison
+   * @returns {number} Similarity score (0-1, higher is more similar)
+   */
+  similarity(e, t = null, r = 4) {
+    const n = this.calculateAll(t, r), i = e.calculateAll(t, r);
+    let o = 0, a = 0;
+    for (const [c, u] of Object.entries(n)) {
+      const d = i[c];
+      if (typeof u == "number" && typeof d == "number") {
+        const v = Math.max(Math.abs(u), Math.abs(d), 1), _ = 1 - Math.abs(u - d) / v;
+        o += _, a++;
+      }
+    }
+    return a === 0 ? 0 : o / a;
   }
 }
-class Ho {
+class vo {
+  /**
+   * Initialize the Darwin genetic algorithm
+   * @param {Object} config - Configuration object
+   */
   constructor(e = {}) {
-    this.options = {
-      populationSize: e.populationSize || 50,
-      generations: e.generations || 100,
-      mutationRate: e.mutationRate || 0.1,
-      crossoverRate: e.crossoverRate || 0.8,
-      elitismRate: e.elitismRate || 0.1,
-      fitnessWeights: {
-        gini: 0.2,
-        balance: 0.15,
-        motif: 0.25,
-        dissonance: 0.2,
-        rhythmic: 0.2,
-        ...e.fitnessWeights
+    const {
+      initialPhrases: t = [],
+      mutationRate: r = 0.05,
+      populationSize: n = 50,
+      mutationProbabilities: i = null,
+      scale: o = null,
+      measureLength: a = 4,
+      timeResolution: c = [0.125, 4],
+      weights: u = null,
+      targets: d = null,
+      seed: v = null
+    } = e;
+    this.initialPhrases = t, this.mutationRate = r, this.populationSize = n, this.scale = o, this.measureLength = a, this.timeResolution = c, v !== null ? (this.seed = v, this.randomState = this.createSeededRandom(v)) : this.randomState = Math;
+    const _ = [0.125, 0.25, 0.5, 1, 2, 3, 4, 8];
+    this.possibleDurations = _.filter(
+      ($) => $ >= c[0] && $ <= Math.min(c[1], a)
+    ), this.mutationProbabilities = i || {
+      pitch: () => Math.max(0, Math.min(127, Math.floor(this.gaussianRandom(60, 5)))),
+      duration: () => {
+        const $ = this.possibleDurations.map((S, g) => Math.pow(2, -g));
+        return this.weightedChoice(this.possibleDurations, $);
       },
-      scale: e.scale || [0, 2, 4, 5, 7, 9, 11],
-      // C major
-      durations: e.durations || ["4n", "8n", "2n", "16n"],
-      lengthRange: e.lengthRange || [8, 16]
-    }, this.population = [], this.generation = 0, this.bestFitness = -1 / 0, this.bestIndividual = null;
+      rest: () => this.randomState.random() < 0.02 ? null : 1
+    }, this.weights = u || {
+      gini: [1, 1, 0],
+      // [pitch, duration, offset]
+      balance: [1, 1, 0],
+      motif: [10, 1, 0],
+      dissonance: [1, 0, 0],
+      rhythmic: [0, 10, 0],
+      rest: [1, 0, 0]
+    }, this.targets = d || {
+      gini: [0.05, 0.5, 0],
+      balance: [0.1, 0.1, 0],
+      motif: [1, 1, 0],
+      dissonance: [0, 0, 0],
+      rhythmic: [0, 1, 0],
+      rest: [0, 0, 0]
+    }, this.population = this.initializePopulation(), this.bestIndividuals = [], this.bestScores = [], this.generationCount = 0;
   }
   /**
-   * Initialize random population
+   * Create a seeded random number generator
+   * @param {number} seed - Random seed
+   * @returns {Object} Random number generator with seeded methods
    */
-  initializePopulation() {
-    this.population = [];
-    for (let e = 0; e < this.options.populationSize; e++) {
-      const t = this.createRandomIndividual();
-      this.population.push(t);
-    }
-    this.evaluatePopulation();
-  }
-  /**
-   * Run the genetic algorithm
-   */
-  evolve() {
-    this.initializePopulation();
-    for (let e = 0; e < this.options.generations; e++) {
-      this.generation = e;
-      const t = this.createNextGeneration();
-      this.population = t, this.evaluatePopulation();
-      const r = this.getBestIndividual();
-      r.fitness > this.bestFitness && (this.bestFitness = r.fitness, this.bestIndividual = { ...r });
-    }
-    return this.getBestIndividual();
-  }
-  /**
-   * Create a random individual
-   */
-  createRandomIndividual() {
-    const e = Math.floor(Math.random() * (this.options.lengthRange[1] - this.options.lengthRange[0] + 1)) + this.options.lengthRange[0], t = [];
-    let r = 0;
-    for (let n = 0; n < e; n++) {
-      const i = this.randomPitch(), s = this.randomDuration();
-      t.push({
-        note: i,
-        time: `${Math.floor(r)}:${Math.floor(r % 1 * 4)}:0`,
-        // Simple time format
-        duration: s,
-        velocity: Math.random() * 0.5 + 0.5
-        // 0.5 to 1.0
-      }), r += this.parseDuration(s);
-    }
+  createSeededRandom(e) {
+    let t = e;
+    const r = () => (t = (t * 9301 + 49297) % 233280, t / 233280);
     return {
-      genes: t,
-      fitness: 0,
-      age: 0
+      random: r,
+      choice: (n) => n[Math.floor(r() * n.length)],
+      sample: (n, i) => [...n].sort(() => r() - 0.5).slice(0, i)
     };
   }
   /**
-   * Generate random pitch from scale
+   * Generate Gaussian random number using Box-Muller transform
+   * @param {number} mean - Mean of distribution
+   * @param {number} stdDev - Standard deviation
+   * @returns {number} Gaussian random number
    */
-  randomPitch() {
-    const e = Math.floor(Math.random() * 3) + 4, t = this.options.scale[Math.floor(Math.random() * this.options.scale.length)];
-    return 12 * e + t;
-  }
-  /**
-   * Generate random duration
-   */
-  randomDuration() {
-    return this.options.durations[Math.floor(Math.random() * this.options.durations.length)];
-  }
-  /**
-   * Parse duration to numeric value (simplified)
-   */
-  parseDuration(e) {
-    return {
-      "1n": 4,
-      "2n": 2,
-      "4n": 1,
-      "8n": 0.5,
-      "16n": 0.25,
-      "32n": 0.125
-    }[e] || 1;
-  }
-  /**
-   * Evaluate fitness for all individuals
-   */
-  evaluatePopulation() {
-    for (const e of this.population)
-      e.fitness = this.calculateFitness(e.genes);
-    this.population.sort((e, t) => t.fitness - e.fitness);
-  }
-  /**
-   * Calculate fitness using weighted musical analysis metrics
-   */
-  calculateFitness(e) {
-    const t = qn.analyze(e, { scale: this.options.scale });
-    let r = 0;
-    const n = this.options.fitnessWeights;
-    r += (n.gini || 0) * (1 - t.gini), r += (n.balance || 0) * (1 - Math.abs(t.balance - 60) / 60), r += (n.motif || 0) * t.motif, r += (n.dissonance || 0) * (1 - t.dissonance), r += (n.rhythmic || 0) * t.rhythmic;
-    const i = e.length;
-    return (i < this.options.lengthRange[0] || i > this.options.lengthRange[1]) && (r *= 0.5), Math.max(0, r);
-  }
-  /**
-   * Create next generation through selection, crossover, and mutation
-   */
-  createNextGeneration() {
-    const e = [], t = Math.floor(this.options.populationSize * this.options.elitismRate);
-    for (let r = 0; r < t; r++) {
-      const n = { ...this.population[r] };
-      n.age++, e.push(n);
+  gaussianRandom(e = 0, t = 1) {
+    if (this.gaussianSpare !== void 0) {
+      const o = this.gaussianSpare;
+      return this.gaussianSpare = void 0, e + t * o;
     }
-    for (; e.length < this.options.populationSize; ) {
-      const r = this.selectParent(), n = this.selectParent();
-      let i, s;
-      Math.random() < this.options.crossoverRate ? [i, s] = this.crossover(r, n) : (i = { ...r }, s = { ...n }), Math.random() < this.options.mutationRate && this.mutate(i), Math.random() < this.options.mutationRate && this.mutate(s), i.age = 0, s.age = 0, e.push(i), e.length < this.options.populationSize && e.push(s);
+    const r = this.randomState.random(), n = this.randomState.random(), i = t * Math.sqrt(-2 * Math.log(r));
+    return this.gaussianSpare = i * Math.cos(2 * Math.PI * n), e + i * Math.sin(2 * Math.PI * n);
+  }
+  /**
+   * Choose random element from array with weights
+   * @param {Array} choices - Array of choices
+   * @param {Array} weights - Array of weights
+   * @returns {*} Weighted random choice
+   */
+  weightedChoice(e, t) {
+    const r = t.reduce((i, o) => i + o, 0);
+    let n = this.randomState.random() * r;
+    for (let i = 0; i < e.length; i++)
+      if (n -= t[i], n <= 0)
+        return e[i];
+    return e[e.length - 1];
+  }
+  /**
+   * Initialize population by mutating initial phrases
+   * @returns {Array} Initial population
+   */
+  initializePopulation() {
+    const e = [], t = Math.floor(this.populationSize / this.initialPhrases.length);
+    for (const r of this.initialPhrases)
+      for (let n = 0; n < t; n++)
+        e.push(this.mutate(r, 0));
+    for (; e.length < this.populationSize; ) {
+      const r = this.randomState.choice(this.initialPhrases);
+      e.push(this.mutate(r, 0));
     }
     return e;
   }
   /**
-   * Tournament selection
+   * Calculate fitness components for a musical phrase
+   * @param {Array} phrase - Musical phrase as [pitch, duration, offset] tuples
+   * @returns {Object} Fitness components
    */
-  selectParent() {
-    const t = [];
-    for (let r = 0; r < 3; r++) {
-      const n = Math.floor(Math.random() * this.population.length);
-      t.push(this.population[n]);
+  calculateFitnessComponents(e) {
+    if (e.length === 0) return {};
+    const t = e.map((a) => a[0]), r = e.map((a) => a[1]), n = e.map((a) => a[2]), i = {};
+    if (t.length > 0) {
+      const a = new Ct(t);
+      i.gini_pitch = a.gini(), i.balance_pitch = a.balance(), i.motif_pitch = a.motif(), this.scale && (i.dissonance_pitch = a.dissonance(this.scale));
     }
-    return t.sort((r, n) => n.fitness - r.fitness), { ...t[0] };
+    if (r.length > 0) {
+      const a = new Ct(r);
+      i.gini_duration = a.gini(), i.balance_duration = a.balance(), i.motif_duration = a.motif(), i.rhythmic = a.rhythmic(this.measureLength);
+    }
+    if (n.length > 0) {
+      const a = new Ct(n);
+      i.gini_offset = a.gini(), i.balance_offset = a.balance(), i.motif_offset = a.motif();
+    }
+    const o = t.filter((a) => a == null).length / t.length;
+    return i.rest = o, i;
   }
   /**
-   * Single-point crossover
+   * Calculate fitness score for a musical phrase
+   * @param {Array} phrase - Musical phrase
+   * @returns {number} Fitness score
+   */
+  fitness(e) {
+    const t = this.calculateFitnessComponents(e);
+    let r = 0;
+    for (const [n, i] of Object.entries(this.targets)) {
+      const o = this.weights[n];
+      for (let a = 0; a < 3; a++) {
+        const c = a === 0 ? `${n}_pitch` : a === 1 ? `${n}_duration` : `${n}_offset`, u = t[c] || 0, d = i[a], v = o[a];
+        if (v > 0 && d !== void 0) {
+          const _ = Math.max(Math.abs(d), 1), $ = 1 - Math.abs(u - d) / _;
+          r += Math.max(0, $) * v;
+        }
+      }
+    }
+    if (this.weights.rest[0] > 0) {
+      const n = t.rest || 0, i = this.targets.rest[0], o = 1 - Math.abs(n - i) / Math.max(i, 1);
+      r += Math.max(0, o) * this.weights.rest[0];
+    }
+    return r;
+  }
+  /**
+   * Mutate a musical phrase
+   * @param {Array} phrase - Original phrase
+   * @param {number} rate - Mutation rate (null to use default)
+   * @returns {Array} Mutated phrase
+   */
+  mutate(e, t = null) {
+    t === null && (t = this.mutationRate);
+    const r = [];
+    let n = 0;
+    for (const i of e) {
+      let [o, a, c] = i;
+      this.randomState.random() < t && (o = this.mutationProbabilities.pitch()), this.randomState.random() < t && (a = this.mutationProbabilities.duration()), this.randomState.random() < t && this.mutationProbabilities.rest() === null && (o = null);
+      const u = n;
+      n += a, r.push([o, a, u]);
+    }
+    return r;
+  }
+  /**
+   * Select top performers from population
+   * @param {number} k - Number of individuals to select
+   * @returns {Array} Selected phrases
+   */
+  select(e = 25) {
+    const t = this.population.map((r) => ({
+      phrase: r,
+      fitness: this.fitness(r)
+    }));
+    return t.sort((r, n) => n.fitness - r.fitness), t.slice(0, e).map((r) => r.phrase);
+  }
+  /**
+   * Crossover (breed) two parent phrases
+   * @param {Array} parent1 - First parent phrase
+   * @param {Array} parent2 - Second parent phrase
+   * @returns {Array} Child phrase
    */
   crossover(e, t) {
-    const r = Math.min(e.genes.length, t.genes.length), n = Math.floor(Math.random() * r), i = {
-      genes: [
-        ...e.genes.slice(0, n),
-        ...t.genes.slice(n)
-      ],
-      fitness: 0,
-      age: 0
-    }, s = {
-      genes: [
-        ...t.genes.slice(0, n),
-        ...e.genes.slice(n)
-      ],
-      fitness: 0,
-      age: 0
-    };
-    return [i, s];
+    if (e.length === 0 || t.length === 0)
+      return e.length > 0 ? [...e] : [...t];
+    const r = Math.min(e.length, t.length), n = Math.floor(this.randomState.random() * r), i = Math.floor(this.randomState.random() * r), [o, a] = [Math.min(n, i), Math.max(n, i)], c = [];
+    for (let d = 0; d < o; d++)
+      d < e.length && c.push([...e[d]]);
+    for (let d = o; d < a; d++)
+      d < t.length && c.push([...t[d]]);
+    for (let d = a; d < Math.max(e.length, t.length); d++)
+      d < e.length ? c.push([...e[d]]) : d < t.length && c.push([...t[d]]);
+    let u = 0;
+    for (let d = 0; d < c.length; d++)
+      c[d][2] = u, u += c[d][1];
+    return c;
   }
   /**
-   * Mutate an individual
+   * Evolve the population for one generation
+   * @param {number} k - Number of parents to select
+   * @param {number} restRate - Rate for introducing rests (unused, kept for compatibility)
+   * @returns {Object} Evolution statistics
    */
-  mutate(e) {
-    const t = e.genes, r = Math.random();
-    if (r < 0.3) {
-      const n = Math.floor(Math.random() * t.length);
-      t[n].pitch = this.randomPitch();
-    } else if (r < 0.6) {
-      const n = Math.floor(Math.random() * t.length);
-      t[n].duration = this.randomDuration();
-    } else if (r < 0.8) {
-      const n = Math.floor(Math.random() * t.length);
-      t[n].velocity = Math.random() * 0.5 + 0.5;
-    } else if (Math.random() < 0.5 && t.length < this.options.lengthRange[1]) {
-      const n = Math.floor(Math.random() * (t.length + 1)), i = {
-        pitch: this.randomPitch(),
-        time: "0:0:0",
-        // Will be recalculated
-        duration: this.randomDuration(),
-        velocity: Math.random() * 0.5 + 0.5
-      };
-      t.splice(n, 0, i);
-    } else if (t.length > this.options.lengthRange[0]) {
-      const n = Math.floor(Math.random() * t.length);
-      t.splice(n, 1);
+  evolve(e = 25) {
+    const t = this.select(e), r = this.fitness(t[0]);
+    this.bestIndividuals.push([...t[0]]), this.bestScores.push(r);
+    const n = [];
+    for (; n.length < this.populationSize; ) {
+      const i = this.randomState.choice(t), o = this.randomState.choice(t), a = this.crossover([...i], [...o]), c = this.mutate(a);
+      n.push(c);
     }
-    this.recalculateTiming(e);
+    return this.population = n, this.generationCount++, {
+      generation: this.generationCount,
+      bestFitness: r,
+      averageFitness: t.reduce((i, o) => i + this.fitness(o), 0) / t.length,
+      populationSize: this.populationSize
+    };
   }
   /**
-   * Recalculate note timing after mutations
+   * Evolve for multiple generations
+   * @param {number} generations - Number of generations to evolve
+   * @param {number} k - Number of parents per generation
+   * @param {Function} callback - Optional callback for progress updates
+   * @returns {Array} Array of evolution statistics
    */
-  recalculateTiming(e) {
-    let t = 0;
-    for (const r of e.genes)
-      r.time = `${Math.floor(t)}:${Math.floor(t % 1 * 4)}:0`, t += this.parseDuration(r.duration);
+  evolveGenerations(e, t = 25, r = null) {
+    const n = [];
+    for (let i = 0; i < e; i++) {
+      const o = this.evolve(t);
+      n.push(o), r && r(o, i, e);
+    }
+    return n;
   }
   /**
-   * Get the best individual from current population
+   * Get the current best individual
+   * @returns {Array} Best musical phrase
    */
   getBestIndividual() {
-    return { ...this.population[0] };
+    return this.bestIndividuals.length > 0 ? [...this.bestIndividuals[this.bestIndividuals.length - 1]] : null;
+  }
+  /**
+   * Get evolution history
+   * @returns {Object} Evolution history with individuals and scores
+   */
+  getEvolutionHistory() {
+    return {
+      individuals: this.bestIndividuals.map((e) => [...e]),
+      scores: [...this.bestScores],
+      generations: this.generationCount
+    };
+  }
+  /**
+   * Reset the evolution state
+   */
+  reset() {
+    this.population = this.initializePopulation(), this.bestIndividuals = [], this.bestScores = [], this.generationCount = 0;
   }
   /**
    * Get population statistics
+   * @returns {Object} Population statistics
    */
-  getStatistics() {
-    const e = this.population.map((i) => i.fitness), t = e.reduce((i, s) => i + s, 0) / e.length, r = Math.max(...e), n = Math.min(...e);
+  getPopulationStats() {
+    const e = this.population.map((n) => this.fitness(n)), t = e.reduce((n, i) => n + i, 0) / e.length, r = e.reduce((n, i) => n + Math.pow(i - t, 2), 0) / e.length;
     return {
-      generation: this.generation,
-      avgFitness: t,
-      maxFitness: r,
-      minFitness: n,
-      bestAllTime: this.bestFitness,
-      populationSize: this.population.length
+      populationSize: this.population.length,
+      meanFitness: t,
+      standardDeviation: Math.sqrt(r),
+      minFitness: Math.min(...e),
+      maxFitness: Math.max(...e),
+      generation: this.generationCount
     };
   }
-  /**
-   * Set custom fitness function
-   */
-  setCustomFitness(e) {
-    this.calculateFitness = e;
-  }
 }
-class Jo {
+class bo {
   options;
   walkers;
   history;
@@ -6745,8 +7131,8 @@ class Jo {
     for (let r = 0; r < e.length; r++)
       for (let n = r + 1; n < e.length; n++)
         if (Math.random() < this.options.mergeProbability && this.calculateDistance(e[r].position, e[n].position) < t) {
-          for (let s = 0; s < this.options.dimensions; s++)
-            e[r].position[s] = (e[r].position[s] + e[n].position[s]) / 2, e[r].velocity[s] = (e[r].velocity[s] + e[n].velocity[s]) / 2;
+          for (let o = 0; o < this.options.dimensions; o++)
+            e[r].position[o] = (e[r].position[o] + e[n].position[o]) / 2, e[r].velocity[o] = (e[r].velocity[o] + e[n].velocity[o]) / 2;
           e[n].active = !1;
         }
     this.walkers = this.walkers.filter((r) => r.active);
@@ -6773,9 +7159,9 @@ class Jo {
     const n = this.getProjection(e);
     if (n.length === 0) return [];
     const i = Math.min(...n), a = Math.max(...n) - i || 1;
-    return n.map((l) => {
-      const u = (l - i) / a, p = Math.floor(u * t.length * r), w = Math.floor(p / t.length), _ = p % t.length;
-      return 60 + w * 12 + t[_];
+    return n.map((c) => {
+      const u = (c - i) / a, d = Math.floor(u * t.length * r), v = Math.floor(d / t.length), _ = d % t.length;
+      return 60 + v * 12 + t[_];
     });
   }
   /**
@@ -6784,10 +7170,10 @@ class Jo {
   mapToRhythm(e = 0, t = [0.25, 0.5, 1, 2]) {
     const r = this.getProjection(e);
     if (r.length === 0) return [];
-    const n = Math.min(...r), s = Math.max(...r) - n || 1;
+    const n = Math.min(...r), o = Math.max(...r) - n || 1;
     return r.map((a) => {
-      const l = (a - n) / s, u = Math.floor(l * t.length), p = Math.max(0, Math.min(u, t.length - 1));
-      return t[p];
+      const c = (a - n) / o, u = Math.floor(c * t.length), d = Math.max(0, Math.min(u, t.length - 1));
+      return t[d];
     });
   }
   /**
@@ -6797,8 +7183,8 @@ class Jo {
     const n = this.getProjection(e);
     if (n.length === 0) return [];
     const i = Math.min(...n), a = Math.max(...n) - i || 1;
-    return n.map((l) => {
-      const u = (l - i) / a;
+    return n.map((c) => {
+      const u = (c - i) / a;
       return t + u * (r - t);
     });
   }
@@ -6809,9 +7195,9 @@ class Jo {
     if (e.length === 0) return [];
     const n = [];
     let i = 0;
-    for (let s = 0; s < e.length; s++) {
-      const a = (Math.random() - 0.5) * 2 * this.options.stepSize, l = t * (e[s] - i);
-      i += a + l, i = Math.max(this.options.bounds[0], Math.min(this.options.bounds[1], i)), n.push(i);
+    for (let o = 0; o < e.length; o++) {
+      const a = (Math.random() - 0.5) * 2 * this.options.stepSize, c = t * (e[o] - i);
+      i += a + c, i = Math.max(this.options.bounds[0], Math.min(this.options.bounds[1], i)), n.push(i);
     }
     return n;
   }
@@ -6826,16 +7212,16 @@ class Jo {
         totalDistance: 0,
         fractalDimension: 0
       };
-    const e = this.getProjection(0), t = e[0], r = e[e.length - 1], n = Math.abs(r - t), i = e.map((u) => Math.pow(u - t, 2)), s = i.reduce((u, p) => u + p, 0) / i.length;
+    const e = this.getProjection(0), t = e[0], r = e[e.length - 1], n = Math.abs(r - t), i = e.map((u) => Math.pow(u - t, 2)), o = i.reduce((u, d) => u + d, 0) / i.length;
     let a = 0;
     for (let u = 1; u < e.length; u++)
       a += Math.abs(e[u] - e[u - 1]);
-    const l = a > 0 ? Math.log(a) / Math.log(e.length) : 0;
+    const c = a > 0 ? Math.log(a) / Math.log(e.length) : 0;
     return {
       meanDisplacement: n,
-      meanSquaredDisplacement: s,
+      meanSquaredDisplacement: o,
       totalDistance: a,
-      fractalDimension: l
+      fractalDimension: c
     };
   }
   /**
@@ -6850,8 +7236,414 @@ class Jo {
   reset() {
     this.walkers = [], this.history = [];
   }
+  /**
+   * Convert walk to JMON notes
+   * @param {Array} durations - Duration sequence
+   * @param {Object} options - Conversion options
+   * @returns {Array} JMON note objects
+   */
+  toJmonNotes(e = [1], t = {}) {
+    const {
+      useStringTime: r = !1,
+      timingConfig: n = Se,
+      dimension: i = 0,
+      mapToScale: o = null,
+      scaleRange: a = [60, 72]
+    } = t, c = this.getProjection(i), u = [];
+    let d = 0;
+    for (let v = 0; v < c.length; v++) {
+      const _ = e[v % e.length];
+      let $ = c[v];
+      if (o) {
+        const S = Math.min(...c), h = Math.max(...c) - S || 1, f = ($ - S) / h, l = Math.floor(f * o.length), p = Math.max(0, Math.min(l, o.length - 1));
+        $ = o[p];
+      } else
+        $ = this.mapToScale([c], o || [60, 62, 64, 65, 67, 69, 71])[0][v];
+      u.push({
+        pitch: $,
+        duration: _,
+        time: r ? Oe(d, n) : d
+      }), d += _;
+    }
+    return u;
+  }
+  /**
+   * Generate JMON track directly from walk
+   * @param {Array} startPosition - Starting position
+   * @param {Array} durations - Duration sequence
+   * @param {Object} options - Generation and conversion options
+   * @param {Object} trackOptions - Track options
+   * @returns {Object} JMON track
+   */
+  generateTrack(e, t = [1], r = {}, n = {}) {
+    this.generate(e);
+    const i = this.toJmonNotes(t, r);
+    return Ue(i, {
+      label: "random-walk",
+      midiChannel: 0,
+      synth: { type: "Synth" },
+      ...n
+    });
+  }
 }
-class Wo {
+class wo {
+  walkRange;
+  walkStart;
+  walkProbability;
+  roundTo;
+  branchingProbability;
+  mergingProbability;
+  timingConfig;
+  constructor(e = {}) {
+    this.walkRange = e.walkRange || null, this.walkStart = e.walkStart !== void 0 ? e.walkStart : this.walkRange ? Math.floor((this.walkRange[1] - this.walkRange[0]) / 2) + this.walkRange[0] : 0, this.walkProbability = e.walkProbability || [-1, 0, 1], this.roundTo = e.roundTo !== void 0 ? e.roundTo : null, this.branchingProbability = e.branchingProbability || 0, this.mergingProbability = e.mergingProbability || 0, this.timingConfig = e.timingConfig || Se;
+  }
+  /**
+   * Generate random walk sequence(s) with branching and merging
+   * @param {number} length - Length of the walk
+   * @param {number} seed - Random seed for reproducibility
+   * @returns {Array<Array>} Array of walk sequences (branches)
+   */
+  generate(e, t) {
+    let r = Math.random;
+    t !== void 0 && (r = this.createSeededRandom(t));
+    const n = [this.initializeWalk(e)];
+    let i = [this.walkStart];
+    for (let o = 1; o < e; o++) {
+      const a = [...i], c = [];
+      for (let u = 0; u < i.length; u++) {
+        const d = n[u], v = i[u];
+        if (v === null) {
+          d && (d[o] = null);
+          continue;
+        }
+        const _ = this.generateStep(r);
+        let $ = v + _;
+        if (isNaN($) && ($ = v), this.walkRange !== null && ($ < this.walkRange[0] ? $ = this.walkRange[0] : $ > this.walkRange[1] && ($ = this.walkRange[1])), isNaN($) && ($ = this.walkStart), d && (d[o] = $), a[u] = $, r() < this.branchingProbability) {
+          const S = this.createBranch(n[u], o), g = this.generateStep(r);
+          let h = v + g;
+          isNaN(h) && (h = v), this.walkRange !== null && (h < this.walkRange[0] ? h = this.walkRange[0] : h > this.walkRange[1] && (h = this.walkRange[1])), isNaN(h) && (h = this.walkStart), S[o] = h, c.push(S), a.push(h);
+        }
+      }
+      n.push(...c), i = a, i = this.handleMerging(n, i, o, r);
+    }
+    return n;
+  }
+  /**
+   * Generate a single step according to the probability distribution
+   */
+  generateStep(e = Math.random) {
+    if (Array.isArray(this.walkProbability))
+      return this.walkProbability[Math.floor(e() * this.walkProbability.length)];
+    if (typeof this.walkProbability == "object" && this.walkProbability.mean !== void 0 && this.walkProbability.std !== void 0) {
+      let t = this.generateNormal(this.walkProbability.mean, this.walkProbability.std, e);
+      return this.roundTo !== null && (t = parseFloat(t.toFixed(this.roundTo))), t;
+    }
+    return [-1, 0, 1][Math.floor(e() * 3)];
+  }
+  /**
+   * Generate a sample from normal distribution
+   */
+  generateNormal(e, t, r = Math.random) {
+    let n, i;
+    do
+      n = r();
+    while (n === 0);
+    i = r();
+    const o = Math.sqrt(-2 * Math.log(n)) * Math.cos(2 * Math.PI * i), a = e + t * o;
+    return isNaN(a) ? e : a;
+  }
+  /**
+   * Initialize a new walk with null values
+   */
+  initializeWalk(e) {
+    const t = new Array(e);
+    t[0] = this.walkStart;
+    for (let r = 1; r < e; r++)
+      t[r] = null;
+    return t;
+  }
+  /**
+   * Create a branch from an existing walk
+   */
+  createBranch(e, t) {
+    const r = new Array(e.length);
+    for (let n = 0; n < t; n++)
+      r[n] = null;
+    for (let n = t; n < r.length; n++)
+      r[n] = null;
+    return r;
+  }
+  /**
+   * Handle merging of walks that collide
+   */
+  handleMerging(e, t, r, n = Math.random) {
+    const i = [...t];
+    for (let o = 0; o < t.length; o++)
+      if (t[o] !== null)
+        for (let a = o + 1; a < t.length; a++) {
+          if (t[a] === null) continue;
+          const c = this.roundTo !== null ? this.roundTo : 1e-3;
+          if (Math.abs(t[o] - t[a]) <= c && n() < this.mergingProbability && (i[a] = null, e[a]))
+            for (let u = r; u < e[a].length; u++)
+              e[a][u] = null;
+        }
+    return i;
+  }
+  /**
+   * Convert walk sequences to JMON notes
+   * @param {Array<Array>} walks - Walk sequences
+   * @param {Array} durations - Duration sequence to map to
+   * @param {Object} options - Conversion options
+   * @returns {Array} JMON note objects
+   */
+  toJmonNotes(e, t = [1], r = {}) {
+    const n = r.useStringTime || !1, i = [];
+    let o = 0, a = 0;
+    const c = Math.max(...e.map((u) => u.length));
+    for (let u = 0; u < c; u++) {
+      const d = e.map((v) => v[u]).filter((v) => v !== null);
+      if (d.length > 0) {
+        const v = t[a % t.length], _ = d.length === 1 ? d[0] : d;
+        i.push({
+          pitch: _,
+          duration: v,
+          time: n ? Oe(o, this.timingConfig) : o
+        }), o += v, a++;
+      }
+    }
+    return i;
+  }
+  /**
+   * Generate a JMON track directly from walk
+   * @param {number} length - Walk length
+   * @param {Array} durations - Duration sequence
+   * @param {Object} trackOptions - Track options
+   * @returns {Object} JMON track
+   */
+  generateTrack(e, t = [1], r = {}) {
+    const n = this.generate(e, r.seed), i = this.toJmonNotes(n, t, r);
+    return Ue(i, {
+      label: "random-walk",
+      midiChannel: 0,
+      synth: { type: "Synth" },
+      ...r
+    });
+  }
+  /**
+   * Map walk values to a musical scale
+   * @param {Array<Array>} walks - Walk sequences  
+   * @param {Array} scale - Scale to map to
+   * @returns {Array<Array>} Walks mapped to scale
+   */
+  mapToScale(e, t = [60, 62, 64, 65, 67, 69, 71]) {
+    return e.map((r) => r.map((n) => {
+      if (n === null) return null;
+      const i = this.walkRange[0], a = this.walkRange[1] - i, c = (n - i) / a, u = Math.floor(c * t.length), d = Math.max(0, Math.min(u, t.length - 1));
+      return t[d];
+    }));
+  }
+  /**
+   * Create a seeded random number generator
+   */
+  createSeededRandom(e) {
+    let t = Math.abs(e) || 1;
+    return function() {
+      t = (t * 9301 + 49297) % 233280;
+      const r = t / 233280;
+      return Math.max(1e-7, Math.min(0.9999999, r));
+    };
+  }
+}
+class je {
+  distance;
+  frequency;
+  phase;
+  subPhasors;
+  center;
+  constructor(e = 1, t = 1, r = 0, n = []) {
+    this.distance = e, this.frequency = t, this.phase = r, this.subPhasors = n || [], this.center = { x: 0, y: 0 };
+  }
+  /**
+   * Add a sub-phasor to this phasor (like epicycles)
+   */
+  addSubPhasor(e) {
+    this.subPhasors.push(e);
+  }
+  /**
+   * Calculate position at given time
+   */
+  getPosition(e) {
+    const t = this.frequency * e + this.phase, r = this.center.x + this.distance * Math.cos(t), n = this.center.y + this.distance * Math.sin(t);
+    return { x: r, y: n, angle: t, distance: this.distance };
+  }
+  /**
+   * Calculate distance from origin
+   */
+  getDistanceFromOrigin(e) {
+    const t = this.getPosition(e);
+    return Math.sqrt(t.x * t.x + t.y * t.y);
+  }
+  /**
+   * Calculate angle from origin in degrees
+   */
+  getAngleFromOrigin(e) {
+    const t = this.getPosition(e);
+    let r = Math.atan2(t.y, t.x) * 180 / Math.PI;
+    return r < 0 && (r += 360), r;
+  }
+  /**
+   * Simulate this phasor and all its sub-phasors
+   */
+  simulate(e, t = { x: 0, y: 0 }) {
+    this.center = t;
+    const r = [];
+    for (const n of e) {
+      const i = this.getPosition(n), o = this.getDistanceFromOrigin(n), a = this.getAngleFromOrigin(n);
+      r.push({
+        time: n,
+        position: i,
+        distance: o,
+        angle: a,
+        phasor: this
+      });
+      for (const c of this.subPhasors) {
+        c.center = i;
+        const u = c.simulate([n], i);
+        r.push(...u);
+      }
+    }
+    return r;
+  }
+}
+class lr {
+  phasors;
+  timingConfig;
+  constructor(e = Se) {
+    this.phasors = [], this.timingConfig = e;
+  }
+  /**
+   * Add a phasor to the system
+   */
+  addPhasor(e) {
+    this.phasors.push(e);
+  }
+  /**
+   * Simulate all phasors and sub-phasors in the system
+   */
+  simulate(e) {
+    const t = [];
+    for (const r of this.phasors) {
+      const n = r.simulate(e);
+      t.push(n);
+    }
+    return t;
+  }
+  /**
+   * Get a flattened list of all phasors (primary + sub-phasors)
+   */
+  getAllPhasors() {
+    const e = [];
+    for (const t of this.phasors)
+      e.push(t), this.collectSubPhasors(t, e);
+    return e;
+  }
+  /**
+   * Recursively collect all sub-phasors
+   */
+  collectSubPhasors(e, t) {
+    for (const r of e.subPhasors)
+      t.push(r), this.collectSubPhasors(r, t);
+  }
+  /**
+   * Map phasor motion to musical parameters
+   */
+  mapToMusic(e, t = {}) {
+    const r = this.simulate(e), n = [];
+    for (let i = 0; i < r.length; i++) {
+      const o = r[i], a = this.createMusicalTrack(o, i, t);
+      n.push(a);
+    }
+    return n;
+  }
+  /**
+   * Create a musical track from phasor motion
+   */
+  createMusicalTrack(e, t, r = {}) {
+    const {
+      pitchRange: n = [40, 80],
+      durationRange: i = [0.25, 2],
+      useDistance: o = !0,
+      useAngle: a = !1,
+      quantizeToScale: c = null,
+      timingConfig: u = this.timingConfig,
+      useStringTime: d = !1
+    } = r, v = [];
+    for (const _ of e) {
+      let $, S;
+      if (o) {
+        const g = Math.max(0, Math.min(1, _.distance / 10));
+        $ = n[0] + g * (n[1] - n[0]);
+      } else
+        $ = n[0] + _.angle / 360 * (n[1] - n[0]);
+      if (a)
+        S = i[0] + _.angle / 360 * (i[1] - i[0]);
+      else {
+        const g = Math.max(0, Math.min(1, _.distance / 10));
+        S = i[1] - g * (i[1] - i[0]);
+      }
+      if (c) {
+        const g = Math.floor(($ - n[0]) / (n[1] - n[0]) * c.length), h = Math.max(0, Math.min(g, c.length - 1));
+        $ = c[h];
+      } else
+        $ = Math.round($);
+      v.push({
+        pitch: $,
+        duration: S,
+        time: d ? Oe(_.time, u) : _.time,
+        phasorData: {
+          distance: _.distance,
+          angle: _.angle,
+          position: _.position
+        }
+      });
+    }
+    return v;
+  }
+  /**
+   * Generate JMON tracks directly from phasor motion
+   */
+  generateTracks(e, t = {}, r = {}) {
+    const n = this.mapToMusic(e, t), i = [];
+    return n.forEach((o, a) => {
+      const c = Ue(o, {
+        label: `phasor-${a + 1}`,
+        midiChannel: a % 16,
+        synth: { type: "Synth" },
+        ...r
+      });
+      i.push(c);
+    }), i;
+  }
+  /**
+   * Create complex harmonic patterns with sub-phasors (epicycles)
+   */
+  static createComplexSystem() {
+    const e = new lr(), t = new je(0.2, 5, 0), r = new je(0.3, 3, Math.PI / 2), n = new je(0.1, 8, Math.PI);
+    t.addSubPhasor(n);
+    const i = new je(2, 1, 0, [t, r]), o = new je(3.5, 0.6, Math.PI / 3);
+    return e.addPhasor(i), e.addPhasor(o), e;
+  }
+  /**
+   * Generate time array with linear spacing
+   */
+  static generateTimeArray(e = 0, t = 10, r = 100) {
+    const n = [], i = (t - e) / (r - 1);
+    for (let o = 0; o < r; o++)
+      n.push(e + o * i);
+    return n;
+  }
+}
+class $o {
   /**
    * @param {MandelbrotOptions} [options={}] - Configuration options
    */
@@ -6867,7 +7659,7 @@ class Wo {
     for (let t = 0; t < this.height; t++) {
       const r = [];
       for (let n = 0; n < this.width; n++) {
-        const i = this.xMin + n / this.width * (this.xMax - this.xMin), s = this.yMin + t / this.height * (this.yMax - this.yMin), a = this.mandelbrotIterations({ real: i, imaginary: s });
+        const i = this.xMin + n / this.width * (this.xMax - this.xMin), o = this.yMin + t / this.height * (this.yMax - this.yMin), a = this.mandelbrotIterations({ real: i, imaginary: o });
         r.push(a);
       }
       e.push(r);
@@ -6950,20 +7742,20 @@ class Wo {
   extractSpiral(e) {
     const t = [], r = e.length, n = e[0]?.length || 0;
     if (r === 0 || n === 0) return t;
-    let i = 0, s = r - 1, a = 0, l = n - 1;
-    for (; i <= s && a <= l; ) {
-      for (let u = a; u <= l; u++)
+    let i = 0, o = r - 1, a = 0, c = n - 1;
+    for (; i <= o && a <= c; ) {
+      for (let u = a; u <= c; u++)
         t.push(e[i][u]);
       i++;
-      for (let u = i; u <= s; u++)
-        t.push(e[u][l]);
-      if (l--, i <= s) {
-        for (let u = l; u >= a; u--)
-          t.push(e[s][u]);
-        s--;
+      for (let u = i; u <= o; u++)
+        t.push(e[u][c]);
+      if (c--, i <= o) {
+        for (let u = c; u >= a; u--)
+          t.push(e[o][u]);
+        o--;
       }
-      if (a <= l) {
-        for (let u = s; u >= i; u--)
+      if (a <= c) {
+        for (let u = o; u >= i; u--)
           t.push(e[u][a]);
         a++;
       }
@@ -6978,8 +7770,8 @@ class Wo {
    */
   extractColumn(e, t) {
     const r = [], n = e[0]?.length || 0, i = Math.max(0, Math.min(t, n - 1));
-    for (const s of e)
-      s[i] !== void 0 && r.push(s[i]);
+    for (const o of e)
+      o[i] !== void 0 && r.push(o[i]);
     return r;
   }
   /**
@@ -7001,10 +7793,10 @@ class Wo {
    */
   mapToScale(e, t = [0, 2, 4, 5, 7, 9, 11], r = 3) {
     if (e.length === 0) return [];
-    const n = Math.min(...e), s = Math.max(...e) - n || 1;
+    const n = Math.min(...e), o = Math.max(...e) - n || 1;
     return e.map((a) => {
-      const l = (a - n) / s, u = Math.floor(l * t.length * r), p = Math.floor(u / t.length), w = u % t.length;
-      return 60 + p * 12 + t[w];
+      const c = (a - n) / o, u = Math.floor(c * t.length * r), d = Math.floor(u / t.length), v = u % t.length;
+      return 60 + d * 12 + t[v];
     });
   }
   /**
@@ -7016,13 +7808,13 @@ class Wo {
   mapToRhythm(e, t = [1, 2, 4, 8, 16]) {
     if (e.length === 0) return [];
     const r = Math.min(...e), i = Math.max(...e) - r || 1;
-    return e.map((s) => {
-      const a = (s - r) / i, l = Math.floor(a * t.length), u = Math.max(0, Math.min(l, t.length - 1));
+    return e.map((o) => {
+      const a = (o - r) / i, c = Math.floor(a * t.length), u = Math.max(0, Math.min(c, t.length - 1));
       return 1 / t[u];
     });
   }
 }
-class Yo {
+class _o {
   /**
    * @param {LogisticMapOptions} [options={}] - Configuration options
    */
@@ -7048,15 +7840,15 @@ class Yo {
    * @returns {Object} Bifurcation data with r and x arrays
    */
   bifurcationDiagram(e = 2.5, t = 4, r = 1e3) {
-    const n = [], i = [], s = (t - e) / r;
+    const n = [], i = [], o = (t - e) / r;
     for (let a = 0; a < r; a++) {
-      const l = e + a * s, u = this.r;
-      this.r = l;
-      const p = this.generate();
+      const c = e + a * o, u = this.r;
+      this.r = c;
+      const d = this.generate();
       this.r = u;
-      const w = p.slice(-50);
-      for (const _ of w)
-        n.push(l), i.push(_);
+      const v = d.slice(-50);
+      for (const _ of v)
+        n.push(c), i.push(_);
     }
     return { r: n, x: i };
   }
@@ -7069,8 +7861,8 @@ class Yo {
    */
   mapToScale(e, t = [0, 2, 4, 5, 7, 9, 11], r = 3) {
     return e.length === 0 ? [] : e.map((n) => {
-      const i = Math.floor(n * t.length * r), s = Math.floor(i / t.length), a = i % t.length;
-      return 60 + s * 12 + t[a];
+      const i = Math.floor(n * t.length * r), o = Math.floor(i / t.length), a = i % t.length;
+      return 60 + o * 12 + t[a];
     });
   }
   /**
@@ -7107,8 +7899,8 @@ class Yo {
     const r = [];
     for (let n = 1; n <= Math.floor(e.length / 2); n++) {
       let i = !0;
-      for (let s = n; s < Math.min(e.length, n * 3); s++)
-        if (Math.abs(e[s] - e[s - n]) > t) {
+      for (let o = n; o < Math.min(e.length, n * 3); o++)
+        if (Math.abs(e[o] - e[o - n]) > t) {
           i = !1;
           break;
         }
@@ -7138,14 +7930,14 @@ class Yo {
   generateCoupled(e = 2, t = 0.1) {
     const r = Array(e).fill(null).map(() => []), n = Array(e).fill(this.x0);
     for (let i = 0; i < this.iterations + this.skipTransient; i++) {
-      const s = [...n];
+      const o = [...n];
       for (let a = 0; a < e; a++) {
-        let l = 0;
+        let c = 0;
         for (let u = 0; u < e; u++)
-          u !== a && (l += t * (n[u] - n[a]));
-        s[a] = this.r * n[a] * (1 - n[a]) + l, s[a] = Math.max(0, Math.min(1, s[a]));
+          u !== a && (c += t * (n[u] - n[a]));
+        o[a] = this.r * n[a] * (1 - n[a]) + c, o[a] = Math.max(0, Math.min(1, o[a]));
       }
-      if (n.splice(0, e, ...s), i >= this.skipTransient)
+      if (n.splice(0, e, ...o), i >= this.skipTransient)
         for (let a = 0; a < e; a++)
           r[a].push(n[a]);
     }
@@ -7185,26 +7977,32 @@ class Yo {
     };
   }
 }
-class Qo {
+class So {
   operation;
   direction;
   repetition;
+  timingConfig;
   sequence = [];
   constructor(e) {
-    const { operation: t, direction: r, repetition: n } = e;
+    const { operation: t, direction: r, repetition: n, timingConfig: i = Se } = e;
     if (!["additive", "subtractive"].includes(t))
       throw new Error("Invalid operation. Choose 'additive' or 'subtractive'.");
     if (!["forward", "backward", "inward", "outward"].includes(r))
       throw new Error("Invalid direction. Choose 'forward', 'backward', 'inward' or 'outward'.");
     if (n < 0 || !Number.isInteger(n))
       throw new Error("Invalid repetition value. Must be an integer greater than or equal to 0.");
-    this.operation = t, this.direction = r, this.repetition = n;
+    this.operation = t, this.direction = r, this.repetition = n, this.timingConfig = i;
   }
   /**
    * Generate processed sequence based on operation and direction
+   * Accepts either:
+   * - JMON note objects: { pitch, duration, time }
+   * - Legacy objects: { pitch, duration, offset }
+   * - Legacy tuples: [pitch, duration, offset]
+   * Returns: JMON note objects with numeric time (quarter notes)
    */
   generate(e) {
-    this.sequence = e;
+    this.sequence = this.normalizeInput(e);
     let t;
     if (this.operation === "additive" && this.direction === "forward")
       t = this.additiveForward();
@@ -7224,7 +8022,8 @@ class Qo {
       t = this.subtractiveOutward();
     else
       throw new Error("Invalid operation/direction combination");
-    return this.adjustOffsets(t);
+    const r = this.adjustOffsets(t);
+    return this.toJmonNotes(r, !1);
   }
   additiveForward() {
     const e = [];
@@ -7249,8 +8048,8 @@ class Qo {
     for (let r = 0; r < Math.ceil(t / 2); r++) {
       let n;
       if (r < t - r - 1) {
-        const i = this.sequence.slice(0, r + 1), s = this.sequence.slice(t - r - 1);
-        n = [...i, ...s];
+        const i = this.sequence.slice(0, r + 1), o = this.sequence.slice(t - r - 1);
+        n = [...i, ...o];
       } else
         n = [...this.sequence];
       for (let i = 0; i <= this.repetition; i++)
@@ -7263,15 +8062,15 @@ class Qo {
     if (t % 2 === 0) {
       const r = Math.floor(t / 2) - 1, n = Math.floor(t / 2);
       for (let i = 0; i < t / 2; i++) {
-        const s = this.sequence.slice(r - i, n + i + 1);
+        const o = this.sequence.slice(r - i, n + i + 1);
         for (let a = 0; a <= this.repetition; a++)
-          e.push(...s);
+          e.push(...o);
       }
     } else {
       const r = Math.floor(t / 2);
       for (let n = 0; n <= r; n++) {
         const i = this.sequence.slice(r - n, r + n + 1);
-        for (let s = 0; s <= this.repetition; s++)
+        for (let o = 0; o <= this.repetition; o++)
           e.push(...i);
       }
     }
@@ -7302,7 +8101,7 @@ class Qo {
     for (let n = 1; n <= r; n++) {
       const i = this.sequence.slice(n, t - n);
       if (i.length > 0)
-        for (let s = 0; s <= this.repetition; s++)
+        for (let o = 0; o <= this.repetition; o++)
           e.push(...i);
     }
     return e;
@@ -7319,6 +8118,23 @@ class Qo {
     }
     return e;
   }
+  // Normalize heterogenous inputs into objects with pitch, duration, offset (beats)
+  normalizeInput(e) {
+    return Array.isArray(e) ? Array.isArray(e[0]) ? e.map(([t, r, n = 0]) => ({ pitch: t, duration: r, offset: n })) : e.map((t) => {
+      const r = t.pitch, n = t.duration;
+      let i = 0;
+      return typeof t.offset == "number" ? i = t.offset : typeof t.time == "number" ? i = t.time : typeof t.time == "string" && (i = this.timeToBeats(t.time)), { ...t, pitch: r, duration: n, offset: i };
+    }) : [];
+  }
+  // Convert beats to bars:beats:ticks using centralized utility
+  beatsToTime(e) {
+    return Oe(e, this.timingConfig);
+  }
+  // Convert bars:beats:ticks to beats using centralized utility
+  timeToBeats(e) {
+    return typeof e != "string" ? Number(e) || 0 : cr(e, this.timingConfig);
+  }
+  // After process, recalc offsets sequentially in beats
   adjustOffsets(e) {
     let t = 0;
     return e.map((r) => {
@@ -7329,104 +8145,364 @@ class Qo {
       return t += r.duration, n;
     });
   }
+  // Produce JMON notes: { pitch, duration, time }
+  // Always use numeric time in quarter notes (like pitch: 60, time: 4.5)
+  toJmonNotes(e, t = !1) {
+    return e.map(({ pitch: r, duration: n, offset: i, ...o }) => {
+      const { time: a, ...c } = o;
+      return {
+        pitch: r,
+        duration: n,
+        time: t ? this.beatsToTime(i) : i,
+        ...c
+      };
+    });
+  }
+  /**
+   * Generate and convert to JMON track format
+   * @param {Array} sequence - Input sequence
+   * @param {Object} trackOptions - Track configuration options
+   * @param {boolean} trackOptions.useStringTime - Use bars:beats:ticks strings for display (default: numeric)
+   * @returns {Object} JMON track object
+   */
+  generateTrack(e, t = {}) {
+    const r = this.generate(e);
+    return Ue(r, {
+      timingConfig: this.timingConfig,
+      ...t
+    });
+  }
 }
-class Xo {
+class Po {
   tChord;
   direction;
   rank;
   isAlternate;
   currentDirection;
-  constructor(e, t = "down", r = 0) {
+  timingConfig;
+  constructor(e, t = "down", r = 0, n = Se) {
     if (!["up", "down", "any", "alternate"].includes(t))
       throw new Error("Invalid direction. Choose 'up', 'down', 'any' or 'alternate'.");
-    if (this.tChord = e, this.isAlternate = t === "alternate", this.currentDirection = this.isAlternate ? "up" : t, this.direction = t, !Number.isInteger(r) || r < 0)
+    if (this.tChord = e, this.isAlternate = t === "alternate", this.currentDirection = this.isAlternate ? "up" : t, this.direction = t, this.timingConfig = n, !Number.isInteger(r) || r < 0)
       throw new Error("Rank must be a non-negative integer.");
     this.rank = Math.min(r, e.length - 1), this.rank >= e.length && console.warn("Rank exceeds the length of the t-chord. Using last note of the t-chord.");
   }
   /**
    * Generate t-voice from m-voice sequence
+   * Accepts: JMON notes, legacy objects, or tuples
+   * Returns: JMON notes with numeric time (quarter notes)
+   * @param {Array} sequence - Input sequence
+   * @param {boolean} useStringTime - Whether to use bars:beats:ticks strings for display (default: false)
    */
-  generate(e) {
-    const t = [];
-    for (const r of e) {
-      if (r.pitch === void 0) {
-        t.push({
-          ...r,
-          pitch: void 0
+  generate(e, t = !1) {
+    const r = this.normalizeInput(e), n = [];
+    for (const i of r) {
+      if (i.pitch === void 0) {
+        const { offset: S, time: g, ...h } = i;
+        n.push({
+          ...h,
+          pitch: void 0,
+          time: t ? this.beatsToTime(S) : S
         });
         continue;
       }
-      const n = r.pitch, s = this.tChord.map((u) => u - n).map((u, p) => ({ index: p, value: u })).sort((u, p) => Math.abs(u.value) - Math.abs(p.value));
-      let a = this.rank, l;
+      const o = i.pitch, c = this.tChord.map((S) => S - o).map((S, g) => ({ index: g, value: S })).sort((S, g) => Math.abs(S.value) - Math.abs(g.value));
+      let u = this.rank, d;
       if (this.currentDirection === "up" || this.currentDirection === "down") {
-        const u = s.filter(
-          ({ value: p }) => this.currentDirection === "up" ? p >= 0 : p <= 0
+        const S = c.filter(
+          ({ value: g }) => this.currentDirection === "up" ? g >= 0 : g <= 0
         );
-        if (u.length === 0)
-          l = this.currentDirection === "up" ? Math.max(...this.tChord) : Math.min(...this.tChord);
+        if (S.length === 0)
+          d = this.currentDirection === "up" ? Math.max(...this.tChord) : Math.min(...this.tChord);
         else {
-          a >= u.length && (a = u.length - 1);
-          const p = u[a].index;
-          l = this.tChord[p];
+          u >= S.length && (u = S.length - 1);
+          const g = S[u].index;
+          d = this.tChord[g];
         }
       } else {
-        a >= s.length && (a = s.length - 1);
-        const u = s[a].index;
-        l = this.tChord[u];
+        u >= c.length && (u = c.length - 1);
+        const S = c[u].index;
+        d = this.tChord[S];
       }
-      this.isAlternate && (this.currentDirection = this.currentDirection === "up" ? "down" : "up"), t.push({
-        ...r,
-        pitch: l
+      this.isAlternate && (this.currentDirection = this.currentDirection === "up" ? "down" : "up");
+      const { offset: v, time: _, ...$ } = i;
+      n.push({
+        ...$,
+        pitch: d,
+        time: t ? this.beatsToTime(v) : v
       });
     }
-    return t;
+    return n;
+  }
+  // Normalize input like MinimalismProcess
+  normalizeInput(e) {
+    return Array.isArray(e) ? Array.isArray(e[0]) ? e.map(([t, r, n = 0]) => ({ pitch: t, duration: r, offset: n })) : e.map((t) => {
+      const r = t.pitch, n = t.duration;
+      let i = 0;
+      return typeof t.offset == "number" ? i = t.offset : typeof t.time == "number" ? i = t.time : typeof t.time == "string" && (i = this.timeToBeats(t.time)), { ...t, pitch: r, duration: n, offset: i };
+    }) : [];
+  }
+  // Convert beats to bars:beats:ticks using centralized utility
+  beatsToTime(e) {
+    return Oe(e, this.timingConfig);
+  }
+  // Convert bars:beats:ticks to beats using centralized utility
+  timeToBeats(e) {
+    return typeof e != "string" ? Number(e) || 0 : cr(e, this.timingConfig);
   }
 }
-const Zo = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
-  __proto__: null,
-  MusicalAnalysis: qn
-}, Symbol.toStringTag, { value: "Module" })), es = {
-  harmony: qo,
-  rhythm: Lo,
-  motifs: {
-    MotifBank: Uo
+class Mo {
+  /**
+   * Calculate Gini coefficient for inequality measurement
+   * @param {number[]} values - Values to analyze
+   * @param {number[]} [weights] - Optional weights
+   * @returns {number} Gini coefficient (0-1)
+   */
+  static gini(e, t) {
+    if (e.length === 0) return 0;
+    const r = e.length, n = t || Array(r).fill(1), i = e.map((v, _) => ({ value: v, weight: n[_] })).sort((v, _) => v.value - _.value), o = i.map((v) => v.value), a = i.map((v) => v.weight), c = a.reduce((v, _) => v + _, 0);
+    let u = 0, d = 0;
+    for (let v = 0; v < r; v++) {
+      const _ = a.slice(0, v + 1).reduce(($, S) => $ + S, 0);
+      u += a[v] * (2 * _ - a[v] - c) * o[v], d += a[v] * o[v] * c;
+    }
+    return d === 0 ? 0 : u / d;
   }
-}, ts = {
+  /**
+   * Calculate center of mass (balance point) of a sequence
+   * @param {number[]} values - Values to analyze
+   * @param {number[]} [weights] - Optional weights
+   * @returns {number} Balance point
+   */
+  static balance(e, t) {
+    if (e.length === 0) return 0;
+    const r = t || Array(e.length).fill(1), n = e.reduce((o, a, c) => o + a * r[c], 0), i = r.reduce((o, a) => o + a, 0);
+    return i === 0 ? 0 : n / i;
+  }
+  /**
+   * Calculate autocorrelation for pattern detection
+   * @param {number[]} values - Values to analyze
+   * @param {number} [maxLag] - Maximum lag to calculate
+   * @returns {number[]} Autocorrelation array
+   */
+  static autocorrelation(e, t) {
+    const r = e.length, n = t || Math.floor(r / 2), i = [], o = e.reduce((c, u) => c + u, 0) / r, a = e.reduce((c, u) => c + Math.pow(u - o, 2), 0) / r;
+    for (let c = 0; c <= n; c++) {
+      let u = 0;
+      for (let d = 0; d < r - c; d++)
+        u += (e[d] - o) * (e[d + c] - o);
+      u /= r - c, i.push(a === 0 ? 0 : u / a);
+    }
+    return i;
+  }
+  /**
+   * Detect and score musical motifs
+   * @param {number[]} values - Values to analyze
+   * @param {number} [patternLength=3] - Length of patterns to detect
+   * @returns {number} Motif score
+   */
+  static motif(e, t = 3) {
+    if (e.length < t * 2) return 0;
+    const r = /* @__PURE__ */ new Map();
+    for (let o = 0; o <= e.length - t; o++) {
+      const a = e.slice(o, o + t).join(",");
+      r.set(a, (r.get(a) || 0) + 1);
+    }
+    const n = Math.max(...r.values()), i = r.size;
+    return i === 0 ? 0 : n / i;
+  }
+  /**
+   * Calculate dissonance/scale conformity
+   * @param {number[]} pitches - MIDI pitch values
+   * @param {number[]} [scale=[0, 2, 4, 5, 7, 9, 11]] - Scale to check against
+   * @returns {number} Dissonance score (0-1)
+   */
+  static dissonance(e, t = [0, 2, 4, 5, 7, 9, 11]) {
+    if (e.length === 0) return 0;
+    let r = 0;
+    for (const n of e) {
+      const i = (n % 12 + 12) % 12;
+      t.includes(i) && r++;
+    }
+    return 1 - r / e.length;
+  }
+  /**
+   * Calculate rhythmic fit to a grid
+   * @param {number[]} onsets - Onset times
+   * @param {number} [gridDivision=16] - Grid division
+   * @returns {number} Rhythmic alignment score
+   */
+  static rhythmic(e, t = 16) {
+    if (e.length === 0) return 0;
+    let r = 0;
+    const n = 0.1;
+    for (const i of e) {
+      const o = i * t, a = Math.round(o);
+      Math.abs(o - a) <= n && r++;
+    }
+    return r / e.length;
+  }
+  /**
+   * Calculate Fibonacci/golden ratio index
+   * @param {number[]} values - Values to analyze
+   * @returns {number} Fibonacci index
+   */
+  static fibonacciIndex(e) {
+    if (e.length < 2) return 0;
+    const t = (1 + Math.sqrt(5)) / 2;
+    let r = 0;
+    for (let n = 1; n < e.length; n++)
+      if (e[n - 1] !== 0) {
+        const i = e[n] / e[n - 1], o = Math.abs(i - t);
+        r += 1 / (1 + o);
+      }
+    return r / (e.length - 1);
+  }
+  /**
+   * Calculate syncopation (off-beat emphasis)
+   * @param {number[]} onsets - Onset times
+   * @param {number} [beatDivision=4] - Beat division
+   * @returns {number} Syncopation score
+   */
+  static syncopation(e, t = 4) {
+    if (e.length === 0) return 0;
+    let r = 0;
+    for (const n of e) {
+      const i = n * t % 1;
+      i > 0.2 && i < 0.8 && Math.abs(i - 0.5) > 0.2 && r++;
+    }
+    return r / e.length;
+  }
+  /**
+   * Calculate contour entropy (melodic direction randomness)
+   * @param {number[]} pitches - Pitch values
+   * @returns {number} Contour entropy
+   */
+  static contourEntropy(e) {
+    if (e.length < 2) return 0;
+    const t = [];
+    for (let o = 1; o < e.length; o++) {
+      const a = e[o] - e[o - 1];
+      a > 0 ? t.push(1) : a < 0 ? t.push(-1) : t.push(0);
+    }
+    const r = { up: 0, down: 0, same: 0 };
+    for (const o of t)
+      o > 0 ? r.up++ : o < 0 ? r.down++ : r.same++;
+    const n = t.length;
+    return -[r.up / n, r.down / n, r.same / n].filter((o) => o > 0).reduce((o, a) => o + a * Math.log2(a), 0);
+  }
+  /**
+   * Calculate interval variance (pitch stability)
+   * @param {number[]} pitches - Pitch values
+   * @returns {number} Interval variance
+   */
+  static intervalVariance(e) {
+    if (e.length < 2) return 0;
+    const t = [];
+    for (let i = 1; i < e.length; i++)
+      t.push(Math.abs(e[i] - e[i - 1]));
+    const r = t.reduce((i, o) => i + o, 0) / t.length;
+    return t.reduce((i, o) => i + Math.pow(o - r, 2), 0) / t.length;
+  }
+  /**
+   * Calculate note density (notes per unit time)
+   * @param {JMonNote[]} notes - Array of notes
+   * @param {number} [timeWindow=1] - Time window for density calculation
+   * @returns {number} Note density
+   */
+  static density(e, t = 1) {
+    if (e.length === 0) return 0;
+    const r = e.map((a) => typeof a.time == "string" ? parseFloat(a.time) || 0 : a.time || 0), n = Math.min(...r), o = Math.max(...r) - n || 1;
+    return e.length / (o / t);
+  }
+  /**
+   * Calculate gap variance (timing consistency)
+   * @param {number[]} onsets - Onset times
+   * @returns {number} Gap variance
+   */
+  static gapVariance(e) {
+    if (e.length < 2) return 0;
+    const t = [];
+    for (let i = 1; i < e.length; i++)
+      t.push(e[i] - e[i - 1]);
+    const r = t.reduce((i, o) => i + o, 0) / t.length;
+    return t.reduce((i, o) => i + Math.pow(o - r, 2), 0) / t.length;
+  }
+  /**
+   * Comprehensive analysis of a musical sequence
+   * @param {JMonNote[]} notes - Array of notes to analyze
+   * @param {AnalysisOptions} [options={}] - Analysis options
+   * @returns {AnalysisResult} Analysis results
+   */
+  static analyze(e, t = {}) {
+    const { scale: r = [0, 2, 4, 5, 7, 9, 11] } = t, n = e.map((o) => typeof o.note == "number" ? o.note : typeof o.note == "string" ? 60 : Array.isArray(o.note) ? o.note[0] : 60), i = e.map((o) => typeof o.time == "number" ? o.time : parseFloat(o.time) || 0);
+    return {
+      gini: this.gini(n),
+      balance: this.balance(n),
+      motif: this.motif(n),
+      dissonance: this.dissonance(n, r),
+      rhythmic: this.rhythmic(i),
+      fibonacciIndex: this.fibonacciIndex(n),
+      syncopation: this.syncopation(i),
+      contourEntropy: this.contourEntropy(n),
+      intervalVariance: this.intervalVariance(n),
+      density: this.density(e),
+      gapVariance: this.gapVariance(i)
+    };
+  }
+}
+const Eo = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
+  __proto__: null,
+  MusicalAnalysis: Mo,
+  MusicalIndex: Ct
+}, Symbol.toStringTag, { value: "Module" })), To = {
+  harmony: Ws,
+  rhythm: lo,
+  motifs: {
+    MotifBank: uo
+  }
+}, ko = {
   theory: de
-}, rs = {
+}, No = {
   gaussian: {
-    Regressor: Bo
+    Regressor: Yn,
+    Kernel: yo
   },
   automata: {
-    Cellular: Ko
+    Cellular: go
   },
-  loops: kt,
+  loops: qt,
   genetic: {
-    Algorithm: Ho
+    Darwin: vo
   },
   walks: {
-    Random: Jo
+    Random: bo,
+    Chain: wo,
+    Phasor: {
+      Vector: je,
+      System: lr
+    }
   },
   fractals: {
-    Mandelbrot: Wo,
-    LogisticMap: Yo
+    Mandelbrot: $o,
+    LogisticMap: _o
   },
   minimalism: {
-    Process: Qo,
-    Tintinnabuli: Xo
+    Process: So,
+    Tintinnabuli: Po
   }
-}, ns = {
-  ...Zo
-}, is = {
-  ...Ro
-}, qe = {
-  theory: es,
-  constants: ts,
-  generative: rs,
-  analysis: ns,
-  utils: is
+}, Ao = {
+  ...Eo
+}, Ro = {
+  ...Us
+}, Fe = {
+  theory: To,
+  constants: ko,
+  generative: No,
+  analysis: Ao,
+  utils: Ro
 };
-class Ht {
+class er {
   constructor(e = {}) {
     this.options = e;
   }
@@ -7436,8 +8512,8 @@ class Ht {
     if (typeof e != "string") return 0;
     const n = e.match(/^(\d+):(\d+(?:\.\d+)?):(\d+)$/);
     if (!n) return 0;
-    const i = parseInt(n[1], 10), s = parseFloat(n[2]), a = parseInt(n[3], 10);
-    return i * t + s + a / r;
+    const i = parseInt(n[1], 10), o = parseFloat(n[2]), a = parseInt(n[3], 10);
+    return i * t + o + a / r;
   }
   // Parse note value (e.g., 4n, 8n, 8t) or BBT to beats
   static parseDurationToBeats(e, t = 4, r = 480) {
@@ -7447,10 +8523,10 @@ class Ht {
       return this.parseBBTToBeats(e, t, r);
     const n = e.match(/^(\d+)(n|t)$/);
     if (n) {
-      const i = parseInt(n[1], 10), s = n[2];
-      if (s === "n")
+      const i = parseInt(n[1], 10), o = n[2];
+      if (o === "n")
         return 4 / i;
-      if (s === "t")
+      if (o === "t")
         return 4 / i * (2 / 3);
     }
     return 0;
@@ -7469,68 +8545,68 @@ class Ht {
     }));
   }
 }
-function Dn(o, e = {}) {
+function Qn(s, e = {}) {
   try {
-    Mn(o);
+    xn(s);
   } catch {
   }
-  const n = new Ht(e).convert(o).map((_, S) => ({
-    originalTrackIndex: S,
+  const n = new er(e).convert(s).map((_, $) => ({
+    originalTrackIndex: $,
     voiceIndex: 0,
     totalVoices: 1,
     trackInfo: { label: _.label },
     synthConfig: { type: _.type || "PolySynth" },
     partEvents: _.part || []
-  })), i = o.metadata?.tempo || o.bpm || 120, [s, a] = (o.timeSignature || "4/4").split("/").map((_) => parseInt(_, 10)), l = isFinite(s) ? s : 4;
+  })), i = s.metadata?.tempo || s.bpm || 120, [o, a] = (s.timeSignature || "4/4").split("/").map((_) => parseInt(_, 10)), c = isFinite(o) ? o : 4;
   let u = 0;
   n.forEach((_) => {
-    _.partEvents && _.partEvents.length > 0 && _.partEvents.forEach((S) => {
-      const E = Ht.parseBBTToBeats(S.time, l), b = Ht.parseDurationToBeats(S.duration, l), h = E + b;
+    _.partEvents && _.partEvents.length > 0 && _.partEvents.forEach(($) => {
+      const S = er.parseBBTToBeats($.time, c), g = er.parseDurationToBeats($.duration, c), h = S + g;
       h > u && (u = h);
     });
   });
-  const p = 60 / i, w = u * p;
+  const d = 60 / i, v = u * d;
   return {
     tracks: n,
     metadata: {
-      totalDuration: w,
+      totalDuration: v,
       tempo: i
     }
   };
 }
-function er(o, e = {}) {
-  if (!o || typeof o != "object")
-    throw console.error("[PLAYER] Invalid composition:", o), new Error("Composition must be a valid JMON object");
+function ur(s, e = {}) {
+  if (!s || typeof s != "object")
+    throw console.error("[PLAYER] Invalid composition:", s), new Error("Composition must be a valid JMON object");
   const {
     autoplay: t = !1,
     showDebug: r = !1,
     customInstruments: n = {},
     autoMultivoice: i = !0,
-    maxVoices: s = 4
+    maxVoices: o = 4
   } = e;
-  if (!o.sequences && !o.tracks)
-    throw console.error("[PLAYER] No sequences or tracks found in composition:", o), new Error("Composition must have sequences or tracks");
-  const a = o.tracks || o.sequences || [];
+  if (!s.sequences && !s.tracks)
+    throw console.error("[PLAYER] No sequences or tracks found in composition:", s), new Error("Composition must have sequences or tracks");
+  const a = s.tracks || s.sequences || [];
   if (!Array.isArray(a))
     throw console.error("[PLAYER] Tracks/sequences must be an array:", a), new Error("Tracks/sequences must be an array");
-  const l = o.bpm || 120, p = Dn(o, { autoMultivoice: i, maxVoices: s, showDebug: r }), { tracks: w, metadata: _ } = p;
-  let S = _.totalDuration;
-  const E = {
+  const c = s.bpm || 120, d = Qn(s, { autoMultivoice: i, maxVoices: o, showDebug: r }), { tracks: v, metadata: _ } = d;
+  let $ = _.totalDuration;
+  const S = {
     background: "#FFFFFF",
     primary: "#333",
     secondary: "#F0F0F0",
     text: "#000000",
     lightText: "#666666",
     border: "#CCCCCC"
-  }, b = document.createElement("div");
-  b.style.cssText = `
+  }, g = document.createElement("div");
+  g.style.cssText = `
         font-family: 'PT Sans', sans-serif;
-        background-color: ${E.background};
-        color: ${E.text};
+        background-color: ${S.background};
+        color: ${S.text};
         padding: 20px;
         border-radius: 12px;
         width: 400px;
-        border: 1px solid ${E.border};
+        border: 1px solid ${S.border};
         box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
         display: flex;
         flex-direction: column;
@@ -7543,30 +8619,30 @@ function er(o, e = {}) {
         margin-bottom: 30px;
         font-family: 'PT Sans', sans-serif;
     `;
-  const d = document.createElement("div");
-  d.style.cssText = `
+  const f = document.createElement("div");
+  f.style.cssText = `
         display: flex;
         flex-direction: column;
         width: 60%;
     `;
-  const c = document.createElement("div");
-  c.style.cssText = `
+  const l = document.createElement("div");
+  l.style.cssText = `
         display: flex;
         flex-direction: column;
     `;
-  const f = ["Sampler", "PolySynth", "Synth", "AMSynth", "DuoSynth", "FMSynth", "MembraneSynth", "MetalSynth", "MonoSynth", "PluckSynth"], m = o.tracks || o.sequences || [], v = [];
-  m.forEach((P, T) => {
-    const C = w.find((X) => X.originalTrackIndex === T)?.analysis;
-    C?.hasGlissando && console.warn(`Track ${P.label || P.name || T + 1} contient un glissando : la polyphonie sera désactivée pour cette piste.`);
-    const O = document.createElement("div");
-    O.style.cssText = `
+  const p = ["Sampler", "PolySynth", "Synth", "AMSynth", "DuoSynth", "FMSynth", "MembraneSynth", "MetalSynth", "MonoSynth", "PluckSynth"], m = s.tracks || s.sequences || [], w = [];
+  m.forEach((M, T) => {
+    const I = v.find((X) => X.originalTrackIndex === T)?.analysis;
+    I?.hasGlissando && console.warn(`Track ${M.label || M.name || T + 1} contient un glissando : la polyphonie sera désactivée pour cette piste.`);
+    const q = document.createElement("div");
+    q.style.cssText = `
             margin-bottom: 8px;
         `;
-    const x = document.createElement("label");
-    x.textContent = P.name || P.label || `Track ${T + 1}`, x.style.cssText = `
+    const D = document.createElement("label");
+    D.textContent = M.name || M.label || `Track ${T + 1}`, D.style.cssText = `
             font-family: 'PT Sans', sans-serif;
             font-size: 16px;
-            color: ${E.text};
+            color: ${S.text};
             display: block;
             margin-bottom: 8px;
             font-weight: normal;
@@ -7574,10 +8650,10 @@ function er(o, e = {}) {
     const U = document.createElement("select");
     U.style.cssText = `
             padding: 4px;
-            border: 1px solid ${E.secondary};
+            border: 1px solid ${S.secondary};
             border-radius: 4px;
-            background-color: ${E.background};
-            color: ${E.text};
+            background-color: ${S.background};
+            color: ${S.text};
             font-size: 12px;
             width: 100%;
             height: 28px;
@@ -7587,19 +8663,19 @@ function er(o, e = {}) {
             appearance: none;
             margin: 0;
             outline: none;
-        `, f.forEach((X) => {
+        `, p.forEach((X) => {
       const te = document.createElement("option");
-      te.value = X, te.textContent = X, o.tracks?.[T]?.synthRef && X === "Sampler" && (te.selected = !0), C?.hasGlissando && (X === "PolySynth" || X === "DuoSynth") && (te.disabled = !0, te.textContent += " (mono only for glissando)"), U.appendChild(te);
-    }), v.push(U), O.append(x, U), c.appendChild(O);
-  }), d.appendChild(c);
-  const g = document.createElement("div");
-  g.style.cssText = `
+      te.value = X, te.textContent = X, s.tracks?.[T]?.synthRef && X === "Sampler" && (te.selected = !0), I?.hasGlissando && (X === "PolySynth" || X === "DuoSynth") && (te.disabled = !0, te.textContent += " (mono only for glissando)"), U.appendChild(te);
+    }), w.push(U), q.append(D, U), l.appendChild(q);
+  }), f.appendChild(l);
+  const b = document.createElement("div");
+  b.style.cssText = `
         display: flex;
         flex-direction: column;
         width: 35%;
     `;
-  const $ = document.createElement("div");
-  $.style.cssText = `
+  const P = document.createElement("div");
+  P.style.cssText = `
         display: flex;
         flex-direction: column;
         width: 100%;
@@ -7610,15 +8686,15 @@ function er(o, e = {}) {
         font-size: 16px;
         font-weight: normal;
         margin-bottom: 8px;
-        color: ${E.text};
+        color: ${S.text};
     `;
-  const j = document.createElement("input");
-  j.type = "number", j.min = 60, j.max = 240, j.value = l, j.style.cssText = `
+  const C = document.createElement("input");
+  C.type = "number", C.min = 60, C.max = 240, C.value = c, C.style.cssText = `
         padding: 4px;
-        border: 1px solid ${E.secondary};
+        border: 1px solid ${S.secondary};
         border-radius: 4px;
-        background-color: ${E.background};
-        color: ${E.text};
+        background-color: ${S.background};
+        color: ${S.text};
         font-size: 12px;
         text-align: center;
         width: 100%;
@@ -7629,9 +8705,9 @@ function er(o, e = {}) {
         appearance: none;
         margin: 0;
         outline: none;
-    `, $.append(k, j), g.appendChild($);
-  const D = document.createElement("div");
-  D.style.cssText = `
+    `, P.append(k, C), b.appendChild(P);
+  const x = document.createElement("div");
+  x.style.cssText = `
         position: relative;
         width: 100%;
         margin: 20px 0;
@@ -7639,11 +8715,11 @@ function er(o, e = {}) {
         align-items: center;
         gap: 15px;
     `;
-  const V = document.createElement("div");
-  V.textContent = "0:00", V.style.cssText = `
+  const z = document.createElement("div");
+  z.textContent = "0:00", z.style.cssText = `
         font-family: 'PT Sans', sans-serif;
         font-size: 14px;
-        color: ${E.text};
+        color: ${S.text};
         min-width: 40px;
         text-align: center;
     `;
@@ -7651,7 +8727,7 @@ function er(o, e = {}) {
   B.textContent = "0:00", B.style.cssText = `
         font-family: 'PT Sans', sans-serif;
         font-size: 14px;
-        color: ${E.text};
+        color: ${S.text};
         min-width: 40px;
         text-align: center;
     `;
@@ -7659,7 +8735,7 @@ function er(o, e = {}) {
   L.type = "range", L.min = 0, L.max = 100, L.value = 0, L.style.cssText = `
         flex-grow: 1;
         -webkit-appearance: none;
-        background: ${E.secondary};
+        background: ${S.secondary};
         outline: none;
         border-radius: 15px;
         overflow: visible;
@@ -7672,8 +8748,8 @@ function er(o, e = {}) {
         padding: 10px;
         border: none;
         border-radius: 50%;
-        background-color: ${E.primary};
-        color: ${E.background};
+        background-color: ${S.primary};
+        color: ${S.background};
         font-size: 16px;
         cursor: pointer;
         transition: background-color 0.3s ease;
@@ -7687,9 +8763,9 @@ function er(o, e = {}) {
         display: flex;
         justify-content: space-between;
         font-size: 12px;
-        color: ${E.lightText};
+        color: ${S.lightText};
         margin: 0px 0px 0px 10px;
-    `, D.append(V, L, B, H);
+    `, x.append(z, L, B, H);
   const me = document.createElement("div");
   me.style.cssText = `
         display: flex;
@@ -7733,46 +8809,46 @@ function er(o, e = {}) {
         align-items: center;
         justify-content: center;
         min-height: 50px;
-    `, me.append(ye, ee), h.append(d, g), b.append(h, D, ce, me);
-  let z, q = !1, N = [], I = [], R = [], y = null;
-  const M = o.tracks || o.sequences || [], A = () => {
-    if (!z || !o.audioGraph || !Array.isArray(o.audioGraph)) return null;
-    const P = {}, T = (C) => {
-      const O = {};
-      return Object.entries(C || {}).forEach(([x, U]) => {
-        let X = x;
-        if (typeof x == "number" || /^\d+$/.test(String(x)))
+    `, me.append(ye, ee), h.append(f, b), g.append(h, x, ce, me);
+  let V, O = !1, N = [], j = [], A = [], y = null;
+  const E = s.tracks || s.sequences || [], R = () => {
+    if (!V || !s.audioGraph || !Array.isArray(s.audioGraph)) return null;
+    const M = {}, T = (I) => {
+      const q = {};
+      return Object.entries(I || {}).forEach(([D, U]) => {
+        let X = D;
+        if (typeof D == "number" || /^\d+$/.test(String(D)))
           try {
-            X = z.Frequency(parseInt(x, 10), "midi").toNote();
+            X = V.Frequency(parseInt(D, 10), "midi").toNote();
           } catch {
           }
-        O[X] = U;
-      }), O;
+        q[X] = U;
+      }), q;
     };
     try {
-      return o.audioGraph.forEach((C) => {
-        const { id: O, type: x, options: U = {}, target: X } = C;
-        if (!O || !x) return;
+      return s.audioGraph.forEach((I) => {
+        const { id: q, type: D, options: U = {}, target: X } = I;
+        if (!q || !D) return;
         let te = null;
-        if (x === "Sampler") {
-          const oe = T(U.urls);
-          let le, se;
+        if (D === "Sampler") {
+          const se = T(U.urls);
+          let le, oe;
           const ae = new Promise((re, K) => {
-            le = re, se = K;
+            le = re, oe = K;
           }), ue = {
-            urls: oe,
+            urls: se,
             onload: () => le && le(),
             onerror: (re) => {
-              console.error(`[PLAYER] Sampler load error for ${O}:`, re), se && se(re);
+              console.error(`[PLAYER] Sampler load error for ${q}:`, re), oe && oe(re);
             }
           };
           U.baseUrl && (ue.baseUrl = U.baseUrl);
           try {
-            console.log(`[PLAYER] Building Sampler ${O} with urls:`, oe, "baseUrl:", ue.baseUrl || "(none)"), te = new z.Sampler(ue).toDestination();
+            console.log(`[PLAYER] Building Sampler ${q} with urls:`, se, "baseUrl:", ue.baseUrl || "(none)"), te = new V.Sampler(ue).toDestination();
           } catch (re) {
             console.error("[PLAYER] Failed to create Sampler:", re), te = null;
           }
-          R.push(ae), te && U.envelope && U.envelope.enabled && (typeof U.envelope.attack == "number" && (te.attack = U.envelope.attack), typeof U.envelope.release == "number" && (te.release = U.envelope.release));
+          A.push(ae), te && U.envelope && U.envelope.enabled && (typeof U.envelope.attack == "number" && (te.attack = U.envelope.attack), typeof U.envelope.release == "number" && (te.release = U.envelope.release));
         } else if ([
           "Synth",
           "PolySynth",
@@ -7782,20 +8858,20 @@ function er(o, e = {}) {
           "DuoSynth",
           "PluckSynth",
           "NoiseSynth"
-        ].includes(x))
+        ].includes(D))
           try {
-            te = new z[x](U).toDestination();
-          } catch (oe) {
-            console.warn(`[PLAYER] Failed to create ${x} from audioGraph, using PolySynth:`, oe), te = new z.PolySynth().toDestination();
+            te = new V[D](U).toDestination();
+          } catch (se) {
+            console.warn(`[PLAYER] Failed to create ${D} from audioGraph, using PolySynth:`, se), te = new V.PolySynth().toDestination();
           }
-        else x === "Destination" && (P[O] = z.Destination);
-        te && (P[O] = te);
-      }), P;
-    } catch (C) {
-      return console.error("[PLAYER] Failed building audioGraph instruments:", C), null;
+        else D === "Destination" && (M[q] = V.Destination);
+        te && (M[q] = te);
+      }), M;
+    } catch (I) {
+      return console.error("[PLAYER] Failed building audioGraph instruments:", I), null;
     }
-  }, F = (P) => `${Math.floor(P / 60)}:${Math.floor(P % 60).toString().padStart(2, "0")}`;
-  B.textContent = F(S);
+  }, F = (M) => `${Math.floor(M / 60)}:${Math.floor(M % 60).toString().padStart(2, "0")}`;
+  B.textContent = F($);
   const G = async () => {
     if (typeof window < "u") {
       if (!window.Tone)
@@ -7803,127 +8879,127 @@ function er(o, e = {}) {
           if (typeof require < "u")
             window.Tone = await require("https://unpkg.com/tone@14.8.49/build/Tone.js");
           else {
-            const P = await import("https://unpkg.com/tone@14.8.49/build/Tone.js");
-            window.Tone = P.default || P;
+            const M = await import("https://unpkg.com/tone@14.8.49/build/Tone.js");
+            window.Tone = M.default || M;
           }
-        } catch (P) {
-          return console.warn("Could not auto-load Tone.js:", P.message), console.log("To use the player, load Tone.js manually first:"), console.log('Tone = await require("https://unpkg.com/tone@14.8.49/build/Tone.js")'), !1;
+        } catch (M) {
+          return console.warn("Could not auto-load Tone.js:", M.message), console.log("To use the player, load Tone.js manually first:"), console.log('Tone = await require("https://unpkg.com/tone@14.8.49/build/Tone.js")'), !1;
         }
       if (window.Tone) {
-        z = window.Tone;
+        V = window.Tone;
         try {
-          return (z.context.state === "suspended" || z.context.state === "interrupted") && await z.context.resume(), z.context.state !== "running" && (await z.start(), navigator.userAgent.includes("Safari") && !navigator.userAgent.includes("Chrome") && await new Promise((P) => setTimeout(P, 100))), z.context.state === "running";
-        } catch (P) {
-          return console.error("[PLAYER] Failed to initialize audio context:", P), !1;
+          return (V.context.state === "suspended" || V.context.state === "interrupted") && await V.context.resume(), V.context.state !== "running" && (await V.start(), navigator.userAgent.includes("Safari") && !navigator.userAgent.includes("Chrome") && await new Promise((M) => setTimeout(M, 100))), V.context.state === "running";
+        } catch (M) {
+          return console.error("[PLAYER] Failed to initialize audio context:", M), !1;
         }
       }
     }
     return console.warn("Tone.js not available"), !1;
   }, Q = () => {
-    if (z) {
-      if (!y && (y = A(), y)) {
-        const P = Object.keys(y).filter((T) => y[T] && y[T].name === "Sampler");
-        P.length > 0 && console.log("[PLAYER] Using audioGraph Samplers for tracks with synthRef:", P);
+    if (V) {
+      if (!y && (y = R(), y)) {
+        const M = Object.keys(y).filter((T) => y[T] && y[T].name === "Sampler");
+        M.length > 0 && console.log("[PLAYER] Using audioGraph Samplers for tracks with synthRef:", M);
       }
-      N.forEach((P) => {
-        if (!y || !Object.values(y).includes(P))
+      N.forEach((M) => {
+        if (!y || !Object.values(y).includes(M))
           try {
-            P.dispose();
+            M.dispose();
           } catch {
           }
-      }), I.forEach((P) => {
-        P.stop(), P.dispose();
-      }), N = [], I = [], console.log("[PLAYER] Converted tracks:", w.length), w.forEach((P) => {
-        const { originalTrackIndex: T, voiceIndex: C, totalVoices: O, trackInfo: x, synthConfig: U, partEvents: X } = P, oe = (M[T] || {}).synthRef, le = 60 / _.tempo, se = (X || []).map((re) => {
+      }), j.forEach((M) => {
+        M.stop(), M.dispose();
+      }), N = [], j = [], console.log("[PLAYER] Converted tracks:", v.length), v.forEach((M) => {
+        const { originalTrackIndex: T, voiceIndex: I, totalVoices: q, trackInfo: D, synthConfig: U, partEvents: X } = M, se = (E[T] || {}).synthRef, le = 60 / _.tempo, oe = (X || []).map((re) => {
           const K = typeof re.time == "number" ? re.time * le : re.time, ie = typeof re.duration == "number" ? re.duration * le : re.duration;
           return { ...re, time: K, duration: ie };
         });
         let ae = null;
-        if (oe && y && y[oe])
-          ae = y[oe];
+        if (se && y && y[se])
+          ae = y[se];
         else {
-          const re = v[T] ? v[T].value : U.type;
+          const re = w[T] ? w[T].value : U.type;
           try {
             const K = U.reason === "glissando_compatibility" ? U.type : re;
-            ae = new z[K]().toDestination(), U.reason === "glissando_compatibility" && C === 0 && console.warn(`[MULTIVOICE] Using ${K} instead of ${U.original} for glissando in ${x.label}`);
+            ae = new V[K]().toDestination(), U.reason === "glissando_compatibility" && I === 0 && console.warn(`[MULTIVOICE] Using ${K} instead of ${U.original} for glissando in ${D.label}`);
           } catch (K) {
-            console.warn(`Failed to create ${re}, using PolySynth:`, K), ae = new z.PolySynth().toDestination();
+            console.warn(`Failed to create ${re}, using PolySynth:`, K), ae = new V.PolySynth().toDestination();
           }
         }
-        N.push(ae), O > 1 && console.log(`[MULTIVOICE] Track "${x.label}" voice ${C + 1}: ${X.length} notes`);
-        const ue = new z.Part((re, K) => {
+        N.push(ae), q > 1 && console.log(`[MULTIVOICE] Track "${D.label}" voice ${I + 1}: ${X.length} notes`);
+        const ue = new V.Part((re, K) => {
           if (Array.isArray(K.pitch))
             K.pitch.forEach((ie) => {
-              let fe = "C4";
-              typeof ie == "number" ? fe = z.Frequency(ie, "midi").toNote() : typeof ie == "string" ? fe = ie : Array.isArray(ie) && typeof ie[0] == "string" && (fe = ie[0]), ae.triggerAttackRelease(fe, K.duration, re);
+              let he = "C4";
+              typeof ie == "number" ? he = V.Frequency(ie, "midi").toNote() : typeof ie == "string" ? he = ie : Array.isArray(ie) && typeof ie[0] == "string" && (he = ie[0]), ae.triggerAttackRelease(he, K.duration, re);
             });
           else if (K.articulation === "glissando" && K.glissTarget !== void 0) {
-            let ie = typeof K.pitch == "number" ? z.Frequency(K.pitch, "midi").toNote() : K.pitch, fe = typeof K.glissTarget == "number" ? z.Frequency(K.glissTarget, "midi").toNote() : K.glissTarget;
-            console.log("[PLAYER] Glissando", { fromNote: ie, toNote: fe, duration: K.duration, time: re }), console.log("[PLAYER] Glissando effect starting from", ie, "to", fe), ae.triggerAttack(ie, re, K.velocity || 0.8);
-            const ve = z.Frequency(ie).toFrequency(), je = z.Frequency(fe).toFrequency(), xe = 1200 * Math.log2(je / ve);
+            let ie = typeof K.pitch == "number" ? V.Frequency(K.pitch, "midi").toNote() : K.pitch, he = typeof K.glissTarget == "number" ? V.Frequency(K.glissTarget, "midi").toNote() : K.glissTarget;
+            console.log("[PLAYER] Glissando", { fromNote: ie, toNote: he, duration: K.duration, time: re }), console.log("[PLAYER] Glissando effect starting from", ie, "to", he), ae.triggerAttack(ie, re, K.velocity || 0.8);
+            const ve = V.Frequency(ie).toFrequency(), xe = V.Frequency(he).toFrequency(), Ge = 1200 * Math.log2(xe / ve);
             if (ae.detune && ae.detune.setValueAtTime && ae.detune.linearRampToValueAtTime)
-              ae.detune.setValueAtTime(0, re), ae.detune.linearRampToValueAtTime(xe, re + K.duration), console.log("[PLAYER] Applied detune glissando:", xe, "cents over", K.duration, "beats");
+              ae.detune.setValueAtTime(0, re), ae.detune.linearRampToValueAtTime(Ge, re + K.duration), console.log("[PLAYER] Applied detune glissando:", Ge, "cents over", K.duration, "beats");
             else {
-              const Ln = z.Frequency(ie).toMidi(), Un = z.Frequency(fe).toMidi(), Ve = Math.max(3, Math.abs(Un - Ln)), nr = K.duration / Ve;
-              for (let ze = 1; ze < Ve; ze++) {
-                const Gn = ze / (Ve - 1), Bn = ve * Math.pow(je / ve, Gn), Kn = z.Frequency(Bn).toNote(), Hn = re + ze * nr;
-                ae.triggerAttackRelease(Kn, nr * 0.8, Hn, (K.velocity || 0.8) * 0.7);
+              const ri = V.Frequency(ie).toMidi(), ni = V.Frequency(he).toMidi(), Be = Math.max(3, Math.abs(ni - ri)), fr = K.duration / Be;
+              for (let Ke = 1; Ke < Be; Ke++) {
+                const ii = Ke / (Be - 1), si = ve * Math.pow(xe / ve, ii), oi = V.Frequency(si).toNote(), ai = re + Ke * fr;
+                ae.triggerAttackRelease(oi, fr * 0.8, ai, (K.velocity || 0.8) * 0.7);
               }
-              console.log("[PLAYER] Applied chromatic glissando with", Ve, "steps");
+              console.log("[PLAYER] Applied chromatic glissando with", Be, "steps");
             }
             ae.triggerRelease(re + K.duration);
           } else {
             let ie = "C4";
-            typeof K.pitch == "number" ? ie = z.Frequency(K.pitch, "midi").toNote() : typeof K.pitch == "string" ? ie = K.pitch : Array.isArray(K.pitch) && typeof K.pitch[0] == "string" && (ie = K.pitch[0]);
-            let fe = K.duration, ve = K.velocity || 0.8;
-            K.articulation === "staccato" && (fe = K.duration * 0.5), K.articulation === "accent" && (ve = Math.min(ve * 2, 1)), K.articulation === "tenuto" && (fe = K.duration * 1.5, ve = Math.min(ve * 1.3, 1)), ae.triggerAttackRelease(ie, fe, re, ve);
+            typeof K.pitch == "number" ? ie = V.Frequency(K.pitch, "midi").toNote() : typeof K.pitch == "string" ? ie = K.pitch : Array.isArray(K.pitch) && typeof K.pitch[0] == "string" && (ie = K.pitch[0]);
+            let he = K.duration, ve = K.velocity || 0.8;
+            K.articulation === "staccato" && (he = K.duration * 0.5), K.articulation === "accent" && (ve = Math.min(ve * 2, 1)), K.articulation === "tenuto" && (he = K.duration * 1.5, ve = Math.min(ve * 1.3, 1)), ae.triggerAttackRelease(ie, he, re, ve);
           }
-        }, se);
-        ue.start(0), I.push(ue);
-      }), z.Transport.bpm.value = _.tempo, z.Transport.loopEnd = S, z.Transport.loop = !0, z.Transport.stop(), z.Transport.position = 0, B.textContent = F(S);
+        }, oe);
+        ue.start(0), j.push(ue);
+      }), V.Transport.bpm.value = _.tempo, V.Transport.loopEnd = $, V.Transport.loop = !0, V.Transport.stop(), V.Transport.position = 0, B.textContent = F($);
     }
   }, W = () => {
-    if (z && q) {
-      const P = typeof z.Transport.loopEnd == "number" ? z.Transport.loopEnd : z.Time(z.Transport.loopEnd).toSeconds(), T = z.Transport.seconds % P, C = T / P * 100;
-      L.value = Math.min(C, 100), V.textContent = F(T), B.textContent = F(P), z.Transport.state === "started" && q ? requestAnimationFrame(W) : z.Transport.state === "stopped" && (z.Transport.seconds = 0, L.value = 0, V.textContent = F(0), q = !1, H.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-play"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8"/></svg>');
+    if (V && O) {
+      const M = typeof V.Transport.loopEnd == "number" ? V.Transport.loopEnd : V.Time(V.Transport.loopEnd).toSeconds(), T = V.Transport.seconds % M, I = T / M * 100;
+      L.value = Math.min(I, 100), z.textContent = F(T), B.textContent = F(M), V.Transport.state === "started" && O ? requestAnimationFrame(W) : V.Transport.state === "stopped" && (V.Transport.seconds = 0, L.value = 0, z.textContent = F(0), O = !1, H.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-play"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8"/></svg>');
     }
   };
   if (H.addEventListener("click", async () => {
-    if (!z)
+    if (!V)
       if (await G())
         Q();
       else {
         console.error("[PLAYER] Failed to initialize Tone.js");
         return;
       }
-    if (q)
-      z.Transport.stop(), q = !1, H.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-play"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8"/></svg>';
+    if (O)
+      V.Transport.stop(), O = !1, H.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-play"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8"/></svg>';
     else {
-      if (z.context.state !== "running" && (await z.start(), console.log("[PLAYER] Audio context started:", z.context.state)), N.length === 0 && (console.log("[PLAYER] No synths found, setting up audio..."), Q()), z.Transport.stop(), z.Transport.position = 0, console.log("[PLAYER] Transport state before start:", z.Transport.state), console.log("[PLAYER] Transport position reset to:", z.Transport.position), console.log("[PLAYER] Audio context state:", z.context.state), console.log("[PLAYER] Parts count:", I.length), console.log("[PLAYER] Synths count:", N.length), y) {
-        const P = Object.values(y).filter((T) => T && T.name === "Sampler");
-        if (P.length > 0 && R.length > 0) {
-          console.log(`[PLAYER] Waiting for ${P.length} sampler(s) to load...`);
+      if (V.context.state !== "running" && (await V.start(), console.log("[PLAYER] Audio context started:", V.context.state)), N.length === 0 && (console.log("[PLAYER] No synths found, setting up audio..."), Q()), V.Transport.stop(), V.Transport.position = 0, console.log("[PLAYER] Transport state before start:", V.Transport.state), console.log("[PLAYER] Transport position reset to:", V.Transport.position), console.log("[PLAYER] Audio context state:", V.context.state), console.log("[PLAYER] Parts count:", j.length), console.log("[PLAYER] Synths count:", N.length), y) {
+        const M = Object.values(y).filter((T) => T && T.name === "Sampler");
+        if (M.length > 0 && A.length > 0) {
+          console.log(`[PLAYER] Waiting for ${M.length} sampler(s) to load...`);
           try {
-            await Promise.all(R), console.log("[PLAYER] All samplers loaded.");
+            await Promise.all(A), console.log("[PLAYER] All samplers loaded.");
           } catch (T) {
             console.warn("[PLAYER] Sampler load wait error:", T);
             return;
           }
         }
       }
-      z.Transport.start(), q = !0, H.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-pause"><circle cx="12" cy="12" r="10"/><line x1="10" x2="10" y1="15" y2="9"/><line x1="14" x2="14" y1="15" y2="9"/></svg>', W();
+      V.Transport.start(), O = !0, H.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-pause"><circle cx="12" cy="12" r="10"/><line x1="10" x2="10" y1="15" y2="9"/><line x1="14" x2="14" y1="15" y2="9"/></svg>', W();
     }
   }), L.addEventListener("input", () => {
-    if (z && S > 0) {
-      const P = L.value / 100 * S;
-      z.Transport.seconds = P, V.textContent = F(P);
+    if (V && $ > 0) {
+      const M = L.value / 100 * $;
+      V.Transport.seconds = M, z.textContent = F(M);
     }
-  }), j.addEventListener("change", () => {
-    const P = parseInt(j.value);
-    z && P >= 60 && P <= 240 ? z.Transport.bpm.value = P : j.value = z ? z.Transport.bpm.value : l;
-  }), v.forEach((P) => {
-    P.addEventListener("change", () => {
-      z && N.length > 0 && Q();
+  }), C.addEventListener("change", () => {
+    const M = parseInt(C.value);
+    V && M >= 60 && M <= 240 ? V.Transport.bpm.value = M : C.value = V ? V.Transport.bpm.value : c;
+  }), w.forEach((M) => {
+    M.addEventListener("change", () => {
+      V && N.length > 0 && Q();
     });
   }), ye.addEventListener("click", () => {
     console.log("MIDI download - requires MIDI converter implementation");
@@ -7934,20 +9010,20 @@ function er(o, e = {}) {
       H.click();
     }, 500);
   }), t && !window.Tone) {
-    const P = setInterval(() => {
-      window.Tone && (clearInterval(P), setTimeout(() => {
+    const M = setInterval(() => {
+      window.Tone && (clearInterval(M), setTimeout(() => {
         H.click();
       }, 500));
     }, 100);
     setTimeout(() => {
-      clearInterval(P);
+      clearInterval(M);
     }, 1e4);
   }
-  return b;
+  return g;
 }
-function tr(o, e = 0.25, t = "nearest") {
-  if (typeof o != "number" || !isFinite(o)) return o;
-  const r = o / e;
+function dr(s, e = 0.25, t = "nearest") {
+  if (typeof s != "number" || !isFinite(s)) return s;
+  const r = s / e;
   let n;
   switch (t) {
     case "floor":
@@ -7962,46 +9038,46 @@ function tr(o, e = 0.25, t = "nearest") {
   }
   return n * e;
 }
-function xn(o, { grid: e = 0.25, fields: t = ["time", "duration"], mode: r = "nearest" } = {}) {
-  return Array.isArray(o) ? o.map((n) => {
+function Xn(s, { grid: e = 0.25, fields: t = ["time", "duration"], mode: r = "nearest" } = {}) {
+  return Array.isArray(s) ? s.map((n) => {
     const i = { ...n };
-    return t.forEach((s) => {
-      typeof i[s] == "number" && (i[s] = tr(i[s], e, r));
+    return t.forEach((o) => {
+      typeof i[o] == "number" && (i[o] = dr(i[o], e, r));
     }), i;
-  }) : o;
+  }) : s;
 }
-function Vn(o, { grid: e = 0.25, mode: t = "nearest" } = {}) {
-  return !o || !Array.isArray(o.notes) ? o : {
-    ...o,
-    notes: xn(o.notes, { grid: e, fields: ["time", "duration"], mode: t })
+function Zn(s, { grid: e = 0.25, mode: t = "nearest" } = {}) {
+  return !s || !Array.isArray(s.notes) ? s : {
+    ...s,
+    notes: Xn(s.notes, { grid: e, fields: ["time", "duration"], mode: t })
   };
 }
-function os(o, { grid: e = 0.25, mode: t = "nearest" } = {}) {
-  return !o || !Array.isArray(o.tracks) ? o : {
-    ...o,
-    tracks: o.tracks.map((r) => Vn(r, { grid: e, mode: t }))
+function Co(s, { grid: e = 0.25, mode: t = "nearest" } = {}) {
+  return !s || !Array.isArray(s.tracks) ? s : {
+    ...s,
+    tracks: s.tracks.map((r) => Zn(r, { grid: e, mode: t }))
   };
 }
-function zn(o, e = 0.25) {
-  const t = Math.round(1 / e), r = Math.round(o / e);
+function ei(s, e = 0.25) {
+  const t = Math.round(1 / e), r = Math.round(s / e);
   return r <= 0 || r === t ? "" : r % t === 0 ? String(r / t) : `${r}/${t}`;
 }
-const Et = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
+const Rt = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
   __proto__: null,
-  encodeAbcDuration: zn,
-  quantize: tr,
-  quantizeComposition: os,
-  quantizeEvents: xn,
-  quantizeTrack: Vn
+  encodeAbcDuration: ei,
+  quantize: dr,
+  quantizeComposition: Co,
+  quantizeEvents: Xn,
+  quantizeTrack: Zn
 }, Symbol.toStringTag, { value: "Module" }));
-class ss {
+class Io {
   /**
    * Convertit un objet JMON en ABC après validation/normalisation
    * @param {Object} composition - objet JMON
    * @returns {string} ABC notation string
    */
   static fromValidatedJmon(e) {
-    const t = new Xt(), { valid: r, normalized: n, errors: i } = t.validateAndNormalize(e);
+    const t = new sr(), { valid: r, normalized: n, errors: i } = t.validateAndNormalize(e);
     if (!r)
       throw console.warn("JMON non valide pour conversion ABC:", i), new Error("JMON non valide");
     return this.convertToAbc(n);
@@ -8021,8 +9097,8 @@ class ss {
     } catch {
     }
     if (e.includes(":")) {
-      const r = e.split(":").map(parseFloat), n = r[0] || 0, i = r[1] || 0, s = r[2] || 0, a = 60 / t, l = a * 4, u = a / 480;
-      return n * l + i * a + s * u;
+      const r = e.split(":").map(parseFloat), n = r[0] || 0, i = r[1] || 0, o = r[2] || 0, a = 60 / t, c = a * 4, u = a / 480;
+      return n * c + i * a + o * u;
     }
     if (e.match(/^\d+[nthq]$/)) {
       const r = parseInt(e), n = e.slice(-1), i = 60 / t;
@@ -8050,78 +9126,78 @@ class ss {
 `, r += `Q:1/4=${e.bpm || 120}
 `, r += `K:${e.keySignature || "C"}
 `;
-    const n = e.timeSignature || "4/4", [i, s] = n.split("/").map(Number), a = i * (4 / s), l = t.measuresPerLine || 4, u = t.lineBreaks || [], p = t.renderMode || "merged", w = t.trackIndex || 0, _ = !!t.hideRests, S = t.showArticulations !== !1, E = Array.isArray(e.tracks) ? e.tracks : Object.values(e.tracks || {});
-    if (E.length === 0) return r;
-    const b = (() => {
-      let d = 0;
-      return E.forEach((c) => {
-        const f = c.notes || c;
-        Array.isArray(f) && f.forEach((m) => {
-          const v = typeof m.time == "number" ? m.time : 0, g = typeof m.duration == "number" ? m.duration : 1, $ = v + g;
-          $ > d && (d = $);
+    const n = e.timeSignature || "4/4", [i, o] = n.split("/").map(Number), a = i * (4 / o), c = t.measuresPerLine || 4, u = t.lineBreaks || [], d = t.renderMode || "merged", v = t.trackIndex || 0, _ = !!t.hideRests, $ = t.showArticulations !== !1, S = Array.isArray(e.tracks) ? e.tracks : Object.values(e.tracks || {});
+    if (S.length === 0) return r;
+    const g = (() => {
+      let f = 0;
+      return S.forEach((l) => {
+        const p = l.notes || l;
+        Array.isArray(p) && p.forEach((m) => {
+          const w = typeof m.time == "number" ? m.time : 0, b = typeof m.duration == "number" ? m.duration : 1, P = w + b;
+          P > f && (f = P);
         });
-      }), d;
-    })(), h = Math.max(1, Math.ceil(b / a));
-    if (p === "tracks" && E.length > 1)
-      r += "%%score {", E.forEach((d, c) => {
-        c > 0 && (r += " | "), r += `${c + 1}`;
+      }), f;
+    })(), h = Math.max(1, Math.ceil(g / a));
+    if (d === "tracks" && S.length > 1)
+      r += "%%score {", S.forEach((f, l) => {
+        l > 0 && (r += " | "), r += `${l + 1}`;
       }), r += `}
-`, E.forEach((d, c) => {
-        const f = d.notes || d;
-        if (f.length === 0) return;
-        const m = c + 1, v = d.label || `Track ${c + 1}`, g = v.length > 12 ? v.substring(0, 10) + ".." : v, $ = d.instrument ? ` [${d.instrument}]` : "";
-        r += `V:${m} name="${v}${$}" snm="${g}"
+`, S.forEach((f, l) => {
+        const p = f.notes || f;
+        if (p.length === 0) return;
+        const m = l + 1, w = f.label || `Track ${l + 1}`, b = w.length > 12 ? w.substring(0, 10) + ".." : w, P = f.instrument ? ` [${f.instrument}]` : "";
+        r += `V:${m} name="${w}${P}" snm="${b}"
 `;
-        const k = f.filter((D) => D.pitch !== void 0).sort((D, V) => (D.time || 0) - (V.time || 0)), { abcNotesStr: j } = this.convertNotesToAbc(k, a, l, u, { hideRests: _, showArticulations: S, padMeasures: h });
-        j.trim() && (r += j + `
+        const k = p.filter((x) => x.pitch !== void 0).sort((x, z) => (x.time || 0) - (z.time || 0)), { abcNotesStr: C } = this.convertNotesToAbc(k, a, c, u, { hideRests: _, showArticulations: $, padMeasures: h });
+        C.trim() && (r += C + `
 `);
       });
-    else if (p === "drums") {
+    else if (d === "drums") {
       r += `V:1 clef=perc name="Drum Set" snm="Drums"
 `;
-      const d = t.percussionMap || {
+      const f = t.percussionMap || {
         kick: "C,,",
         snare: "D,",
         hat: "F",
         "hi-hat": "F",
         hihat: "F"
-      }, c = (g) => {
-        const $ = (g || "").toLowerCase();
-        for (const k of Object.keys(d))
-          if ($.includes(k)) return d[k];
+      }, l = (b) => {
+        const P = (b || "").toLowerCase();
+        for (const k of Object.keys(f))
+          if (P.includes(k)) return f[k];
         return "E";
-      }, f = [];
-      E.forEach((g) => {
-        const $ = g.notes || g, k = g.label || "", j = c(k);
-        ($ || []).forEach((D) => {
-          D.pitch !== void 0 && f.push({
-            time: typeof D.time == "number" ? D.time : 0,
-            duration: typeof D.duration == "number" ? D.duration : 1,
+      }, p = [];
+      S.forEach((b) => {
+        const P = b.notes || b, k = b.label || "", C = l(k);
+        (P || []).forEach((x) => {
+          x.pitch !== void 0 && p.push({
+            time: typeof x.time == "number" ? x.time : 0,
+            duration: typeof x.duration == "number" ? x.duration : 1,
             // Use mapped ABC pitch string directly in converter
-            pitch: j,
-            articulation: D.articulation
+            pitch: C,
+            articulation: x.articulation
           });
         });
       });
-      const m = f.sort((g, $) => (g.time || 0) - ($.time || 0)), { abcNotesStr: v } = this.convertNotesToAbc(m, a, l, u, { hideRests: _, showArticulations: S, padMeasures: h });
-      v.trim() && (r += v + `
+      const m = p.sort((b, P) => (b.time || 0) - (P.time || 0)), { abcNotesStr: w } = this.convertNotesToAbc(m, a, c, u, { hideRests: _, showArticulations: $, padMeasures: h });
+      w.trim() && (r += w + `
 `);
-    } else if (p === "single") {
-      const d = E[w];
-      if (d) {
-        const f = (d.notes || d).filter((v) => v.pitch !== void 0).sort((v, g) => (v.time || 0) - (g.time || 0)), { abcNotesStr: m } = this.convertNotesToAbc(f, a, l, u, { hideRests: _, showArticulations: S, padMeasures: h });
+    } else if (d === "single") {
+      const f = S[v];
+      if (f) {
+        const p = (f.notes || f).filter((w) => w.pitch !== void 0).sort((w, b) => (w.time || 0) - (b.time || 0)), { abcNotesStr: m } = this.convertNotesToAbc(p, a, c, u, { hideRests: _, showArticulations: $, padMeasures: h });
         m.trim() && (r += m + `
 `);
       }
     } else {
-      const d = [];
-      E.forEach((m) => {
-        (m.notes || m).forEach((g) => {
-          g.pitch !== void 0 && d.push(g);
+      const f = [];
+      S.forEach((m) => {
+        (m.notes || m).forEach((b) => {
+          b.pitch !== void 0 && f.push(b);
         });
       });
-      const c = d.sort((m, v) => (m.time || 0) - (v.time || 0)), { abcNotesStr: f } = this.convertNotesToAbc(c, a, l, u, { hideRests: _, showArticulations: S, padMeasures: h });
-      f.trim() && (r += f + `
+      const l = f.sort((m, w) => (m.time || 0) - (w.time || 0)), { abcNotesStr: p } = this.convertNotesToAbc(l, a, c, u, { hideRests: _, showArticulations: $, padMeasures: h });
+      p.trim() && (r += p + `
 `);
     }
     return r;
@@ -8130,45 +9206,45 @@ class ss {
    * Convert notes to ABC notation string
    */
   static convertNotesToAbc(e, t, r, n, i = {}) {
-    let s = "", a = 0, l = 0, u = 0, p = 0;
-    const w = options?.quantizeBeats || 0.25, _ = 1e-6, S = (m) => tr(m, w, "nearest"), E = (m) => zn(m, w), b = (m) => {
-      s += m + " ";
+    let o = "", a = 0, c = 0, u = 0, d = 0;
+    const v = options?.quantizeBeats || 0.25, _ = 1e-6, $ = (m) => dr(m, v, "nearest"), S = (m) => ei(m, v), g = (m) => {
+      o += m + " ";
     }, h = () => {
       for (; a >= t - 1e-9; )
-        b("|"), a -= t, l++, u++, (n.includes(l) || u >= r) && (s += `
+        g("|"), a -= t, c++, u++, (n.includes(c) || u >= r) && (o += `
 `, u = 0);
-    }, d = (m, { forceVisible: v = !1 } = {}) => {
-      let g = m;
-      for (; g > 0; ) {
-        const $ = t - a, k = S(Math.min(g, $));
-        let j = i.hideRests && !v ? "x" : "z";
-        j += E(k), b(j), a = S(a + k), h(), g = S(g - k);
+    }, f = (m, { forceVisible: w = !1 } = {}) => {
+      let b = m;
+      for (; b > 0; ) {
+        const P = t - a, k = $(Math.min(b, P));
+        let C = i.hideRests && !w ? "x" : "z";
+        C += S(k), g(C), a = $(a + k), h(), b = $(b - k);
       }
     };
     for (const m of e) {
-      const v = typeof m.time == "number" ? S(m.time) : 0, g = typeof m.duration == "number" ? S(m.duration) : 1, $ = S(v - p);
-      $ > _ && d($);
+      const w = typeof m.time == "number" ? $(m.time) : 0, b = typeof m.duration == "number" ? $(m.duration) : 1, P = $(w - d);
+      P > _ && f(P);
       let k = "z";
       if (typeof m.pitch == "number") {
-        const D = m.pitch, V = ["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"], B = Math.floor(D / 12) - 1, L = D % 12;
-        k = V[L].replace("#", "^"), B >= 4 ? (k = k.toLowerCase(), B > 4 && (k += "'".repeat(B - 4))) : B < 4 && (k = k.toUpperCase(), B < 3 && (k += ",".repeat(3 - B)));
+        const x = m.pitch, z = ["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"], B = Math.floor(x / 12) - 1, L = x % 12;
+        k = z[L].replace("#", "^"), B >= 4 ? (k = k.toLowerCase(), B > 4 && (k += "'".repeat(B - 4))) : B < 4 && (k = k.toUpperCase(), B < 3 && (k += ",".repeat(3 - B)));
       } else typeof m.pitch == "string" ? k = m.pitch : m.pitch === null && (k = i.hideRests ? "x" : "z");
-      let j = k;
-      j += E(g), i.showArticulations && (m.articulation === "staccato" && (j += "."), m.articulation === "accent" && (j += ">"), m.articulation === "tenuto" && (j += "-"), m.articulation === "marcato" && (j += "^")), b(j), a = S(a + g), h(), p = S(v + g);
+      let C = k;
+      C += S(b), i.showArticulations && (m.articulation === "staccato" && (C += "."), m.articulation === "accent" && (C += ">"), m.articulation === "tenuto" && (C += "-"), m.articulation === "marcato" && (C += "^")), g(C), a = $(a + b), h(), d = $(w + b);
     }
-    const c = i.padMeasures || 0;
-    for (; l < c; ) {
-      const m = S(t - a);
-      m > _ && d(m, { forceVisible: !0 }), b("|"), a = 0, l++;
+    const l = i.padMeasures || 0;
+    for (; c < l; ) {
+      const m = $(t - a);
+      m > _ && f(m, { forceVisible: !0 }), g("|"), a = 0, c++;
     }
-    const f = s.trim();
-    return f && !f.endsWith("|") && (s += "|"), { abcNotesStr: s };
+    const p = o.trim();
+    return p && !p.endsWith("|") && (o += "|"), { abcNotesStr: o };
   }
 }
-function Fn(o, e = {}) {
-  return ss.convertToAbc(o, e);
+function ti(s, e = {}) {
+  return Io.convertToAbc(s, e);
 }
-class rr {
+class hr {
   static midiToNoteName(e) {
     const t = ["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"], r = Math.floor(e / 12) - 1, n = e % 12;
     return t[n] + r;
@@ -8184,7 +9260,7 @@ class rr {
         label: n.label,
         notes: n.notes.map((i) => ({
           pitch: i.pitch,
-          noteName: typeof i.pitch == "number" ? rr.midiToNoteName(i.pitch) : i.pitch,
+          noteName: typeof i.pitch == "number" ? hr.midiToNoteName(i.pitch) : i.pitch,
           time: i.time,
           duration: i.duration,
           velocity: i.velocity || 0.8,
@@ -8194,19 +9270,19 @@ class rr {
     };
   }
 }
-function as(o) {
-  return rr.convert(o);
+function jo(s) {
+  return hr.convert(s);
 }
-function cs(o, e = {}) {
+function qo(s, e = {}) {
   return {
     sampleRate: e.sampleRate || 44100,
     duration: e.duration || 10,
     channels: e.channels || 1,
-    bpm: o.bpm || 120,
-    notes: o.tracks?.flatMap((t) => t.notes) || []
+    bpm: s.bpm || 120,
+    notes: s.tracks?.flatMap((t) => t.notes) || []
   };
 }
-class ls {
+class Oo {
   static convert(e) {
     let r = `// SuperCollider script generated from JMON
 // Title: ${e.metadata?.name || "Untitled"}
@@ -8217,30 +9293,30 @@ class ls {
     }), r;
   }
 }
-function us(o) {
-  return ls.convert(o);
+function xo(s) {
+  return Oo.convert(s);
 }
-function ds(o) {
-  return new Xt().validateAndNormalize(o);
+function Do(s) {
+  return new sr().validateAndNormalize(s);
 }
-function fs(o, e = {}) {
-  if (!o || typeof o != "object")
-    throw console.error("[RENDER] Invalid JMON object:", o), new Error("render() requires a valid JMON object");
-  return !o.sequences && !o.tracks && !o.format && console.warn("[RENDER] Object does not appear to be JMON format, attempting normalization"), er(o, e);
+function zo(s, e = {}) {
+  if (!s || typeof s != "object")
+    throw console.error("[RENDER] Invalid JMON object:", s), new Error("render() requires a valid JMON object");
+  return !s.sequences && !s.tracks && !s.format && console.warn("[RENDER] Object does not appear to be JMON format, attempting normalization"), ur(s, e);
 }
-function hs(o, e = {}) {
+function Vo(s, e = {}) {
   const t = { autoplay: !0, ...e };
-  return er(o, t);
+  return ur(s, t);
 }
-function ps(o, e = {}) {
+function Fo(s, e = {}) {
   const {
     scale: t = 0.9,
     staffwidth: r,
     showAbc: n = !0,
     responsive: i = "resize",
-    abcOptions: s = {}
-  } = e, a = Fn(o, s), l = document.createElement("div");
-  l.style.cssText = `
+    abcOptions: o = {}
+  } = e, a = ti(s, o), c = document.createElement("div");
+  c.style.cssText = `
 		margin: 15px 0;
 		font-family: sans-serif;
 	`;
@@ -8249,11 +9325,11 @@ function ps(o, e = {}) {
 		width: 100%;
 		overflow-x: auto;
 		margin: 10px 0;
-	`, l.appendChild(u), n) {
-    const p = document.createElement("details");
-    p.style.marginTop = "15px";
-    const w = document.createElement("summary");
-    w.textContent = "ABC Notation (click to expand)", w.style.cursor = "pointer", p.appendChild(w);
+	`, c.appendChild(u), n) {
+    const d = document.createElement("details");
+    d.style.marginTop = "15px";
+    const v = document.createElement("summary");
+    v.textContent = "ABC Notation (click to expand)", v.style.cursor = "pointer", d.appendChild(v);
     const _ = document.createElement("pre");
     _.textContent = a, _.style.cssText = `
 			background: #f5f5f5;
@@ -8261,12 +9337,12 @@ function ps(o, e = {}) {
 			border-radius: 4px;
 			overflow-x: auto;
 			font-size: 12px;
-		`, p.appendChild(_), l.appendChild(p);
+		`, d.appendChild(_), c.appendChild(d);
   }
   if (typeof ABCJS < "u")
     try {
-      const p = r || null, w = { responsive: i, scale: t };
-      p && (w.staffwidth = p), ABCJS.renderAbc(u, a, w), setTimeout(() => {
+      const d = r || null, v = { responsive: i, scale: t };
+      d && (v.staffwidth = d), ABCJS.renderAbc(u, a, v), setTimeout(() => {
         if (u.children.length === 0 || u.innerHTML.trim() === "")
           try {
             ABCJS.renderAbc(u, a), u.children.length === 0 && (u.innerHTML = '<p style="color: red;">ABCJS rendering failed - no content generated</p><pre>' + a + "</pre>");
@@ -8274,55 +9350,57 @@ function ps(o, e = {}) {
             u.innerHTML = "<p>Error with alternative rendering</p><pre>" + a + "</pre>";
           }
       }, 200);
-    } catch (p) {
-      console.error("Error rendering with ABCJS:", p), u.innerHTML = "<p>Error rendering notation</p><pre>" + a + "</pre>";
+    } catch (d) {
+      console.error("Error rendering with ABCJS:", d), u.innerHTML = "<p>Error rendering notation</p><pre>" + a + "</pre>";
     }
   else
     u.innerHTML = "<p>ABCJS not available - showing text notation only</p><pre>" + a + "</pre>";
-  return l;
+  return c;
 }
-const ms = {
+const Lo = {
   // Core functionality
-  render: fs,
-  play: hs,
-  score: ps,
-  validate: ds,
+  render: zo,
+  play: Vo,
+  score: Fo,
+  validate: Do,
   // Core formats and players
-  createPlayer: er,
+  createPlayer: ur,
   // Converters
   converters: {
-    abc: Fn,
-    midi: as,
-    tonejs: Dn,
-    wav: cs,
-    supercollider: us
+    abc: ti,
+    midi: jo,
+    tonejs: Qn,
+    wav: qo,
+    supercollider: xo
   },
   // Theory and algorithms
-  theory: qe.theory,
-  generative: qe.generative,
-  analysis: qe.analysis,
-  constants: qe.constants,
+  theory: Fe.theory,
+  generative: Fe.generative,
+  analysis: Fe.analysis,
+  constants: Fe.constants,
   // Utils
   utils: {
-    ...qe.utils,
-    JmonValidator: Xt,
+    ...Fe.utils,
+    JmonValidator: sr,
     // Expose utility helpers
-    quantize: (o, e, t) => Promise.resolve().then(() => Et).then((r) => r.quantize(o, e, t)),
-    quantizeEvents: async (o, e) => (await Promise.resolve().then(() => Et)).quantizeEvents(o, e),
-    quantizeTrack: async (o, e) => (await Promise.resolve().then(() => Et)).quantizeTrack(o, e),
-    quantizeComposition: async (o, e) => (await Promise.resolve().then(() => Et)).quantizeComposition(o, e)
+    quantize: (s, e, t) => Promise.resolve().then(() => Rt).then((r) => r.quantize(s, e, t)),
+    quantizeEvents: async (s, e) => (await Promise.resolve().then(() => Rt)).quantizeEvents(s, e),
+    quantizeTrack: async (s, e) => (await Promise.resolve().then(() => Rt)).quantizeTrack(s, e),
+    quantizeComposition: async (s, e) => (await Promise.resolve().then(() => Rt)).quantizeComposition(s, e),
+    // JMON utilities - official format helpers
+    jmon: so
   },
   VERSION: "1.0.0"
-}, ys = {
+}, Uo = {
   loops: {
-    async plotLoops(o, e = 4, t = 1 / 4, r = null, n = {}) {
-      const { LoopVisualizer: i } = await import("./LoopVisualizer-DS22P85c.mjs");
-      return i.plotLoops(o, e, t, r, n);
+    async plotLoops(s, e = 4, t = 1 / 4, r = null, n = {}) {
+      const { LoopVisualizer: i } = await import("./LoopVisualizer-DS22P85c.js");
+      return i.plotLoops(s, e, t, r, n);
     }
   }
 };
-ms.visualization = ys;
+Lo.visualization = Uo;
 export {
-  ms as default,
-  ms as jm
+  Lo as default,
+  Lo as jm
 };
