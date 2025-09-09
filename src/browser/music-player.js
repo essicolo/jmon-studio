@@ -94,8 +94,13 @@ export function createPlayer(composition, options = {}) {
         flex-direction: column;
     `;
     
-    // Available synth types (Sampler included for explicit selection)
-    const synthTypes = ['Sampler', 'PolySynth', 'Synth', 'AMSynth', 'DuoSynth', 'FMSynth', 'MembraneSynth', 'MetalSynth', 'MonoSynth', 'PluckSynth'];
+    // Available synth types (exclude Sampler unless audioGraph is present)
+    const synthTypes = ['PolySynth', 'Synth', 'AMSynth', 'DuoSynth', 'FMSynth', 'MembraneSynth', 'MetalSynth', 'MonoSynth', 'PluckSynth'];
+    
+    // Add Sampler if audioGraph contains sampler definitions
+    if (composition.audioGraph && composition.audioGraph.some(node => node.type === 'Sampler')) {
+        synthTypes.unshift('Sampler');
+    }
     
     // Get tracks from composition for UI
     const originalTracks = composition.tracks || composition.sequences || [];
@@ -647,8 +652,8 @@ export function createPlayer(composition, options = {}) {
                 }
             }, normalizedEvents);
             
-            // Start the part immediately
-            part.start(0);
+            // Don't start the part yet - wait for user to click play
+            // part.start(0) will be called in the play button handler
             
             parts.push(part);
         });
@@ -710,7 +715,11 @@ export function createPlayer(composition, options = {}) {
         }
 
         if (isPlaying) {
+            // Stop transport and all parts
             Tone.Transport.stop();
+            parts.forEach(part => {
+                part.stop();
+            });
             isPlaying = false;
             playButton.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-play"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8"/></svg>`;
         } else {
@@ -752,7 +761,12 @@ export function createPlayer(composition, options = {}) {
                 }
             }
 
-            // Start immediately at position 0
+            // Start all parts at position 0 (only when user clicks play)
+            parts.forEach(part => {
+                part.start(0);
+            });
+            
+            // Start transport at position 0
             Tone.Transport.start();
             isPlaying = true;
             playButton.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-pause"><circle cx="12" cy="12" r="10"/><line x1="10" x2="10" y1="15" y2="9"/><line x1="14" x2="14" y1="15" y2="9"/></svg>`;

@@ -42,8 +42,8 @@ function render(jmonObj, options = {}) {
  * @returns {HTMLElement} Player element (auto-plays)
  */
 function play(jmonObj, options = {}) {
-	// Enable autoplay by default for play function
-	const playOptions = { autoplay: true, ...options };
+	// Disable autoplay by default for play function
+	const playOptions = { autoplay: false, ...options };
 	return createPlayer(jmonObj, playOptions);
 }
 
