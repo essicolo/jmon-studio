@@ -146,15 +146,24 @@ export function createPlayer(composition, options = {}) {
             outline: none;
         `;
         
-        synthTypes.forEach(synthType => {
+        synthTypes.forEach((synthType, synthIndex) => {
             const option = document.createElement('option');
             option.value = synthType;
             option.textContent = synthType;
-            // If the original track references a sampler via synthRef, preselect Sampler
+            
+            // Default selection priority:
+            // 1. If track has synthRef and Sampler is available, select Sampler
+            // 2. If track has glissando, select first mono synth (typically 'Synth')
+            // 3. Otherwise, select PolySynth (first option)
             if ((composition.tracks?.[index]?.synthRef) && synthType === 'Sampler') {
                 option.selected = true;
+            } else if (trackAnalysis?.hasGlissando && synthType === 'Synth') {
+                option.selected = true;
+            } else if (!trackAnalysis?.hasGlissando && !composition.tracks?.[index]?.synthRef && synthType === 'PolySynth') {
+                option.selected = true;
             }
-            // Désactive les synthés polyphoniques si glissando détecté
+            
+            // Disable polyphonic synths for glissando
             if (trackAnalysis?.hasGlissando && (synthType === 'PolySynth' || synthType === 'DuoSynth')) {
                 option.disabled = true;
                 option.textContent += ' (mono only for glissando)';
@@ -455,18 +464,31 @@ export function createPlayer(composition, options = {}) {
                     // Use Observable-compatible loading (no CSP violations)
                     if (typeof require !== 'undefined') {
                         // Try Observable's require first
-                        window.Tone = await require('https://unpkg.com/tone@14.8.49/build/Tone.js');
+                        console.log('[PLAYER] Loading Tone.js via require()...');
+                        const ToneFromRequire = await require('https://unpkg.com/tone@14.8.49/build/Tone.js');
+                        // Handle different export formats
+                        window.Tone = ToneFromRequire.default || ToneFromRequire.Tone || ToneFromRequire;
                     } else {
                         // Fallback to ES6 import
+                        console.log('[PLAYER] Loading Tone.js via import()...');
                         const ToneModule = await import('https://unpkg.com/tone@14.8.49/build/Tone.js');
-                        window.Tone = ToneModule.default || ToneModule;
+                        window.Tone = ToneModule.default || ToneModule.Tone || ToneModule;
                     }
+                    
+                    // Validate that we got a proper Tone object
+                    if (!window.Tone || typeof window.Tone !== 'object') {
+                        throw new Error('Loaded Tone.js but got invalid object');
+                    }
+                    
+                    console.log('[PLAYER] Tone.js loaded successfully, version:', window.Tone.version || 'unknown');
                 } catch (error) {
                     console.warn('Could not auto-load Tone.js:', error.message);
                     console.log('To use the player, load Tone.js manually first:');
                     console.log('Tone = await require("https://unpkg.com/tone@14.8.49/build/Tone.js")');
                     return false;
                 }
+            } else {
+                console.log('[PLAYER] Using existing Tone.js, version:', window.Tone.version || 'unknown');
             }
             
             if (window.Tone) {
@@ -500,7 +522,21 @@ export function createPlayer(composition, options = {}) {
     };
 
     const setupAudio = () => {
-        if (!Tone) return;
+        if (!Tone) {
+            console.warn('[PLAYER] Tone.js not available, cannot setup audio');
+            return;
+        }
+        
+        // Validate that Tone.js has the required constructors
+        if (!Tone.PolySynth || !Tone.Synth || !Tone.Part || !Tone.Transport) {
+            console.error('[PLAYER] Tone.js is missing required constructors:', {
+                PolySynth: !!Tone.PolySynth,
+                Synth: !!Tone.Synth,
+                Part: !!Tone.Part,
+                Transport: !!Tone.Transport
+            });
+            return;
+        }
 
         // Build audioGraph instruments (once)
         if (!graphInstruments) {
@@ -554,13 +590,27 @@ export function createPlayer(composition, options = {}) {
                 try {
                     // Use synth type from converter (handles glissando compatibility)
                     const synthType = (synthConfig.reason === 'glissando_compatibility') ? synthConfig.type : selectedSynth;
+                    
+                    // Validate that the synth constructor exists
+                    if (!Tone[synthType] || typeof Tone[synthType] !== 'function') {
+                        throw new Error(`Tone.${synthType} is not a constructor`);
+                    }
+                    
                     synth = new Tone[synthType]().toDestination();
                     if (synthConfig.reason === 'glissando_compatibility' && voiceIndex === 0) {
                         console.warn(`[MULTIVOICE] Using ${synthType} instead of ${synthConfig.original} for glissando in ${trackInfo.label}`);
                     }
                 } catch (error) {
                     console.warn(`Failed to create ${selectedSynth}, using PolySynth:`, error);
-                    synth = new Tone.PolySynth().toDestination();
+                    try {
+                        if (!Tone.PolySynth || typeof Tone.PolySynth !== 'function') {
+                            throw new Error('Tone.PolySynth is not available');
+                        }
+                        synth = new Tone.PolySynth().toDestination();
+                    } catch (fallbackError) {
+                        console.error('Fatal: Cannot create any synth, Tone.js may not be properly loaded:', fallbackError);
+                        return; // Skip this track if we can't create any synth
+                    }
                 }
             }
             
