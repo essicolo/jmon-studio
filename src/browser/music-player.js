@@ -499,6 +499,16 @@ export function createPlayer(composition, options = {}) {
             if (toneInstance) {
                 Tone = toneInstance;
                 
+                // Debug: Log all available Tone constructors
+                console.log('[PLAYER] Available Tone constructors:', {
+                    PolySynth: typeof Tone.PolySynth,
+                    Synth: typeof Tone.Synth,
+                    Part: typeof Tone.Part,
+                    Transport: typeof Tone.Transport,
+                    start: typeof Tone.start,
+                    context: !!Tone.context
+                });
+                
                 // Don't start audio context here - must wait for user gesture
                 // Just validate that Tone.js is properly loaded
                 console.log('[PLAYER] Tone.js initialized, context state:', Tone.context ? Tone.context.state : 'no context');
@@ -516,13 +526,17 @@ export function createPlayer(composition, options = {}) {
         }
         
         // Validate that Tone.js has the required constructors
-        if (!Tone.PolySynth || !Tone.Synth || !Tone.Part || !Tone.Transport) {
-            console.error('[PLAYER] Tone.js is missing required constructors:', {
-                PolySynth: !!Tone.PolySynth,
-                Synth: !!Tone.Synth,
-                Part: !!Tone.Part,
-                Transport: !!Tone.Transport
-            });
+        const missingConstructors = [];
+        if (!Tone.PolySynth) missingConstructors.push('PolySynth');
+        if (!Tone.Synth) missingConstructors.push('Synth');
+        if (!Tone.Part) missingConstructors.push('Part');
+        if (!Tone.Transport) missingConstructors.push('Transport');
+        
+        if (missingConstructors.length > 0) {
+            console.error('[PLAYER] Tone.js is missing required constructors:', missingConstructors);
+            console.error('[PLAYER] Available Tone properties:', Object.keys(Tone).filter(k => typeof Tone[k] === 'function').slice(0, 20));
+            console.error('[PLAYER] Tone object:', Tone);
+            console.error('[PLAYER] This usually means Tone.js did not load correctly. Try refreshing the page or loading Tone.js manually.');
             return;
         }
 
@@ -800,8 +814,22 @@ export function createPlayer(composition, options = {}) {
             }
 
             // Start all parts at position 0 (only when user clicks play)
-            parts.forEach(part => {
-                part.start(0);
+            if (parts.length === 0) {
+                console.error('[PLAYER] No parts available to start. This usually means setupAudio() failed.');
+                console.error('[PLAYER] Try refreshing the page or check if Tone.js is properly loaded.');
+                return;
+            }
+            
+            parts.forEach((part, index) => {
+                if (!part || typeof part.start !== 'function') {
+                    console.error(`[PLAYER] Part ${index} is invalid:`, part);
+                    return;
+                }
+                try {
+                    part.start(0);
+                } catch (error) {
+                    console.error(`[PLAYER] Failed to start part ${index}:`, error);
+                }
             });
             
             // Start transport at position 0
