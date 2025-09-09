@@ -2,6 +2,7 @@ import { JmonValidator } from './utils/jmon-validator.js';
 import algorithms from './algorithms/index.js';
 import { createPlayer } from './browser/music-player.js';
 import { abc, midi, tonejs, wav, supercollider } from './converters/index.js';
+import * as jmonUtils from './utils/jmon-utils.js';
 /**
  * Validation utilitaire simple
  * @param {Object} obj - Objet JMON à valider
@@ -171,7 +172,9 @@ const jm = {
         quantize: (val, grid, mode) => import('./utils/quantize.js').then(m => m.quantize(val, grid, mode)),
         quantizeEvents: async (events, opts) => (await import('./utils/quantize.js')).quantizeEvents(events, opts),
         quantizeTrack: async (track, opts) => (await import('./utils/quantize.js')).quantizeTrack(track, opts),
-        quantizeComposition: async (comp, opts) => (await import('./utils/quantize.js')).quantizeComposition(comp, opts)
+        quantizeComposition: async (comp, opts) => (await import('./utils/quantize.js')).quantizeComposition(comp, opts),
+        // JMON utilities - official format helpers
+        jmon: jmonUtils
     },
 
     VERSION: '1.0.0'

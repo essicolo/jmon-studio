@@ -1,12 +1,16 @@
 import { setOffsetsAccordingToDurations } from '../../utils.js';
+import { beatsToTime } from '../../../utils/jmon-utils.js';
 
 /**
  * Merges durations and pitches until both ends coincide, then sets offsets according to successive durations
  * @param {Array} pitches - Array of pitches or tuples
  * @param {Array} durations - Array of durations
- * @returns {Array} Array of notes as [pitch, duration, offset] tuples
+ * @param {Object} options - Options for output format
+ * @param {boolean} options.legacy - If true, return legacy tuple format (default: false)
+ * @param {boolean} options.useStringTime - If true, use bars:beats:ticks time format (default: false for MIDI consistency)
+ * @returns {Array} Array of JMON notes with numeric time (MIDI-consistent) or legacy tuples
  */
-export function isorhythm(pitches, durations) {
+export function isorhythm(pitches, durations, options = {}) {
     // Extract pitches if they are tuples
     const cleanPitches = pitches.map(p => Array.isArray(p) || (typeof p === 'object' && p.length) ? p[0] : p);
     
@@ -26,7 +30,19 @@ export function isorhythm(pitches, durations) {
     const notes = pRepeated.map((pitch, i) => [pitch, dRepeated[i], 1]);
     
     // Set proper offsets based on durations
-    return setOffsetsAccordingToDurations(notes);
+    const tuplesWithOffsets = setOffsetsAccordingToDurations(notes);
+    
+    // Return legacy format if requested
+    if (options.legacy) {
+        return tuplesWithOffsets;
+    }
+    
+    // Convert to JMON format - use numeric time by default for MIDI consistency
+    return tuplesWithOffsets.map(([pitch, duration, offset]) => ({
+        pitch,
+        duration,
+        time: options.useStringTime ? beatsToTime(offset) : offset
+    }));
 }
 
 /**

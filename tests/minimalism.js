@@ -12,78 +12,40 @@
  * 5. Complete composition combining all techniques
  */
 
-// ==========================================
-// HELPER FUNCTIONS
-// ==========================================
+// Import utilities from jmon-studio - using the existing API
+const { midiToCde, cdeToMidi } = require('../src/algorithms/utils.js');
+const { Tonejs } = require('../src/converters/tonejs.js');
+const { Scale } = require('../src/algorithms/theory/harmony/Scale.js');
+
+// Use the existing conversion functions from jmon-studio
+const midiToNote = midiToCde;
+const noteToMidi = cdeToMidi;
 
 /**
- * Convert MIDI note number to note name (e.g., 60 -> 'C4')
- */
-function midiToNote(midi) {
-    const noteNames = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B'];
-    const octave = Math.floor(midi / 12) - 1;
-    const noteName = noteNames[midi % 12];
-    return noteName + octave;
-}
-
-/**
- * Convert note name to MIDI number (e.g., 'C4' -> 60)
- */
-function noteToMidi(note) {
-    const noteNames = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B'];
-    const parts = note.match(/([A-G]#?)([0-9])/);
-    if (!parts) return 60; // Default to middle C
-    const noteName = parts[1];
-    const octave = parseInt(parts[2]);
-    const noteIndex = noteNames.indexOf(noteName);
-    return (octave + 1) * 12 + noteIndex;
-}
-
-/**
- * Convert duration string to ticks (e.g., '4n' -> 480)
+ * Convert duration to ticks and bars:beats:ticks using Tone.js converter
  */
 function durationToTicks(duration) {
-    const durations = {
-        '1n': 1920,     // whole note
-        '2n': 960,      // half note
-        '2n.': 1440,    // dotted half
-        '4n': 480,      // quarter note
-        '4n.': 720,     // dotted quarter
-        '8n': 240,      // eighth note
-        '8n.': 360,     // dotted eighth
-        '16n': 120,     // sixteenth note
-        '32n': 60       // thirty-second note
-    };
-    return durations[duration] || 480;
+    // Standard PPQ (pulses per quarter) is 480
+    const beats = Tonejs.parseDurationToBeats(duration);
+    return beats * 480; // Convert beats to ticks
 }
 
-/**
- * Convert ticks to bars:beats:sixteenths format
- */
 function ticksToBarsBeatsSixteenths(ticks) {
     const ticksPerQuarter = 480;
-    const ticksPerSixteenth = ticksPerQuarter / 4;
-    const ticksPerBar = ticksPerQuarter * 4; // Assuming 4/4 time
+    const ticksPerBar = ticksPerQuarter * 4; // 4/4 time
     
     const bars = Math.floor(ticks / ticksPerBar);
     const remainingTicks = ticks % ticksPerBar;
     const beats = Math.floor(remainingTicks / ticksPerQuarter);
     const remainingTicksAfterBeats = remainingTicks % ticksPerQuarter;
-    const sixteenths = Math.floor(remainingTicksAfterBeats / ticksPerSixteenth);
     
-    return `${bars}:${beats}:${sixteenths * ticksPerSixteenth}`;
+    return `${bars}:${beats}:${remainingTicksAfterBeats}`;
 }
 
-/**
- * Parse bars:beats:sixteenths to ticks
- */
 function barsBeatsSixteenthsToTicks(timeStr) {
-    const parts = timeStr.split(':');
-    const bars = parseInt(parts[0]) || 0;
-    const beats = parseInt(parts[1]) || 0;
-    const ticks = parseInt(parts[2]) || 0;
-    
-    return bars * 1920 + beats * 480 + ticks;
+    // Use Tone.js parser to convert BBT to beats, then to ticks
+    const beats = Tonejs.parseBBTToBeats(timeStr);
+    return beats * 480;
 }
 
 // ==========================================
@@ -94,8 +56,10 @@ function demonstrateIsorhythms() {
     console.log('\n=== ISORHYTHM EXAMPLES ===\n');
     
     // Example 1: Simple solfège with uniform durations
-    // C major scale from C4 to C5
-    const cMajorScale = ['C4', 'D4', 'E4', 'F4', 'G4', 'A4', 'B4', 'C5'];
+    // Use the Scale class from jmon-studio
+    const scale = new Scale('C', 'major');
+    const cMajorMidi = scale.generate().slice(0, 8); // Get first octave
+    const cMajorScale = cMajorMidi.map(midi => midiToNote(midi));
     const uniformDurations = Array(8).fill('8n'); // All eighth notes
     
     const solfege = {
@@ -115,9 +79,7 @@ function demonstrateIsorhythms() {
     console.log(JSON.stringify(solfege.tracks[0].notes.slice(0, 4), null, 2));
     
     // Example 2: Isorhythm with non-matching lengths
-    // 8 pitches, 3 durations - creates interesting patterns
     const isorhythmDurations = ['4n', '8n', '8n']; // Pattern repeats
-    
     const isorhythmNotes = [];
     let currentTime = 0;
     
@@ -128,10 +90,9 @@ function demonstrateIsorhythms() {
         isorhythmNotes.push({
             pitch: pitch,
             duration: duration,
-                time: ticksToBarsBeatsSixteenths(currentTime)
+            time: ticksToBarsBeatsSixteenths(currentTime)
         });
         
-        // Update current time based on duration
         currentTime += durationToTicks(duration);
     }
     
@@ -160,7 +121,6 @@ function demonstrateProcesses() {
     const baseMelody = ['C4', 'D4', 'E4', 'F4', 'G4', 'A4', 'B4', 'C5'];
     
     // Additive Forward Process
-    // C4, C4-D4, C4-D4-E4, etc.
     function additiveForward(melody) {
         const result = [];
         let timePosition = 0;
@@ -178,46 +138,7 @@ function demonstrateProcesses() {
         return result;
     }
     
-    // Additive Backward Process
-    // C5, B4-C5, A4-B4-C5, etc.
-    function additiveBackward(melody) {
-        const result = [];
-        let timePosition = 0;
-        
-        for (let i = 1; i <= melody.length; i++) {
-            for (let j = melody.length - i; j < melody.length; j++) {
-                result.push({
-                    pitch: melody[j],
-                    duration: '8n',
-                    time: ticksToBarsBeatsSixteenths(timePosition)
-                });
-                timePosition += 240;
-            }
-        }
-        return result;
-    }
-    
-    // Subtractive Forward Process
-    // C4-D4-E4-F4-G4-A4-B4-C5, D4-E4-F4-G4-A4-B4-C5, E4-F4-G4-A4-B4-C5, etc.
-    function subtractiveForward(melody) {
-        const result = [];
-        let timePosition = 0;
-        
-        for (let i = 0; i < melody.length; i++) {
-            for (let j = i; j < melody.length; j++) {
-                result.push({
-                    pitch: melody[j],
-                    duration: '8n',
-                    time: ticksToBarsBeatsSixteenths(timePosition)
-                });
-                timePosition += 240;
-            }
-        }
-        return result;
-    }
-    
     // Subtractive Backward Process
-    // C4-D4-E4-F4-G4-A4-B4-C5, C4-D4-E4-F4-G4-A4-B4, C4-D4-E4-F4-G4-A4, etc.
     function subtractiveBackward(melody) {
         const result = [];
         let timePosition = 0;
@@ -269,7 +190,6 @@ function demonstrateProcesses() {
 function demonstrateShuffling() {
     console.log('\n=== SHUFFLING EXAMPLE ===\n');
     
-    // Create a melody with specific rhythm
     const originalMelody = [
         { pitch: 'E4', duration: '4n.' },
         { pitch: 'G4', duration: '16n' },
@@ -292,11 +212,9 @@ function demonstrateShuffling() {
             };
         })(seed);
         
-        // Extract pitches and shuffle them
         const pitches = melody.map(note => note.pitch);
         const shuffledPitches = [...pitches].sort(() => seededRandom() - 0.5);
         
-        // Create new melody with shuffled pitches but same rhythm
         let timePosition = 0;
         const shuffledMelody = melody.map((note, i) => {
             const newNote = {
@@ -350,10 +268,6 @@ function demonstrateTintinnabuli() {
     
     /**
      * Generate T-voice using tintinnabuli technique
-     * @param {Array} mVoice - The melody voice
-     * @param {Array} tChord - The tintinnabuli chord (without octaves)
-     * @param {string} direction - 'up', 'down', 'alternate', or 'nearest'
-     * @param {number} rank - Which note to select (1 = closest, 2 = second closest, etc.)
      */
     function generateTintinnabuli(mVoice, tChord, direction = 'up', rank = 1) {
         const tVoice = [];
@@ -389,17 +303,6 @@ function demonstrateTintinnabuli() {
                     });
                 }
                 candidates.sort((a, b) => noteToMidi(b) - noteToMidi(a));
-            } else if (direction === 'nearest') {
-                // Find nearest notes regardless of direction
-                for (let octave = mOctave - 1; octave <= mOctave + 1; octave++) {
-                    tChord.forEach(tNote => {
-                        candidates.push(tNote + octave);
-                    });
-                }
-                candidates.sort((a, b) => 
-                    Math.abs(noteToMidi(a) - noteToMidi(mPitch)) -
-                    Math.abs(noteToMidi(b) - noteToMidi(mPitch))
-                );
             }
             
             // Select the note at the specified rank
@@ -473,13 +376,12 @@ function createComposition() {
     }
     
     // Part B: Additive process followed by subtractive process in E minor
-    const eMinorBase = ['B4', 'E4', 'G#5', 'F#4', 'C#5', 'B4', 'F#4', 'D#4'];
+    const eMinorBase = ['B4', 'E4', 'G5', 'F#4', 'C#5', 'B4', 'F#4', 'D#4'];
     const partBDurations = ['4n.', '16n', '2n', '4n', '16n', '16n', '8n', '2n'];
     
     // Create additive forward process
     const partBAdditive = [];
-    timePosition = partANotes[partANotes.length - 1].time;
-    timePosition = barsBeatsSixteenthsToTicks(timePosition) + 
+    timePosition = barsBeatsSixteenthsToTicks(partANotes[partANotes.length - 1].time) + 
                    durationToTicks(partANotes[partANotes.length - 1].duration);
     
     for (let i = 1; i <= eMinorBase.length; i++) {
@@ -522,80 +424,33 @@ function createComposition() {
     // Combine all parts into Track 1
     const track1 = [...partANotes, ...partBAdditive, ...partBSubtractive, ...partCNotes];
     
-    // Generate Tintinnabuli T-voice for Track 2
-    const eMajorTriad = ['E', 'G#', 'B'];
-    const eMinorTriad = ['E', 'G', 'B'];
-    
-    // T-voice for Part A (E major, up)
-    const track2PartA = [];
-    partANotes.forEach(note => {
-        const tChordNote = eMajorTriad[Math.floor(Math.random() * 3)] + '4';
-        track2PartA.push({
-            pitch: tChordNote,
+    // Generate simplified T-voice for Track 2
+    const track2 = track1.map((note, i) => {
+        const chordNotes = i < 30 ? ['E4', 'G#4', 'B4'] : 
+                          i < 66 ? ['E3', 'G3', 'B3'] : 
+                                   ['E5', 'G#5', 'B5'];
+        return {
+            pitch: chordNotes[i % 3],
             duration: note.duration,
             time: note.time
-        });
+        };
     });
     
-    // T-voice for Part B (E minor, down with offset)
-    const track2PartB = [];
-    [...partBAdditive, ...partBSubtractive].forEach(note => {
-        const tChordNote = eMinorTriad[Math.floor(Math.random() * 3)] + '3';
-        // Add quarter note offset
-        const offsetTime = barsBeatsSixteenthsToTicks(note.time) + 480;
-        track2PartB.push({
-            pitch: tChordNote,
-            duration: note.duration,
-            time: ticksToBarsBeatsSixteenths(offsetTime)
-        });
-    });
-    
-    // T-voice for Part C (E major, alternate, octave higher)
-    const track2PartC = [];
-    partCNotes.forEach((note, i) => {
-        const tChordNote = eMajorTriad[i % 3] + '5';
-        track2PartC.push({
-            pitch: tChordNote,
-            duration: note.duration,
-            time: note.time
-        });
-    });
-    
-    const track2 = [...track2PartA, ...track2PartB, ...track2PartC];
-    
-    // Generate Track 3: Bass line with chords at measure starts
+    // Generate Track 3: Bass line
     const track3 = [];
     const measureLength = 1920; // 1 whole note in ticks
     const totalMeasures = Math.ceil(timePosition / measureLength);
     
     for (let measure = 0; measure < totalMeasures; measure++) {
         const measureTime = measure * measureLength;
-        const mode = measure < 8 ? 'major' : measure < 20 ? 'minor' : 'major';
-        const root = 'E2';
-        const third = mode === 'major' ? 'G#2' : 'G2';
-        const fifth = 'B2';
+        const root = measure % 4 === 0 ? 'E2' : 'B2';
         
-        // Create a chord
-        track3.push(
-            {
-                pitch: root,
-                duration: '1n',
-                time: ticksToBarsBeatsSixteenths(measureTime),
-                velocity: 0.6
-            },
-            {
-                pitch: third,
-                duration: '1n',
-                time: ticksToBarsBeatsSixteenths(measureTime),
-                velocity: 0.5
-            },
-            {
-                pitch: fifth,
-                duration: '1n',
-                time: ticksToBarsBeatsSixteenths(measureTime),
-                velocity: 0.5
-            }
-        );
+        track3.push({
+            pitch: root,
+            duration: '1n',
+            time: ticksToBarsBeatsSixteenths(measureTime),
+            velocity: 0.6
+        });
     }
     
     // Create the final JMON composition
@@ -619,7 +474,7 @@ function createComposition() {
                 notes: track2
             },
             {
-                name: 'Bass Chords',
+                name: 'Bass',
                 instrument: 'bass',
                 notes: track3
             }
@@ -631,13 +486,6 @@ function createComposition() {
     console.log(`- Track 2 (Tintinnabuli): ${track2.length} notes`);
     console.log(`- Track 3 (Bass): ${track3.length} notes`);
     console.log(`- Total duration: ${totalMeasures} measures`);
-    
-    // Validate the composition (simplified)
-    const validation = { valid: true };
-    console.log('\nComposition validation:', validation.valid ? 'VALID' : 'INVALID');
-    if (!validation.valid) {
-        console.log('Validation errors:', validation.errors);
-    }
     
     return composition;
 }

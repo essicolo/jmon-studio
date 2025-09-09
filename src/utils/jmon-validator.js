@@ -2,7 +2,7 @@
 // Classe de validation et normalisation JMON
 
 import Ajv from 'ajv';
-import jmonSchema from '../../schemas/jmon-schema.json';
+import jmonSchema from '../../schemas/jmon-schema.json' with { type: 'json' };
 import { normalizeSamplerUrlsToNoteNames } from './normalize.js';
 
 export class JmonValidator {

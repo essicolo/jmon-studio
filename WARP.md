@@ -36,11 +36,12 @@ Note: This project uses a custom test runner rather than Jest/Mocha, with tests 
 
 ### Core JMON Format
 This library implements JMON (JSON Music Object Notation), a declarative format for algorithmic music composition. The format supports:
-- Multi-track compositions with precise musical timing using bars:beats:ticks format
+- Multi-track compositions with numeric timing in quarter notes for MIDI compatibility
 - Synthesis and audio graph configuration with Tone.js integration
 - Musical ornaments, articulations, and advanced performance instructions
 - Format conversion to ABC notation, MIDI, WAV, and SuperCollider
 - Comprehensive schema validation via JSON Schema
+- Optional bars:beats:ticks format for display and external formats
 
 ### Main Entry Points
 - **`src/index.js`**: Primary export providing the `jm` object with core functions (`render`, `play`, `score`, `validate`)
@@ -83,7 +84,8 @@ This library implements JMON (JSON Music Object Notation), a declarative format 
 - **Peer dependency pattern**: Core audio libraries (Tone.js, ABCJS, Plotly.js) are peer dependencies to avoid version conflicts
 
 ### Important Implementation Notes
-- **Time format**: Preferentially uses `bars:beats:ticks` format (e.g., "1:2:240") for precise musical timing
+- **Time format**: Uses numeric time in quarter notes (e.g., 4.5) as primary format for MIDI compatibility and algorithmic processing
+- **Display format**: Provides bars:beats:ticks conversion for display and external format compatibility
 - **Audio Graph**: Supports complex synthesis chains with effects processing via audio node graphs
 - **Modulation support**: Comprehensive MIDI CC, pitch bend, and aftertouch support
 - **Multi-track**: Full support for complex multi-track compositions with individual synthesis chains

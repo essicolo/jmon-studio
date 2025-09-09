@@ -10,8 +10,9 @@ import { MotifBank } from './theory/motifs/index.js';
 import { GaussianProcessRegressor } from './generative/gaussian-processes/index.js';
 import { CellularAutomata } from './generative/cellular-automata/index.js';
 import { Loop } from './generative/loops/index.js';
-import { GeneticAlgorithm } from './generative/genetic/index.js';
-import { RandomWalk } from './generative/walks/index.js';
+import { Darwin } from './generative/genetic/index.js';
+import { RandomWalk, Chain, Phasor, PhasorSystem } from './generative/walks/index.js';
+import { KernelGenerator } from './generative/gaussian-processes/index.js';
 import { Mandelbrot, LogisticMap } from './generative/fractals/index.js';
 import { MinimalismProcess, Tintinnabuli } from './generative/minimalism/index.js';
 
@@ -36,17 +37,23 @@ export const constants = {
 
 export const generative = {
     gaussian: {
-        Regressor: GaussianProcessRegressor
+        Regressor: GaussianProcessRegressor,
+        Kernel: KernelGenerator
     },
     automata: {
         Cellular: CellularAutomata
     },
     loops: Loop,
     genetic: {
-        Algorithm: GeneticAlgorithm
+        Darwin: Darwin
     },
     walks: {
-        Random: RandomWalk
+        Random: RandomWalk,
+        Chain: Chain,
+        Phasor: {
+            Vector: Phasor,
+            System: PhasorSystem
+        }
     },
     fractals: {
         Mandelbrot,

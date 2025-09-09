@@ -1,4 +1,10 @@
-// (Type import removed: MusicalNote)
+// JMON timing utilities
+import {
+  offsetToBarsBeatsTicks,
+  barsBeatsTicksToOffset,
+  notesToTrack,
+  DEFAULT_TIMING_CONFIG
+} from '../../utils/jmon-timing.js';
 
 /**
  * @typedef {'additive'|'subtractive'} MinimalismOperation
@@ -13,6 +19,7 @@
  * @property {MinimalismOperation} operation - Operation type
  * @property {MinimalismDirection} direction - Direction
  * @property {number} repetition - Repetition count
+ * @property {Object} [timingConfig] - Timing configuration (mainly for display conversion)
  */
 
 /**
@@ -23,10 +30,11 @@ export class MinimalismProcess {
   operation;
   direction;
   repetition;
+  timingConfig;
   sequence = [];
 
   constructor(options) {
-    const { operation, direction, repetition } = options;
+    const { operation, direction, repetition, timingConfig = DEFAULT_TIMING_CONFIG } = options;
     
     if (!['additive', 'subtractive'].includes(operation)) {
       throw new Error("Invalid operation. Choose 'additive' or 'subtractive'.");
@@ -43,14 +51,21 @@ export class MinimalismProcess {
     this.operation = operation;
     this.direction = direction;
     this.repetition = repetition;
+    this.timingConfig = timingConfig;
   }
 
   /**
    * Generate processed sequence based on operation and direction
+   * Accepts either:
+   * - JMON note objects: { pitch, duration, time }
+   * - Legacy objects: { pitch, duration, offset }
+   * - Legacy tuples: [pitch, duration, offset]
+   * Returns: JMON note objects with numeric time (quarter notes)
    */
   generate(sequence) {
-    this.sequence = sequence;
-    
+    // Normalize input to objects with numeric 'offset' in beats for internal processing
+    this.sequence = this.normalizeInput(sequence);
+
     let processed;
     
     if (this.operation === 'additive' && this.direction === 'forward') {
@@ -73,8 +88,10 @@ export class MinimalismProcess {
       throw new Error('Invalid operation/direction combination');
     }
 
-    // Adjust offsets based on durations
-    return this.adjustOffsets(processed);
+    // Adjust offsets based on durations and return JMON-compliant notes
+    // Always use numeric time in quarter notes
+    const withOffsets = this.adjustOffsets(processed);
+    return this.toJmonNotes(withOffsets, false);
   }
 
   additiveForward() {
@@ -227,22 +244,87 @@ export class MinimalismProcess {
     return processed;
   }
 
+  // Normalize heterogenous inputs into objects with pitch, duration, offset (beats)
+  normalizeInput(sequence) {
+    if (!Array.isArray(sequence)) return [];
+
+    // If tuples [pitch, duration, offset]
+    if (Array.isArray(sequence[0])) {
+      return sequence.map(([pitch, duration, offset = 0]) => ({ pitch, duration, offset }));
+    }
+
+    // If objects
+    return sequence.map((n) => {
+      const pitch = n.pitch;
+      const duration = n.duration;
+      // Prefer numeric beats for internal work
+      let offset = 0;
+      if (typeof n.offset === 'number') offset = n.offset;
+      else if (typeof n.time === 'number') offset = n.time;
+      else if (typeof n.time === 'string') offset = this.timeToBeats(n.time);
+      return { ...n, pitch, duration, offset };
+    });
+  }
+
+  // Convert beats to bars:beats:ticks using centralized utility
+  beatsToTime(beats) {
+    return offsetToBarsBeatsTicks(beats, this.timingConfig);
+  }
+
+  // Convert bars:beats:ticks to beats using centralized utility
+  timeToBeats(timeStr) {
+    if (typeof timeStr !== 'string') return Number(timeStr) || 0;
+    return barsBeatsTicksToOffset(timeStr, this.timingConfig);
+  }
+
+  // After process, recalc offsets sequentially in beats
   adjustOffsets(processed) {
     let currentOffset = 0;
-    
-    return processed.map(note => {
+    return processed.map((note) => {
       const newNote = {
         ...note,
-        offset: currentOffset
+        offset: currentOffset,
       };
       currentOffset += note.duration;
       return newNote;
+    });
+  }
+
+  // Produce JMON notes: { pitch, duration, time }
+  // Always use numeric time in quarter notes (like pitch: 60, time: 4.5)
+  toJmonNotes(notesWithOffsets, useStringTime = false) {
+    return notesWithOffsets.map(({ pitch, duration, offset, ...rest }) => {
+      // Remove the old time property to avoid conflicts
+      const { time: oldTime, ...cleanRest } = rest;
+      return {
+        pitch,
+        duration,
+        time: useStringTime ? this.beatsToTime(offset) : offset,
+        ...cleanRest,
+      };
+    });
+  }
+  
+  /**
+   * Generate and convert to JMON track format
+   * @param {Array} sequence - Input sequence
+   * @param {Object} trackOptions - Track configuration options
+   * @param {boolean} trackOptions.useStringTime - Use bars:beats:ticks strings for display (default: numeric)
+   * @returns {Object} JMON track object
+   */
+  generateTrack(sequence, trackOptions = {}) {
+    const processedNotes = this.generate(sequence);
+    return notesToTrack(processedNotes, {
+      timingConfig: this.timingConfig,
+      useStringTime: false,
+      ...trackOptions
     });
   }
 }
 
 /**
  * Tintinnabuli style implementation for modal composition
+ * JMON-compliant: accepts mixed inputs, returns JMON notes
  */
 export class Tintinnabuli {
   tChord;
@@ -250,11 +332,13 @@ export class Tintinnabuli {
   rank;
   isAlternate;
   currentDirection;
+  timingConfig;
 
   constructor(
     tChord,
     direction = 'down',
-    rank = 0
+    rank = 0,
+    timingConfig = DEFAULT_TIMING_CONFIG
   ) {
     if (!['up', 'down', 'any', 'alternate'].includes(direction)) {
       throw new Error("Invalid direction. Choose 'up', 'down', 'any' or 'alternate'.");
@@ -264,6 +348,7 @@ export class Tintinnabuli {
     this.isAlternate = direction === 'alternate';
     this.currentDirection = this.isAlternate ? 'up' : direction;
     this.direction = direction;
+    this.timingConfig = timingConfig;
     
     if (!Number.isInteger(rank) || rank < 0) {
       throw new Error("Rank must be a non-negative integer.");
@@ -278,16 +363,23 @@ export class Tintinnabuli {
 
   /**
    * Generate t-voice from m-voice sequence
+   * Accepts: JMON notes, legacy objects, or tuples
+   * Returns: JMON notes with numeric time (quarter notes)
+   * @param {Array} sequence - Input sequence
+   * @param {boolean} useStringTime - Whether to use bars:beats:ticks strings for display (default: false)
    */
-  generate(sequence) {
+  generate(sequence, useStringTime = false) {
+    const normalizedSequence = this.normalizeInput(sequence);
     const tVoice = [];
     
-    for (const note of sequence) {
+    for (const note of normalizedSequence) {
       if (note.pitch === undefined) {
-        // Rest note
+        // Rest note - preserve timing
+        const { offset, time: oldTime, ...rest } = note;
         tVoice.push({
-          ...note,
-          pitch: undefined
+          ...rest,
+          pitch: undefined,
+          time: useStringTime ? this.beatsToTime(offset) : offset
         });
         continue;
       }
@@ -331,12 +423,47 @@ export class Tintinnabuli {
         this.currentDirection = this.currentDirection === 'up' ? 'down' : 'up';
       }
       
+      // Output JMON note - use numeric time by default for MIDI consistency
+      const { offset, time: oldTime, ...rest } = note;
       tVoice.push({
-        ...note,
-        pitch: tVoicePitch
+        ...rest,
+        pitch: tVoicePitch,
+        time: useStringTime ? this.beatsToTime(offset) : offset
       });
     }
     
     return tVoice;
+  }
+
+  // Normalize input like MinimalismProcess
+  normalizeInput(sequence) {
+    if (!Array.isArray(sequence)) return [];
+
+    // If tuples [pitch, duration, offset]
+    if (Array.isArray(sequence[0])) {
+      return sequence.map(([pitch, duration, offset = 0]) => ({ pitch, duration, offset }));
+    }
+
+    // If objects
+    return sequence.map((n) => {
+      const pitch = n.pitch;
+      const duration = n.duration;
+      let offset = 0;
+      if (typeof n.offset === 'number') offset = n.offset;
+      else if (typeof n.time === 'number') offset = n.time;
+      else if (typeof n.time === 'string') offset = this.timeToBeats(n.time);
+      return { ...n, pitch, duration, offset };
+    });
+  }
+
+  // Convert beats to bars:beats:ticks using centralized utility
+  beatsToTime(beats) {
+    return offsetToBarsBeatsTicks(beats, this.timingConfig);
+  }
+
+  // Convert bars:beats:ticks to beats using centralized utility
+  timeToBeats(timeStr) {
+    if (typeof timeStr !== 'string') return Number(timeStr) || 0;
+    return barsBeatsTicksToOffset(timeStr, this.timingConfig);
   }
 }

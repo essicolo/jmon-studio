@@ -1,7 +1,14 @@
 
+import { 
+  offsetToBarsBeatsTicks,
+  notesToTrack,
+  DEFAULT_TIMING_CONFIG 
+} from '../../utils/jmon-timing.js';
+
 /**
  * Multi-dimensional random walk generator with branching and merging
  * Based on the Python djalgo walk module (Chain class)
+ * Enhanced with JMON integration
  */
 export class RandomWalk {
   options;
@@ -327,5 +334,75 @@ export class RandomWalk {
   reset() {
     this.walkers = [];
     this.history = [];
+  }
+  
+  /**
+   * Convert walk to JMON notes
+   * @param {Array} durations - Duration sequence
+   * @param {Object} options - Conversion options
+   * @returns {Array} JMON note objects
+   */
+  toJmonNotes(durations = [1], options = {}) {
+    const {
+      useStringTime = false,
+      timingConfig = DEFAULT_TIMING_CONFIG,
+      dimension = 0,
+      mapToScale = null,
+      scaleRange = [60, 72]
+    } = options;
+    
+    const projection = this.getProjection(dimension);
+    const notes = [];
+    let currentTime = 0;
+    
+    for (let i = 0; i < projection.length; i++) {
+      const duration = durations[i % durations.length];
+      let pitch = projection[i];
+      
+      // Map to scale or pitch range
+      if (mapToScale) {
+        const minVal = Math.min(...projection);
+        const maxVal = Math.max(...projection);
+        const range = maxVal - minVal || 1;
+        const normalized = (pitch - minVal) / range;
+        const scaleIndex = Math.floor(normalized * mapToScale.length);
+        const clampedIndex = Math.max(0, Math.min(scaleIndex, mapToScale.length - 1));
+        pitch = mapToScale[clampedIndex];
+      } else {
+        // Use existing mapToScale method
+        const scaledWalk = this.mapToScale([projection], mapToScale || [60, 62, 64, 65, 67, 69, 71]);
+        pitch = scaledWalk[0][i];
+      }
+      
+      notes.push({
+        pitch,
+        duration,
+        time: useStringTime ? offsetToBarsBeatsTicks(currentTime, timingConfig) : currentTime
+      });
+      
+      currentTime += duration;
+    }
+    
+    return notes;
+  }
+  
+  /**
+   * Generate JMON track directly from walk
+   * @param {Array} startPosition - Starting position
+   * @param {Array} durations - Duration sequence
+   * @param {Object} options - Generation and conversion options
+   * @param {Object} trackOptions - Track options
+   * @returns {Object} JMON track
+   */
+  generateTrack(startPosition, durations = [1], options = {}, trackOptions = {}) {
+    this.generate(startPosition);
+    const notes = this.toJmonNotes(durations, options);
+    
+    return notesToTrack(notes, {
+      label: 'random-walk',
+      midiChannel: 0,
+      synth: { type: 'Synth' },
+      ...trackOptions
+    });
   }
 }

@@ -1,1 +1,1 @@
-export { GeneticAlgorithm } from './GeneticAlgorithm.js';
+export { Darwin } from './Darwin.js';

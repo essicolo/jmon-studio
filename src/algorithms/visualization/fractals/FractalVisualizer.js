@@ -1,40 +1,55 @@
-import { PlotRenderer, PlotOptions } from '../plots/PlotRenderer.js';
+import { PlotRenderer } from '../plots/PlotRenderer.js';
 
-export interface FractalVisualizationOptions extends PlotOptions {
-  colorScheme?: 'viridis' | 'plasma' | 'turbo' | 'rainbow' | 'heat';
-  iterations?: number;
-  threshold?: number;
-  zoom?: number;
-  centerX?: number;
-  centerY?: number;
-}
+/**
+ * @typedef {Object} FractalVisualizationOptions
+ * @property {string} [colorScheme='viridis'] - Color scheme for visualization
+ * @property {number} [iterations] - Number of iterations
+ * @property {number} [threshold] - Threshold value
+ * @property {number} [zoom] - Zoom level
+ * @property {number} [centerX] - Center X coordinate
+ * @property {number} [centerY] - Center Y coordinate
+ * @property {string} [title] - Plot title
+ * @property {number} [width] - Plot width
+ * @property {number} [height] - Plot height
+ * @property {boolean} [showAxis] - Whether to show axis
+ * @property {HTMLCanvasElement} [canvas] - Canvas element for rendering
+ */
 
-export interface LogisticMapData {
-  r: number;
-  x: number;
-  iteration: number;
-}
+/**
+ * @typedef {Object} LogisticMapData
+ * @property {number} r - Growth parameter
+ * @property {number} x - Population value
+ * @property {number} iteration - Iteration number
+ */
 
-export interface MandelbrotPoint {
-  x: number;
-  y: number;
-  iterations: number;
-  escaped: boolean;
-}
+/**
+ * @typedef {Object} MandelbrotPoint
+ * @property {number} x - X coordinate
+ * @property {number} y - Y coordinate
+ * @property {number} iterations - Iterations to escape
+ * @property {boolean} escaped - Whether point escaped
+ */
 
 export class FractalVisualizer {
   
   /**
    * Visualize logistic map bifurcation diagram
+   * @param {number} [rMin=2.8] - Minimum r value
+   * @param {number} [rMax=4.0] - Maximum r value
+   * @param {number} [rSteps=1000] - Number of r steps
+   * @param {number} [iterations=1000] - Iterations per r value
+   * @param {number} [skipTransient=500] - Transient iterations to skip
+   * @param {FractalVisualizationOptions} [options={}] - Visualization options
+   * @returns {Object} Plot data object
    */
   static plotLogisticMap(
-    rMin: number = 2.8,
-    rMax: number = 4.0,
-    rSteps: number = 1000,
-    iterations: number = 1000,
-    skipTransient: number = 500,
-    options: FractalVisualizationOptions = {}
-  ): ReturnType<typeof PlotRenderer.scatter> {
+    rMin = 2.8,
+    rMax = 4.0,
+    rSteps = 1000,
+    iterations = 1000,
+    skipTransient = 500,
+    options = {}
+  ) {
     const { 
       title = 'Logistic Map Bifurcation',
       width = 800,
@@ -42,7 +57,7 @@ export class FractalVisualizer {
       colorScheme = 'viridis'
     } = options;
 
-    const plotData: Array<{x: number, y: number, color: string}> = [];
+    const plotData = [];
     
     for (let i = 0; i < rSteps; i++) {
       const r = rMin + (i / rSteps) * (rMax - rMin);
@@ -54,7 +69,7 @@ export class FractalVisualizer {
       }
       
       // Collect attractors
-      const attractors = new Set<number>();
+      const attractors = new Set();
       for (let j = 0; j < iterations; j++) {
         x = r * x * (1 - x);
         attractors.add(Math.round(x * 10000) / 10000); // Round for stability
@@ -86,29 +101,44 @@ export class FractalVisualizer {
 
   /**
    * Generate Mandelbrot set visualization
+   * @param {number} [xMin=-2.5] - Minimum x coordinate
+   * @param {number} [xMax=1.0] - Maximum x coordinate  
+   * @param {number} [yMin=-1.25] - Minimum y coordinate
+   * @param {number} [yMax=1.25] - Maximum y coordinate
+   * @param {number} [resolution=400] - Grid resolution
+   * @param {number} [maxIterations=100] - Maximum iterations
+   * @param {FractalVisualizationOptions} [options={}] - Visualization options
+   * @returns {Object} Plot data object
    */
   static plotMandelbrot(
-    xMin: number = -2.5,
-    xMax: number = 1.0,
-    yMin: number = -1.25,
-    yMax: number = 1.25,
-    resolution: number = 400,
-    maxIterations: number = 100,
-    options: FractalVisualizationOptions = {}
-  ): ReturnType<typeof PlotRenderer.heatmap> {
+    xMin = -2.5,
+    xMax = 1.0,
+    yMin = -1.25,
+    yMax = 1.25,
+    resolution = 400,
+    maxIterations = 100,
+    options = {}
+  ) {
     const { 
       title = 'Mandelbrot Set',
       width = 600,
       height = 600,
-      colorScheme = 'plasma'
+      colorScheme = 'plasma',
+      canvas = null
     } = options;
 
-    const matrix: number[][] = [];
+    if (canvas) {
+      return this.renderMandelbrotCanvas(
+        canvas, xMin, xMax, yMin, yMax, resolution, maxIterations, colorScheme
+      );
+    }
+
+    const matrix = [];
     const dx = (xMax - xMin) / resolution;
     const dy = (yMax - yMin) / resolution;
 
     for (let py = 0; py < resolution; py++) {
-      const row: number[] = [];
+      const row = [];
       const y = yMin + py * dy;
       
       for (let px = 0; px < resolution; px++) {
@@ -128,43 +158,74 @@ export class FractalVisualizer {
   }
 
   /**
-   * Create Julia set visualization
+   * Render Mandelbrot set directly to Canvas for better performance
+   * @param {HTMLCanvasElement} canvas - Canvas element
+   * @param {number} xMin - Minimum x coordinate
+   * @param {number} xMax - Maximum x coordinate
+   * @param {number} yMin - Minimum y coordinate
+   * @param {number} yMax - Maximum y coordinate
+   * @param {number} resolution - Grid resolution
+   * @param {number} maxIterations - Maximum iterations
+   * @param {string} colorScheme - Color scheme
+   * @returns {HTMLCanvasElement} The canvas element
    */
-  static plotJuliaSet(
-    cReal: number = -0.7,
-    cImag: number = 0.27015,
-    xMin: number = -1.5,
-    xMax: number = 1.5,
-    yMin: number = -1.5,
-    yMax: number = 1.5,
-    resolution: number = 400,
-    maxIterations: number = 100,
-    options: FractalVisualizationOptions = {}
-  ): ReturnType<typeof PlotRenderer.heatmap> {
-    const { 
-      title = `Julia Set (c = ${cReal} + ${cImag}i)`,
-      width = 600,
-      height = 600,
-      colorScheme = 'turbo'
-    } = options;
-
-    const matrix: number[][] = [];
+  static renderMandelbrotCanvas(
+    canvas, 
+    xMin, xMax, yMin, yMax, 
+    resolution, maxIterations, 
+    colorScheme
+  ) {
+    const ctx = canvas.getContext('2d');
+    canvas.width = resolution;
+    canvas.height = resolution;
+    
+    const imageData = ctx.createImageData(resolution, resolution);
+    const data = imageData.data;
+    
     const dx = (xMax - xMin) / resolution;
     const dy = (yMax - yMin) / resolution;
-
+    
     for (let py = 0; py < resolution; py++) {
-      const row: number[] = [];
       const y = yMin + py * dy;
       
       for (let px = 0; px < resolution; px++) {
         const x = xMin + px * dx;
-        const iterations = this.juliaIterations(x, y, cReal, cImag, maxIterations);
-        row.push(iterations / maxIterations);
+        const iterations = this.mandelbrotIterations(x, y, maxIterations);
+        const normalized = iterations / maxIterations;
+        
+        const color = this.getColorComponents(normalized, colorScheme);
+        const index = (py * resolution + px) * 4;
+        
+        data[index] = color.r;     // Red
+        data[index + 1] = color.g; // Green
+        data[index + 2] = color.b; // Blue
+        data[index + 3] = 255;     // Alpha
       }
-      matrix.push(row);
+    }
+    
+    ctx.putImageData(imageData, 0, 0);
+    return canvas;
+  }
+
+  /**
+   * Visualize cellular automata evolution
+   * @param {number[][]} history - CA evolution history
+   * @param {FractalVisualizationOptions} [options={}] - Visualization options
+   * @returns {Object} Plot data object
+   */
+  static plotCellularAutomata(history, options = {}) {
+    const {
+      title = 'Cellular Automata Evolution',
+      width = 600,
+      height = 400,
+      canvas = null
+    } = options;
+
+    if (canvas) {
+      return this.renderCACanvas(canvas, history, options);
     }
 
-    return PlotRenderer.heatmap(matrix, {
+    return PlotRenderer.matrix(history, {
       title,
       width,
       height,
@@ -173,167 +234,48 @@ export class FractalVisualizer {
   }
 
   /**
-   * Visualize strange attractors (Lorenz, Rossler, etc.)
+   * Render cellular automata to Canvas
+   * @param {HTMLCanvasElement} canvas - Canvas element
+   * @param {number[][]} history - CA evolution history
+   * @param {FractalVisualizationOptions} options - Visualization options
+   * @returns {HTMLCanvasElement} The canvas element
    */
-  static plotAttractor(
-    type: 'lorenz' | 'rossler' | 'henon',
-    steps: number = 10000,
-    options: FractalVisualizationOptions = {}
-  ): ReturnType<typeof PlotRenderer.scatter> {
-    const { 
-      title = `${type.charAt(0).toUpperCase() + type.slice(1)} Attractor`,
-      width = 600,
-      height = 600,
-      colorScheme = 'viridis'
-    } = options;
-
-    const points = this.generateAttractor(type, steps);
+  static renderCACanvas(canvas, history, options = {}) {
+    const ctx = canvas.getContext('2d');
+    const cellSize = options.cellSize || 4;
     
-    const data = {
-      x: points.map(p => p.x),
-      y: points.map(p => p.y),
-      color: points.map((_, i) => this.getColorForValue(i / points.length, colorScheme))
-    };
-
-    return PlotRenderer.scatter(data, {
-      title,
-      width,
-      height,
-      showAxis: false
-    });
-  }
-
-  /**
-   * Create a chaos game visualization (Sierpinski triangle, etc.)
-   */
-  static plotChaosGame(
-    vertices: Array<{x: number, y: number}>,
-    ratio: number = 0.5,
-    iterations: number = 10000,
-    options: FractalVisualizationOptions = {}
-  ): ReturnType<typeof PlotRenderer.scatter> {
-    const { 
-      title = 'Chaos Game',
-      width = 600,
-      height = 600
-    } = options;
-
-    const points: Array<{x: number, y: number}> = [];
-    let current = { x: 0.5, y: 0.5 }; // Starting point
-
-    for (let i = 0; i < iterations; i++) {
-      const vertex = vertices[Math.floor(Math.random() * vertices.length)];
-      current = {
-        x: current.x + ratio * (vertex.x - current.x),
-        y: current.y + ratio * (vertex.y - current.y)
-      };
-      
-      if (i > 100) { // Skip initial transient
-        points.push({ ...current });
+    canvas.width = history[0].length * cellSize;
+    canvas.height = history.length * cellSize;
+    
+    ctx.fillStyle = 'white';
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    
+    ctx.fillStyle = 'black';
+    
+    for (let y = 0; y < history.length; y++) {
+      for (let x = 0; x < history[y].length; x++) {
+        if (history[y][x] === 1) {
+          ctx.fillRect(
+            x * cellSize, 
+            y * cellSize, 
+            cellSize, 
+            cellSize
+          );
+        }
       }
     }
-
-    const data = {
-      x: points.map(p => p.x),
-      y: points.map(p => p.y),
-      color: points.map(() => 'steelblue')
-    };
-
-    return PlotRenderer.scatter(data, {
-      title,
-      width,
-      height,
-      showAxis: false
-    });
-  }
-
-  /**
-   * Plot fractal dimension analysis
-   */
-  static plotFractalDimension(
-    data: number[],
-    options: FractalVisualizationOptions = {}
-  ): ReturnType<typeof PlotRenderer.line> {
-    const { 
-      title = 'Fractal Dimension Analysis',
-      width = 600,
-      height = 400
-    } = options;
-
-    // Box-counting method
-    const scales: number[] = [];
-    const counts: number[] = [];
     
-    for (let scale = 1; scale <= data.length / 10; scale *= 2) {
-      const boxCount = this.boxCount(data, scale);
-      scales.push(Math.log(1 / scale));
-      counts.push(Math.log(boxCount));
-    }
-
-    const plotData = {
-      x: scales,
-      y: counts
-    };
-
-    return PlotRenderer.line(plotData, {
-      title,
-      width,
-      height,
-      showAxis: true
-    });
-  }
-
-  /**
-   * Create a phase space plot for time series
-   */
-  static plotPhaseSpace(
-    data: number[],
-    delay: number = 1,
-    embedding: number = 2,
-    options: FractalVisualizationOptions = {}
-  ): ReturnType<typeof PlotRenderer.scatter> {
-    const { 
-      title = 'Phase Space Reconstruction',
-      width = 600,
-      height = 600,
-      colorScheme = 'viridis'
-    } = options;
-
-    const points: Array<{x: number, y: number, z?: number}> = [];
-    
-    for (let i = 0; i < data.length - delay * (embedding - 1); i++) {
-      if (embedding === 2) {
-        points.push({
-          x: data[i]!,
-          y: data[i + delay]!
-        });
-      } else if (embedding === 3) {
-        points.push({
-          x: data[i]!,
-          y: data[i + delay]!,
-          z: data[i + 2 * delay]!
-        });
-      }
-    }
-
-    const plotData = {
-      x: points.map(p => p.x),
-      y: points.map(p => p.y),
-      color: points.map((_, i) => this.getColorForValue(i / points.length, colorScheme))
-    };
-
-    return PlotRenderer.scatter(plotData, {
-      title,
-      width,
-      height,
-      showAxis: true
-    });
+    return canvas;
   }
 
   /**
    * Helper: Calculate Mandelbrot iterations
+   * @param {number} x - Real coordinate
+   * @param {number} y - Imaginary coordinate
+   * @param {number} maxIterations - Maximum iterations
+   * @returns {number} Number of iterations before escape
    */
-  static mandelbrotIterations(x: number, y: number, maxIterations: number): number {
+  static mandelbrotIterations(x, y, maxIterations) {
     let zx = 0;
     let zy = 0;
     let iteration = 0;
@@ -349,106 +291,12 @@ export class FractalVisualizer {
   }
 
   /**
-   * Helper: Calculate Julia set iterations
-   */
-  static juliaIterations(
-    x: number, 
-    y: number, 
-    cReal: number, 
-    cImag: number, 
-    maxIterations: number
-  ): number {
-    let zx = x;
-    let zy = y;
-    let iteration = 0;
-
-    while (zx * zx + zy * zy < 4 && iteration < maxIterations) {
-      const temp = zx * zx - zy * zy + cReal;
-      zy = 2 * zx * zy + cImag;
-      zx = temp;
-      iteration++;
-    }
-
-    return iteration;
-  }
-
-  /**
-   * Helper: Generate strange attractor points
-   */
-  static generateAttractor(
-    type: 'lorenz' | 'rossler' | 'henon',
-    steps: number
-  ): Array<{x: number, y: number, z?: number}> {
-    const points: Array<{x: number, y: number, z?: number}> = [];
-    
-    if (type === 'lorenz') {
-      let x = 1, y = 1, z = 1;
-      const sigma = 10, rho = 28, beta = 8/3;
-      const dt = 0.01;
-      
-      for (let i = 0; i < steps; i++) {
-        const dx = sigma * (y - x);
-        const dy = x * (rho - z) - y;
-        const dz = x * y - beta * z;
-        
-        x += dx * dt;
-        y += dy * dt;
-        z += dz * dt;
-        
-        points.push({ x, y, z });
-      }
-    } else if (type === 'rossler') {
-      let x = 1, y = 1, z = 1;
-      const a = 0.2, b = 0.2, c = 5.7;
-      const dt = 0.01;
-      
-      for (let i = 0; i < steps; i++) {
-        const dx = -y - z;
-        const dy = x + a * y;
-        const dz = b + z * (x - c);
-        
-        x += dx * dt;
-        y += dy * dt;
-        z += dz * dt;
-        
-        points.push({ x, y, z });
-      }
-    } else if (type === 'henon') {
-      let x = 0, y = 0;
-      const a = 1.4, b = 0.3;
-      
-      for (let i = 0; i < steps; i++) {
-        const newX = 1 - a * x * x + y;
-        const newY = b * x;
-        
-        x = newX;
-        y = newY;
-        
-        points.push({ x, y });
-      }
-    }
-    
-    return points;
-  }
-
-  /**
-   * Helper: Box counting for fractal dimension
-   */
-  static boxCount(data: number[], scale: number): number {
-    const boxes = new Set<string>();
-    
-    for (let i = 0; i < data.length; i++) {
-      const box = Math.floor(data[i]! / scale);
-      boxes.add(box.toString());
-    }
-    
-    return boxes.size;
-  }
-
-  /**
    * Helper: Get color for value based on color scheme
+   * @param {number} value - Normalized value (0-1)
+   * @param {string} scheme - Color scheme name
+   * @returns {string} CSS color string
    */
-  static getColorForValue(value: number, scheme: string): string {
+  static getColorForValue(value, scheme) {
     const normalized = Math.max(0, Math.min(1, value));
     
     switch (scheme) {
@@ -460,57 +308,146 @@ export class FractalVisualizer {
         return `hsl(${normalized * 360}, 70%, 50%)`;
       case 'heat':
         return `hsl(${(1 - normalized) * 60}, 100%, 50%)`;
+      case 'rainbow':
+        return `hsl(${normalized * 300}, 70%, 50%)`;
       default:
         return `hsl(${normalized * 240}, 70%, 50%)`;
     }
   }
 
   /**
-   * Create musical fractal sequences from logistic map
+   * Helper: Get RGB color components
+   * @param {number} value - Normalized value (0-1)
+   * @param {string} scheme - Color scheme name
+   * @returns {Object} RGB color object
    */
-  static generateMusicalSequence(
-    r: number,
-    length: number,
-    initialValue: number = 0.5
-  ): number[] {
-    const sequence: number[] = [];
-    let x = initialValue;
+  static getColorComponents(value, scheme) {
+    const colorStr = this.getColorForValue(value, scheme);
     
-    for (let i = 0; i < length; i++) {
-      x = r * x * (1 - x);
-      sequence.push(x);
+    // Convert HSL to RGB for canvas rendering
+    if (colorStr.startsWith('hsl')) {
+      const matches = colorStr.match(/hsl\((\d+),\s*(\d+)%,\s*(\d+)%\)/);
+      if (matches) {
+        const h = parseInt(matches[1]) / 360;
+        const s = parseInt(matches[2]) / 100;
+        const l = parseInt(matches[3]) / 100;
+        
+        return this.hslToRgb(h, s, l);
+      }
     }
     
-    return sequence;
+    // Fallback
+    return { r: 0, g: 0, b: 0 };
   }
 
   /**
-   * Create rhythm patterns from cellular automata
+   * Helper: Convert HSL to RGB
+   * @param {number} h - Hue (0-1)
+   * @param {number} s - Saturation (0-1)
+   * @param {number} l - Lightness (0-1)
+   * @returns {Object} RGB color object
    */
-  static rhythmFromCA(
-    rule: number,
-    width: number,
-    generations: number,
-    initialPattern?: number[]
-  ): number[][] {
-    const pattern = initialPattern || Array(width).fill(0).map(() => Math.random() > 0.5 ? 1 : 0);
-    const history: number[][] = [pattern];
+  static hslToRgb(h, s, l) {
+    let r, g, b;
+
+    if (s === 0) {
+      r = g = b = l; // Achromatic
+    } else {
+      const hue2rgb = (p, q, t) => {
+        if (t < 0) t += 1;
+        if (t > 1) t -= 1;
+        if (t < 1/6) return p + (q - p) * 6 * t;
+        if (t < 1/2) return q;
+        if (t < 2/3) return p + (q - p) * (2/3 - t) * 6;
+        return p;
+      };
+
+      const q = l < 0.5 ? l * (1 + s) : l + s - l * s;
+      const p = 2 * l - q;
+      r = hue2rgb(p, q, h + 1/3);
+      g = hue2rgb(p, q, h);
+      b = hue2rgb(p, q, h - 1/3);
+    }
+
+    return {
+      r: Math.round(r * 255),
+      g: Math.round(g * 255),
+      b: Math.round(b * 255)
+    };
+  }
+
+  /**
+   * Helper: Create center initial state for CA
+   * @param {number} width - Width of the CA
+   * @returns {number[]} Initial state array
+   */
+  static createCenterInitialState(width) {
+    const state = new Array(width).fill(0);
+    state[Math.floor(width / 2)] = 1;
+    return state;
+  }
+
+  /**
+   * Extract strips from CA evolution for musical use
+   * @param {number[][]} history - CA evolution history
+   * @param {number[][]} stripRanges - Array of [start, end] strip ranges
+   * @returns {number[][][]} Extracted strips
+   */
+  static extractStrips(history, stripRanges) {
+    const strips = [];
     
-    for (let gen = 0; gen < generations - 1; gen++) {
-      const current = history[history.length - 1];
-      const next: number[] = [];
-      
-      for (let i = 0; i < width; i++) {
-        const left = current[(i - 1 + width) % width];
-        const center = current[i];
-        const right = current[(i + 1) % width];
-        const index = (left << 2) | (center << 1) | right;
-        next.push((rule >> index) & 1);
+    for (const [start, end] of stripRanges) {
+      const strip = [];
+      for (const generation of history) {
+        strip.push(generation.slice(start, end + 1));
       }
-      
-      history.push(next);
+      strips.push(strip);
     }
     
-    return history;
+    return strips;
+  }
+
+  /**
+   * Convert strips to musical sequences
+   * @param {number[][][]} strips - Extracted strips
+   * @param {Object} options - Conversion options
+   * @returns {number[][]} Musical sequences
+   */
+  static stripsToSequences(strips, options = {}) {
+    const { values = null } = options;
+    
+    return strips.map(strip => {
+      // Flatten strip into sequence
+      const sequence = [];
+      for (const generation of strip) {
+        for (let i = 0; i < generation.length; i++) {
+          if (generation[i] === 1) {
+            sequence.push(values ? values[i % values.length] : i);
+          }
+        }
+      }
+      return sequence;
+    });
+  }
+
+  /**
+   * Generate Canvas element for visualization
+   * @param {number} width - Canvas width
+   * @param {number} height - Canvas height
+   * @returns {HTMLCanvasElement} Canvas element
+   */
+  static createCanvas(width, height) {
+    // For Node.js environments, this would need canvas package
+    // For browser environments, this works directly
+    if (typeof window !== 'undefined') {
+      const canvas = document.createElement('canvas');
+      canvas.width = width;
+      canvas.height = height;
+      return canvas;
+    } else {
+      // Node.js environment - would need canvas package
+      console.warn('Canvas rendering not available in Node.js environment');
+      return null;
+    }
   }
 }
