@@ -459,7 +459,9 @@ export function createPlayer(composition, options = {}) {
 
     const initializeTone = async () => {
         if (typeof window !== 'undefined') {
-            if (!window.Tone) {
+            // Check for Tone.js in window or as global variable
+            const existingTone = window.Tone || (typeof Tone !== 'undefined' ? Tone : null);
+            if (!existingTone) {
                 try {
                     // Use Observable-compatible loading (no CSP violations)
                     if (typeof require !== 'undefined') {
@@ -488,11 +490,14 @@ export function createPlayer(composition, options = {}) {
                     return false;
                 }
             } else {
-                console.log('[PLAYER] Using existing Tone.js, version:', window.Tone.version || 'unknown');
+                console.log('[PLAYER] Using existing Tone.js, version:', existingTone.version || 'unknown');
+                // Make sure window.Tone is set for consistency
+                window.Tone = existingTone;
             }
             
-            if (window.Tone) {
-                Tone = window.Tone;
+            const toneInstance = window.Tone || existingTone;
+            if (toneInstance) {
+                Tone = toneInstance;
                 
                 // Safari-specific audio context handling
                 try {
@@ -502,12 +507,12 @@ export function createPlayer(composition, options = {}) {
                         await Tone.start();
                     } else {
                         // Force audio context start for Safari
-                        if (Tone.context.state === 'suspended' || Tone.context.state === 'interrupted') {
+                        if (Tone.context && (Tone.context.state === 'suspended' || Tone.context.state === 'interrupted')) {
                             await Tone.context.resume();
                         }
                         
                         // Ensure audio context is started
-                        if (Tone.context.state !== 'running') {
+                        if (!Tone.context || Tone.context.state !== 'running') {
                             await Tone.start();
                             
                             // Safari sometimes needs a delay
@@ -865,7 +870,8 @@ export function createPlayer(composition, options = {}) {
     });
 
     // Initialize if Tone.js is already available
-    if (typeof window !== 'undefined' && window.Tone) {
+    const initialTone = (typeof window !== 'undefined' && window.Tone) || (typeof Tone !== 'undefined' ? Tone : null);
+    if (initialTone) {
         initializeTone().then(() => {
             setupAudio();
             // Auto-start playback if autoplay is enabled
@@ -878,9 +884,10 @@ export function createPlayer(composition, options = {}) {
     }
 
     // If autoplay is enabled but Tone.js isn't available yet, try later
-    if (autoplay && (!window.Tone)) {
+    if (autoplay && !initialTone) {
         const autoplayInterval = setInterval(() => {
-            if (window.Tone) {
+            const currentTone = (typeof window !== 'undefined' && window.Tone) || (typeof Tone !== 'undefined' ? Tone : null);
+            if (currentTone) {
                 clearInterval(autoplayInterval);
                 setTimeout(() => {
                     playButton.click();
