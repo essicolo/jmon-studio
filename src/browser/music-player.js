@@ -12,6 +12,15 @@ export function createPlayer(composition, options = {}) {
         throw new Error('Composition must be a valid JMON object');
     }
 
+    // Extract options
+    const {
+        autoplay = false,
+        showDebug = false,
+        customInstruments = {},
+        autoMultivoice = true,
+        maxVoices = 4
+    } = options;
+
     // Ensure composition has the expected structure
     if (!composition.sequences && !composition.tracks) {
         console.error('[PLAYER] No sequences or tracks found in composition:', composition);
@@ -25,15 +34,8 @@ export function createPlayer(composition, options = {}) {
         throw new Error('Tracks/sequences must be an array');
     }
 
-    console.log('[PLAYER] Processing composition with', tracks.length, 'tracks');
 
-    const {
-        tempo = composition.bpm || 120,
-        showDebug = false,
-        customInstruments = {},
-        autoMultivoice = true, // Automatically create multiple synths for overlapping notes
-        maxVoices = 4 // Maximum voices per track
-    } = options;
+    const tempo = composition.bpm || 120;
 
     // Convert JMON to Tone.js format with multivoice support
     const conversionOptions = { autoMultivoice, maxVoices, showDebug };
@@ -68,21 +70,22 @@ export function createPlayer(composition, options = {}) {
         flex-direction: column;
     `;
 
-    // Top container with instruments and tempo
+    // Top container with track selector and tempo
     const topContainer = document.createElement('div');
     topContainer.style.cssText = `
         display: flex;
         justify-content: space-between;
-        margin-bottom: 20px;
+        align-items: center;
+        margin-bottom: 30px;
+        font-family: 'PT Sans', sans-serif;
     `;
 
-    // Left column for instruments
+    // Left column for track selector
     const leftColumn = document.createElement('div');
     leftColumn.style.cssText = `
         display: flex;
         flex-direction: column;
-        width: 48%;
-        justify-content: space-between;
+        width: 60%;
     `;
 
     const instrumentsContainer = document.createElement('div');
@@ -91,8 +94,8 @@ export function createPlayer(composition, options = {}) {
         flex-direction: column;
     `;
     
-    // Available synth types
-    const synthTypes = ['PolySynth', 'Synth', 'AMSynth', 'DuoSynth', 'FMSynth', 'MembraneSynth', 'MetalSynth', 'MonoSynth', 'PluckSynth'];
+    // Available synth types (Sampler included for explicit selection)
+    const synthTypes = ['Sampler', 'PolySynth', 'Synth', 'AMSynth', 'DuoSynth', 'FMSynth', 'MembraneSynth', 'MetalSynth', 'MonoSynth', 'PluckSynth'];
     
     // Get tracks from composition for UI
     const originalTracks = composition.tracks || composition.sequences || [];
@@ -112,10 +115,12 @@ export function createPlayer(composition, options = {}) {
         const synthLabel = document.createElement('label');
         synthLabel.textContent = track.name || track.label || `Track ${index + 1}`;
         synthLabel.style.cssText = `
-            font-size: 12px;
+            font-family: 'PT Sans', sans-serif;
+            font-size: 16px;
             color: ${colors.text};
             display: block;
-            margin-bottom: 2px;
+            margin-bottom: 8px;
+            font-weight: normal;
         `;
         
         const synthSelect = document.createElement('select');
@@ -128,12 +133,22 @@ export function createPlayer(composition, options = {}) {
             font-size: 12px;
             width: 100%;
             height: 28px;
+            box-sizing: border-box;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            margin: 0;
+            outline: none;
         `;
         
         synthTypes.forEach(synthType => {
             const option = document.createElement('option');
             option.value = synthType;
             option.textContent = synthType;
+            // If the original track references a sampler via synthRef, preselect Sampler
+            if ((composition.tracks?.[index]?.synthRef) && synthType === 'Sampler') {
+                option.selected = true;
+            }
             // Désactive les synthés polyphoniques si glissando détecté
             if (trackAnalysis?.hasGlissando && (synthType === 'PolySynth' || synthType === 'DuoSynth')) {
                 option.disabled = true;
@@ -154,8 +169,7 @@ export function createPlayer(composition, options = {}) {
     rightColumn.style.cssText = `
         display: flex;
         flex-direction: column;
-        width: 48%;
-        justify-content: space-between;
+        width: 35%;
     `;
 
     const bpmContainer = document.createElement('div');
@@ -168,8 +182,10 @@ export function createPlayer(composition, options = {}) {
     const bpmLabel = document.createElement('label');
     bpmLabel.textContent = 'Tempo';
     bpmLabel.style.cssText = `
-        font-size: 14px;
-        margin-bottom: 5px;
+        font-family: 'PT Sans', sans-serif;
+        font-size: 16px;
+        font-weight: normal;
+        margin-bottom: 8px;
         color: ${colors.text};
     `;
 
@@ -179,15 +195,21 @@ export function createPlayer(composition, options = {}) {
     bpmInput.max = 240;
     bpmInput.value = tempo;
     bpmInput.style.cssText = `
-        padding: 8px;
+        padding: 4px;
         border: 1px solid ${colors.secondary};
-        border-radius: 6px;
+        border-radius: 4px;
         background-color: ${colors.background};
         color: ${colors.text};
-        font-size: 14px;
+        font-size: 12px;
         text-align: center;
         width: 100%;
-        height: 36px;
+        height: 28px;
+        box-sizing: border-box;
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        appearance: none;
+        margin: 0;
+        outline: none;
     `;
 
     bpmContainer.append(bpmLabel, bpmInput);
@@ -201,6 +223,29 @@ export function createPlayer(composition, options = {}) {
         margin: 20px 0;
         display: flex;
         align-items: center;
+        gap: 15px;
+    `;
+
+    // Current time display
+    const currentTime = document.createElement('div');
+    currentTime.textContent = '0:00';
+    currentTime.style.cssText = `
+        font-family: 'PT Sans', sans-serif;
+        font-size: 14px;
+        color: ${colors.text};
+        min-width: 40px;
+        text-align: center;
+    `;
+
+    // Total time display
+    const totalTime = document.createElement('div');
+    totalTime.textContent = '0:00';
+    totalTime.style.cssText = `
+        font-family: 'PT Sans', sans-serif;
+        font-size: 14px;
+        color: ${colors.text};
+        min-width: 40px;
+        text-align: center;
     `;
 
     const timeline = document.createElement('input');
@@ -246,13 +291,7 @@ export function createPlayer(composition, options = {}) {
         margin: 0px 0px 0px 10px;
     `;
 
-    const currentTime = document.createElement('span');
-    currentTime.textContent = '0:00';
-    const totalTime = document.createElement('span');
-    totalTime.textContent = '0:00';
-
-    timeDisplay.append(currentTime, ' / ', totalTime);
-    timelineContainer.append(timeline, playButton);
+    timelineContainer.append(currentTime, timeline, totalTime, playButton);
 
     // Download buttons container
     const buttonContainer = document.createElement('div');
@@ -265,37 +304,43 @@ export function createPlayer(composition, options = {}) {
     const downloadMIDIButton = document.createElement('button');
     downloadMIDIButton.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-keyboard-music" style="margin-right: 5px;"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="M6 8h4"/><path d="M14 8h.01"/><path d="M18 8h.01"/><path d="M2 12h20"/><path d="M6 12v4"/><path d="M10 12v4"/><path d="M14 12v4"/><path d="M18 12v4"/></svg><span>MIDI</span>`;
     downloadMIDIButton.style.cssText = `
-        padding: 10px 20px;
+        padding: 15px 30px;
         margin: 0 5px;
         border: none;
-        border-radius: 6px;
-        background-color: ${colors.accent};
-        color: ${colors.background};
-        font-size: 14px;
+        border-radius: 8px;
+        background-color: #333333;
+        color: white;
+        font-family: 'PT Sans', sans-serif;
+        font-size: 16px;
+        font-weight: 500;
         cursor: pointer;
         transition: background-color 0.3s ease;
         flex: 1;
         display: flex;
         align-items: center;
         justify-content: center;
+        min-height: 50px;
     `;
 
     const downloadWavButton = document.createElement('button');
     downloadWavButton.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-audio-lines" style="margin-right: 5px;"><path d="M2 10v3"/><path d="M6 6v11"/><path d="M10 3v18"/><path d="M14 8v7"/><path d="M18 5v13"/><path d="M22 10v3"/></svg><span>WAV</span>`;
     downloadWavButton.style.cssText = `
-        padding: 10px 20px;
+        padding: 15px 30px;
         margin: 0 5px;
         border: none;
-        border-radius: 6px;
-        background-color: ${colors.accent};
-        color: ${colors.background};
-        font-size: 14px;
+        border-radius: 8px;
+        background-color: #333333;
+        color: white;
+        font-family: 'PT Sans', sans-serif;
+        font-size: 16px;
+        font-weight: 500;
         cursor: pointer;
         transition: background-color 0.3s ease;
         flex: 1;
         display: flex;
         align-items: center;
         justify-content: center;
+        min-height: 50px;
     `;
 
     buttonContainer.append(downloadMIDIButton, downloadWavButton);
@@ -306,11 +351,97 @@ export function createPlayer(composition, options = {}) {
     // Initialize Tone.js functionality
     let Tone, isPlaying = false, synths = [], parts = [];
 
+    // Track sampler loading promises so we can await before starting
+    let samplerLoadPromises = [];
+
+    // Optional: AudioGraph support (Sampler nodes)
+    let graphInstruments = null; // { [id]: Tone.Instrument }
+    const originalTracksSource = composition.tracks || composition.sequences || [];
+
+    const buildAudioGraphInstruments = () => {
+        if (!Tone) return null;
+        if (!composition.audioGraph || !Array.isArray(composition.audioGraph)) return null;
+        const map = {};
+
+        const normalizeUrlsToNoteNames = (urls) => {
+            const out = {};
+            Object.entries(urls || {}).forEach(([k, v]) => {
+                let noteKey = k;
+                if (typeof k === 'number' || /^\d+$/.test(String(k))) {
+                    try {
+                        noteKey = Tone.Frequency(parseInt(k, 10), 'midi').toNote();
+                    } catch (e) {
+                        // keep original key if conversion fails
+                    }
+                }
+                out[noteKey] = v;
+            });
+            return out;
+        };
+
+        try {
+            composition.audioGraph.forEach(node => {
+                const { id, type, options = {}, target } = node;
+                if (!id || !type) return;
+                let instrument = null;
+                if (type === 'Sampler') {
+                    // Normalize urls: use scientific note names for maximum compatibility
+                    const normalizedUrls = normalizeUrlsToNoteNames(options.urls);
+                    // Always use options signature so we can provide onload reliably
+                    let resolveLoaded, rejectLoaded;
+                    const loadPromise = new Promise((res, rej) => { resolveLoaded = res; rejectLoaded = rej; });
+                    const samplerOpts = {
+                        urls: normalizedUrls,
+                        onload: () => resolveLoaded && resolveLoaded(),
+                        onerror: (e) => {
+                            console.error(`[PLAYER] Sampler load error for ${id}:`, e);
+                            rejectLoaded && rejectLoaded(e);
+                        }
+                    };
+                    if (options.baseUrl) samplerOpts.baseUrl = options.baseUrl;
+                    try {
+                        console.log(`[PLAYER] Building Sampler ${id} with urls:`, normalizedUrls, 'baseUrl:', samplerOpts.baseUrl || '(none)');
+                        instrument = new Tone.Sampler(samplerOpts).toDestination();
+                    } catch (e) {
+                        console.error('[PLAYER] Failed to create Sampler:', e);
+                        instrument = null;
+                    }
+                    samplerLoadPromises.push(loadPromise);
+                    // Apply simple envelope if provided
+                    if (instrument && options.envelope && options.envelope.enabled) {
+                        if (typeof options.envelope.attack === 'number') instrument.attack = options.envelope.attack;
+                        if (typeof options.envelope.release === 'number') instrument.release = options.envelope.release;
+                    }
+                } else if ([
+                    'Synth','PolySynth','MonoSynth','AMSynth','FMSynth','DuoSynth','PluckSynth','NoiseSynth'
+                ].includes(type)) {
+                    // Basic synth support (to destination). Effects graph is not yet implemented.
+                    try {
+                        instrument = new Tone[type](options).toDestination();
+                    } catch (e) {
+                        console.warn(`[PLAYER] Failed to create ${type} from audioGraph, using PolySynth:`, e);
+                        instrument = new Tone.PolySynth().toDestination();
+                    }
+                } else if (type === 'Destination') {
+                    map[id] = Tone.Destination; // marker
+                }
+                if (instrument) {
+                    map[id] = instrument;
+                }
+            });
+            return map;
+        } catch (e) {
+            console.error('[PLAYER] Failed building audioGraph instruments:', e);
+            return null;
+        }
+    };
+
     const formatTime = (seconds) => {
         return `${Math.floor(seconds / 60)}:${Math.floor(seconds % 60).toString().padStart(2, '0')}`;
     };
 
-    // totalDuration already set above
+    // Set initial total time display
+    totalTime.textContent = formatTime(totalDuration);
 
     const initializeTone = async () => {
         if (typeof window !== 'undefined') {
@@ -335,12 +466,28 @@ export function createPlayer(composition, options = {}) {
             
             if (window.Tone) {
                 Tone = window.Tone;
-                // Ensure audio context is started
-                if (Tone.context.state !== 'running') {
-                    await Tone.start();
-                    console.log('[PLAYER] Audio context started:', Tone.context.state);
+                
+                // Safari-specific audio context handling
+                try {
+                    // Force audio context start for Safari
+                    if (Tone.context.state === 'suspended' || Tone.context.state === 'interrupted') {
+                        await Tone.context.resume();
+                    }
+                    
+                    // Ensure audio context is started
+                    if (Tone.context.state !== 'running') {
+                        await Tone.start();
+                        
+                        // Safari sometimes needs a delay
+                        if (navigator.userAgent.includes('Safari') && !navigator.userAgent.includes('Chrome')) {
+                            await new Promise(resolve => setTimeout(resolve, 100));
+                        }
+                    }
+                    return Tone.context.state === 'running';
+                } catch (error) {
+                    console.error('[PLAYER] Failed to initialize audio context:', error);
+                    return false;
                 }
-                return true;
             }
         }
         console.warn('Tone.js not available');
@@ -350,9 +497,24 @@ export function createPlayer(composition, options = {}) {
     const setupAudio = () => {
         if (!Tone) return;
 
-        // Clean up existing synths and parts
-        console.log('[PLAYER] Cleaning up existing synths:', synths.length, 'parts:', parts.length);
-        synths.forEach(s => s.dispose());
+        // Build audioGraph instruments (once)
+        if (!graphInstruments) {
+            graphInstruments = buildAudioGraphInstruments();
+            if (graphInstruments) {
+                const samplerIds = Object.keys(graphInstruments).filter(k => graphInstruments[k] && graphInstruments[k].name === 'Sampler');
+                if (samplerIds.length > 0) {
+                    console.log('[PLAYER] Using audioGraph Samplers for tracks with synthRef:', samplerIds);
+                }
+            }
+        }
+
+        // Clean up existing synths and parts (but do not dispose graph instruments)
+        synths.forEach(s => {
+            // Avoid disposing shared graph instruments
+            if (!graphInstruments || !Object.values(graphInstruments).includes(s)) {
+                try { s.dispose(); } catch (e) {}
+            }
+        });
         parts.forEach(p => {
             p.stop();
             p.dispose();
@@ -360,25 +522,41 @@ export function createPlayer(composition, options = {}) {
         synths = [];
         parts = [];
 
+        console.log('[PLAYER] Converted tracks:', convertedTracks.length);
+
         // Create synths and parts from converted track data
         convertedTracks.forEach((trackConfig) => {
             const { originalTrackIndex, voiceIndex, totalVoices, trackInfo, synthConfig, partEvents } = trackConfig;
             
-            // Use selected synthesizer from UI or converted config
-            const selectedSynth = synthSelectors[originalTrackIndex] ? synthSelectors[originalTrackIndex].value : synthConfig.type;
-            
-            let synth;
-            try {
-                // Use synth type from converter (handles glissando compatibility)
-                const synthType = (synthConfig.reason === 'glissando_compatibility') ? synthConfig.type : selectedSynth;
-                synth = new Tone[synthType]().toDestination();
-                
-                if (synthConfig.reason === 'glissando_compatibility' && voiceIndex === 0) {
-                    console.warn(`[MULTIVOICE] Using ${synthType} instead of ${synthConfig.original} for glissando in ${trackInfo.label}`);
+            // Prefer audioGraph instrument if synthRef is set
+            const originalTrack = originalTracksSource[originalTrackIndex] || {};
+            const synthRef = originalTrack.synthRef;
+
+            // Normalize event times: treat numeric times/durations as beats and convert to seconds
+            const secPerBeat = 60 / metadata.tempo;
+            const normalizedEvents = (partEvents || []).map(ev => {
+                const time = (typeof ev.time === 'number') ? ev.time * secPerBeat : ev.time;
+                const duration = (typeof ev.duration === 'number') ? ev.duration * secPerBeat : ev.duration;
+                return { ...ev, time, duration };
+            });
+
+            let synth = null;
+            if (synthRef && graphInstruments && graphInstruments[synthRef]) {
+                synth = graphInstruments[synthRef];
+            } else {
+                // Use selected synthesizer from UI or converted config
+                const selectedSynth = synthSelectors[originalTrackIndex] ? synthSelectors[originalTrackIndex].value : synthConfig.type;
+                try {
+                    // Use synth type from converter (handles glissando compatibility)
+                    const synthType = (synthConfig.reason === 'glissando_compatibility') ? synthConfig.type : selectedSynth;
+                    synth = new Tone[synthType]().toDestination();
+                    if (synthConfig.reason === 'glissando_compatibility' && voiceIndex === 0) {
+                        console.warn(`[MULTIVOICE] Using ${synthType} instead of ${synthConfig.original} for glissando in ${trackInfo.label}`);
+                    }
+                } catch (error) {
+                    console.warn(`Failed to create ${selectedSynth}, using PolySynth:`, error);
+                    synth = new Tone.PolySynth().toDestination();
                 }
-            } catch (error) {
-                console.warn(`Failed to create ${selectedSynth}, using PolySynth:`, error);
-                synth = new Tone.PolySynth().toDestination();
             }
             
             synths.push(synth);
@@ -388,13 +566,8 @@ export function createPlayer(composition, options = {}) {
                 console.log(`[MULTIVOICE] Track "${trackInfo.label}" voice ${voiceIndex + 1}: ${partEvents.length} notes`);
             }
             
-            console.log('[PLAYER] Part events array:', partEvents);
-            
             const part = new Tone.Part((time, note) => {
                 // Log chaque note jouée
-                console.log('[PLAYER] Note event', {
-                    time, pitch: note.pitch, duration: note.duration, articulation: note.articulation, velocity: note.velocity, glissTarget: note.glissTarget
-                });
                 if (Array.isArray(note.pitch)) {
                     // Chord (no glissando for chords)
                     note.pitch.forEach(n => {
@@ -406,7 +579,6 @@ export function createPlayer(composition, options = {}) {
                         } else if (Array.isArray(n) && typeof n[0] === 'string') {
                             noteName = n[0];
                         }
-                        console.log('[PLAYER] Chord note', {noteName, duration: note.duration, time});
                         synth.triggerAttackRelease(noteName, note.duration, time);
                     });
                 } else if (note.articulation === 'glissando' && note.glissTarget !== undefined) {
@@ -471,46 +643,45 @@ export function createPlayer(composition, options = {}) {
                         noteDuration = note.duration * 1.5; // Allonger significativement (150%)
                         noteVelocity = Math.min(noteVelocity * 1.3, 1.0); // Augmenter aussi la vélocité
                     }
-                    console.log('[PLAYER] Single note', {noteName, noteDuration, time, noteVelocity});
                     synth.triggerAttackRelease(noteName, noteDuration, time, noteVelocity);
                 }
-            }, partEvents);
+            }, normalizedEvents);
             
             // Start the part immediately
             part.start(0);
-            console.log(`[PLAYER] Part created for voice ${voiceIndex + 1} with ${partEvents.length} notes, started at time 0`);
             
             parts.push(part);
         });
 
         // Use duration from converter
-        console.log('[PLAYER] Total duration from converter:', totalDuration, 'seconds');
         
         // Set up Transport timing
         Tone.Transport.bpm.value = metadata.tempo;
         
-        // Calculate loop end in beats from total duration
-        const beatDuration = 60 / metadata.tempo;
-        const totalBeats = totalDuration / beatDuration;
-        Tone.Transport.loopEnd = totalBeats;
-        console.log('[PLAYER] Transport loop end set to', totalBeats, 'beats');
-        
+        // Set Transport loop end in seconds to match event scheduling
+        Tone.Transport.loopEnd = totalDuration; // seconds
         Tone.Transport.loop = true;
         
         // Reset transport completely but keep our new Parts
         Tone.Transport.stop();
         Tone.Transport.position = 0;
         
-        console.log('[PLAYER] Transport fully reset - position:', Tone.Transport.position, 'state:', Tone.Transport.state);
         
         totalTime.textContent = formatTime(totalDuration);
     };
 
     const updateTimeline = () => {
         if (Tone && isPlaying) {
-            const progress = (Tone.Transport.seconds / totalDuration) * 100;
+            // Compute loop length in seconds (loopEnd is set in seconds)
+            const loopSeconds = (typeof Tone.Transport.loopEnd === 'number')
+                ? Tone.Transport.loopEnd
+                : (Tone.Time(Tone.Transport.loopEnd).toSeconds());
+
+            const elapsed = Tone.Transport.seconds % loopSeconds;
+            const progress = (elapsed / loopSeconds) * 100;
             timeline.value = Math.min(progress, 100);
-            currentTime.textContent = formatTime(Tone.Transport.seconds);
+            currentTime.textContent = formatTime(elapsed);
+            totalTime.textContent = formatTime(loopSeconds);
             
             // Check if we should continue updating
             if (Tone.Transport.state === 'started' && isPlaying) {
@@ -528,10 +699,8 @@ export function createPlayer(composition, options = {}) {
 
     // Event handlers - using addEventListener to avoid CSP violations
     playButton.addEventListener('click', async () => {
-        console.log('[PLAYER] Play button clicked, isPlaying:', isPlaying, 'Tone available:', !!Tone);
         
         if (!Tone) {
-            console.log('[PLAYER] Initializing Tone.js...');
             if (await initializeTone()) {
                 setupAudio();
             } else {
@@ -541,12 +710,17 @@ export function createPlayer(composition, options = {}) {
         }
 
         if (isPlaying) {
-            console.log('[PLAYER] Stopping transport...');
             Tone.Transport.stop();
             isPlaying = false;
             playButton.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-play"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8"/></svg>`;
         } else {
-            console.log('[PLAYER] Starting transport...');
+            
+            // Ensure audio context is started first
+            if (Tone.context.state !== 'running') {
+                await Tone.start();
+                console.log('[PLAYER] Audio context started:', Tone.context.state);
+            }
+            
             if (synths.length === 0) {
                 console.log('[PLAYER] No synths found, setting up audio...');
                 setupAudio();
@@ -562,7 +736,22 @@ export function createPlayer(composition, options = {}) {
             console.log('[PLAYER] Audio context state:', Tone.context.state);
             console.log('[PLAYER] Parts count:', parts.length);
             console.log('[PLAYER] Synths count:', synths.length);
-            
+            // Wait for samplers to load if present
+            if (graphInstruments) {
+                const samplers = Object.values(graphInstruments).filter(inst => inst && inst.name === 'Sampler');
+                if (samplers.length > 0 && samplerLoadPromises.length > 0) {
+                    console.log(`[PLAYER] Waiting for ${samplers.length} sampler(s) to load...`);
+                    try {
+                        await Promise.all(samplerLoadPromises);
+                        console.log('[PLAYER] All samplers loaded.');
+                    } catch (e) {
+                        console.warn('[PLAYER] Sampler load wait error:', e);
+                        // Abort start if samples failed to load
+                        return;
+                    }
+                }
+            }
+
             // Start immediately at position 0
             Tone.Transport.start();
             isPlaying = true;
@@ -607,7 +796,32 @@ export function createPlayer(composition, options = {}) {
 
     // Initialize if Tone.js is already available
     if (typeof window !== 'undefined' && window.Tone) {
-        initializeTone().then(() => setupAudio());
+        initializeTone().then(() => {
+            setupAudio();
+            // Auto-start playback if autoplay is enabled
+            if (autoplay) {
+                setTimeout(() => {
+                    playButton.click();
+                }, 500); // Small delay to ensure audio is fully initialized
+            }
+        });
+    }
+
+    // If autoplay is enabled but Tone.js isn't available yet, try later
+    if (autoplay && (!window.Tone)) {
+        const autoplayInterval = setInterval(() => {
+            if (window.Tone) {
+                clearInterval(autoplayInterval);
+                setTimeout(() => {
+                    playButton.click();
+                }, 500);
+            }
+        }, 100); // Check every 100ms for Tone.js availability
+        
+        // Clear interval after 10 seconds to avoid infinite checking
+        setTimeout(() => {
+            clearInterval(autoplayInterval);
+        }, 10000);
     }
 
     return container;

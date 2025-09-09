@@ -65,5 +65,9 @@
   "bugs": {
     "url": "https://github.com/essicolo/jmon-studio/issues"
   },
-  "homepage": "https://github.com/essicolo/jmon-studio#readme"
+  "homepage": "https://github.com/essicolo/jmon-studio#readme",
+  "volta": {
+    "node": "24.7.0",
+    "npm": "11.5.1"
+  }
 }

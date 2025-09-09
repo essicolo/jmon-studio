@@ -158,7 +158,11 @@ export class Ornament {
      * Add a grace note
      */
     addGraceNote(notes, noteIndex) {
-        const [mainPitch, mainDuration, mainOffset] = notes[noteIndex];
+        const mainNote = notes[noteIndex];
+        const mainPitch = mainNote.pitch;
+        const mainDuration = mainNote.duration;
+        const mainOffset = mainNote.time;
+        
         const ornamentPitch = this.params.gracePitches ? 
             this.params.gracePitches[Math.floor(Math.random() * this.params.gracePitches.length)] :
             mainPitch + 1;
@@ -166,20 +170,20 @@ export class Ornament {
         if (this.params.graceNoteType === 'acciaccatura') {
             // Very brief, does not alter main note's start time
             const graceDuration = mainDuration * 0.125;
-            const modifiedMain = [mainPitch, mainDuration, mainOffset + graceDuration];
+            const modifiedMain = { pitch: mainPitch, duration: mainDuration, time: mainOffset + graceDuration };
             return [
                 ...notes.slice(0, noteIndex),
-                [ornamentPitch, graceDuration, mainOffset],
+                { pitch: ornamentPitch, duration: graceDuration, time: mainOffset },
                 modifiedMain,
                 ...notes.slice(noteIndex + 1)
             ];
         } else { // appoggiatura
             // Takes half the time of the main note
             const graceDuration = mainDuration / 2;
-            const modifiedMain = [mainPitch, graceDuration, mainOffset + graceDuration];
+            const modifiedMain = { pitch: mainPitch, duration: graceDuration, time: mainOffset + graceDuration };
             return [
                 ...notes.slice(0, noteIndex),
-                [ornamentPitch, graceDuration, mainOffset],
+                { pitch: ornamentPitch, duration: graceDuration, time: mainOffset },
                 modifiedMain,
                 ...notes.slice(noteIndex + 1)
             ];
@@ -190,7 +194,11 @@ export class Ornament {
      * Add a trill
      */
     addTrill(notes, noteIndex) {
-        const [mainPitch, mainDuration, mainOffset] = notes[noteIndex];
+        const mainNote = notes[noteIndex];
+        const mainPitch = mainNote.pitch;
+        const mainDuration = mainNote.duration;
+        const mainOffset = mainNote.time;
+        
         const trillNotes = [];
         let currentOffset = mainOffset;
 
@@ -213,8 +221,8 @@ export class Ornament {
             const noteLength = Math.min(trillRate, remainingTime / 2);
             
             if (remainingTime >= noteLength * 2) {
-                trillNotes.push([mainPitch, noteLength, currentOffset]);
-                trillNotes.push([trillPitch, noteLength, currentOffset + noteLength]);
+                trillNotes.push({ pitch: mainPitch, duration: noteLength, time: currentOffset });
+                trillNotes.push({ pitch: trillPitch, duration: noteLength, time: currentOffset + noteLength });
                 currentOffset += 2 * noteLength;
             } else {
                 break;
@@ -232,7 +240,11 @@ export class Ornament {
      * Add a mordent
      */
     addMordent(notes, noteIndex) {
-        const [mainPitch, mainDuration, mainOffset] = notes[noteIndex];
+        const mainNote = notes[noteIndex];
+        const mainPitch = mainNote.pitch;
+        const mainDuration = mainNote.duration;
+        const mainOffset = mainNote.time;
+        
         const by = this.params.by || 1;
 
         let mordentPitch;
@@ -246,9 +258,9 @@ export class Ornament {
 
         const partDuration = mainDuration / 3;
         const mordentNotes = [
-            [mainPitch, partDuration, mainOffset],
-            [mordentPitch, partDuration, mainOffset + partDuration],
-            [mainPitch, partDuration, mainOffset + 2 * partDuration]
+            { pitch: mainPitch, duration: partDuration, time: mainOffset },
+            { pitch: mordentPitch, duration: partDuration, time: mainOffset + partDuration },
+            { pitch: mainPitch, duration: partDuration, time: mainOffset + 2 * partDuration }
         ];
 
         return [
@@ -262,7 +274,11 @@ export class Ornament {
      * Add a turn
      */
     addTurn(notes, noteIndex) {
-        const [mainPitch, mainDuration, mainOffset] = notes[noteIndex];
+        const mainNote = notes[noteIndex];
+        const mainPitch = mainNote.pitch;
+        const mainDuration = mainNote.duration;
+        const mainOffset = mainNote.time;
+        
         const partDuration = mainDuration / 4;
 
         let upperPitch, lowerPitch;
@@ -276,10 +292,10 @@ export class Ornament {
         }
 
         const turnNotes = [
-            [mainPitch, partDuration, mainOffset],
-            [upperPitch, partDuration, mainOffset + partDuration],
-            [mainPitch, partDuration, mainOffset + 2 * partDuration],
-            [lowerPitch, partDuration, mainOffset + 3 * partDuration]
+            { pitch: mainPitch, duration: partDuration, time: mainOffset },
+            { pitch: upperPitch, duration: partDuration, time: mainOffset + partDuration },
+            { pitch: mainPitch, duration: partDuration, time: mainOffset + 2 * partDuration },
+            { pitch: lowerPitch, duration: partDuration, time: mainOffset + 3 * partDuration }
         ];
 
         return [
@@ -293,7 +309,11 @@ export class Ornament {
      * Add an arpeggio
      */
     addArpeggio(notes, noteIndex) {
-        const [mainPitch, mainDuration, mainOffset] = notes[noteIndex];
+        const mainNote = notes[noteIndex];
+        const mainPitch = mainNote.pitch;
+        const mainDuration = mainNote.duration;
+        const mainOffset = mainNote.time;
+        
         const { arpeggioDegrees, direction = 'up' } = this.params;
 
         if (!arpeggioDegrees || !Array.isArray(arpeggioDegrees)) {
@@ -312,11 +332,11 @@ export class Ornament {
         if (direction === 'both') pitches.push(...pitches.slice(0, -1).reverse());
 
         const partDuration = mainDuration / pitches.length;
-        const arpeggioNotes = pitches.map((pitch, i) => [
-            pitch,
-            partDuration,
-            mainOffset + i * partDuration
-        ]);
+        const arpeggioNotes = pitches.map((pitch, i) => ({
+            pitch: pitch,
+            duration: partDuration,
+            time: mainOffset + i * partDuration
+        }));
 
         return [
             ...notes.slice(0, noteIndex),

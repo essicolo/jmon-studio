@@ -3,6 +3,7 @@
 
 import Ajv from 'ajv';
 import jmonSchema from '../../schemas/jmon-schema.json';
+import { normalizeSamplerUrlsToNoteNames } from './normalize.js';
 
 export class JmonValidator {
     constructor(schema = jmonSchema) {
@@ -18,6 +19,8 @@ export class JmonValidator {
     validateAndNormalize(jmonObj) {
         // Deep clone pour ne pas modifier l'objet d'origine
         const data = JSON.parse(JSON.stringify(jmonObj));
+        // Pre-normalize for schema compliance (e.g., Sampler urls keys to scientific pitch names)
+        normalizeSamplerUrlsToNoteNames(data);
         const valid = this.validate(data);
         return {
             valid,

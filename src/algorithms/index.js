@@ -9,7 +9,7 @@ import { MotifBank } from './theory/motifs/index.js';
 // Generative algorithm imports
 import { GaussianProcessRegressor } from './generative/gaussian-processes/index.js';
 import { CellularAutomata } from './generative/cellular-automata/index.js';
-import { Polyloop } from './generative/polyloops/index.js';
+import { Loop } from './generative/loops/index.js';
 import { GeneticAlgorithm } from './generative/genetic/index.js';
 import { RandomWalk } from './generative/walks/index.js';
 import { Mandelbrot, LogisticMap } from './generative/fractals/index.js';
@@ -41,9 +41,7 @@ export const generative = {
     automata: {
         Cellular: CellularAutomata
     },
-    loops: {
-        Poly: Polyloop
-    },
+    loops: Loop,
     genetic: {
         Algorithm: GeneticAlgorithm
     },

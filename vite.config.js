@@ -24,9 +24,21 @@ export default defineConfig({
     outDir: 'dist',
     emptyOutDir: false
   },
+  define: {
+    global: 'globalThis'
+  },
+  optimizeDeps: {
+    exclude: ['plotly.js']
+  },
   resolve: {
     alias: {
-      '@': resolve(__dirname, 'src')
+      '@': resolve(__dirname, 'src'),
+      buffer: 'buffer'
+    }
+  },
+  server: {
+    fs: {
+      allow: ['.']
     }
   }
 });

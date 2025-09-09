@@ -1,4 +1,5 @@
 import { JmonValidator } from '../utils/jmon-validator.js';
+import { quantize, quantizeEvents, encodeAbcDuration } from '../utils/quantize.js';
 /**
  * toAbc.js - Convert jmon format to ABC notation
  * 
@@ -59,7 +60,7 @@ export class ToAbc {
         }
         return parseFloat(timeString) || 0;
     }
-    static convertToAbc(composition) {
+    static convertToAbc(composition, options = {}) {
         // Header
         let abc = 'X:1\n';
         abc += `T:${composition.metadata?.title || composition.metadata?.name || composition.label || 'Untitled'}\n`;
@@ -68,56 +69,250 @@ export class ToAbc {
         abc += `Q:1/4=${composition.bpm || 120}\n`;
         abc += `K:${composition.keySignature || 'C'}\n`;
 
-        // Prend le premier track (array ou objet)
+        // Parse time signature to get beats per measure
+        const timeSignature = composition.timeSignature || '4/4';
+        const [beatsPerMeasure, beatValue] = timeSignature.split('/').map(Number);
+        const quarterNotesPerMeasure = beatsPerMeasure * (4 / beatValue); // Convert to quarter note units
+        
+        // Line break options
+        const measuresPerLine = options.measuresPerLine || 4; // Default: 4 measures per line
+        const lineBreaks = options.lineBreaks || []; // Manual line breaks at specific measure numbers
+        const renderMode = options.renderMode || 'merged'; // 'merged', 'tracks', or 'single'
+        const trackIndex = options.trackIndex || 0; // Which track to render if renderMode is 'single'
+        const hideRests = !!options.hideRests; // if true, use spacer rests 'x' instead of 'z'
+        const showArticulations = options.showArticulations !== false; // default true
+        
+        // Get tracks
         const tracks = Array.isArray(composition.tracks) ? composition.tracks : Object.values(composition.tracks || {});
-        if (tracks.length > 0) {
-            const notes = tracks[0].notes || tracks[0];
-            let abcNotes = '';
-            let beatCount = 0;
-            // Tri par temps
-            const sortedNotes = notes.filter(n => n.pitch !== undefined).sort((a, b) => (a.time || 0) - (b.time || 0));
-            for (const note of sortedNotes) {
-                if (beatCount > 0 && beatCount % 4 === 0) {
-                    abcNotes += '| ';
+        if (tracks.length === 0) return abc;
+
+        // Pre-compute total project length (in quarter notes) for padding
+        const totalQuarters = (() => {
+            let maxEnd = 0;
+            tracks.forEach(track => {
+                const notes = track.notes || track;
+                if (!Array.isArray(notes)) return;
+                notes.forEach(n => {
+                    const start = typeof n.time === 'number' ? n.time : 0;
+                    const dur = typeof n.duration === 'number' ? n.duration : 1;
+                    const end = start + dur;
+                    if (end > maxEnd) maxEnd = end;
+                });
+            });
+            return maxEnd;
+        })();
+        const totalMeasures = Math.max(1, Math.ceil(totalQuarters / quarterNotesPerMeasure));
+
+        // Handle different rendering modes
+        if (renderMode === 'tracks' && tracks.length > 1) {
+            // Add score configuration for multi-voice rendering
+            abc += `%%score {`;
+            tracks.forEach((track, trackIndex) => {
+                if (trackIndex > 0) abc += ' | ';
+                abc += `${trackIndex + 1}`;
+            });
+            abc += `}\n`;
+            
+            // Render each track as a separate voice/staff
+            tracks.forEach((track, trackIndex) => {
+                const trackNotes = track.notes || track;
+                if (trackNotes.length === 0) return;
+
+                // Add voice header with proper naming
+                const voiceId = trackIndex + 1;
+                const trackName = track.label || `Track ${trackIndex + 1}`;
+                const shortName = trackName.length > 12 ? trackName.substring(0, 10) + '..' : trackName;
+                const instrument = track.instrument ? ` [${track.instrument}]` : '';
+                
+                abc += `V:${voiceId} name="${trackName}${instrument}" snm="${shortName}"\n`;
+                
+                const sortedNotes = trackNotes.filter(n => n.pitch !== undefined).sort((a, b) => (a.time || 0) - (b.time || 0));
+                const { abcNotesStr } = this.convertNotesToAbc(sortedNotes, quarterNotesPerMeasure, measuresPerLine, lineBreaks, { hideRests, showArticulations, padMeasures: totalMeasures });
+                
+                if (abcNotesStr.trim()) {
+                    abc += abcNotesStr + '\n';
                 }
-                // Conversion MIDI -> ABC
-                let noteName = 'z';
-                if (typeof note.pitch === 'number') {
-                    const midi = note.pitch;
-                    const noteNames = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B'];
-                    const octave = Math.floor(midi / 12) - 1;
-                    const noteIndex = midi % 12;
-                    noteName = noteNames[noteIndex].replace('#', '^');
-                    if (octave >= 4) {
-                        noteName = noteName.toLowerCase();
-                        if (octave > 4) noteName += "'".repeat(octave - 4);
-                    } else if (octave < 4) {
-                        noteName = noteName.toUpperCase();
-                        if (octave < 3) noteName += ','.repeat(3 - octave);
-                    }
-                } else if (typeof note.pitch === 'string') {
-                    noteName = note.pitch;
+            });
+        } else if (renderMode === 'drums') {
+            // Merge all tracks into a single percussion staff
+            abc += `V:1 clef=perc name="Drum Set" snm="Drums"\n`;
+            // Build a mapping from track label to ABC pitch for staff position
+            const defaultMap = options.percussionMap || {
+                'kick': 'C,,',
+                'snare': 'D,',
+                'hat': 'F',
+                'hi-hat': 'F',
+                'hihat': 'F'
+            };
+            const mapLabelToPitch = (label) => {
+                const lower = (label || '').toLowerCase();
+                for (const key of Object.keys(defaultMap)) {
+                    if (lower.includes(key)) return defaultMap[key];
                 }
-                // Durée
-                const duration = note.duration || 1.0;
-                if (duration === 2.0) noteName += '2';
-                else if (duration === 0.5) noteName += '/2';
-                // Articulations (staccato, accent, etc.)
-                if (note.articulation === 'staccato') noteName += '.';
-                if (note.articulation === 'accent') noteName += '>';
-                if (note.articulation === 'tenuto') noteName += '-';
-                if (note.articulation === 'marcato') noteName += '^';
-                abcNotes += noteName + ' ';
-                beatCount += duration;
+                return 'E'; // default mid line
+            };
+            const merged = [];
+            tracks.forEach(track => {
+                const notes = track.notes || track;
+                const label = track.label || '';
+                const staffPitch = mapLabelToPitch(label);
+                (notes || []).forEach(n => {
+                    if (n.pitch === undefined) return; // skip invalid
+                    merged.push({
+                        time: typeof n.time === 'number' ? n.time : 0,
+                        duration: typeof n.duration === 'number' ? n.duration : 1,
+                        // Use mapped ABC pitch string directly in converter
+                        pitch: staffPitch,
+                        articulation: n.articulation
+                    });
+                });
+            });
+            const sorted = merged.sort((a,b)=> (a.time||0)-(b.time||0));
+            const { abcNotesStr } = this.convertNotesToAbc(sorted, quarterNotesPerMeasure, measuresPerLine, lineBreaks, { hideRests, showArticulations, padMeasures: totalMeasures });
+            if (abcNotesStr.trim()) abc += abcNotesStr + '\n';
+        } else if (renderMode === 'single') {
+            // Render only the specified track
+            const track = tracks[trackIndex];
+            if (track) {
+                const notes = track.notes || track;
+                const sortedNotes = notes.filter(n => n.pitch !== undefined).sort((a, b) => (a.time || 0) - (b.time || 0));
+                const { abcNotesStr } = this.convertNotesToAbc(sortedNotes, quarterNotesPerMeasure, measuresPerLine, lineBreaks, { hideRests, showArticulations, padMeasures: totalMeasures });
+                
+                if (abcNotesStr.trim()) {
+                    abc += abcNotesStr + '\n';
+                }
             }
-            if (abcNotes.trim()) {
-                abcNotes += '|';
-                abc += abcNotes + '\n';
+        } else {
+            // Default: merge all tracks chronologically
+            const allNotes = [];
+            tracks.forEach(track => {
+                const trackNotes = track.notes || track;
+                trackNotes.forEach(note => {
+                    if (note.pitch !== undefined) {
+                        allNotes.push(note);
+                    }
+                });
+            });
+            
+            const sortedNotes = allNotes.sort((a, b) => (a.time || 0) - (b.time || 0));
+            const { abcNotesStr } = this.convertNotesToAbc(sortedNotes, quarterNotesPerMeasure, measuresPerLine, lineBreaks, { hideRests, showArticulations, padMeasures: totalMeasures });
+            
+            if (abcNotesStr.trim()) {
+                abc += abcNotesStr + '\n';
             }
         }
         return abc;
     }
+
+    /**
+     * Convert notes to ABC notation string
+     */
+    static convertNotesToAbc(sortedNotes, quarterNotesPerMeasure, measuresPerLine, lineBreaks, opts = {}) {
+        let abcNotes = '';
+        let currentMeasureBeat = 0; // in quarter-note units
+        let measureCount = 0;
+        let measuresOnCurrentLine = 0;
+        let lastEnd = 0; // absolute time in quarter-note units
+
+        const grid = options?.quantizeBeats || 0.25; // user-definable grid
+        const EPS = 1e-6;
+        const q = (v) => quantize(v, grid, 'nearest');
+        const encodeDur = (d) => encodeAbcDuration(d, grid);
+
+        const emitToken = (token) => { abcNotes += token + ' '; };
+        const emitBarsIfNeeded = () => {
+            while (currentMeasureBeat >= quarterNotesPerMeasure - 1e-9) {
+                emitToken('|');
+                currentMeasureBeat -= quarterNotesPerMeasure;
+                measureCount++;
+                measuresOnCurrentLine++;
+                const shouldBreakLine = lineBreaks.includes(measureCount) || (measuresOnCurrentLine >= measuresPerLine);
+                if (shouldBreakLine) {
+                    abcNotes += '\n';
+                    measuresOnCurrentLine = 0;
+                }
+            }
+        };
+        const emitRest = (dur, { forceVisible = false } = {}) => {
+            // dur in quarter-note units; may span measures
+            let remaining = dur;
+            while (remaining > 0) {
+                const spaceLeft = quarterNotesPerMeasure - currentMeasureBeat;
+                const chunk = q(Math.min(remaining, spaceLeft));
+                let restToken = (opts.hideRests && !forceVisible) ? 'x' : 'z';
+                restToken += encodeDur(chunk);
+                emitToken(restToken);
+                currentMeasureBeat = q(currentMeasureBeat + chunk);
+                emitBarsIfNeeded();
+                remaining = q(remaining - chunk);
+            }
+        };
+
+        for (const note of sortedNotes) {
+            const start = (typeof note.time === 'number') ? q(note.time) : 0; // quarters
+            const duration = (typeof note.duration === 'number') ? q(note.duration) : 1.0;
+
+            // Insert rests for gaps
+            const gap = q(start - lastEnd);
+            if (gap > EPS) emitRest(gap);
+
+            // Build pitch token
+            let token = 'z';
+            if (typeof note.pitch === 'number') {
+                const midi = note.pitch;
+                const noteNames = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B'];
+                const octave = Math.floor(midi / 12) - 1;
+                const noteIndex = midi % 12;
+                token = noteNames[noteIndex].replace('#', '^');
+                if (octave >= 4) {
+                    token = token.toLowerCase();
+                    if (octave > 4) token += "'".repeat(octave - 4);
+                } else if (octave < 4) {
+                    token = token.toUpperCase();
+                    if (octave < 3) token += ','.repeat(3 - octave);
+                }
+            } else if (typeof note.pitch === 'string') {
+                token = note.pitch;
+            } else if (note.pitch === null) {
+                token = opts.hideRests ? 'x' : 'z';
+            }
+
+            // Duration annotation
+            let noteToken = token;
+            noteToken += encodeDur(duration);
+
+            // Articulations
+            if (opts.showArticulations) {
+                if (note.articulation === 'staccato') noteToken += '.';
+                if (note.articulation === 'accent') noteToken += '>';
+                if (note.articulation === 'tenuto') noteToken += '-';
+                if (note.articulation === 'marcato') noteToken += '^';
+            }
+
+            emitToken(noteToken);
+            currentMeasureBeat = q(currentMeasureBeat + duration);
+            emitBarsIfNeeded();
+
+            lastEnd = q(start + duration);
+        }
+
+        // Pad trailing measure(s) to align voices
+        const padMeasures = opts.padMeasures || 0;
+        while (measureCount < padMeasures) {
+            const remaining = q(quarterNotesPerMeasure - currentMeasureBeat);
+            if (remaining > EPS) emitRest(remaining, { forceVisible: true });
+            // ensure barline at end of measure
+            emitToken('|');
+            currentMeasureBeat = 0;
+            measureCount++;
+        }
+        
+        // Final bar if needed
+        const trimmed = abcNotes.trim();
+        if (trimmed && !trimmed.endsWith('|')) abcNotes += '|';
+        return { abcNotesStr: abcNotes };
+    }
 }
-export function abc(composition) {
-    return ToAbc.convertToAbc(composition);
+export function abc(composition, options = {}) {
+    return ToAbc.convertToAbc(composition, options);
 }
