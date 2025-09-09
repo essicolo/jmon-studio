@@ -499,33 +499,10 @@ export function createPlayer(composition, options = {}) {
             if (toneInstance) {
                 Tone = toneInstance;
                 
-                // Safari-specific audio context handling
-                try {
-                    // Check if context exists before accessing it
-                    if (!Tone.context) {
-                        console.warn('[PLAYER] Tone.context not available, attempting to start...');
-                        await Tone.start();
-                    } else {
-                        // Force audio context start for Safari
-                        if (Tone.context && (Tone.context.state === 'suspended' || Tone.context.state === 'interrupted')) {
-                            await Tone.context.resume();
-                        }
-                        
-                        // Ensure audio context is started
-                        if (!Tone.context || Tone.context.state !== 'running') {
-                            await Tone.start();
-                            
-                            // Safari sometimes needs a delay
-                            if (navigator.userAgent.includes('Safari') && !navigator.userAgent.includes('Chrome')) {
-                                await new Promise(resolve => setTimeout(resolve, 100));
-                            }
-                        }
-                    }
-                    return Tone.context && Tone.context.state === 'running';
-                } catch (error) {
-                    console.error('[PLAYER] Failed to initialize audio context:', error);
-                    return false;
-                }
+                // Don't start audio context here - must wait for user gesture
+                // Just validate that Tone.js is properly loaded
+                console.log('[PLAYER] Tone.js initialized, context state:', Tone.context ? Tone.context.state : 'no context');
+                return true;
             }
         }
         console.warn('Tone.js not available');
