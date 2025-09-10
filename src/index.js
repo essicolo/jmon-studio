@@ -3,7 +3,7 @@ import algorithms from './algorithms/index.js';
 import { createPlayer } from './browser/music-player.js';
 import { abc, midi, tonejs, wav, supercollider } from './converters/index.js';
 import * as jmonUtils from './utils/jmon-utils.js';
-import { GM_INSTRUMENTS, generateSamplerUrls, createGMInstrumentNode, getPopularInstruments } from './utils/gm-instruments.js';
+import { GM_INSTRUMENTS, generateSamplerUrls, createGMInstrumentNode, findGMProgramByName, getPopularInstruments } from './utils/gm-instruments.js';
 /**
  * Validation utilitaire simple
  * @param {Object} obj - Objet JMON à valider
@@ -245,6 +245,7 @@ const jm = {
         GM_INSTRUMENTS,
         generateSamplerUrls,
         createGMInstrumentNode,
+        findGMProgramByName,
         getPopularInstruments
     },
 

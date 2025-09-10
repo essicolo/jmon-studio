@@ -252,17 +252,57 @@ function midiToNoteName(midi) {
 }
 
 /**
+ * Find GM program number by instrument name (case-insensitive)
+ * @param {string} instrumentName - Name of the instrument (e.g., "Violin", "acoustic grand piano")
+ * @returns {number|null} GM program number or null if not found
+ */
+export function findGMProgramByName(instrumentName) {
+  const searchName = instrumentName.toLowerCase().trim();
+  
+  for (const [program, instrument] of Object.entries(GM_INSTRUMENTS)) {
+    if (instrument.name.toLowerCase() === searchName) {
+      return parseInt(program, 10);
+    }
+  }
+  
+  // Try partial matching for common variations
+  for (const [program, instrument] of Object.entries(GM_INSTRUMENTS)) {
+    const instName = instrument.name.toLowerCase();
+    if (instName.includes(searchName) || searchName.includes(instName.split(' ')[0])) {
+      return parseInt(program, 10);
+    }
+  }
+  
+  return null;
+}
+
+/**
  * Create audioGraph configuration for GM instrument
- * @param {number} gmProgram - GM program number
+ * @param {number|string} gmProgramOrName - GM program number (0-127) OR instrument name (e.g., "Violin")
  * @param {string} synthRef - Reference ID for the synth
  * @param {Object} options - Additional options
  * @returns {Object} AudioGraph node configuration
  */
 export function createGMInstrumentNode(
-  gmProgram,
+  gmProgramOrName,
   synthRef = "gm_sampler",
   options = {},
 ) {
+  let gmProgram;
+  
+  // Handle both number and string inputs
+  if (typeof gmProgramOrName === 'string') {
+    gmProgram = findGMProgramByName(gmProgramOrName);
+    if (gmProgram === null) {
+      console.warn(`GM instrument "${gmProgramOrName}" not found. Available instruments:`);
+      const availableNames = Object.values(GM_INSTRUMENTS).map(inst => inst.name).slice(0, 10);
+      console.warn(`Examples: ${availableNames.join(', ')}...`);
+      console.warn('Using Acoustic Grand Piano as fallback');
+      gmProgram = 0;
+    }
+  } else {
+    gmProgram = gmProgramOrName;
+  }
   const instrument = GM_INSTRUMENTS[gmProgram];
   if (!instrument) return null;
 
