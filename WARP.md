@@ -32,6 +32,33 @@ node src/converters/__tests__/abc-glissando.test.js
 
 Note: This project uses a custom test runner rather than Jest/Mocha, with tests written in plain Node.js modules.
 
+## Complete Instrument Sampling
+
+### Default Strategy: Complete
+As of version 1.5.30+, JMON uses **complete sampling** by default for GM instruments. This loads all 88 piano keys (MIDI notes 21-108) for maximum audio quality.
+
+**Benefits:**
+- Perfect pitch accuracy for all notes
+- No artifacts from pitch-shifting
+- Professional audio quality
+- ~4MB per instrument (reasonable for modern connections)
+
+**Usage:**
+```javascript
+// Default: loads all 88 keys
+const urls = jm.instruments.generateSamplerUrls(24); // Acoustic Guitar
+
+// Alternative strategies available:
+const minimalUrls = jm.instruments.generateSamplerUrls(24, undefined, [36, 84], 'minimal'); // ~8 samples
+const balancedUrls = jm.instruments.generateSamplerUrls(24, undefined, [36, 84], 'balanced'); // ~16 samples
+const qualityUrls = jm.instruments.generateSamplerUrls(24, undefined, [36, 84], 'quality'); // ~20 samples
+```
+
+**Testing:**
+- `test-complete-sampler.html` - Complete range testing with progress tracking
+- `test-sampling-strategies.html` - Compare different sampling strategies
+- `test-sampler-debug.html` - Debug loading issues
+
 ## High-Level Architecture
 
 ### Core JMON Format

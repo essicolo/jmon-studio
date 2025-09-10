@@ -144,3 +144,7 @@ vite.config.ts.timestamp-*
 _djalgo/
 
 node_modules/
+
+# ai coding agents
+WARP.md
+.claude

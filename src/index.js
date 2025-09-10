@@ -3,6 +3,7 @@ import algorithms from './algorithms/index.js';
 import { createPlayer } from './browser/music-player.js';
 import { abc, midi, tonejs, wav, supercollider } from './converters/index.js';
 import * as jmonUtils from './utils/jmon-utils.js';
+import { GM_INSTRUMENTS, generateSamplerUrls, createGMInstrumentNode, getPopularInstruments } from './utils/gm-instruments.js';
 /**
  * Validation utilitaire simple
  * @param {Object} obj - Objet JMON à valider
@@ -237,6 +238,14 @@ const jm = {
         quantizeComposition: async (comp, opts) => (await import('./utils/quantize.js')).quantizeComposition(comp, opts),
         // JMON utilities - official format helpers
         jmon: jmonUtils
+    },
+    
+    // GM Instruments
+    instruments: {
+        GM_INSTRUMENTS,
+        generateSamplerUrls,
+        createGMInstrumentNode,
+        getPopularInstruments
     },
 
     VERSION: '1.0.0'

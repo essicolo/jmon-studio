@@ -1,5 +1,6 @@
 // import { JmonValidator } from '../utils/jmon-validator.js';
 import { tonejs } from '../converters/tonejs.js';
+import { GM_INSTRUMENTS, generateSamplerUrls, createGMInstrumentNode, getPopularInstruments, CDN_SOURCES } from '../utils/gm-instruments.js';
 /**
  * Music Player
  * Comprehensive music player inspired by djalgo player.py
@@ -95,13 +96,8 @@ export function createPlayer(composition, options = {}) {
         flex-direction: column;
     `;
     
-    // Available synth types (exclude Sampler unless audioGraph is present)
-    const synthTypes = ['PolySynth', 'Synth', 'AMSynth', 'DuoSynth', 'FMSynth', 'MembraneSynth', 'MetalSynth', 'MonoSynth', 'PluckSynth'];
-    
-    // Add Sampler if audioGraph contains sampler definitions
-    if (composition.audioGraph && composition.audioGraph.some(node => node.type === 'Sampler')) {
-        synthTypes.unshift('Sampler');
-    }
+    // Get GM instruments for organized dropdown
+    const gmInstruments = getPopularInstruments();
     
     // Get tracks from composition for UI
     const originalTracks = composition.tracks || composition.sequences || [];
@@ -147,18 +143,30 @@ export function createPlayer(composition, options = {}) {
             outline: none;
         `;
         
-        synthTypes.forEach((synthType, synthIndex) => {
+        // Add Synthesizers optgroup
+        const synthGroup = document.createElement('optgroup');
+        synthGroup.label = 'Synthesizers';
+        
+        const basicSynths = ['PolySynth', 'Synth', 'AMSynth', 'DuoSynth', 'FMSynth', 'MembraneSynth', 'MetalSynth', 'MonoSynth', 'PluckSynth'];
+        
+        // Add custom samplers first if present
+        if (composition.audioGraph && composition.audioGraph.some(node => node.type === 'Sampler')) {
+            const samplerOption = document.createElement('option');
+            samplerOption.value = 'Sampler';
+            samplerOption.textContent = 'Sampler';
+            if ((composition.tracks?.[index]?.synthRef)) {
+                samplerOption.selected = true;
+            }
+            synthGroup.appendChild(samplerOption);
+        }
+        
+        basicSynths.forEach((synthType) => {
             const option = document.createElement('option');
             option.value = synthType;
             option.textContent = synthType;
             
-            // Default selection priority:
-            // 1. If track has synthRef and Sampler is available, select Sampler
-            // 2. If track has glissando, select first mono synth (typically 'Synth')
-            // 3. Otherwise, select PolySynth (first option)
-            if ((composition.tracks?.[index]?.synthRef) && synthType === 'Sampler') {
-                option.selected = true;
-            } else if (trackAnalysis?.hasGlissando && synthType === 'Synth') {
+            // Default selection priority for basic synths
+            if (trackAnalysis?.hasGlissando && synthType === 'Synth') {
                 option.selected = true;
             } else if (!trackAnalysis?.hasGlissando && !composition.tracks?.[index]?.synthRef && synthType === 'PolySynth') {
                 option.selected = true;
@@ -169,7 +177,44 @@ export function createPlayer(composition, options = {}) {
                 option.disabled = true;
                 option.textContent += ' (mono only for glissando)';
             }
-            synthSelect.appendChild(option);
+            synthGroup.appendChild(option);
+        });
+        
+        synthSelect.appendChild(synthGroup);
+        
+        // Add GM Instruments optgroup
+        const gmGroup = document.createElement('optgroup');
+        gmGroup.label = 'Sampled Instruments';
+        
+        // Group GM instruments by category
+        const instrumentsByCategory = {};
+        gmInstruments.forEach(instrument => {
+            if (!instrumentsByCategory[instrument.category]) {
+                instrumentsByCategory[instrument.category] = [];
+            }
+            instrumentsByCategory[instrument.category].push(instrument);
+        });
+        
+        // Add instruments organized by category
+        Object.keys(instrumentsByCategory).sort().forEach(category => {
+            const categoryGroup = document.createElement('optgroup');
+            categoryGroup.label = category;
+            
+            instrumentsByCategory[category].forEach(instrument => {
+                const option = document.createElement('option');
+                option.value = `GM: ${instrument.name}`;
+                option.textContent = instrument.name;
+                
+                // Disable GM instruments for glissando (samplers don't support smooth pitch bending well)
+                if (trackAnalysis?.hasGlissando) {
+                    option.disabled = true;
+                    option.textContent += ' (not suitable for glissando)';
+                }
+                
+                categoryGroup.appendChild(option);
+            });
+            
+            synthSelect.appendChild(categoryGroup);
         });
         
         synthSelectors.push(synthSelect);
@@ -616,18 +661,47 @@ export function createPlayer(composition, options = {}) {
             } else {
                 // Use selected synthesizer from UI or converted config
                 const selectedSynth = synthSelectors[originalTrackIndex] ? synthSelectors[originalTrackIndex].value : synthConfig.type;
+                
                 try {
-                    // Use synth type from converter (handles glissando compatibility)
-                    const synthType = (synthConfig.reason === 'glissando_compatibility') ? synthConfig.type : selectedSynth;
-                    
-                    // Validate that the synth constructor exists
-                    if (!Tone[synthType] || typeof Tone[synthType] !== 'function') {
-                        throw new Error(`Tone.${synthType} is not a constructor`);
-                    }
-                    
-                    synth = new Tone[synthType]().toDestination();
-                    if (synthConfig.reason === 'glissando_compatibility' && voiceIndex === 0) {
-                        console.warn(`[MULTIVOICE] Using ${synthType} instead of ${synthConfig.original} for glissando in ${trackInfo.label}`);
+                    // Check if this is a GM instrument selection
+                    if (selectedSynth.startsWith('GM: ')) {
+                        const instrumentName = selectedSynth.substring(4); // Remove 'GM: ' prefix
+                        const gmInstrument = gmInstruments.find(inst => inst.name === instrumentName);
+                        
+                        if (gmInstrument) {
+                            console.log(`[PLAYER] Loading GM instrument: ${instrumentName}`);
+                            
+                            // Generate sampler URLs for the selected GM instrument using balanced strategy
+                            const samplerUrls = generateSamplerUrls(gmInstrument.program, CDN_SOURCES[0], [36, 84], 'balanced');
+                            
+                            console.log(`[PLAYER] Loading GM instrument ${instrumentName} with ${Object.keys(samplerUrls).length} samples`);
+                            console.log(`[PLAYER] Sample notes:`, Object.keys(samplerUrls).sort());
+                            
+                            // Create Tone.js Sampler with GM instrument samples
+                            synth = new Tone.Sampler({
+                                urls: samplerUrls,
+                                onload: () => console.log(`[PLAYER] GM instrument ${instrumentName} loaded successfully`),
+                                onerror: (error) => {
+                                    console.error(`[PLAYER] Failed to load GM instrument ${instrumentName}:`, error);
+                                    // Still continue with the sampler, it may have loaded enough samples to be usable
+                                }
+                            }).toDestination();
+                        } else {
+                            throw new Error(`GM instrument ${instrumentName} not found`);
+                        }
+                    } else {
+                        // Use synth type from converter (handles glissando compatibility)
+                        const synthType = (synthConfig.reason === 'glissando_compatibility') ? synthConfig.type : selectedSynth;
+                        
+                        // Validate that the synth constructor exists
+                        if (!Tone[synthType] || typeof Tone[synthType] !== 'function') {
+                            throw new Error(`Tone.${synthType} is not a constructor`);
+                        }
+                        
+                        synth = new Tone[synthType]().toDestination();
+                        if (synthConfig.reason === 'glissando_compatibility' && voiceIndex === 0) {
+                            console.warn(`[MULTIVOICE] Using ${synthType} instead of ${synthConfig.original} for glissando in ${trackInfo.label}`);
+                        }
                     }
                 } catch (error) {
                     console.warn(`Failed to create ${selectedSynth}, using PolySynth:`, error);

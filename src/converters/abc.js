@@ -63,7 +63,7 @@ export class ToAbc {
     static convertToAbc(composition, options = {}) {
         // Header
         let abc = 'X:1\n';
-        abc += `T:${composition.metadata?.title || composition.metadata?.name || composition.label || 'Untitled'}\n`;
+        abc += `T:${composition.metadata?.title || composition.metadata?.name || composition.meta?.title || composition.meta?.name || composition.label || 'Untitled'}\n`;
         abc += `M:${composition.timeSignature || '4/4'}\n`;
         abc += 'L:1/4\n';
         abc += `Q:1/4=${composition.bpm || 120}\n`;

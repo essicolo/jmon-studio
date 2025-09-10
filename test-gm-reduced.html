@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>JMON - GM Instruments (Reduced Sampling)</title>
+    <style>
+        body { 
+            font-family: system-ui, -apple-system, sans-serif; 
+            max-width: 600px; 
+            margin: 0 auto; 
+            padding: 20px; 
+        }
+        .test-section { 
+            margin: 20px 0; 
+            padding: 20px; 
+            background: #f5f5f5; 
+            border-radius: 8px; 
+        }
+        button { 
+            padding: 10px 20px; 
+            margin: 5px; 
+            border: none; 
+            border-radius: 4px; 
+            background: #007bff; 
+            color: white; 
+            cursor: pointer; 
+        }
+        button:hover { background: #0056b3; }
+        button:disabled { background: #ccc; cursor: not-allowed; }
+        .log { 
+            background: #000; 
+            color: #00ff00; 
+            padding: 10px; 
+            font-family: monospace; 
+            font-size: 12px; 
+            max-height: 200px; 
+            overflow-y: auto; 
+            margin: 10px 0; 
+        }
+    </style>
+</head>
+<body>
+    <h1>🎵 GM Instruments - Reduced Sampling Test</h1>
+    
+    <div class="test-section">
+        <h3>Test Strategy</h3>
+        <p>This test uses reduced sampling (every octave + key notes) to minimize CDN requests and avoid rate limiting.</p>
+        <div id="log" class="log">Loading...</div>
+    </div>
+    
+    <div class="test-section">
+        <h3>Quick Instrument Tests</h3>
+        <button onclick="testInstrument(0, 'Acoustic Grand Piano')">Piano</button>
+        <button onclick="testInstrument(56, 'Trumpet')">Trumpet</button>
+        <button onclick="testInstrument(40, 'Violin')">Violin</button>
+        <button onclick="testInstrument(33, 'Electric Bass')">Bass</button>
+        <button onclick="testPlayMelody()">Play Melody</button>
+    </div>
+
+    <script src="https://unpkg.com/tone@14.8.49/build/Tone.js"></script>
+    <script type="module">
+        let jm;
+        const log = document.getElementById('log');
+        
+        function addLog(message) {
+            log.textContent += new Date().toLocaleTimeString() + ': ' + message + '\n';
+            log.scrollTop = log.scrollHeight;
+        }
+        
+        // Load JMON Studio
+        try {
+            const jmonModule = await import('./dist/jmon.esm.js?v=' + Date.now());
+            jm = jmonModule.default;
+            addLog('JMON Studio loaded successfully');
+            
+            await Tone.start();
+            addLog('Tone.js audio context started');
+            
+        } catch (error) {
+            addLog('Error: ' + error.message);
+        }
+        
+        // Global test functions
+        window.testInstrument = async function(gmProgram, name) {
+            addLog(`Testing ${name} (GM ${gmProgram})...`);
+            
+            try {
+                // Create a simple JMON composition
+                const composition = {
+                    bpm: 120,
+                    tracks: [{
+                        label: `${name} Test`,
+                        notes: [
+                            { pitch: 60, duration: 0.5, time: 0 },   // C4
+                            { pitch: 64, duration: 0.5, time: 0.5 }, // E4  
+                            { pitch: 67, duration: 0.5, time: 1.0 }, // G4
+                            { pitch: 72, duration: 1.0, time: 1.5 }  // C5
+                        ],
+                        audioGraph: {
+                            nodes: [{
+                                id: 'sampler',
+                                type: 'GMInstrument', 
+                                options: { 
+                                    program: gmProgram,
+                                    noteRange: [36, 84] // Reduced range
+                                },
+                                target: 'destination'
+                            }]
+                        }
+                    }]
+                };
+                
+                // Create and play
+                const player = jm.play(composition, { Tone: window.Tone });
+                addLog(`✓ ${name} sampler created successfully`);
+                
+                // Auto-play after a brief delay
+                setTimeout(() => {
+                    player.querySelector('button[title="Play"]')?.click();
+                    addLog(`▶ Playing ${name}...`);
+                }, 500);
+                
+            } catch (error) {
+                addLog(`✗ ${name} failed: ${error.message}`);
+            }
+        };
+        
+        window.testPlayMelody = function() {
+            addLog('Playing melody with Piano...');
+            testInstrument(0, 'Piano');
+        };
+    </script>
+</body>
+</html>
