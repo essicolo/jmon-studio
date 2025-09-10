@@ -478,11 +478,11 @@ const allTracks = [
 const fractalComposition = {
   format: 'jmon',
   version: '1.0.0',
-  bpm: 120,
+  tempo: 120,
   timeSignature: '4/4',
   keySignature: 'C',
   metadata: {
-    name: 'Fractal Symphony',
+    title: 'Fractal Symphony',
     composer: 'JMON Studio Fractal Algorithms',
     description: 'A comprehensive composition using cellular automata, Mandelbrot sets, and logistic maps',
     tags: ['fractal', 'algorithmic', 'experimental', 'mathematical-music']
@@ -491,7 +491,7 @@ const fractalComposition = {
 };
 
 console.log(`\n🎼 Complete Fractal Composition:`);
-console.log(`- Title: "${fractalComposition.metadata.name}"`);
+console.log(`- Title: "${fractalComposition.metadata.title}"`);
 console.log(`- Total tracks: ${fractalComposition.tracks.length}`);
 console.log(`- BPM: ${fractalComposition.bpm}`);
 console.log(`- Key: ${fractalComposition.keySignature} ${fractalComposition.timeSignature}`);

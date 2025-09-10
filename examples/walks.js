@@ -661,11 +661,11 @@ console.log('=== SUMMARY: Complete Multi-Track Composition ===');
 const fullComposition = {
   format: 'jmon',
   version: '1.0.0',
-  bpm: 110,
+  tempo: 110,
   timeSignature: '4/4',
   keySignature: 'C',
   metadata: {
-    name: 'Algorithmic Walks Showcase',
+    title: 'Algorithmic Walks Showcase',
     composer: 'JMON Studio Walk Algorithms',
     description: 'A comprehensive demonstration of random walks, Gaussian processes, phasor motion, and Fibonacci sequences in music'
   },
@@ -684,7 +684,7 @@ const fullComposition = {
 };
 
 console.log('\n🎼 Complete Algorithmic Walks Composition:');
-console.log(`- Title: "${fullComposition.metadata.name}"`);
+console.log(`- Title: "${fullComposition.metadata.title}"`);
 console.log(`- Total tracks: ${fullComposition.tracks.length}`);
 console.log(`- BPM: ${fullComposition.bpm}`);
 console.log(`- Key: ${fullComposition.keySignature} ${fullComposition.timeSignature}`);

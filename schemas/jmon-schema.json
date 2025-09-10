@@ -6,7 +6,7 @@
   "required": [
     "format",
     "version", 
-    "bpm",
+    "tempo",
     "tracks"
   ],
   "properties": {
@@ -19,11 +19,11 @@
       "type": "string",
       "description": "JMON schema version."
     },
-    "bpm": {
+    "tempo": {
       "type": "number",
       "minimum": 20,
       "maximum": 400,
-      "description": "Tempo in beats per minute."
+      "description": "Tempo in beats per minute (BPM)."
     },
     "keySignature": {
       "type": "string",
@@ -70,7 +70,7 @@
       "description": "Map of tempo changes over time.",
       "items": {
         "type": "object",
-        "required": ["time", "bpm"],
+        "required": ["time", "tempo"],
         "properties": {
           "time": {
             "oneOf": [
@@ -86,7 +86,7 @@
             ],
             "description": "The time point for the tempo change."
           },
-          "bpm": {
+          "tempo": {
             "type": "number",
             "minimum": 20,
             "maximum": 400,
@@ -145,13 +145,13 @@
       "type": "object",
       "description": "Metadata for the composition, allowing arbitrary fields.",
       "properties": {
-        "name": {
+        "title": {
           "type": "string",
-          "description": "Name of the composition."
+          "description": "Title of the composition."
         },
-        "author": {
+        "composer": {
           "type": "string",
-          "description": "Author or composer."
+          "description": "Composer of the music."
         },
         "description": {
           "type": "string",

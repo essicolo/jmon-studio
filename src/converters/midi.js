@@ -9,7 +9,7 @@ export class Midi {
     }
     static convert(composition) {
         // Conversion JMON -> MIDI (structure JSON, articulations incluses)
-        const bpm = composition.bpm || 120;
+        const bpm = composition.tempo || composition.bpm || 120;
         const tracks = composition.tracks || [];
         return {
             header: {

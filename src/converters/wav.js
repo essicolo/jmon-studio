@@ -5,7 +5,7 @@ export function wav(composition, options = {}) {
 		sampleRate: options.sampleRate || 44100,
 		duration: options.duration || 10,
 		channels: options.channels || 1,
-		bpm: composition.bpm || 120,
+		tempo: composition.tempo || composition.bpm || 120,
 		notes: composition.tracks?.flatMap(t => t.notes) || []
 	};
 }

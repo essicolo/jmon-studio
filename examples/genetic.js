@@ -276,7 +276,7 @@ const composition = {
     description: 'Musical evolution using genetic algorithms',
     composer: 'JMON Darwin Genetic Algorithm',
     created: new Date().toISOString(),
-    bpm: 120,
+  tempo: 120,
     keySignature: 'C major',
     timeSignature: '4/4',
     evolutionParameters: {

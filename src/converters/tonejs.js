@@ -78,7 +78,7 @@ export function tonejs(composition, options = {}) {
     }));
 
     // Compute total duration in seconds using BPM and timeSignature
-    const bpm = composition.metadata?.tempo || composition.bpm || 120;
+    const bpm = composition.tempo || composition.metadata?.tempo || composition.bpm || 120;
     const [tsNum, tsDen] = (composition.timeSignature || '4/4').split('/').map(x => parseInt(x, 10));
     const beatsPerBar = isFinite(tsNum) ? tsNum : 4;
 

@@ -2,7 +2,7 @@
 const baseTwinkle = {
   format: "jmon",
   version: "1.0.0",
-  bpm: 120,
+  tempo: 120,
   timeSignature: "4/4",
   keySignature: "C",
   metadata: {

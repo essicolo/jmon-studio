@@ -550,7 +550,7 @@ jmonComposition = {
       description: `Generated using genetic algorithms with ${evolutionParams.generations} generations`,
       composer: "JMON Darwin Genetic Algorithm",
       created: new Date().toISOString(),
-      bpm: 120,
+  tempo: 120,
       keySignature: `${evolutionParams.scaleName} scale`,
       evolutionParameters: {
         generations: evolutionControl.currentGeneration,

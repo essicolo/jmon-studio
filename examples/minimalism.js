@@ -226,7 +226,7 @@ const composition = {
   title: "Enhanced Minimalism Study",
   composer: "JMON Studio Algorithm",
   timeSignature: "4/4",
-  tempoMap: [{ time: 0, bpm: 120 }],
+  tempoMap: [{ time: 0, tempo: 120 }],
   keySignatureMap: [{ time: 0, keySignature: "C" }],
   tracks: [modernPart1, tVoicePart],
 };
@@ -327,7 +327,7 @@ const multiTrackComposition = {
   title: "Multi-Track Minimalist Study",
   composer: "JMON Studio Enhanced Algorithm",
   timeSignature: "4/4",
-  tempoMap: [{ time: 0, bpm: 100 }],
+  tempoMap: [{ time: 0, tempo: 100 }],
   keySignatureMap: [{ time: 0, keySignature: "C" }],
   synthConfig: {
     type: "Synth",
@@ -763,7 +763,7 @@ const harmonicComposition = {
   title: "Beat-Aware Minimalist Harmonic Study",
   composer: "JMON Studio Beat-Aware Voicing Algorithm",
   timeSignature: "4/4",
-  tempoMap: [{ time: 0, bpm: 96 }],
+  tempoMap: [{ time: 0, tempo: 96 }],
   keySignatureMap: [{ time: 0, keySignature: "C" }],
   tracks,
 };

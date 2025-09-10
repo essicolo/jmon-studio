@@ -22,7 +22,7 @@ const c_major_track = c_major_pitches.map((pitch, i) => ({
 const c_major_piece = {
   format: "jmon",
   version: "1.0.0",
-  bpm: 120,
+  tempo: 120,
   timeSignature: "4/4",
   keySignature: "C",
   metadata: { title: "C-major Scale" },

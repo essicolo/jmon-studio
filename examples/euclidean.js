@@ -131,7 +131,7 @@ const bassTracks = bass.toJMonSequences().map(({ synth, ...t }) => ({
 const euclideanComposition = {
   format: "jmon",
   version: "1.0.0",
-  bpm: 130,
+  tempo: 120,
   timeSignature: "4/4",
   keySignature: "C",
   audioGraph, // Use the audioGraph defined above

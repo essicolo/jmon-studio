@@ -280,11 +280,11 @@ fractalComposition = jmonTracks.length > 0
   ? {
       format: 'jmon',
       version: '1.0.0',
-      bpm: 120,
+      tempo: 120,
       timeSignature: '4/4',
       keySignature: 'C',
       metadata: {
-        name: `Cellular Automata ${caRule.name} Composition`,
+        title: `Cellular Automata ${caRule.name} Composition`,
         composer: 'JMON Studio Observable',
         description: `Musical composition generated from ${caRule.name} using ${selectedStrips.strips.length} selected strips`,
         scale: musicalScale.name,
@@ -304,7 +304,7 @@ fractalComposition = jmonTracks.length > 0
 fractalComposition
   ? md`## 🎼 Generated Composition
 
-**"${fractalComposition.metadata.name}"**
+**"${fractalComposition.metadata.title}"**
 
 - **Tracks:** ${fractalComposition.tracks.length} 
 - **Total Notes:** ${fractalComposition.tracks.reduce((sum, track) => sum + track.notes.length, 0)}

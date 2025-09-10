@@ -1,2 +1,8 @@
-- add a jmon cleaner to remove unused graph nodes and other stuff
-- add sampler dicts linking notes to cdn served from https://github.com/gleitz/midi-js-soundfonts/tree/gh-pages/FluidR3_GM
+Done
+- add sampler dicts linking notes to cdn served from https://github.com/jmonlabs/midi-js-soundfonts/tree/gh-pages/FluidR3_GM
+
+Now
+
+
+Future
+- add a jmon cleaner utility to remove unused graph nodes and other stuff

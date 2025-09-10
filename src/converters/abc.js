@@ -64,9 +64,14 @@ export class ToAbc {
         // Header
         let abc = 'X:1\n';
         abc += `T:${composition.metadata?.title || composition.metadata?.name || composition.meta?.title || composition.meta?.name || composition.label || 'Untitled'}\n`;
+        // Add composer line if available
+        const composer = composition.metadata?.composer || composition.metadata?.author || composition.meta?.composer || composition.meta?.author;
+        if (composer) {
+            abc += `C:${composer}\n`;
+        }
         abc += `M:${composition.timeSignature || '4/4'}\n`;
         abc += 'L:1/4\n';
-        abc += `Q:1/4=${composition.bpm || 120}\n`;
+        abc += `Q:1/4=${composition.tempo || composition.bpm || 120}\n`;
         abc += `K:${composition.keySignature || 'C'}\n`;
 
         // Parse time signature to get beats per measure

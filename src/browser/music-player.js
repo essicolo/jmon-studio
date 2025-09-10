@@ -37,7 +37,7 @@ export function createPlayer(composition, options = {}) {
     }
 
 
-    const tempo = composition.bpm || 120;
+    const tempo = composition.tempo || composition.bpm || 120;
 
     // Convert JMON to Tone.js format with multivoice support
     const conversionOptions = { autoMultivoice, maxVoices, showDebug };
@@ -150,7 +150,7 @@ export function createPlayer(composition, options = {}) {
         const basicSynths = ['PolySynth', 'Synth', 'AMSynth', 'DuoSynth', 'FMSynth', 'MembraneSynth', 'MetalSynth', 'MonoSynth', 'PluckSynth'];
         
         // Add custom samplers first if present
-        if (composition.audioGraph && composition.audioGraph.some(node => node.type === 'Sampler')) {
+        if (composition.audioGraph && composition.audioGraph.nodes && composition.audioGraph.nodes.some(node => node.type === 'Sampler')) {
             const samplerOption = document.createElement('option');
             samplerOption.value = 'Sampler';
             samplerOption.textContent = 'Sampler';
@@ -624,18 +624,51 @@ export function createPlayer(composition, options = {}) {
         }
 
         // Clean up existing synths and parts (but do not dispose graph instruments)
-        synths.forEach(s => {
-            // Avoid disposing shared graph instruments
-            if (!graphInstruments || !Object.values(graphInstruments).includes(s)) {
-                try { s.dispose(); } catch (e) {}
+        console.log('[PLAYER] Cleaning up existing audio...', { synths: synths.length, parts: parts.length });
+        
+        // Stop and clean Transport first to prevent overlapping
+        Tone.Transport.stop();
+        Tone.Transport.cancel(); // This clears all scheduled events - crucial for preventing overlap!
+        Tone.Transport.position = 0;
+        
+        // Stop all parts first
+        parts.forEach((p, index) => {
+            try {
+                p.stop();
+            } catch (e) {
+                console.warn(`[PLAYER] Failed to stop part ${index}:`, e);
             }
         });
-        parts.forEach(p => {
-            p.stop();
-            p.dispose();
+        
+        // Dispose all parts
+        parts.forEach((p, index) => {
+            try {
+                p.dispose();
+            } catch (e) {
+                console.warn(`[PLAYER] Failed to dispose part ${index}:`, e);
+            }
         });
+        
+        // Dispose synths (except graph instruments)
+        synths.forEach((s, index) => {
+            // Avoid disposing shared graph instruments
+            if (!graphInstruments || !Object.values(graphInstruments).includes(s)) {
+                try {
+                    // Disconnect from destination first
+                    if (s.disconnect && typeof s.disconnect === 'function') {
+                        s.disconnect();
+                    }
+                    s.dispose();
+                } catch (e) {
+                    console.warn(`[PLAYER] Failed to dispose synth ${index}:`, e);
+                }
+            }
+        });
+        
         synths = [];
         parts = [];
+        
+        console.log('[PLAYER] Audio cleanup completed');
 
         console.log('[PLAYER] Converted tracks:', convertedTracks.length);
 
@@ -868,13 +901,22 @@ export function createPlayer(composition, options = {}) {
         }
 
         if (isPlaying) {
-            // Stop transport and all parts
+            // Stop transport and all parts with proper cleanup
+            console.log('[PLAYER] Stopping playback...');
             Tone.Transport.stop();
-            parts.forEach(part => {
-                part.stop();
+            Tone.Transport.cancel(); // Clear all scheduled events to prevent overlap
+            
+            parts.forEach((part, index) => {
+                try {
+                    part.stop();
+                } catch (e) {
+                    console.warn(`[PLAYER] Failed to stop part ${index} during playback stop:`, e);
+                }
             });
+            
             isPlaying = false;
             playButton.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-play"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8"/></svg>`;
+            console.log('[PLAYER] Playback stopped and cleaned up');
         } else {
             
             // Ensure audio context is started first
@@ -890,8 +932,8 @@ export function createPlayer(composition, options = {}) {
             
             // Reset transport position to ensure clean start
             Tone.Transport.stop();
+            Tone.Transport.cancel(); // Clear any remaining scheduled events from previous sessions
             Tone.Transport.position = 0;
-            // Don't use cancel() here - it clears the Parts we just created
             
             console.log('[PLAYER] Transport state before start:', Tone.Transport.state);
             console.log('[PLAYER] Transport position reset to:', Tone.Transport.position);
@@ -952,7 +994,24 @@ export function createPlayer(composition, options = {}) {
     bpmInput.addEventListener('change', () => {
         const newTempo = parseInt(bpmInput.value);
         if (Tone && newTempo >= 60 && newTempo <= 240) {
-            Tone.Transport.bpm.value = newTempo;
+            console.log(`[PLAYER] Tempo changed to ${newTempo} BPM`);
+            
+            // Stop playback if running to prevent overlap
+            if (isPlaying) {
+                console.log('[PLAYER] Stopping playback for tempo change...');
+                Tone.Transport.stop();
+                Tone.Transport.cancel();
+                isPlaying = false;
+                playButton.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-play"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8"/></svg>`;
+                
+                // Small delay to ensure cleanup completes
+                setTimeout(() => {
+                    Tone.Transport.bpm.value = newTempo;
+                    console.log(`[PLAYER] Tempo applied: ${newTempo} BPM`);
+                }, 100);
+            } else {
+                Tone.Transport.bpm.value = newTempo;
+            }
         } else {
             bpmInput.value = Tone ? Tone.Transport.bpm.value : tempo;
         }
@@ -962,6 +1021,14 @@ export function createPlayer(composition, options = {}) {
     synthSelectors.forEach(select => {
         select.addEventListener('change', () => {
             if (Tone && synths.length > 0) {
+                console.log('[PLAYER] Synthesizer selection changed, reinitializing audio...');
+                // Stop any playing audio first
+                if (isPlaying) {
+                    Tone.Transport.stop();
+                    Tone.Transport.cancel();
+                    isPlaying = false;
+                    playButton.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-play"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8"/></svg>`;
+                }
                 setupAudio(); // Reinitialize audio with new synthesizers
             }
         });

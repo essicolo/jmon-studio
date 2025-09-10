@@ -142,11 +142,11 @@ ${jmonTracks.map((track, i) =>
 fractalComposition = {
   format: 'jmon',
   version: '1.0.0',
-  bpm: 120,
+  tempo: 120,
   timeSignature: '4/4',
   keySignature: 'C',
   metadata: {
-    name: `CA Rule ${ca.ruleNumber} Musical Composition`,
+    title: `CA Rule ${ca.ruleNumber} Musical Composition`,
     composer: 'JMON Studio Observable Notebook',
     description: `Musical composition generated from Cellular Automata Rule ${ca.ruleNumber} with ${selectedStrips.strips.length} selected strips`,
     generatedFrom: `CA Rule ${ca.ruleNumber}, strips: ${selectedStrips.strips.map(s => `[${s[0]}, ${s[1]}]`).join(', ')}`
@@ -158,7 +158,7 @@ fractalComposition = {
 ```js
 // Display composition summary
 md`**🎼 Complete JMON Composition:**
-- **Title:** "${fractalComposition.metadata.name}"
+- **Title:** "${fractalComposition.metadata.title}"
 - **Tracks:** ${fractalComposition.tracks.length}
 - **Total Notes:** ${fractalComposition.tracks.reduce((sum, track) => sum + track.notes.length, 0)}
 - **BPM:** ${fractalComposition.bpm}
