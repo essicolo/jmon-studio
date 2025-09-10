@@ -54,6 +54,7 @@ function play(jmonObj, options = {}) {
  * @param {Object} jmonObj - JMON object to render as score
  * @param {Object} options - Score rendering options
  * @param {Object} options.ABCJS - Pre-loaded ABCJS instance (optional)
+ * @param {Object} options.abcjs - Pre-loaded ABCJS instance (optional, lowercase alias)
  * @param {boolean} options.autoload - Whether to auto-load ABCJS if not provided (default: true)
  * @returns {HTMLElement} Score container element
  */
@@ -65,6 +66,7 @@ async function score(jmonObj, options = {}) {
 		responsive = 'resize',
 		abcOptions = {},
 		ABCJS: externalABCJS = null,
+		abcjs: externalAbcjs = null,  // Support lowercase alias
 		autoload = true
 	} = options;
 
@@ -111,8 +113,8 @@ async function score(jmonObj, options = {}) {
 		scoreContainer.appendChild(details);
 	}
 
-	// Initialize ABCJS
-	let ABCJSInstance = externalABCJS || (typeof window !== 'undefined' && window.ABCJS) || (typeof ABCJS !== 'undefined' ? ABCJS : null);
+	// Initialize ABCJS (support both uppercase ABCJS and lowercase abcjs parameters)
+	let ABCJSInstance = externalABCJS || externalAbcjs || (typeof window !== 'undefined' && window.ABCJS) || (typeof ABCJS !== 'undefined' ? ABCJS : null);
 	
 	// Try to auto-load ABCJS if not available and autoload is enabled
 	if (!ABCJSInstance && autoload) {
