@@ -99,8 +99,8 @@ export function createPlayer(composition, options = {}) {
     // Get GM instruments for organized dropdown
     const gmInstruments = getPopularInstruments();
     
-    // Get tracks from composition for UI
-    const originalTracks = composition.tracks || composition.sequences || [];
+    // Get tracks from composition for UI (using JMON standard)
+    const originalTracks = composition.tracks || [];
     const synthSelectors = [];
     
     originalTracks.forEach((track, index) => {
@@ -115,7 +115,7 @@ export function createPlayer(composition, options = {}) {
         `;
         
         const synthLabel = document.createElement('label');
-        synthLabel.textContent = track.name || track.label || `Track ${index + 1}`;
+        synthLabel.textContent = track.label || `Track ${index + 1}`;
         synthLabel.style.cssText = `
             font-family: 'PT Sans', sans-serif;
             font-size: 16px;
@@ -149,15 +149,26 @@ export function createPlayer(composition, options = {}) {
         
         const basicSynths = ['PolySynth', 'Synth', 'AMSynth', 'DuoSynth', 'FMSynth', 'MembraneSynth', 'MetalSynth', 'MonoSynth', 'PluckSynth'];
         
-        // Add custom samplers first if present
-        if (composition.audioGraph && composition.audioGraph.nodes && composition.audioGraph.nodes.some(node => node.type === 'Sampler')) {
-            const samplerOption = document.createElement('option');
-            samplerOption.value = 'Sampler';
-            samplerOption.textContent = 'Sampler';
-            if ((composition.tracks?.[index]?.synthRef)) {
-                samplerOption.selected = true;
-            }
-            synthGroup.appendChild(samplerOption);
+        // Add custom audioGraph instruments first if present (using JMON standard)
+        const audioGraphNodes = composition.audioGraph || [];
+        if (Array.isArray(audioGraphNodes) && audioGraphNodes.length > 0) {
+            // Find the synthRef for this track
+            const trackSynthRef = composition.tracks?.[index]?.synthRef;
+            
+            audioGraphNodes.forEach(node => {
+                if (node.id && node.type && node.type !== 'Destination') {
+                    const option = document.createElement('option');
+                    option.value = `AudioGraph: ${node.id}`;
+                    option.textContent = node.id; // Use the node ID as display name (e.g., "Synth 1", "Synth 2")
+                    
+                    // Select this option if it matches the track's synthRef
+                    if (trackSynthRef === node.id) {
+                        option.selected = true;
+                    }
+                    
+                    synthGroup.appendChild(option);
+                }
+            });
         }
         
         basicSynths.forEach((synthType) => {
@@ -416,7 +427,7 @@ export function createPlayer(composition, options = {}) {
 
     // Optional: AudioGraph support (Sampler nodes)
     let graphInstruments = null; // { [id]: Tone.Instrument }
-    const originalTracksSource = composition.tracks || composition.sequences || [];
+    const originalTracksSource = composition.tracks || [];
 
     const buildAudioGraphInstruments = () => {
         if (!Tone) return null;
@@ -626,9 +637,9 @@ export function createPlayer(composition, options = {}) {
         // Clean up existing synths and parts (but do not dispose graph instruments)
         console.log('[PLAYER] Cleaning up existing audio...', { synths: synths.length, parts: parts.length });
         
-        // Stop and clean Transport first to prevent overlapping
+        // Stop Transport first to prevent overlapping
         Tone.Transport.stop();
-        Tone.Transport.cancel(); // This clears all scheduled events - crucial for preventing overlap!
+        // Note: NOT using Tone.Transport.cancel() here as it might interfere with loop timing
         Tone.Transport.position = 0;
         
         // Stop all parts first
@@ -696,8 +707,16 @@ export function createPlayer(composition, options = {}) {
                 const selectedSynth = synthSelectors[originalTrackIndex] ? synthSelectors[originalTrackIndex].value : synthConfig.type;
                 
                 try {
-                    // Check if this is a GM instrument selection
-                    if (selectedSynth.startsWith('GM: ')) {
+                    // Check if this is an AudioGraph instrument selection
+                    if (selectedSynth.startsWith('AudioGraph: ')) {
+                        const audioGraphId = selectedSynth.substring(12); // Remove 'AudioGraph: ' prefix
+                        if (graphInstruments && graphInstruments[audioGraphId]) {
+                            synth = graphInstruments[audioGraphId];
+                            console.log(`[PLAYER] Using audioGraph instrument: ${audioGraphId}`);
+                        } else {
+                            throw new Error(`AudioGraph instrument ${audioGraphId} not found`);
+                        }
+                    } else if (selectedSynth.startsWith('GM: ')) {
                         const instrumentName = selectedSynth.substring(4); // Remove 'GM: ' prefix
                         const gmInstrument = gmInstruments.find(inst => inst.name === instrumentName);
                         
@@ -932,8 +951,8 @@ export function createPlayer(composition, options = {}) {
             
             // Reset transport position to ensure clean start
             Tone.Transport.stop();
-            Tone.Transport.cancel(); // Clear any remaining scheduled events from previous sessions
             Tone.Transport.position = 0;
+            // Note: NOT using cancel() here to preserve loop timing accuracy
             
             console.log('[PLAYER] Transport state before start:', Tone.Transport.state);
             console.log('[PLAYER] Transport position reset to:', Tone.Transport.position);
@@ -996,22 +1015,12 @@ export function createPlayer(composition, options = {}) {
         if (Tone && newTempo >= 60 && newTempo <= 240) {
             console.log(`[PLAYER] Tempo changed to ${newTempo} BPM`);
             
-            // Stop playback if running to prevent overlap
-            if (isPlaying) {
-                console.log('[PLAYER] Stopping playback for tempo change...');
-                Tone.Transport.stop();
-                Tone.Transport.cancel();
-                isPlaying = false;
-                playButton.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-play"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8"/></svg>`;
-                
-                // Small delay to ensure cleanup completes
-                setTimeout(() => {
-                    Tone.Transport.bpm.value = newTempo;
-                    console.log(`[PLAYER] Tempo applied: ${newTempo} BPM`);
-                }, 100);
-            } else {
-                Tone.Transport.bpm.value = newTempo;
-            }
+            // Apply tempo change immediately - Tone.js handles this gracefully
+            Tone.Transport.bpm.value = newTempo;
+            console.log(`[PLAYER] Tempo changed to ${newTempo} BPM`);
+            
+            // If playing, the tempo change takes effect immediately
+            // No need to stop/restart for tempo changes
         } else {
             bpmInput.value = Tone ? Tone.Transport.bpm.value : tempo;
         }
@@ -1022,14 +1031,25 @@ export function createPlayer(composition, options = {}) {
         select.addEventListener('change', () => {
             if (Tone && synths.length > 0) {
                 console.log('[PLAYER] Synthesizer selection changed, reinitializing audio...');
-                // Stop any playing audio first
+                // Stop playing temporarily to reinitialize with new synths
+                const wasPlaying = isPlaying;
                 if (isPlaying) {
                     Tone.Transport.stop();
-                    Tone.Transport.cancel();
                     isPlaying = false;
+                }
+                
+                setupAudio(); // Reinitialize audio with new synthesizers
+                
+                // Restart if it was playing before
+                if (wasPlaying) {
+                    setTimeout(() => {
+                        Tone.Transport.start();
+                        isPlaying = true;
+                        playButton.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-pause"><circle cx="12" cy="12" r="10"/><line x1="10" x2="10" y1="15" y2="9"/><line x1="14" x2="14" y1="15" y2="9"/></svg>`;
+                    }, 100);
+                } else {
                     playButton.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-play"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8"/></svg>`;
                 }
-                setupAudio(); // Reinitialize audio with new synthesizers
             }
         });
     });

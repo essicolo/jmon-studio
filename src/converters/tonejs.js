@@ -97,10 +97,12 @@ export function tonejs(composition, options = {}) {
     const secondsPerBeat = 60 / bpm;
     const totalDuration = totalBeats * secondsPerBeat;
 
+    console.log(`[TONEJS] Duration calc: totalBeats=${totalBeats.toFixed(2)} beats = ${totalDuration.toFixed(2)}s - loop ends exactly when last note finishes`);
+
     return {
         tracks,
         metadata: {
-            totalDuration,
+            totalDuration, // Use total duration - loop should end when last note finishes
             tempo: bpm
         }
     };
