@@ -9271,7 +9271,7 @@ class Oo {
    */
   static convertNotesToAbc(e, t, r, n, i = {}) {
     let o = "", a = 0, c = 0, u = 0, d = 0;
-    const g = options?.quantizeBeats || 0.25, _ = 1e-6, w = (y) => hr(y, g, "nearest"), S = (y) => ni(y, g), m = (y) => {
+    const g = i?.quantizeBeats || 0.25, _ = 1e-6, w = (y) => hr(y, g, "nearest"), S = (y) => ni(y, g), m = (y) => {
       o += y + " ";
     }, h = () => {
       for (; a >= t - 1e-9; )

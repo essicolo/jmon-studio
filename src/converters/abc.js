@@ -214,7 +214,7 @@ export class ToAbc {
         let measuresOnCurrentLine = 0;
         let lastEnd = 0; // absolute time in quarter-note units
 
-        const grid = options?.quantizeBeats || 0.25; // user-definable grid
+        const grid = opts?.quantizeBeats || 0.25; // user-definable grid
         const EPS = 1e-6;
         const q = (v) => quantize(v, grid, 'nearest');
         const encodeDur = (d) => encodeAbcDuration(d, grid);
