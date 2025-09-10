@@ -278,33 +278,36 @@ export function findGMProgramByName(instrumentName) {
 
 /**
  * Create audioGraph configuration for GM instrument
- * @param {number|string} gmProgramOrName - GM program number (0-127) OR instrument name (e.g., "Violin")
- * @param {string} synthRef - Reference ID for the synth
- * @param {Object} options - Additional options
+ * @param {string} id - Node ID for the audioGraph
+ * @param {number|string} instrument - GM program number (0-127) OR instrument name (e.g., "Violin")
+ * @param {Object} options - Sampler options (noteRange, envelope, strategy, baseUrl, etc.)
+ * @param {string} target - Target node ID (default: "destination")
  * @returns {Object} AudioGraph node configuration
  */
 export function createGMInstrumentNode(
-  gmProgramOrName,
-  synthRef = "gm_sampler",
+  id,
+  instrument,
   options = {},
+  target = "destination"
 ) {
   let gmProgram;
   
   // Handle both number and string inputs
-  if (typeof gmProgramOrName === 'string') {
-    gmProgram = findGMProgramByName(gmProgramOrName);
+  if (typeof instrument === 'string') {
+    gmProgram = findGMProgramByName(instrument);
     if (gmProgram === null) {
-      console.warn(`GM instrument "${gmProgramOrName}" not found. Available instruments:`);
+      console.warn(`GM instrument "${instrument}" not found. Available instruments:`);
       const availableNames = Object.values(GM_INSTRUMENTS).map(inst => inst.name).slice(0, 10);
       console.warn(`Examples: ${availableNames.join(', ')}...`);
       console.warn('Using Acoustic Grand Piano as fallback');
       gmProgram = 0;
     }
   } else {
-    gmProgram = gmProgramOrName;
+    gmProgram = instrument;
   }
-  const instrument = GM_INSTRUMENTS[gmProgram];
-  if (!instrument) return null;
+  
+  const instrumentData = GM_INSTRUMENTS[gmProgram];
+  if (!instrumentData) return null;
 
   const {
     baseUrl = CDN_SOURCES[0],
@@ -314,7 +317,7 @@ export function createGMInstrumentNode(
   } = options;
 
   return {
-    id: synthRef,
+    id,
     type: "Sampler",
     options: {
       urls: generateSamplerUrls(gmProgram, baseUrl, noteRange, strategy),
@@ -325,7 +328,7 @@ export function createGMInstrumentNode(
         release: envelope.release,
       },
     },
-    target: "destination",
+    target,
   };
 }
 

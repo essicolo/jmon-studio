@@ -31,19 +31,19 @@ console.log('\n🏗️  Testing createGMInstrumentNode with names:');
 
 // Test creating nodes with instrument names
 const testInstruments = [
-    { input: 'Violin', id: 'violin_sampler' },
-    { input: 40, id: 'violin_by_number' },     // For comparison
-    { input: 'Acoustic Grand Piano', id: 'piano_sampler' },
-    { input: 'trumpet', id: 'trumpet_sampler' },
-    { input: 'NonExistent', id: 'fallback_test' }
+    { instrument: 'Violin', id: 'violin_sampler' },
+    { instrument: 40, id: 'violin_by_number' },     // For comparison
+    { instrument: 'Acoustic Grand Piano', id: 'piano_sampler' },
+    { instrument: 'trumpet', id: 'trumpet_sampler' },
+    { instrument: 'NonExistent', id: 'fallback_test' }
 ];
 
-testInstruments.forEach(({ input, id }) => {
-    console.log(`\n📄 Creating node for "${input}":`);
-    const node = jm.instruments.createGMInstrumentNode(input, id, {
+testInstruments.forEach(({ instrument, id }) => {
+    console.log(`\n📄 Creating node for "${instrument}":`); 
+    const node = jm.instruments.createGMInstrumentNode(id, instrument, {
         noteRange: [60, 72], // Just middle octave for testing
         envelope: { attack: 0.1, release: 0.5 }
-    });
+    }, "master");
     
     if (node) {
         console.log(`  ✅ Created: ${node.id}`);
@@ -90,14 +90,14 @@ const testComposition = {
     ],
     audioGraph: [
         // Using instrument NAMES instead of numbers! 🎉
-        jm.instruments.createGMInstrumentNode("Violin", "violin", {
+        jm.instruments.createGMInstrumentNode("violin", "Violin", {
             noteRange: [55, 84],
             envelope: { attack: 0.1, release: 1.0 }
-        }),
-        jm.instruments.createGMInstrumentNode("Acoustic Grand Piano", "piano", {
+        }, "master"),
+        jm.instruments.createGMInstrumentNode("piano", "Acoustic Grand Piano", {
             noteRange: [21, 108],
             envelope: { attack: 0.01, release: 0.8 }
-        }),
+        }, "master"),
         {
             id: "master",
             type: "Destination",
@@ -105,10 +105,6 @@ const testComposition = {
         }
     ]
 };
-
-// Update targets to route through master
-testComposition.audioGraph[0].target = "master";
-testComposition.audioGraph[1].target = "master";
 
 console.log('\n🎵 Test composition created successfully!');
 console.log(`   📊 Tracks: ${testComposition.tracks.length}`);
@@ -124,14 +120,14 @@ console.log('   ✅ Backward compatible - still accepts program numbers');
 
 console.log('\n📚 Usage Examples:');
 console.log(`
-// ✨ NEW: Using instrument names
-jm.instruments.createGMInstrumentNode("Violin", "violin_sampler")
-jm.instruments.createGMInstrumentNode("acoustic grand piano", "piano")  // case insensitive
-jm.instruments.createGMInstrumentNode("trumpet", "brass_section")
+// ✨ NEW: AudioGraph-consistent signature - createGMInstrumentNode(id, instrument, options, target)
+jm.instruments.createGMInstrumentNode("violin_sampler", "Violin", { noteRange: [55, 84] }, "master")
+jm.instruments.createGMInstrumentNode("piano", "acoustic grand piano", {}, "reverb")  // case insensitive
+jm.instruments.createGMInstrumentNode("brass_section", "trumpet", { strategy: "balanced" }, "destination")
 
 // 🔍 Find program numbers by name
 const violinProgram = jm.instruments.findGMProgramByName("Violin")  // Returns 40
 
 // ✅ Still works: Using program numbers  
-jm.instruments.createGMInstrumentNode(40, "violin_sampler")  // Same as above
+jm.instruments.createGMInstrumentNode("violin_sampler", 40, {}, "master")  // Same as using "Violin"
 `);
