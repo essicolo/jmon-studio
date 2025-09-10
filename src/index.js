@@ -53,15 +53,19 @@ function play(jmonObj, options = {}) {
  * Score function - renders ABC notation as visual musical score
  * @param {Object} jmonObj - JMON object to render as score
  * @param {Object} options - Score rendering options
+ * @param {Object} options.ABCJS - Pre-loaded ABCJS instance (optional)
+ * @param {boolean} options.autoload - Whether to auto-load ABCJS if not provided (default: true)
  * @returns {HTMLElement} Score container element
  */
-function score(jmonObj, options = {}) {
+async function score(jmonObj, options = {}) {
 	const {
 		scale = 0.9,
 		staffwidth,
 		showAbc = true,
 		responsive = 'resize',
-		abcOptions = {}
+		abcOptions = {},
+		ABCJS: externalABCJS = null,
+		autoload = true
 	} = options;
 
 	// Generate ABC notation with options
@@ -107,21 +111,67 @@ function score(jmonObj, options = {}) {
 		scoreContainer.appendChild(details);
 	}
 
+	// Initialize ABCJS
+	let ABCJSInstance = externalABCJS || (typeof window !== 'undefined' && window.ABCJS) || (typeof ABCJS !== 'undefined' ? ABCJS : null);
+	
+	// Try to auto-load ABCJS if not available and autoload is enabled
+	if (!ABCJSInstance && autoload) {
+		try {
+			if (typeof require !== 'undefined') {
+				console.log('[SCORE] Loading ABCJS via require()...');
+				ABCJSInstance = await require('abcjs');
+			} else {
+				console.log('[SCORE] Loading ABCJS via import()...');
+				const ABCJSModule = await import('https://cdn.skypack.dev/abcjs');
+				ABCJSInstance = ABCJSModule.default || ABCJSModule;
+			}
+			
+			// Validate that we got a proper ABCJS object
+			if (!ABCJSInstance || !ABCJSInstance.renderAbc) {
+				console.warn('[SCORE] First load attempt failed, trying alternative CDN...');
+				try {
+					const ABCJSAlt = await import('https://cdn.jsdelivr.net/npm/abcjs@6.4.0/dist/abcjs-basic-min.js');
+					ABCJSInstance = ABCJSAlt.default || ABCJSAlt.ABCJS || (typeof window !== 'undefined' && window.ABCJS);
+					if (!ABCJSInstance || !ABCJSInstance.renderAbc) {
+						throw new Error('Alternative CDN also failed');
+					}
+				} catch (altError) {
+					console.warn('[SCORE] Could not auto-load ABCJS:', altError.message);
+					ABCJSInstance = null;
+				}
+			}
+			
+			if (ABCJSInstance) {
+				console.log('[SCORE] ABCJS loaded successfully, version:', ABCJSInstance.version || 'unknown');
+				// Make it globally available for consistency
+				if (typeof window !== 'undefined') {
+					window.ABCJS = ABCJSInstance;
+				}
+			}
+		} catch (error) {
+			console.warn('[SCORE] Could not auto-load ABCJS:', error.message);
+			console.log('[SCORE] To use score rendering, load ABCJS manually first:');
+			console.log('Method 1: ABCJS = await require("abcjs")');
+			console.log('Method 2: ABCJS = await import("https://cdn.skypack.dev/abcjs").then(m => m.default)');
+			ABCJSInstance = null;
+		}
+	}
+	
 	// Render the musical notation using ABCJS
-	if (typeof ABCJS !== 'undefined') {
+	if (ABCJSInstance && ABCJSInstance.renderAbc) {
 		try {
 			// Determine staff width from container if not provided
 			const width = staffwidth || null;
 			const params = { responsive, scale };
 			if (width) params.staffwidth = width;
-			ABCJS.renderAbc(notationDiv, abcNotation, params);
+			ABCJSInstance.renderAbc(notationDiv, abcNotation, params);
 			
 			// Check if anything was actually rendered
 			setTimeout(() => {
 				if (notationDiv.children.length === 0 || notationDiv.innerHTML.trim() === '') {
 					// Try alternative rendering method
 					try {
-						ABCJS.renderAbc(notationDiv, abcNotation);
+						ABCJSInstance.renderAbc(notationDiv, abcNotation);
 						
 						if (notationDiv.children.length === 0) {
 							notationDiv.innerHTML = '<p style="color: red;">ABCJS rendering failed - no content generated</p><pre>' + abcNotation + '</pre>';
@@ -132,11 +182,19 @@ function score(jmonObj, options = {}) {
 				}
 			}, 200);
 		} catch (error) {
-			console.error('Error rendering with ABCJS:', error);
+			console.error('[SCORE] Error rendering with ABCJS:', error);
 			notationDiv.innerHTML = '<p>Error rendering notation</p><pre>' + abcNotation + '</pre>';
 		}
 	} else {
-		notationDiv.innerHTML = '<p>ABCJS not available - showing text notation only</p><pre>' + abcNotation + '</pre>';
+		const message = autoload ? 
+			'ABCJS not available and auto-loading failed - showing text notation only' : 
+			'ABCJS not provided and auto-loading disabled - showing text notation only';
+		notationDiv.innerHTML = `<p>${message}</p><pre>` + abcNotation + '</pre>';
+		
+		if (!ABCJSInstance && autoload) {
+			console.log('[SCORE] To use visual score rendering, try:');
+			console.log('ABCJS = await require("abcjs"), then jm.score(composition, { ABCJS })');
+		}
 	}
 
 	return scoreContainer;
