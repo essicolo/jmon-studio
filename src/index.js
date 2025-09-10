@@ -17,6 +17,7 @@ function validateJmon(obj) {
  * Main render function for JMON objects
  * @param {Object} jmonObj - JMON object to render
  * @param {Object} options - Player options
+ * @param {Object} options.Tone - Pre-loaded Tone.js instance (optional)
  * @returns {HTMLElement} Player element
  */
 function render(jmonObj, options = {}) {
@@ -39,6 +40,7 @@ function render(jmonObj, options = {}) {
  * Main play function for JMON objects  
  * @param {Object} jmonObj - JMON object to play
  * @param {Object} options - Player options
+ * @param {Object} options.Tone - Pre-loaded Tone.js instance (optional)
  * @returns {HTMLElement} Player element (auto-plays)
  */
 function play(jmonObj, options = {}) {

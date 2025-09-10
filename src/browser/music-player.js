@@ -18,7 +18,8 @@ export function createPlayer(composition, options = {}) {
         showDebug = false,
         customInstruments = {},
         autoMultivoice = true,
-        maxVoices = 4
+        maxVoices = 4,
+        Tone: externalTone = null
     } = options;
 
     // Ensure composition has the expected structure
@@ -459,34 +460,60 @@ export function createPlayer(composition, options = {}) {
 
     const initializeTone = async () => {
         if (typeof window !== 'undefined') {
-            // Check for Tone.js in window or as global variable
-            const existingTone = window.Tone || (typeof Tone !== 'undefined' ? Tone : null);
+            // Check for Tone.js as parameter, in window, or as global variable
+            const existingTone = externalTone || window.Tone || (typeof Tone !== 'undefined' ? Tone : null);
             if (!existingTone) {
                 try {
                     // Use Observable-compatible loading (no CSP violations)
                     if (typeof require !== 'undefined') {
-                        // Try Observable's require first
+                        // Try Observable's require first with ES modules version
                         console.log('[PLAYER] Loading Tone.js via require()...');
-                        const ToneFromRequire = await require('https://unpkg.com/tone@14.8.49/build/Tone.js');
+                        const ToneFromRequire = await require('tone@14.8.49/build/Tone.js');
                         // Handle different export formats
                         window.Tone = ToneFromRequire.default || ToneFromRequire.Tone || ToneFromRequire;
                     } else {
-                        // Fallback to ES6 import
+                        // Fallback to ES6 import with correct module path
                         console.log('[PLAYER] Loading Tone.js via import()...');
-                        const ToneModule = await import('https://unpkg.com/tone@14.8.49/build/Tone.js');
+                        const ToneModule = await import('https://esm.sh/tone@14.8.49');
                         window.Tone = ToneModule.default || ToneModule.Tone || ToneModule;
                     }
                     
-                    // Validate that we got a proper Tone object
-                    if (!window.Tone || typeof window.Tone !== 'object') {
-                        throw new Error('Loaded Tone.js but got invalid object');
+                    // Validate that we got a proper Tone object with essential constructors
+                    if (!window.Tone || typeof window.Tone !== 'object' || !window.Tone.PolySynth) {
+                        console.warn('[PLAYER] First load attempt failed, trying alternative CDN...');
+                        
+                        // Try alternative CDN
+                        try {
+                            const ToneAlt = await import('https://cdn.skypack.dev/tone@14.8.49');
+                            window.Tone = ToneAlt.default || ToneAlt.Tone || ToneAlt;
+                            
+                            if (!window.Tone || !window.Tone.PolySynth) {
+                                throw new Error('Alternative CDN also failed');
+                            }
+                        } catch (altError) {
+                            console.warn('[PLAYER] Alternative CDN failed, trying jsdelivr...');
+                            
+                            // Last resort: jsdelivr
+                            try {
+                                const ToneJsdelivr = await import('https://cdn.jsdelivr.net/npm/tone@14.8.49/build/Tone.js');
+                                window.Tone = ToneJsdelivr.default || ToneJsdelivr.Tone || ToneJsdelivr;
+                                
+                                if (!window.Tone || !window.Tone.PolySynth) {
+                                    throw new Error('All CDN attempts failed');
+                                }
+                            } catch (jsdelivrError) {
+                                throw new Error('Loaded Tone.js but got invalid object from all CDNs');
+                            }
+                        }
                     }
                     
                     console.log('[PLAYER] Tone.js loaded successfully, version:', window.Tone.version || 'unknown');
                 } catch (error) {
                     console.warn('Could not auto-load Tone.js:', error.message);
-                    console.log('To use the player, load Tone.js manually first:');
-                    console.log('Tone = await require("https://unpkg.com/tone@14.8.49/build/Tone.js")');
+                    console.log('To use the player, load Tone.js manually first using one of these methods:');
+                    console.log('Method 1: Tone = await require("tone@14.8.49/build/Tone.js")');
+                    console.log('Method 2: Tone = await import("https://esm.sh/tone@14.8.49").then(m => m.default)');
+                    console.log('Method 3: Tone = await import("https://cdn.skypack.dev/tone@14.8.49").then(m => m.default)');
                     return false;
                 }
             } else {
