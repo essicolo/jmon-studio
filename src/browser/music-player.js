@@ -623,7 +623,11 @@ export function createPlayer(composition, options = {}) {
             return;
         }
 
-        // Build audioGraph instruments (once)
+        // Set up Transport timing FIRST to ensure correct BPM for all instruments
+        Tone.Transport.bpm.value = metadata.tempo;
+        console.log(`[PLAYER] Set Transport BPM to ${metadata.tempo} before building instruments`);
+        
+        // Build audioGraph instruments (once) - now with correct BPM context
         if (!graphInstruments) {
             graphInstruments = buildAudioGraphInstruments();
             if (graphInstruments) {
@@ -865,10 +869,7 @@ export function createPlayer(composition, options = {}) {
 
         // Use duration from converter
         
-        // Set up Transport timing
-        Tone.Transport.bpm.value = metadata.tempo;
-        
-        // Set Transport loop end in seconds to match event scheduling
+        // Set Transport loop end in seconds to match event scheduling (BPM already set above)
         Tone.Transport.loopEnd = totalDuration; // seconds
         Tone.Transport.loop = true;
         
