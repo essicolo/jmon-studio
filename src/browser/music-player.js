@@ -86,6 +86,20 @@ export function createPlayer(composition, options = {}) {
   // Responsive: add a style block for mobile
   const styleTag = document.createElement("style");
   styleTag.textContent = `
+        /* iOS audio improvements */
+        .jmon-music-player-container {
+            -webkit-user-select: none;
+            -webkit-touch-callout: none;
+            -webkit-tap-highlight-color: transparent;
+            touch-action: manipulation;
+        }
+        .jmon-music-player-play {
+            -webkit-user-select: none;
+            -webkit-touch-callout: none;
+            -webkit-tap-highlight-color: transparent;
+            touch-action: manipulation;
+        }
+        
         @media (max-width: 480px) {
             .jmon-music-player-container {
                 padding: 8px !important;
@@ -118,10 +132,23 @@ export function createPlayer(composition, options = {}) {
                 padding: 10px 0 !important;
             }
             .jmon-music-player-play {
-                width: 36px !important;
-                height: 36px !important;
+                width: 40px !important;
+                height: 40px !important;
+                min-width: 40px !important;
+                max-width: 40px !important;
+                padding: 8px !important;
+                margin: 0 4px !important;
+                border-radius: 50% !important;
+                flex-shrink: 0 !important;
+            }
+            .jmon-music-player-stop {
+                width: 32px !important;
+                height: 32px !important;
+                min-width: 32px !important;
+                max-width: 32px !important;
                 padding: 6px !important;
                 margin: 0 4px !important;
+                flex-shrink: 0 !important;
             }
         }
     `;
@@ -427,13 +454,16 @@ export function createPlayer(composition, options = {}) {
         height: 8px;
     `;
 
+  // Play/Pause button
   const playButton = document.createElement("button");
   playButton.innerHTML =
     `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-play"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8"/></svg>`;
   playButton.style.cssText = `
         width: 40px;
         height: 40px;
-        padding: 10px;
+        min-width: 40px;
+        max-width: 40px;
+        padding: 8px;
         border: none;
         border-radius: 50%;
         background-color: ${colors.primary};
@@ -444,11 +474,37 @@ export function createPlayer(composition, options = {}) {
         display: flex;
         align-items: center;
         justify-content: center;
-        margin: 0px 10px 0px 10px;
-        min-width: 0;
+        margin: 0px 5px 0px 10px;
         box-sizing: border-box;
+        flex-shrink: 0;
     `;
   playButton.classList.add("jmon-music-player-play");
+
+  // Stop button
+  const stopButton = document.createElement("button");
+  stopButton.innerHTML =
+    `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-square"><rect width="18" height="18" x="3" y="3" rx="2"/></svg>`;
+  stopButton.style.cssText = `
+        width: 32px;
+        height: 32px;
+        min-width: 32px;
+        max-width: 32px;
+        padding: 6px;
+        border: none;
+        border-radius: 4px;
+        background-color: ${colors.secondary};
+        color: ${colors.text};
+        font-size: 14px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0px 5px 0px 0px;
+        box-sizing: border-box;
+        flex-shrink: 0;
+    `;
+  stopButton.classList.add("jmon-music-player-stop");
 
   const timeDisplay = document.createElement("div");
   timeDisplay.style.cssText = `
@@ -459,7 +515,16 @@ export function createPlayer(composition, options = {}) {
         margin: 0px 0px 0px 10px;
     `;
 
-  timelineContainer.append(currentTime, timeline, totalTime, playButton);
+  // Control buttons container
+  const controlsContainer = document.createElement("div");
+  controlsContainer.style.cssText = `
+        display: flex;
+        align-items: center;
+        gap: 0px;
+    `;
+  controlsContainer.append(playButton, stopButton);
+
+  timelineContainer.append(currentTime, timeline, totalTime, controlsContainer);
 
   // Download buttons container
   const buttonContainer = document.createElement("div");
@@ -647,6 +712,12 @@ export function createPlayer(composition, options = {}) {
     }
   };
 
+  // iOS detection utility
+  const isIOS = () => {
+    return /iPad|iPhone|iPod/.test(navigator.userAgent) ||
+      (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+  };
+
   const formatTime = (seconds) => {
     return `${Math.floor(seconds / 60)}:${
       Math.floor(seconds % 60).toString().padStart(2, "0")
@@ -770,6 +841,12 @@ export function createPlayer(composition, options = {}) {
           "[PLAYER] Tone.js initialized, context state:",
           Tone.context ? Tone.context.state : "no context",
         );
+        
+        // iOS-specific logging
+        if (isIOS()) {
+          console.log("[PLAYER] iOS device detected - audio context will start on user interaction");
+        }
+        
         return true;
       }
     }
@@ -1175,30 +1252,51 @@ export function createPlayer(composition, options = {}) {
     totalTime.textContent = formatTime(totalDuration);
   };
 
+  // Throttle timeline updates for better performance
+  let lastTimelineUpdate = 0;
+  const TIMELINE_UPDATE_INTERVAL = 100; // Update every 100ms instead of every frame
+
   const updateTimeline = () => {
+    const now = performance.now();
+    const shouldUpdate = (now - lastTimelineUpdate) >= TIMELINE_UPDATE_INTERVAL;
+    
     if (Tone && isPlaying) {
       // Compute loop length in seconds (loopEnd is set in seconds)
       const loopSeconds = (typeof Tone.Transport.loopEnd === "number")
         ? Tone.Transport.loopEnd
         : (Tone.Time(Tone.Transport.loopEnd).toSeconds());
 
-      const elapsed = Tone.Transport.seconds % loopSeconds;
-      const progress = (elapsed / loopSeconds) * 100;
-      timeline.value = Math.min(progress, 100);
-      currentTime.textContent = formatTime(elapsed);
-      totalTime.textContent = formatTime(loopSeconds);
+      if (shouldUpdate) {
+        const elapsed = Tone.Transport.seconds % loopSeconds;
+        const progress = (elapsed / loopSeconds) * 100;
+        timeline.value = Math.min(progress, 100);
+        currentTime.textContent = formatTime(elapsed);
+        totalTime.textContent = formatTime(loopSeconds);
+        lastTimelineUpdate = now;
+      }
 
       // Check if we should continue updating
       if (Tone.Transport.state === "started" && isPlaying) {
         requestAnimationFrame(updateTimeline);
-      } else if (Tone.Transport.state === "stopped") {
-        // Reset to beginning when stopped
-        Tone.Transport.seconds = 0;
-        timeline.value = 0;
-        currentTime.textContent = formatTime(0);
-        isPlaying = false;
-        playButton.innerHTML =
-          `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-play"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8"/></svg>`;
+      } else if (Tone.Transport.state === "stopped" || Tone.Transport.state === "paused") {
+        // Keep updating display even when paused
+        if (shouldUpdate) {
+          const elapsed = Tone.Transport.seconds % loopSeconds;
+          const progress = (elapsed / loopSeconds) * 100;
+          timeline.value = Math.min(progress, 100);
+          currentTime.textContent = formatTime(elapsed);
+          lastTimelineUpdate = now;
+        }
+        
+        if (Tone.Transport.state === "stopped") {
+          // Only reset to beginning when actually stopped
+          Tone.Transport.seconds = 0;
+          timeline.value = 0;
+          currentTime.textContent = formatTime(0);
+          isPlaying = false;
+          playButton.innerHTML =
+            `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-play"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8"/></svg>`;
+        }
       }
     }
   };
@@ -1215,34 +1313,43 @@ export function createPlayer(composition, options = {}) {
     }
 
     if (isPlaying) {
-      // Stop transport and all parts with proper cleanup
-      console.log("[PLAYER] Stopping playback...");
-      Tone.Transport.stop();
-      Tone.Transport.cancel(); // Clear all scheduled events to prevent overlap
-
-      parts.forEach((part, index) => {
-        try {
-          part.stop();
-        } catch (e) {
-          console.warn(
-            `[PLAYER] Failed to stop part ${index} during playback stop:`,
-            e,
-          );
-        }
-      });
+      // Pause transport instead of stopping - this preserves the current position
+      console.log("[PLAYER] Pausing playback...");
+      Tone.Transport.pause();
 
       isPlaying = false;
       playButton.innerHTML =
         `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-play"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8"/></svg>`;
-      console.log("[PLAYER] Playback stopped and cleaned up");
+      console.log("[PLAYER] Playback paused");
     } else {
-      // Ensure audio context is started first
+      // Ensure audio context is started first - critical for iOS
       if (!Tone.context || Tone.context.state !== "running") {
-        await Tone.start();
-        console.log(
-          "[PLAYER] Audio context started:",
-          Tone.context ? Tone.context.state : "unknown",
-        );
+        try {
+          await Tone.start();
+          console.log(
+            "[PLAYER] Audio context started:",
+            Tone.context ? Tone.context.state : "unknown",
+          );
+          
+          // Additional iOS-specific setup
+          if (Tone.context && typeof Tone.context.resume === "function") {
+            await Tone.context.resume();
+            console.log("[PLAYER] Audio context resumed for iOS compatibility");
+          }
+        } catch (error) {
+          console.error("[PLAYER] Failed to start audio context:", error);
+          
+          // More helpful error messages
+          let errorMsg = "Failed to start audio. ";
+          if (isIOS()) {
+            errorMsg += "On iOS, please ensure your device isn't in silent mode and try again.";
+          } else {
+            errorMsg += "Please check your audio settings and try again.";
+          }
+          
+          alert(errorMsg);
+          return;
+        }
       }
 
       if (synths.length === 0) {
@@ -1250,9 +1357,14 @@ export function createPlayer(composition, options = {}) {
         setupAudio();
       }
 
-      // Reset transport position to ensure clean start
-      Tone.Transport.stop();
-      Tone.Transport.position = 0;
+      // Only reset position if we're not in a paused state
+      if (Tone.Transport.state !== "paused") {
+        Tone.Transport.stop();
+        Tone.Transport.position = 0;
+        console.log("[PLAYER] Starting from beginning");
+      } else {
+        console.log("[PLAYER] Resuming from paused position");
+      }
       // Note: NOT using cancel() here to preserve loop timing accuracy
 
       console.log(
@@ -1300,17 +1412,20 @@ export function createPlayer(composition, options = {}) {
         return;
       }
 
-      parts.forEach((part, index) => {
-        if (!part || typeof part.start !== "function") {
-          console.error(`[PLAYER] Part ${index} is invalid:`, part);
-          return;
-        }
-        try {
-          part.start(0);
-        } catch (error) {
-          console.error(`[PLAYER] Failed to start part ${index}:`, error);
-        }
-      });
+      // Only restart parts if transport was not in paused state
+      if (Tone.Transport.state !== "paused") {
+        parts.forEach((part, index) => {
+          if (!part || typeof part.start !== "function") {
+            console.error(`[PLAYER] Part ${index} is invalid:`, part);
+            return;
+          }
+          try {
+            part.start(0);
+          } catch (error) {
+            console.error(`[PLAYER] Failed to start part ${index}:`, error);
+          }
+        });
+      }
 
       // Start transport at position 0
       Tone.Transport.start();
@@ -1321,11 +1436,60 @@ export function createPlayer(composition, options = {}) {
     }
   });
 
+  // Stop button handler
+  stopButton.addEventListener("click", async () => {
+    if (!Tone) {
+      return;
+    }
+
+    console.log("[PLAYER] Stopping playback completely...");
+    
+    // Stop transport and all parts with proper cleanup
+    Tone.Transport.stop();
+    Tone.Transport.cancel(); // Clear all scheduled events
+    Tone.Transport.position = 0; // Reset to beginning
+
+    parts.forEach((part, index) => {
+      try {
+        part.stop();
+      } catch (e) {
+        console.warn(
+          `[PLAYER] Failed to stop part ${index} during complete stop:`,
+          e,
+        );
+      }
+    });
+
+    // Reset UI
+    isPlaying = false;
+    timeline.value = 0;
+    currentTime.textContent = formatTime(0);
+    playButton.innerHTML =
+      `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-play"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8"/></svg>`;
+    
+    console.log("[PLAYER] Playback stopped completely");
+  });
+
   timeline.addEventListener("input", () => {
     if (Tone && totalDuration > 0) {
       const time = (timeline.value / 100) * totalDuration;
+      const wasPlaying = isPlaying;
+      
+      // If playing, pause temporarily for seeking
+      if (wasPlaying) {
+        Tone.Transport.pause();
+      }
+      
+      // Set the new position
       Tone.Transport.seconds = time;
       currentTime.textContent = formatTime(time);
+      
+      // Resume if it was playing before
+      if (wasPlaying) {
+        setTimeout(() => {
+          Tone.Transport.start();
+        }, 50); // Small delay to ensure position is set
+      }
     }
   });
 
