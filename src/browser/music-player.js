@@ -7,6 +7,9 @@ import {
   getPopularInstruments,
   GM_INSTRUMENTS,
 } from "../utils/gm-instruments.js";
+import { SYNTHESIZER_TYPES, ALL_EFFECTS } from "../constants/audio-effects.js";
+import { COLORS, PLAYER_DIMENSIONS, TIMELINE_CONFIG, LAYOUT } from "../constants/ui-constants.js";
+import { AUDIO_CONFIG, ERROR_MESSAGES, LOG_PREFIXES } from "../constants/player-constants.js";
 /**
  * Music Player
  * Comprehensive music player inspired by djalgo player.py
@@ -15,8 +18,8 @@ import {
 export function createPlayer(composition, options = {}) {
   // Defensive validation
   if (!composition || typeof composition !== "object") {
-    console.error("[PLAYER] Invalid composition:", composition);
-    throw new Error("Composition must be a valid JMON object");
+    console.error(`${LOG_PREFIXES.PLAYER} Invalid composition:`, composition);
+    throw new Error(ERROR_MESSAGES.INVALID_COMPOSITION);
   }
 
   // Extract options
@@ -32,20 +35,20 @@ export function createPlayer(composition, options = {}) {
   // Ensure composition has the expected structure
   if (!composition.sequences && !composition.tracks) {
     console.error(
-      "[PLAYER] No sequences or tracks found in composition:",
+      `${LOG_PREFIXES.PLAYER} No sequences or tracks found in composition:`,
       composition,
     );
-    throw new Error("Composition must have sequences or tracks");
+    throw new Error(ERROR_MESSAGES.NO_SEQUENCES_OR_TRACKS);
   }
 
   // Normalize sequences/tracks to ensure forEach works
   const tracks = composition.tracks || composition.sequences || [];
   if (!Array.isArray(tracks)) {
-    console.error("[PLAYER] Tracks/sequences must be an array:", tracks);
-    throw new Error("Tracks/sequences must be an array");
+    console.error(`${LOG_PREFIXES.PLAYER} Tracks/sequences must be an array:`, tracks);
+    throw new Error(ERROR_MESSAGES.TRACKS_MUST_BE_ARRAY);
   }
 
-  const tempo = composition.tempo || composition.bpm || 120;
+  const tempo = composition.tempo || composition.bpm || AUDIO_CONFIG.DEFAULT_TEMPO;
 
   // Convert JMON to Tone.js format with multivoice support
   const conversionOptions = { autoMultivoice, maxVoices, showDebug };
@@ -55,15 +58,7 @@ export function createPlayer(composition, options = {}) {
   const { tracks: convertedTracks, metadata } = convertedData;
   let totalDuration = metadata.totalDuration;
 
-  const colors = {
-    background: "#FFFFFF",
-    primary: "#333",
-    secondary: "#F0F0F0",
-    accent: "#333",
-    text: "#000000",
-    lightText: "#666666",
-    border: "#CCCCCC",
-  };
+  const colors = COLORS;
 
   // Create player UI container
   const container = document.createElement("div");
@@ -74,8 +69,8 @@ export function createPlayer(composition, options = {}) {
         padding: 16px;
         border-radius: 12px;
         width: 100%;
-        max-width: 400px;
-        min-width: 0;
+        max-width: ${PLAYER_DIMENSIONS.MAX_WIDTH}px;
+        min-width: ${PLAYER_DIMENSIONS.MIN_WIDTH};
         border: 1px solid ${colors.border};
         box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
         display: flex;
@@ -174,7 +169,7 @@ export function createPlayer(composition, options = {}) {
             }
             .jmon-music-player-timeline {
                 gap: 8px !important;
-                margin: 12px 0 !important;
+                margin: 6px 0 !important;
             }
             .jmon-music-player-downloads {
                 flex-direction: column !important;
@@ -216,7 +211,7 @@ export function createPlayer(composition, options = {}) {
         display: grid;
         grid-template-columns: 1fr;
         grid-template-rows: auto auto auto auto;
-        gap: 20px;
+        gap: 16px;
         margin-bottom: 0px;
         font-family: 'PT Sans', sans-serif;
     `;
@@ -535,10 +530,10 @@ export function createPlayer(composition, options = {}) {
   timelineContainer.style.cssText = `
         position: relative;
         width: 100%;
-        margin: 20px 0;
+        margin: ${TIMELINE_CONFIG.MARGIN};
         display: flex;
         align-items: center;
-        gap: 15px;
+        gap: ${TIMELINE_CONFIG.GAP}px;
         min-width: 0;
         box-sizing: border-box;
     `;
@@ -792,7 +787,7 @@ export function createPlayer(composition, options = {}) {
               "baseUrl:",
               samplerOpts.baseUrl || "(none)",
             );
-            instrument = new Tone.Sampler(samplerOpts).toDestination();
+            instrument = new Tone.Sampler(samplerOpts);
           } catch (e) {
             console.error("[PLAYER] Failed to create Sampler:", e);
             instrument = null;
@@ -807,27 +802,25 @@ export function createPlayer(composition, options = {}) {
               instrument.release = options.envelope.release;
             }
           }
-        } else if (
-          [
-            "Synth",
-            "PolySynth",
-            "MonoSynth",
-            "AMSynth",
-            "FMSynth",
-            "DuoSynth",
-            "PluckSynth",
-            "NoiseSynth",
-          ].includes(type)
-        ) {
-          // Basic synth support (to destination). Effects graph is not yet implemented.
+        } else if (SYNTHESIZER_TYPES.includes(type)) {
+          // Basic synth support - do not connect to destination yet (effects chain will handle routing)
           try {
-            instrument = new Tone[type](options).toDestination();
+            instrument = new Tone[type](options);
           } catch (e) {
             console.warn(
               `[PLAYER] Failed to create ${type} from audioGraph, using PolySynth:`,
               e,
             );
-            instrument = new Tone.PolySynth().toDestination();
+            instrument = new Tone.PolySynth();
+          }
+        } else if (ALL_EFFECTS.includes(type)) {
+          // Effect support - create the effect but don't connect yet
+          try {
+            instrument = new Tone[type](options);
+            console.log(`[PLAYER] Created effect ${id} (${type}) with options:`, options);
+          } catch (e) {
+            console.warn(`[PLAYER] Failed to create ${type} effect:`, e);
+            instrument = null;
           }
         } else if (type === "Destination") {
           map[id] = Tone.Destination; // marker
@@ -836,6 +829,41 @@ export function createPlayer(composition, options = {}) {
           map[id] = instrument;
         }
       });
+
+      // Second pass: Connect the audio graph routing
+      if (Object.keys(map).length > 0) {
+        composition.audioGraph.forEach((node) => {
+          const { id, target } = node;
+          if (!id || !map[id]) return;
+
+          const currentNode = map[id];
+          
+          // Skip Destination nodes (they're the final output)
+          if (currentNode === Tone.Destination) return;
+
+          // Connect to target if specified, otherwise connect to destination
+          if (target && map[target]) {
+            try {
+              if (map[target] === Tone.Destination) {
+                currentNode.toDestination();
+                console.log(`[PLAYER] Connected ${id} -> Destination`);
+              } else {
+                currentNode.connect(map[target]);
+                console.log(`[PLAYER] Connected ${id} -> ${target}`);
+              }
+            } catch (e) {
+              console.warn(`[PLAYER] Failed to connect ${id} -> ${target}:`, e);
+              // Fallback to destination
+              currentNode.toDestination();
+            }
+          } else {
+            // No target specified, connect directly to destination
+            currentNode.toDestination();
+            console.log(`[PLAYER] Connected ${id} -> Destination (no target specified)`);
+          }
+        });
+      }
+
       return map;
     } catch (e) {
       console.error("[PLAYER] Failed building audioGraph instruments:", e);
@@ -1385,7 +1413,7 @@ export function createPlayer(composition, options = {}) {
 
   // Throttle timeline updates for better performance
   let lastTimelineUpdate = 0;
-  const TIMELINE_UPDATE_INTERVAL = 100; // Update every 100ms instead of every frame
+  const TIMELINE_UPDATE_INTERVAL = TIMELINE_CONFIG.UPDATE_INTERVAL; // Update every 100ms instead of every frame
 
   const updateTimeline = () => {
     const now = performance.now();
