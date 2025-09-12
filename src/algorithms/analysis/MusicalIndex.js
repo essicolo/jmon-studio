@@ -4,13 +4,20 @@
  * Used primarily for genetic algorithm fitness evaluation
  */
 
+/**
+ * MusicalIndex
+ * Analyzes a musical sequence for various metrics such as rest analysis, pitch/duration statistics, and more.
+ *
+ * @class
+ * @param {Array} sequence - Array of musical values (pitches, durations, etc.)
+ */
 export class MusicalIndex {
   /**
    * Create a musical index analyzer for a sequence
    * @param {Array} sequence - Array of musical values (pitches, durations, etc.)
    */
   constructor(sequence) {
-    this.sequence = sequence.filter(val => val !== null && val !== undefined);
+    this.sequence = sequence.filter((val) => val !== null && val !== undefined);
     this.originalSequence = sequence; // Keep original for rest analysis
   }
 
@@ -21,17 +28,17 @@ export class MusicalIndex {
    */
   gini() {
     if (this.sequence.length === 0) return 0;
-    
+
     // Sort sequence
     const sorted = [...this.sequence].sort((a, b) => a - b);
     const n = sorted.length;
-    
+
     // Calculate Gini coefficient
     let sum = 0;
     for (let i = 0; i < n; i++) {
       sum += (2 * (i + 1) - n - 1) * sorted[i];
     }
-    
+
     const totalSum = sorted.reduce((acc, val) => acc + val, 0);
     return totalSum === 0 ? 0 : sum / (n * totalSum);
   }
@@ -43,10 +50,13 @@ export class MusicalIndex {
    */
   balance() {
     if (this.sequence.length === 0) return 0;
-    
-    const mean = this.sequence.reduce((sum, val) => sum + val, 0) / this.sequence.length;
-    const variance = this.sequence.reduce((sum, val) => sum + Math.pow(val - mean, 2), 0) / this.sequence.length;
-    
+
+    const mean = this.sequence.reduce((sum, val) => sum + val, 0) /
+      this.sequence.length;
+    const variance =
+      this.sequence.reduce((sum, val) => sum + Math.pow(val - mean, 2), 0) /
+      this.sequence.length;
+
     // Normalize by mean to make it scale-independent
     return mean === 0 ? 0 : Math.sqrt(variance) / Math.abs(mean);
   }
@@ -59,19 +69,23 @@ export class MusicalIndex {
    */
   motif(maxMotifLength = 4) {
     if (this.sequence.length < 2) return 0;
-    
+
     const motifCounts = new Map();
     let totalMotifs = 0;
-    
+
     // Check all possible motif lengths
-    for (let length = 2; length <= Math.min(maxMotifLength, this.sequence.length); length++) {
+    for (
+      let length = 2;
+      length <= Math.min(maxMotifLength, this.sequence.length);
+      length++
+    ) {
       for (let i = 0; i <= this.sequence.length - length; i++) {
-        const motif = this.sequence.slice(i, i + length).join(',');
+        const motif = this.sequence.slice(i, i + length).join(",");
         motifCounts.set(motif, (motifCounts.get(motif) || 0) + 1);
         totalMotifs++;
       }
     }
-    
+
     // Calculate motif strength as sum of squared frequencies
     let motifStrength = 0;
     for (const count of motifCounts.values()) {
@@ -79,7 +93,7 @@ export class MusicalIndex {
         motifStrength += count * count;
       }
     }
-    
+
     return totalMotifs === 0 ? 0 : motifStrength / totalMotifs;
   }
 
@@ -91,10 +105,10 @@ export class MusicalIndex {
    */
   dissonance(scale) {
     if (!scale || scale.length === 0 || this.sequence.length === 0) return 0;
-    
+
     // Convert scale to set of pitch classes (mod 12)
-    const scaleClasses = new Set(scale.map(pitch => pitch % 12));
-    
+    const scaleClasses = new Set(scale.map((pitch) => pitch % 12));
+
     let dissonantNotes = 0;
     for (const pitch of this.sequence) {
       if (pitch !== null && pitch !== undefined) {
@@ -104,7 +118,7 @@ export class MusicalIndex {
         }
       }
     }
-    
+
     return dissonantNotes / this.sequence.length;
   }
 
@@ -116,30 +130,37 @@ export class MusicalIndex {
    */
   rhythmic(measureLength = 4) {
     if (this.sequence.length === 0) return 0;
-    
+
     let currentBeat = 0;
     let rhythmicErrors = 0;
-    const totalDuration = this.sequence.reduce((sum, duration) => sum + duration, 0);
-    
+    const totalDuration = this.sequence.reduce(
+      (sum, duration) => sum + duration,
+      0,
+    );
+
     // Check if durations align well with measure boundaries
     for (const duration of this.sequence) {
       // Check if note crosses measure boundary awkwardly
       const nextBeat = currentBeat + duration;
       const currentMeasure = Math.floor(currentBeat / measureLength);
       const nextMeasure = Math.floor(nextBeat / measureLength);
-      
+
       if (currentMeasure !== nextMeasure) {
         // Note crosses measure boundary
-        const remainingInMeasure = measureLength - (currentBeat % measureLength);
+        const remainingInMeasure = measureLength -
+          (currentBeat % measureLength);
         if (remainingInMeasure < duration && remainingInMeasure > 0) {
           // Note doesn't fill the remaining measure completely
-          rhythmicErrors += Math.min(remainingInMeasure, duration - remainingInMeasure);
+          rhythmicErrors += Math.min(
+            remainingInMeasure,
+            duration - remainingInMeasure,
+          );
         }
       }
-      
+
       currentBeat = nextBeat;
     }
-    
+
     // Calculate rhythmic fitness (1 = perfect, 0 = worst)
     return totalDuration === 0 ? 0 : 1 - (rhythmicErrors / totalDuration);
   }
@@ -150,8 +171,10 @@ export class MusicalIndex {
    */
   restProportion() {
     if (this.originalSequence.length === 0) return 0;
-    
-    const restCount = this.originalSequence.filter(val => val === null || val === undefined).length;
+
+    const restCount =
+      this.originalSequence.filter((val) => val === null || val === undefined)
+        .length;
     return restCount / this.originalSequence.length;
   }
 
@@ -168,7 +191,7 @@ export class MusicalIndex {
       motif: this.motif(),
       dissonance: scale ? this.dissonance(scale) : 0,
       rhythmic: this.rhythmic(measureLength),
-      rest: this.restProportion()
+      rest: this.restProportion(),
     };
   }
 
@@ -181,18 +204,21 @@ export class MusicalIndex {
       return { mean: 0, std: 0, min: 0, max: 0, range: 0 };
     }
 
-    const mean = this.sequence.reduce((sum, val) => sum + val, 0) / this.sequence.length;
-    const variance = this.sequence.reduce((sum, val) => sum + Math.pow(val - mean, 2), 0) / this.sequence.length;
+    const mean = this.sequence.reduce((sum, val) => sum + val, 0) /
+      this.sequence.length;
+    const variance =
+      this.sequence.reduce((sum, val) => sum + Math.pow(val - mean, 2), 0) /
+      this.sequence.length;
     const std = Math.sqrt(variance);
     const min = Math.min(...this.sequence);
     const max = Math.max(...this.sequence);
-    
+
     return {
       mean,
       std,
       min,
       max,
-      range: max - min
+      range: max - min,
     };
   }
 
@@ -206,13 +232,13 @@ export class MusicalIndex {
   similarity(other, scale = null, measureLength = 4) {
     const metrics1 = this.calculateAll(scale, measureLength);
     const metrics2 = other.calculateAll(scale, measureLength);
-    
+
     let totalSimilarity = 0;
     let count = 0;
-    
+
     for (const [key, value1] of Object.entries(metrics1)) {
       const value2 = metrics2[key];
-      if (typeof value1 === 'number' && typeof value2 === 'number') {
+      if (typeof value1 === "number" && typeof value2 === "number") {
         // Calculate similarity as 1 - normalized difference
         const maxVal = Math.max(Math.abs(value1), Math.abs(value2), 1);
         const similarity = 1 - Math.abs(value1 - value2) / maxVal;
@@ -220,7 +246,7 @@ export class MusicalIndex {
         count++;
       }
     }
-    
+
     return count === 0 ? 0 : totalSimilarity / count;
   }
 }
