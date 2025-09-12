@@ -213,7 +213,7 @@ export function createPlayer(composition, options = {}) {
             .jmon-music-player-downloads {
                 flex-direction: column !important;
                 gap: 8px !important;
-                margin-top: 12px !important;
+                margin-top: 6px !important;
             }
             .jmon-music-player-btn {
                 min-height: 40px !important;
@@ -231,11 +231,11 @@ export function createPlayer(composition, options = {}) {
                 flex-shrink: 0 !important;
             }
             .jmon-music-player-stop {
-                width: 32px !important;
-                height: 32px !important;
-                min-width: 32px !important;
-                max-width: 32px !important;
-                padding: 6px !important;
+                width: 40px !important;
+                height: 40px !important;
+                min-width: 40px !important;
+                max-width: 40px !important;
+                padding: 8px !important;
                 margin: 0 4px !important;
                 flex-shrink: 0 !important;
             }
@@ -250,7 +250,7 @@ export function createPlayer(composition, options = {}) {
         display: grid;
         grid-template-columns: 1fr;
         grid-template-rows: auto auto auto auto;
-        gap: 16px;
+        gap: 12px;
         margin-bottom: 0px;
         font-family: 'PT Sans', sans-serif;
     `;
@@ -625,34 +625,42 @@ export function createPlayer(composition, options = {}) {
     timelineStyle.textContent = `
         input[type="range"].jmon-timeline-slider {
             background: ${colors.secondary} !important;
+            border: 1px solid ${colors.border} !important;
+            box-shadow: inset 0 1px 3px rgba(0,0,0,0.1) !important;
         }
         input[type="range"].jmon-timeline-slider::-webkit-slider-track {
             background: ${colors.secondary} !important;
-            height: 8px;
-            border-radius: 15px;
+            height: 8px !important;
+            border-radius: 15px !important;
+            border: 1px solid ${colors.border} !important;
+            box-shadow: inset 0 1px 3px rgba(0,0,0,0.1) !important;
         }
         input[type="range"].jmon-timeline-slider::-moz-range-track {
             background: ${colors.secondary} !important;
-            height: 8px;
-            border-radius: 15px;
-            border: none;
+            height: 8px !important;
+            border-radius: 15px !important;
+            border: 1px solid ${colors.border} !important;
+            box-shadow: inset 0 1px 3px rgba(0,0,0,0.1) !important;
         }
         input[type="range"].jmon-timeline-slider::-webkit-slider-thumb {
-            -webkit-appearance: none;
-            appearance: none;
-            height: 20px;
-            width: 20px;
-            border-radius: 50%;
-            background: ${colors.primary};
-            cursor: pointer;
+            -webkit-appearance: none !important;
+            appearance: none !important;
+            height: 20px !important;
+            width: 20px !important;
+            border-radius: 50% !important;
+            background: ${colors.primary} !important;
+            cursor: pointer !important;
+            border: 2px solid ${colors.background} !important;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.2) !important;
         }
         input[type="range"].jmon-timeline-slider::-moz-range-thumb {
-            height: 20px;
-            width: 20px;
-            border-radius: 50%;
-            background: ${colors.primary};
-            cursor: pointer;
-            border: none;
+            height: 20px !important;
+            width: 20px !important;
+            border-radius: 50% !important;
+            background: ${colors.primary} !important;
+            cursor: pointer !important;
+            border: 2px solid ${colors.background} !important;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.2) !important;
         }
     `;
     document.head.appendChild(timelineStyle);
@@ -689,13 +697,13 @@ export function createPlayer(composition, options = {}) {
   stopButton.innerHTML =
     `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-square"><rect width="18" height="18" x="3" y="3" rx="2"/></svg>`;
   stopButton.style.cssText = `
-        width: 32px;
-        height: 32px;
-        min-width: 32px;
-        max-width: 32px;
-        padding: 6px;
+        width: 40px;
+        height: 40px;
+        min-width: 40px;
+        max-width: 40px;
+        padding: 8px;
         border: none;
-        border-radius: 4px;
+        border-radius: 8px;
         background-color: ${colors.secondary};
         color: ${colors.text};
         font-size: 14px;
@@ -735,7 +743,7 @@ export function createPlayer(composition, options = {}) {
   buttonContainer.style.cssText = `
         display: flex;
         justify-content: space-between;
-        margin-top: 20px;
+        margin-top: 8px;
         gap: 10px;
         min-width: 0;
         box-sizing: border-box;
