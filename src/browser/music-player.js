@@ -104,7 +104,7 @@ export function createPlayer(composition, options = {}) {
             transform: translateY(0px);
         }
         
-        /* Large screens: Show vertical downloads, hide horizontal ones */
+        /* Large screens: Show vertical downloads, hide horizontal ones, horizontal track layout */
         @media (min-width: 600px) {
             .jmon-music-player-downloads {
                 display: none !important;
@@ -119,9 +119,22 @@ export function createPlayer(composition, options = {}) {
                 min-width: 140px !important;
                 max-width: 160px !important;
             }
+            .jmon-track-selector {
+                flex-direction: row !important;
+                align-items: center !important;
+                gap: 16px !important;
+            }
+            .jmon-track-selector label {
+                min-width: 120px !important;
+                margin-bottom: 0 !important;
+                flex-shrink: 0 !important;
+            }
+            .jmon-track-selector select {
+                flex: 1 !important;
+            }
         }
         
-        /* Medium screens: Compact layout */
+        /* Medium screens: Compact layout with horizontal track selectors */
         @media (min-width: 481px) and (max-width: 799px) {
             .jmon-music-player-downloads {
                 display: none !important;
@@ -135,6 +148,20 @@ export function createPlayer(composition, options = {}) {
             .jmon-music-player-right {
                 min-width: 120px !important;
                 max-width: 140px !important;
+            }
+            .jmon-track-selector {
+                flex-direction: row !important;
+                align-items: center !important;
+                gap: 12px !important;
+            }
+            .jmon-track-selector label {
+                min-width: 100px !important;
+                margin-bottom: 0 !important;
+                flex-shrink: 0 !important;
+                font-size: 14px !important;
+            }
+            .jmon-track-selector select {
+                flex: 1 !important;
             }
         }
         
@@ -166,6 +193,18 @@ export function createPlayer(composition, options = {}) {
             }
             .jmon-music-player-right {
                 gap: 12px !important;
+            }
+            .jmon-track-selector {
+                flex-direction: column !important;
+                align-items: stretch !important;
+                gap: 8px !important;
+            }
+            .jmon-track-selector label {
+                min-width: auto !important;
+                margin-bottom: 0 !important;
+            }
+            .jmon-track-selector select {
+                flex: none !important;
             }
             .jmon-music-player-timeline {
                 gap: 8px !important;
@@ -269,7 +308,11 @@ export function createPlayer(composition, options = {}) {
     const synthSelectorItem = document.createElement("div");
     synthSelectorItem.style.cssText = `
             margin-bottom: 8px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
         `;
+    synthSelectorItem.classList.add("jmon-track-selector");
 
     const synthLabel = document.createElement("label");
     synthLabel.textContent = track.label || `Track ${index + 1}`;
@@ -278,8 +321,9 @@ export function createPlayer(composition, options = {}) {
             font-size: 16px;
             color: ${colors.text};
             display: block;
-            margin-bottom: 8px;
+            margin-bottom: 0;
             font-weight: normal;
+            flex-shrink: 0;
         `;
 
     const synthSelect = document.createElement("select");
@@ -575,6 +619,44 @@ export function createPlayer(composition, options = {}) {
         overflow: visible;
         height: 8px;
     `;
+    
+    // Add timeline track styling to ensure visibility across browsers
+    const timelineStyle = document.createElement("style");
+    timelineStyle.textContent = `
+        input[type="range"].jmon-timeline-slider {
+            background: ${colors.secondary} !important;
+        }
+        input[type="range"].jmon-timeline-slider::-webkit-slider-track {
+            background: ${colors.secondary} !important;
+            height: 8px;
+            border-radius: 15px;
+        }
+        input[type="range"].jmon-timeline-slider::-moz-range-track {
+            background: ${colors.secondary} !important;
+            height: 8px;
+            border-radius: 15px;
+            border: none;
+        }
+        input[type="range"].jmon-timeline-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            height: 20px;
+            width: 20px;
+            border-radius: 50%;
+            background: ${colors.primary};
+            cursor: pointer;
+        }
+        input[type="range"].jmon-timeline-slider::-moz-range-thumb {
+            height: 20px;
+            width: 20px;
+            border-radius: 50%;
+            background: ${colors.primary};
+            cursor: pointer;
+            border: none;
+        }
+    `;
+    document.head.appendChild(timelineStyle);
+    timeline.classList.add("jmon-timeline-slider");
 
   // Play/Pause button
   const playButton = document.createElement("button");
