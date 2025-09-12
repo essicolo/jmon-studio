@@ -100,7 +100,57 @@ export function createPlayer(composition, options = {}) {
             touch-action: manipulation;
         }
         
+        /* Button hover effects */
+        .jmon-music-player-btn-vertical:hover {
+            background-color: #555555 !important;
+            transform: translateY(-1px);
+        }
+        .jmon-music-player-btn-vertical:active {
+            transform: translateY(0px);
+        }
+        
+        /* Large screens: Show vertical downloads, hide horizontal ones */
+        @media (min-width: 600px) {
+            .jmon-music-player-downloads {
+                display: none !important;
+            }
+            .jmon-music-player-vertical-downloads {
+                display: flex !important;
+            }
+            .jmon-music-player-top {
+                gap: 32px !important;
+            }
+            .jmon-music-player-right {
+                min-width: 140px !important;
+                max-width: 160px !important;
+            }
+        }
+        
+        /* Medium screens: Compact layout */
+        @media (min-width: 481px) and (max-width: 799px) {
+            .jmon-music-player-downloads {
+                display: none !important;
+            }
+            .jmon-music-player-vertical-downloads {
+                display: flex !important;
+            }
+            .jmon-music-player-top {
+                gap: 20px !important;
+            }
+            .jmon-music-player-right {
+                min-width: 120px !important;
+                max-width: 140px !important;
+            }
+        }
+        
+        /* Small screens: Mobile layout */
         @media (max-width: 480px) {
+            .jmon-music-player-downloads {
+                display: flex !important;
+            }
+            .jmon-music-player-vertical-downloads {
+                display: none !important;
+            }
             .jmon-music-player-container {
                 padding: 8px !important;
                 border-radius: 8px !important;
@@ -111,11 +161,16 @@ export function createPlayer(composition, options = {}) {
             .jmon-music-player-top {
                 flex-direction: column !important;
                 gap: 12px !important;
-                margin-bottom: 18px !important;
+                align-items: stretch !important;
             }
             .jmon-music-player-left, .jmon-music-player-right {
                 width: 100% !important;
                 min-width: 0 !important;
+                max-width: none !important;
+                flex: none !important;
+            }
+            .jmon-music-player-right {
+                gap: 12px !important;
             }
             .jmon-music-player-timeline {
                 gap: 8px !important;
@@ -155,25 +210,36 @@ export function createPlayer(composition, options = {}) {
   document.head.appendChild(styleTag);
   container.classList.add("jmon-music-player-container");
 
+  // Main layout container - responsive grid
+  const mainLayout = document.createElement("div");
+  mainLayout.style.cssText = `
+        display: grid;
+        grid-template-columns: 1fr;
+        grid-template-rows: auto auto auto auto;
+        gap: 20px;
+        margin-bottom: 0px;
+        font-family: 'PT Sans', sans-serif;
+    `;
+  mainLayout.classList.add("jmon-music-player-main");
+
   // Top container with track selector and tempo
   const topContainer = document.createElement("div");
   topContainer.style.cssText = `
         display: flex;
         justify-content: space-between;
-        align-items: center;
-        margin-bottom: 30px;
+        align-items: flex-start;
         font-family: 'PT Sans', sans-serif;
         gap: 24px;
         flex-wrap: wrap;
     `;
   topContainer.classList.add("jmon-music-player-top");
 
-  // Left column for track selector
+  // Left column for track selector - now flexible
   const leftColumn = document.createElement("div");
   leftColumn.style.cssText = `
         display: flex;
         flex-direction: column;
-        width: 60%;
+        flex: 1;
         min-width: 0;
         box-sizing: border-box;
     `;
@@ -347,14 +413,15 @@ export function createPlayer(composition, options = {}) {
 
   leftColumn.appendChild(instrumentsContainer);
 
-  // Right column for tempo
+  // Right column for tempo and downloads
   const rightColumn = document.createElement("div");
   rightColumn.style.cssText = `
         display: flex;
         flex-direction: column;
-        width: 35%;
-        min-width: 0;
+        min-width: 120px;
+        max-width: 150px;
         box-sizing: border-box;
+        gap: 16px;
     `;
   rightColumn.classList.add("jmon-music-player-right");
 
@@ -401,7 +468,67 @@ export function createPlayer(composition, options = {}) {
     `;
 
   bpmContainer.append(bpmLabel, bpmInput);
-  rightColumn.appendChild(bpmContainer);
+
+  // Vertical download buttons for large screens
+  const verticalDownloads = document.createElement("div");
+  verticalDownloads.style.cssText = `
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        margin-top: 8px;
+    `;
+  verticalDownloads.classList.add("jmon-music-player-vertical-downloads");
+
+  const downloadMIDIButtonVertical = document.createElement("button");
+  downloadMIDIButtonVertical.innerHTML =
+    `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-keyboard-music" style="margin-right: 8px;"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="M6 8h4"/><path d="M14 8h.01"/><path d="M18 8h.01"/><path d="M2 12h20"/><path d="M6 12v4"/><path d="M10 12v4"/><path d="M14 12v4"/><path d="M18 12v4"/></svg><span>MIDI</span>`;
+  downloadMIDIButtonVertical.style.cssText = `
+        padding: 12px 16px;
+        border: none;
+        border-radius: 8px;
+        background-color: #333333;
+        color: white;
+        font-family: 'PT Sans', sans-serif;
+        font-size: 14px;
+        font-weight: 500;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 44px;
+        box-sizing: border-box;
+    `;
+  downloadMIDIButtonVertical.classList.add("jmon-music-player-btn-vertical");
+
+  const downloadWavButtonVertical = document.createElement("button");
+  downloadWavButtonVertical.innerHTML =
+    `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-audio-lines" style="margin-right: 8px;"><path d="M2 10v3"/><path d="M6 6v11"/><path d="M10 3v18"/><path d="M14 8v7"/><path d="M18 5v13"/><path d="M22 10v3"/></svg><span>WAV</span>`;
+  downloadWavButtonVertical.style.cssText = `
+        padding: 12px 16px;
+        border: none;
+        border-radius: 8px;
+        background-color: #333333;
+        color: white;
+        font-family: 'PT Sans', sans-serif;
+        font-size: 14px;
+        font-weight: 500;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 44px;
+        box-sizing: border-box;
+    `;
+  downloadWavButtonVertical.classList.add("jmon-music-player-btn-vertical");
+
+  verticalDownloads.append(downloadMIDIButtonVertical, downloadWavButtonVertical);
+  
+  // Hide vertical downloads by default - CSS will show them on larger screens
+  verticalDownloads.style.display = 'none';
+  
+  rightColumn.append(bpmContainer, verticalDownloads);
 
   // Timeline container
   const timelineContainer = document.createElement("div");
@@ -591,10 +718,14 @@ export function createPlayer(composition, options = {}) {
   buttonContainer.append(downloadMIDIButton, downloadWavButton);
 
   topContainer.append(leftColumn, rightColumn);
+  
+  // Assemble main layout
+  mainLayout.appendChild(topContainer);
+  mainLayout.appendChild(timelineContainer);
+  
+  // Keep original horizontal buttons for mobile
   container.append(
-    topContainer,
-    timelineContainer,
-    timeDisplay,
+    mainLayout,
     buttonContainer,
   );
 
@@ -1541,13 +1672,22 @@ export function createPlayer(composition, options = {}) {
     });
   });
 
-  downloadMIDIButton.addEventListener("click", () => {
+  // Download button handlers
+  const handleMIDIDownload = () => {
     console.log("MIDI download - requires MIDI converter implementation");
-  });
+  };
 
-  downloadWavButton.addEventListener("click", () => {
+  const handleWavDownload = () => {
     console.log("WAV download - requires WAV generator implementation");
-  });
+  };
+
+  // Horizontal buttons (mobile)
+  downloadMIDIButton.addEventListener("click", handleMIDIDownload);
+  downloadWavButton.addEventListener("click", handleWavDownload);
+
+  // Vertical buttons (desktop)
+  downloadMIDIButtonVertical.addEventListener("click", handleMIDIDownload);
+  downloadWavButtonVertical.addEventListener("click", handleWavDownload);
 
   // Initialize if Tone.js is already available
   const initialTone = (typeof window !== "undefined" && window.Tone) ||
